@@ -11,7 +11,7 @@ export default function Enter() {
 
     return (
         <div className="mt-16 px-4">
-            <h3 className="text-3xl font-bold text-center">Join Galaxy!</h3>
+            <h3 className="text-3xl font-bold text-center">Join us Galaxy!</h3>
             <div className="mt-16">
                 <div className="flex flex-col items-center">
                     <h5 className="text-sm text-gray-400 font-medium">
@@ -20,10 +20,10 @@ export default function Enter() {
                     <div className="grid grid-cols-2 mt-8 gap-16 border-b w-full">
                         <button
                             className={cls(
-                                "pb-4 font-medium",
+                                "pb-4 font-medium border-b-2",
                                 method === "email"
-                                    ? "border-b-2  border-purple-400 text-purple-400 font-medium"
-                                    : "border-opacity-0 text-gray-400"
+                                    ? "border-purple-400 text-purple-400 font-medium"
+                                    : "border-transparent text-gray-400"
                             )}
                             onClick={onEmailClick}
                         >
@@ -31,9 +31,9 @@ export default function Enter() {
                         </button>
                         <button
                             className={cls(
-                                "pb-4 font-medium",
+                                "pb-4 font-medium border-b-2",
                                 method === "phone"
-                                    ? "border-b-2  border-purple-400 text-purple-400 font-medium"
+                                    ? "border-purple-400 text-purple-400 font-medium"
                                     : "border-transparent text-gray-400"
                             )}
                             onClick={onPhoneClick}
