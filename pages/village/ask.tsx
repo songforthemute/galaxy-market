@@ -7,7 +7,7 @@ const NewAsking: NextPage = () => {
                 className="inline-flex my-4 ml-4 items-center px-2 py-1 rounded-full
                 text-xs font-medium bg-gray-100 text-gray-700"
             >
-                Galaxies Ask
+                Galaxies Question
             </span>
             <textarea
                 rows={4}
