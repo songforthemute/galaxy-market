@@ -4,27 +4,27 @@ import type { NextPage } from "next";
 // /community/[id]
 const Community: NextPage = () => {
     return (
-        <div className="py-16 px-4 space-y-8">
+        <div className="py-10 space-y-8">
             {[1, 2, 3, 4, 5].map((v, i) => (
                 <div
                     key={i}
                     className="flex flex-col items-start cursor-pointer"
                 >
                     <span
-                        className="flex items-center px-2 py-1 rounded-full
+                        className="flex items-center ml-4 px-2 py-1 rounded-full
                 text-xs font-medium bg-gray-100 text-gray-700"
                     >
                         Galaxies Question
                     </span>
-                    <div className="mt-2 text-gray-700">
+                    <div className="mt-2 px-4 text-gray-700">
                         <span className="text-purple-400 font-medium">Q.</span>{" "}
                         What is the best burger restaurant?
                     </div>
-                    <div className="mt-4 flex items-center justify-between w-full text-gray-400 text-xs font-medium">
+                    <div className="mt-4 px-4 flex items-center justify-between w-full text-gray-400 text-xs font-medium">
                         <span>Lee</span>
                         <span>18 hours ago</span>
                     </div>
-                    <div className="flex space-x-4 mt-4 text-gray-700 py-2 border-t border-b w-full">
+                    <div className="flex px-4 space-x-4 mt-4 text-gray-700 py-2 border-t border-b w-full">
                         <span className="flex space-x-2 items-center text-sm">
                             <svg
                                 className="w-4 h-4"
@@ -62,7 +62,10 @@ const Community: NextPage = () => {
                     </div>
                 </div>
             ))}
-            <button className="fixed bottom-20 right-4 shadow-xl bg-purple-400 rounded-full p-4 text-white hover:bg-purple-700 transition-colors">
+            <button
+                className="fixed bottom-20 right-4 shadow-xl bg-purple-400 rounded-full p-4 text-white
+            hover:bg-purple-700 transition-colors"
+            >
                 <svg
                     className="w-6 h-6"
                     fill="none"
