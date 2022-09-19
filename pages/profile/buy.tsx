@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 
-const Home: NextPage = () => {
+const Buy: NextPage = () => {
     return (
         <div className="flex flex-col py-10 divide-y-[1px]">
             {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => (
@@ -79,4 +79,4 @@ const Home: NextPage = () => {
     );
 };
 
-export default Home;
+export default Buy;
