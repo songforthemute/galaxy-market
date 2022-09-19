@@ -5,7 +5,7 @@ const CommunityPosting: NextPage = () => {
         <div>
             <span
                 className="inline-flex my-4 ml-4 items-center px-2 py-1 rounded-full
-                text-xs font-medium bg-gray-100 text-gray-700"
+                text-sm font-medium bg-gray-100 text-gray-700"
             >
                 Galaxies Question
             </span>
@@ -64,7 +64,7 @@ const CommunityPosting: NextPage = () => {
                 </div>
             </div>
 
-            <div className="px-4 my-4 space-y-4">
+            <div className="px-4 pb-4 my-4 space-y-4 border-b">
                 <div className="flex items-start space-x-4">
                     <div className="w-8 h-8 bg-neutral-200 rounded-full" />
                     <div>

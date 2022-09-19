@@ -2,12 +2,9 @@ import type { NextPage } from "next";
 
 const Home: NextPage = () => {
     return (
-        <div className="flex flex-col space-y-4 py-8">
+        <div className="flex flex-col py-8 divide-y-[1px]">
             {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => (
-                <div
-                    key={i}
-                    className="flex border-b p-4 pt-0 cursor-pointer justify-center"
-                >
+                <div key={i} className="flex p-4 cursor-pointer justify-center">
                     <div className="flex space-x-4">
                         <div className="w-20 h-20 bg-gray-100 rounded-md shadow-md" />
                         <div className="py-2 flex flex-col">
