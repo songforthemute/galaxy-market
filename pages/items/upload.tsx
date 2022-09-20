@@ -27,6 +27,27 @@ const Upload: NextPage = () => {
                     <input type="file" className="hidden" accept="image/*" />
                 </label>
             </div>
+
+            <div className="my-4">
+                <label
+                    htmlFor="name"
+                    className="text-sm font-medium text-gray-400 block mb-1"
+                >
+                    Name
+                </label>
+                <div className="rounded-md relative flex items-center">
+                    <input
+                        id="name"
+                        type="text"
+                        placeholder="0.00"
+                        className="appearance-none w-full pl-8 px-4 py-2 my-2 border border-transparent rounded-md shadow-md placeholder-gray-400 focus:outline-none focus:ring-purple-400 focus:border-purple-400 hover:bg-gray-50 focus:bg-white"
+                    />
+                    <div className="absolute right-0 pr-4 flex items-center pointer-events-none">
+                        <span className="text-gray-400">USD</span>
+                    </div>
+                </div>
+            </div>
+
             <div className="my-4">
                 <label
                     htmlFor="price"
@@ -40,7 +61,7 @@ const Upload: NextPage = () => {
                     </div>
                     <input
                         id="price"
-                        type="text"
+                        type="number"
                         placeholder="0.00"
                         className="appearance-none w-full pl-8 px-4 py-2 my-2 border border-transparent rounded-md shadow-md placeholder-gray-400 focus:outline-none focus:ring-purple-400 focus:border-purple-400 hover:bg-gray-50 focus:bg-white"
                     />
@@ -49,7 +70,8 @@ const Upload: NextPage = () => {
                     </div>
                 </div>
             </div>
-            <div>
+
+            <div className="my-4">
                 <label
                     className="text-sm font-medium text-gray-400 block mb-1"
                     htmlFor=""
@@ -63,7 +85,7 @@ const Upload: NextPage = () => {
                 />
             </div>
             <button className="w-full my-4 text-sm font-medium bg-purple-400 hover:bg-purple-700 text-white py-2 px-4 border border-transparent rounded-md shadow-md focus:ring-2 focus:ring-offset-2 focus:ring-purple-400 focus:outline-none">
-                Upload product
+                Upload Item
             </button>
         </div>
     );
