@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { Fragment } from "react";
 
-const StreamingDetail: NextPage = () => {
+const StreamDetail: NextPage = () => {
     return (
         <div className="py-10 px-4 space-y-4">
             <div className="w-full bg-gray-400 aspect-video rounded-md shadow-md" />
@@ -51,4 +51,4 @@ const StreamingDetail: NextPage = () => {
     );
 };
 
-export default StreamingDetail;
+export default StreamDetail;
