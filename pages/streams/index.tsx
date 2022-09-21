@@ -12,7 +12,7 @@ const Stream: NextPage = () => {
                 </div>
             ))}
 
-            <button className="fixed bottom-20 right-4 shadow-xl bg-purple-400 rounded-full p-4 text-white hover:bg-purple-700 transition-colors border-transparent">
+            <button className="fixed bottom-28 right-4 shadow-xl bg-purple-400 rounded-full p-4 text-white hover:bg-purple-700 transition-colors border-transparent">
                 <svg
                     className="w-6 h-6"
                     fill="none"

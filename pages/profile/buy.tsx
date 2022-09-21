@@ -58,7 +58,7 @@ const Buy: NextPage = () => {
                     </div>
                 </div>
             ))}
-            <button className="fixed bottom-20 right-4 shadow-xl bg-purple-400 rounded-full p-4 text-white hover:bg-purple-700 transition-colors">
+            <button className="fixed bottom-28 right-4 shadow-xl bg-purple-400 rounded-full p-4 text-white hover:bg-purple-700 transition-colors">
                 <svg
                     className="h-6 w-6"
                     xmlns="http://www.w3.org/2000/svg"
