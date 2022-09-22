@@ -3,7 +3,7 @@ import Layout from "../../components/layout";
 
 const EditProfile: NextPage = () => {
     return (
-        <Layout title="프로필 수정" hasTabBar>
+        <Layout title="프로필 수정" hasTabBar canGoBack>
             <div className="pt-4 px-4 space-y-8">
                 <div className="flex items-center space-x-2">
                     <div className="w-20 h-20 rounded-full bg-gray-400 mr-4" />

@@ -1,26 +1,31 @@
 import type { NextPage } from "next";
+import Link from "next/link";
 import Layout from "../../components/layout";
 
 const CommunityPosting: NextPage = () => {
     return (
         // 스테이트 전달로 동적 타이틀 변화
-        <Layout title={"동네이야기"} hasTabBar>
+        <Layout title={"동네이야기"} hasTabBar canGoBack>
             <div>
                 <span
-                    className="inline-flex my-4 ml-4 items-center px-2 py-1 rounded-full
+                    className="inline-flex mt-4 ml-4 items-center px-2 py-1 rounded-full
         text-sm font-medium bg-gray-100 text-gray-700"
                 >
                     궁금해요
                 </span>
                 <div className="flex mb-2 p-4 items-center space-x-4 border-b">
                     <div className="w-12 h-12 rounded-full bg-slate-400" />
-                    <div>
+                    <div className="space-y-0.5">
                         <p className="text-sm font-medium text-gray-700">
                             Lee Joey
                         </p>
-                        <p className="text-xs font-medium text-gray-400 cursor-pointer hover:opacity-50 transition-all">
-                            프로필 보기 &rarr;
-                        </p>
+                        <Link href={"/profile"}>
+                            <a className="block">
+                                <p className="text-xs font-medium text-gray-400 cursor-pointer hover:opacity-50 transition-all">
+                                    프로필 보기 &rarr;
+                                </p>
+                            </a>
+                        </Link>
                     </div>
                 </div>
 

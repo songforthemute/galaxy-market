@@ -1,11 +1,10 @@
 import type { NextPage } from "next";
+import Link from "next/link";
 import Layout from "../../components/layout";
 
-// /community
-// /community/[id]
 const Community: NextPage = () => {
     return (
-        <Layout title="동네이야기" hasTabBar>
+        <Layout title="동네이야기" hasTabBar canGoBack hasConfig>
             <div className="mt-4 space-y-4">
                 {[1, 2, 3, 4, 5].map((v, i) => (
                     <div
@@ -66,25 +65,27 @@ const Community: NextPage = () => {
                         </div>
                     </div>
                 ))}
-                <button
-                    className="fixed bottom-28 right-4 shadow-xl bg-purple-400 rounded-full p-4 text-white
+                <Link href={"/community/ask"}>
+                    <a
+                        className="fixed bottom-28 right-4 shadow-xl bg-purple-400 rounded-full p-4 text-white
         hover:bg-purple-700 transition-colors"
-                >
-                    <svg
-                        className="w-6 h-6"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
                     >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                        ></path>
-                    </svg>
-                </button>
+                        <svg
+                            className="w-6 h-6"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                            ></path>
+                        </svg>
+                    </a>
+                </Link>
             </div>
         </Layout>
     );

@@ -1,9 +1,10 @@
 import type { NextPage } from "next";
+import Link from "next/link";
 import Layout from "../components/layout";
 
 const Home: NextPage = () => {
     return (
-        <Layout title="홈" hasTabBar>
+        <Layout title="홈" hasTabBar canGoBack hasConfig>
             <div className="flex flex-col divide-y-[1px]">
                 {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => (
                     <div
@@ -62,23 +63,25 @@ const Home: NextPage = () => {
                         </div>
                     </div>
                 ))}
-                <button className="fixed bottom-28 right-4 shadow-xl bg-purple-400 rounded-full p-4 text-white hover:bg-purple-700 transition-colors">
-                    <svg
-                        className="h-6 w-6"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        aria-hidden="true"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                        />
-                    </svg>
-                </button>
+                <Link href="/items/upload">
+                    <a className="fixed bottom-28 right-4 shadow-xl bg-purple-400 rounded-full p-4 text-white hover:bg-purple-700 transition-colors">
+                        <svg
+                            className="h-6 w-6"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            aria-hidden="true"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                            />
+                        </svg>
+                    </a>
+                </Link>
             </div>
         </Layout>
     );

@@ -5,7 +5,7 @@ import Layout from "../../components/layout";
 const StreamDetail: NextPage = () => {
     return (
         // 타이틀 동적 할당
-        <Layout title={"라이브 커머스"}>
+        <Layout title={"라이브 커머스"} canGoBack>
             <div className="pt-4 px-4 space-y-4">
                 <div className="w-full bg-gray-400 aspect-video rounded-md shadow-md" />
                 <h3 className="text-gray-700 text-2xl font-medium mt-2 text-center">

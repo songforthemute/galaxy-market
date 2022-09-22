@@ -1,22 +1,25 @@
 import type { NextPage } from "next";
+import Link from "next/link";
 import Layout from "../../components/layout";
 
 const ItemDetail: NextPage = () => {
     return (
-        <Layout title="상품 상세" hasTabBar>
+        <Layout title="상품 상세" hasTabBar canGoBack>
             <div className="p-4">
                 <div className="mb-8">
                     <div className="h-96 bg-slate-400" />
                     <div className="flex mt-2 py-4 items-center space-x-4 border-y">
                         <div className="w-12 h-12 rounded-full bg-slate-400" />
-                        <div>
-                            <p className="text-sm font-medium text-gray-700">
-                                스티브 잡스
-                            </p>
-                            <p className="text-xs font-medium text-gray-400 cursor-pointer hover:opacity-50 transition-all">
-                                프로필 보기 &rarr;
-                            </p>
-                        </div>
+                        <Link href={"/profile"}>
+                            <a className="cursor-pointer hover:opacity-50 transition-all">
+                                <p className="text-sm font-medium text-gray-700">
+                                    스티브 잡스
+                                </p>
+                                <p className="text-xs font-medium text-gray-400">
+                                    프로필 보기 &rarr;
+                                </p>
+                            </a>
+                        </Link>
                     </div>
                     <div className="mt-6">
                         <h1 className="text-3xl font-bold text-black">

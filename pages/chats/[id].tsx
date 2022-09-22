@@ -5,7 +5,7 @@ import Layout from "../../components/layout";
 const ChatDetail: NextPage = () => {
     return (
         // 스테이트로 유저 네임 동적 할당
-        <Layout title={"메시지"}>
+        <Layout title={"메시지"} canGoBack>
             <div className="p-4 pb-20 space-y-4">
                 {[1, 2, 3, 4, 5, 6, 7].map((v, i) => (
                     <Fragment key={i}>

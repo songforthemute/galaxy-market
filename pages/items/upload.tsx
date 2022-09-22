@@ -3,7 +3,7 @@ import Layout from "../../components/layout";
 
 const Upload: NextPage = () => {
     return (
-        <Layout title="상품 등록" hasTabBar>
+        <Layout title="상품 등록" hasTabBar canGoBack>
             <div className="px-4 pt-10">
                 <div>
                     <label

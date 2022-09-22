@@ -3,7 +3,7 @@ import Layout from "../../components/layout";
 
 const NewAsking: NextPage = () => {
     return (
-        <Layout title="질문하기" hasTabBar>
+        <Layout title="질문하기" hasTabBar canGoBack>
             <form className="px-4">
                 <span
                     className="inline-flex my-4 ml-4 items-center px-2 py-1 rounded-full

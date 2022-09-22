@@ -8,7 +8,7 @@ export default function Enter() {
     const onPhoneClick = () => setMethod("phone");
 
     return (
-        <Layout title="로그인">
+        <Layout title="로그인" canGoBack>
             <div className="mt-16 px-4">
                 <h3 className="text-3xl font-bold text-center">
                     Join us Galaxy!

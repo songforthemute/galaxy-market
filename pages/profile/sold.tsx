@@ -3,7 +3,7 @@ import Layout from "../../components/layout";
 
 const Sold: NextPage = () => {
     return (
-        <Layout title="판매내역" hasTabBar>
+        <Layout title="판매내역" hasTabBar canGoBack>
             <div className="flex flex-col divide-y-[1px]">
                 {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => (
                     <div

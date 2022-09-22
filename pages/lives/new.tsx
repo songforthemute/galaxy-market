@@ -3,7 +3,7 @@ import Layout from "../../components/layout";
 
 const NewStream: NextPage = () => {
     return (
-        <Layout title="새 라이브 커머스" hasTabBar>
+        <Layout title="새 라이브 커머스" hasTabBar canGoBack>
             <div className="space-y-4 py-10 px-4">
                 <div className="my-4">
                     <label
