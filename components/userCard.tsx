@@ -8,6 +8,7 @@ interface UserCardProps {
     link: string;
     type?: "message" | "profile"; // default: "profile"
     key?: number;
+    hasBorder?: boolean;
     [key: string]: any;
 }
 
@@ -18,6 +19,7 @@ const UserCard = ({
     link,
     type = "profile",
     key,
+    hasBorder,
     ...properties
 }: UserCardProps) => {
     return (
@@ -25,7 +27,8 @@ const UserCard = ({
             className={cls(
                 type === "message"
                     ? "cursor-pointer transition-all hover:opacity-50 p-4"
-                    : "flex py-4 items-center space-x-4 mt-2 border-y"
+                    : "flex py-4 items-center space-x-4 mt-2",
+                hasBorder ? "border-y" : ""
             )}
             key={type === "message" ? key : undefined}
         >
@@ -36,8 +39,8 @@ const UserCard = ({
                         <p
                             className={cls(
                                 type === "message"
-                                    ? "text-xs font-medium text-gray-400"
-                                    : "text-sm text-gray-700"
+                                    ? "text-xs text-gray-400"
+                                    : "text-sm font-medium text-gray-700"
                             )}
                         >
                             {username}

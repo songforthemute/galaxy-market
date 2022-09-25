@@ -1,6 +1,7 @@
 interface TxtAreaProps {
     placeholder?: string;
     name: string;
+    title: string;
     rows?: number;
     [key: string]: any;
 }
@@ -8,6 +9,7 @@ interface TxtAreaProps {
 const TxtArea = ({
     placeholder,
     name,
+    title,
     rows = 4,
     ...properties
 }: TxtAreaProps) => {
@@ -17,7 +19,7 @@ const TxtArea = ({
                 className="text-sm font-medium text-gray-400 block mb-1"
                 htmlFor={name}
             >
-                Description
+                {title}
             </label>
             <textarea
                 rows={rows}
