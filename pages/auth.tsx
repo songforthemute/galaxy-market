@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Btn from "../components/btn";
+import Input from "../components/input";
 import Layout from "../components/layout";
 import { cls } from "../libs/util";
 
@@ -9,14 +11,15 @@ export default function Enter() {
 
     return (
         <Layout title="로그인" canGoBack>
-            <div className="mt-16 px-4">
+            <div className="mt-12 px-4">
                 <h3 className="text-3xl font-bold text-center">
-                    Join us Galaxy!
+                    Join now in Galaxy!
                 </h3>
-                <div className="mt-16">
+
+                <div className="mt-12">
                     <div className="flex flex-col items-center">
                         <h5 className="text-sm text-gray-400 font-medium">
-                            Enter using:
+                            다음의 방법으로 로그인하기
                         </h5>
                         <div className="grid grid-cols-2 mt-8 gap-16 border-b w-full">
                             <button
@@ -28,7 +31,7 @@ export default function Enter() {
                                 )}
                                 onClick={onEmailClick}
                             >
-                                Email
+                                이메일
                             </button>
                             <button
                                 className={cls(
@@ -39,54 +42,43 @@ export default function Enter() {
                                 )}
                                 onClick={onPhoneClick}
                             >
-                                Phone
+                                전화번호
                             </button>
                         </div>
                     </div>
+
+                    {/* 로그인 폼 컴포넌트 */}
                     <form className="flex flex-col mt-8">
-                        <label
-                            htmlFor="input"
-                            className="text-sm font-medium text-gray-400"
-                        >
-                            {method === "email" ? "Email address" : null}
-                            {method === "phone" ? "Phone number" : null}
-                        </label>
-                        <div className="mt-2">
-                            {method === "email" ? (
-                                <input
-                                    id="input"
-                                    className="appearance-none w-full px-4 py-2 my-2 border border-transparent rounded-md shadow-md placeholder-gray-400 focus:outline-none focus:ring-purple-400 focus:border-purple-400 hover:bg-gray-50 focus:bg-white"
-                                    type="email"
-                                    required
-                                />
-                            ) : null}
-                            {method === "phone" ? (
-                                <div className="flex rounded-md shadow-md my-2">
-                                    <span className="flex items-center justify-center px-4 rounded-l-md border border-r-0 border-transparent bg-gray-50 text-gray-400 select-none">
-                                        +82
-                                    </span>
-                                    <input
-                                        id="input"
-                                        className="appearance-none w-full px-4 py-2 border border-transparent rounded-r-md placeholder-gray-400 focus:outline-none focus:ring-purple-400 focus:border-purple-400 hover:bg-gray-50 focus:bg-white"
-                                        type="number"
-                                        required
-                                    />
-                                </div>
-                            ) : null}
-                        </div>
-                        <button className="my-4 text-sm font-medium bg-purple-400 hover:bg-purple-700 text-white py-2 px-4 border border-transparent rounded-md shadow-md focus:ring-2 focus:ring-offset-2 focus:ring-purple-400 focus:outline-none">
-                            {method === "email" ? "Get login link" : null}
-                            {method === "phone"
-                                ? "Get one-time password"
-                                : null}
-                        </button>
+                        <Input
+                            label={
+                                method === "email" ? "이메일 주소" : "전화번호"
+                            }
+                            name={method === "email" ? "email" : "phone"}
+                            type={method === "email" ? "email" : "phone"}
+                            placeholder={
+                                method === "email"
+                                    ? "galaxy@market.co"
+                                    : "010-1234-5678"
+                            }
+                            required
+                        />
+
+                        <Btn
+                            isLarge
+                            text={
+                                method === "email"
+                                    ? "이메일로 로그인하기"
+                                    : "전화번호로 로그인 하기"
+                            }
+                        />
                     </form>
-                    <div className="mt-4">
+
+                    <div className="mt-6">
                         <div className="relative">
                             <div className="absolute w-full border-t border-gray-400" />
                             <div className="relative -top-3 text-center">
                                 <span className="bg-white px-2 text-sm text-gray-400 select-none">
-                                    Or enter with
+                                    혹은 다른 방법으로 로그인 하기
                                 </span>
                             </div>
                         </div>

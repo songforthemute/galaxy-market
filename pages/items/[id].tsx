@@ -1,47 +1,43 @@
 import type { NextPage } from "next";
-import Link from "next/link";
+import Btn from "../../components/btn";
 import Layout from "../../components/layout";
+import UserCard from "../../components/userCard";
 
 const ItemDetail: NextPage = () => {
     return (
         <Layout title="상품 상세" hasTabBar canGoBack>
             <div className="p-4">
                 <div className="mb-8">
-                    <div className="h-96 bg-slate-400" />
-                    <div className="flex mt-2 py-4 items-center space-x-4 border-y">
-                        <div className="w-12 h-12 rounded-full bg-slate-400" />
-                        <Link href={"/profile"}>
-                            <a className="cursor-pointer hover:opacity-50 transition-all">
-                                <p className="text-sm font-medium text-gray-700">
-                                    스티브 잡스
-                                </p>
-                                <p className="text-xs font-medium text-gray-400">
-                                    프로필 보기 &rarr;
-                                </p>
-                            </a>
-                        </Link>
-                    </div>
-                    <div className="mt-6">
+                    <div className="h-96 bg-slate-400 mb-4" />
+
+                    <UserCard
+                        text="프로필 보기 &rarr;"
+                        username="조이"
+                        type="profile"
+                        href="/profile"
+                        hasBorder
+                    />
+
+                    <div className="mt-8 space-y-4">
                         <h1 className="text-3xl font-bold text-black">
-                            Galaxy S50
+                            아이폰 14 프로 맥스
                         </h1>
-                        <div className="text-2xl mt-1 text-gray-700">$140</div>
+                        <div className="text-2xl mt-1 text-gray-700">
+                            123,456원
+                        </div>
                         <p className="text-base mt-4 text-gray-700">
-                            My money&apos;s in that office, right? If she start
-                            giving me some bullshit about it ain&apos;t there,
-                            and we got to go someplace else and get it, I&apos;m
-                            gonna shoot you in the head then and there. Then
-                            I&apos;m gonna shoot that bitch in the kneecaps,
-                            find out where my goddamn money is. She gonna tell
-                            me too. Hey, look at me when I&apos;m talking to
-                            you, motherfucker. You listen: we go in there, and
-                            that ni**a Winston or anybody else is in there, you
-                            the first motherfucker to get shot. You understand?
+                            iPhone을 다루는 완전히 새로운 방법. 생명을 구할 수
+                            있도록 설계된 새로운 핵심 안전 기능. 압도적인
+                            디테일을 자랑하는 혁신적인 48MP 카메라. 이 모든 걸
+                            가능케 하는 궁극의 스마트폰 칩. 새롭게 선보이는
+                            Dynamic Island. 하드웨어와 소프트웨어 그리고 그
+                            사이의 모든 것을 아우르는 진정 Apple 다운
+                            혁신입니다. 음악, 스포츠 점수, FaceTime 등 다양한
+                            정보들을 띄워주기 때문에 하던 일을 멈추지 않고도
+                            중요한 정보들을 확인할 수 있죠.
                         </p>
                         <div className="flex items-center justify-between space-x-2 my-4">
-                            <button className="flex-1 bg-purple-400 text-white py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-400 shadow-md font-medium text-sm hover:bg-purple-700">
-                                Talk to seller
-                            </button>
+                            <Btn text={"판매자에게 연락하기"} />
                             <button className="p-2 flex items-center justify-center text-gray-400 rounded-md focus:text-red-400 focus:outline-none hover:text-red-100 transition-colors">
                                 <svg
                                     className="h-6 w-6 "
@@ -70,11 +66,11 @@ const ItemDetail: NextPage = () => {
                         {[1, 2, 3, 4, 5, 6].map((_, i) => (
                             <div key={i} className="">
                                 <div className="h-56 w-56 mb-2 bg-slate-400" />
-                                <h3 className="text-sm text-gray-700 -mb-1">
-                                    Galaxy S60
+                                <h3 className="text-sm font-semibold text-gray-700 -mb-1">
+                                    아이폰 SE3
                                 </h3>
                                 <span className="text-sm font-medium text-gray-400">
-                                    $6
+                                    ₩ 10,000
                                 </span>
                             </div>
                         ))}
