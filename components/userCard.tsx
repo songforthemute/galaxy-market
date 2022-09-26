@@ -5,9 +5,10 @@ interface UserCardProps {
     text: string;
     username: string;
     avatarUrl?: string;
-    link: string;
+    href: string;
     type?: "message" | "profile"; // default: "profile"
     key?: number;
+    isLarge?: boolean;
     hasBorder?: boolean;
     [key: string]: any;
 }
@@ -16,8 +17,9 @@ const UserCard = ({
     text = "",
     username,
     avatarUrl, // 차후에 이미지 링킹
-    link,
+    href,
     type = "profile",
+    isLarge = false,
     key,
     hasBorder,
     ...properties
@@ -25,6 +27,7 @@ const UserCard = ({
     return (
         <div
             className={cls(
+                "px-4",
                 type === "message"
                     ? "cursor-pointer transition-all hover:opacity-50 p-4"
                     : "flex py-4 items-center space-x-4 mt-2",
@@ -32,14 +35,21 @@ const UserCard = ({
             )}
             key={type === "message" ? key : undefined}
         >
-            <Link href={link}>
+            <Link href={href}>
                 <a className="flex items-center space-x-4 cursor-pointer hover:opacity-50 transition-all">
-                    <div className="w-12 h-12 rounded-full bg-slate-400" />
+                    <div
+                        className={cls(
+                            "rounded-full bg-slate-400",
+                            isLarge ? "w-16 h-16" : "w-12 h-12"
+                        )}
+                    />
                     <div>
                         <p
                             className={cls(
                                 type === "message"
                                     ? "text-xs text-gray-400"
+                                    : isLarge
+                                    ? "text-md font-semibold text-gray-700"
                                     : "text-sm font-medium text-gray-700"
                             )}
                         >
@@ -47,9 +57,12 @@ const UserCard = ({
                         </p>
                         <p
                             className={cls(
+                                "font-medium",
                                 type === "message"
-                                    ? "text-sm font-medium text-gray-700"
-                                    : "text-xs font-medium text-gray-400"
+                                    ? "text-sm text-gray-700"
+                                    : isLarge
+                                    ? "text-sm text-gray-400"
+                                    : "text-xs text-gray-400"
                             )}
                         >
                             {text}

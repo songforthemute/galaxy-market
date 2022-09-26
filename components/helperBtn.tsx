@@ -14,7 +14,7 @@ const HelperBtn = ({ href, children, ...properties }: HelperBtnProps) => {
             <a
                 {...properties}
                 className={cls(
-                    "fixed bottom-28 right-4 shadow-xl bg-purple-400 rounded-full p-4 text-white hover:bg-purple-700 transition-colors"
+                    "fixed bottom-28 right-4 shadow-xl border-transparent bg-purple-400 rounded-full p-4 text-white hover:bg-purple-700 transition-colors"
                 )}
             >
                 {children}

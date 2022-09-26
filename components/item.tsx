@@ -1,47 +1,48 @@
 import Link from "next/link";
-import Badge from "./badge";
+import { priceConverter } from "../libs/util";
 
-interface MessageProps {
-    key: number;
-    badge: string;
-    text: string;
-    creator: string;
-    createdAt: string;
-    interested: number;
-    reply: number;
+interface ItemProps {
     href: string;
+    name: string;
+    imgUrl?: string;
+    opt: string;
+    price: string;
+    likes: number;
+    reply: number;
+    key: number;
 }
 
-const Ask = ({
-    key,
-    badge,
-    text,
-    creator,
-    createdAt,
-    interested,
-    reply,
+const Item = ({
     href,
-}: MessageProps) => {
+    name,
+    imgUrl,
+    opt,
+    price,
+    likes,
+    reply,
+    key,
+}: ItemProps) => {
     return (
         <Link href={href}>
             <a
                 key={key}
-                className="flex flex-col items-start cursor-pointer hover:opacity-50 transition-all"
+                className="flex p-4 cursor-pointer justify-between hover:opacity-50 transition-opacity"
             >
-                <Badge text={badge} />
-
-                <div className="px-4 text-gray-700">
-                    <span className="text-purple-400 font-medium">Q. </span>
-                    {text}
+                <div className="flex space-x-4">
+                    <div className="w-20 h-20 bg-gray-400 rounded-md" />
+                    <div className="py-1.5 flex flex-col">
+                        <h3 className="text-sm font-medium text-gray-700">
+                            {name}
+                        </h3>
+                        <span className="text-xs text-gray-400">{opt}</span>
+                        <span className="font-medium mt-2 text-gray-700">
+                            ₩{priceConverter(price)}
+                        </span>
+                    </div>
                 </div>
 
-                <div className="mt-4 px-4 flex items-center justify-between w-full text-gray-400 text-xs font-medium">
-                    <span>{creator}</span>
-                    <span>{createdAt}</span>
-                </div>
-
-                <div className="flex px-4 space-x-4 mt-4 text-gray-700 py-2 border-y w-full">
-                    <span className="flex space-x-2 items-center text-sm">
+                <div className="flex items-end justify-end space-x-4">
+                    <div className="flex items-center text-sm text-gray-400 space-x-1">
                         <svg
                             className="w-4 h-4"
                             fill="none"
@@ -53,13 +54,13 @@ const Ask = ({
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
                                 strokeWidth="2"
-                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
                             ></path>
                         </svg>
-                        <span>Interested {interested}</span>
-                    </span>
+                        <span>{likes}</span>
+                    </div>
 
-                    <span className="flex space-x-2 items-center text-sm">
+                    <div className="flex items-center text-sm text-gray-400 space-x-1">
                         <svg
                             className="w-4 h-4"
                             fill="none"
@@ -74,13 +75,12 @@ const Ask = ({
                                 d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                             ></path>
                         </svg>
-
-                        <span>Reply {reply}</span>
-                    </span>
+                        <span>{reply}</span>
+                    </div>
                 </div>
             </a>
         </Link>
     );
 };
 
-export default Ask;
+export default Item;
