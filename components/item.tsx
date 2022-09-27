@@ -9,25 +9,12 @@ interface ItemProps {
     price: string;
     likes: number;
     reply: number;
-    key: number;
 }
 
-const Item = ({
-    href,
-    name,
-    imgUrl,
-    opt,
-    price,
-    likes,
-    reply,
-    key,
-}: ItemProps) => {
+const Item = ({ href, name, imgUrl, opt, price, likes, reply }: ItemProps) => {
     return (
         <Link href={href}>
-            <a
-                key={key}
-                className="flex p-4 cursor-pointer justify-between hover:opacity-50 transition-opacity"
-            >
+            <a className="flex p-4 cursor-pointer justify-between hover:opacity-50 transition-opacity">
                 <div className="flex space-x-4">
                     <div className="w-20 h-20 bg-gray-400 rounded-md" />
                     <div className="py-1.5 flex flex-col">

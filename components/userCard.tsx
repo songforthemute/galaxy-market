@@ -7,7 +7,7 @@ interface UserCardProps {
     avatarUrl?: string;
     href: string;
     type?: "message" | "profile"; // default: "profile"
-    key?: number;
+
     isLarge?: boolean;
     hasBorder?: boolean;
     [key: string]: any;
@@ -20,7 +20,7 @@ const UserCard = ({
     href,
     type = "profile",
     isLarge = false,
-    key,
+
     hasBorder,
     ...properties
 }: UserCardProps) => {
@@ -33,7 +33,6 @@ const UserCard = ({
                     : "flex py-4 items-center space-x-4 mt-2",
                 hasBorder ? "border-y" : ""
             )}
-            key={type === "message" ? key : undefined}
         >
             <Link href={href}>
                 <a className="flex items-center space-x-4 cursor-pointer hover:opacity-50 transition-all">

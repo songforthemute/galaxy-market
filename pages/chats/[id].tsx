@@ -11,16 +11,12 @@ const ChatDetail: NextPage = () => {
             <div className="p-4 pb-20 space-y-4">
                 {[1, 2, 3, 4, 5, 6, 7].map((v, i) => (
                     <Fragment key={i}>
-                        <Message
-                            text="올려 둔 상품 얼마에 판매하시나요?"
-                            key={i}
-                        />
+                        <Message text="올려 둔 상품 얼마에 판매하시나요?" />
                         <Message
                             text="130,000원까지 생각하고 있어요!"
-                            key={i}
                             isReverse={true}
                         />
-                        <Message text="오!" key={i} />
+                        <Message text="오!" />
                     </Fragment>
                 ))}
 

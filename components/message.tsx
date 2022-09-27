@@ -4,13 +4,11 @@ interface MessageProps {
     text: string;
     isReverse?: boolean;
     avatarUrl?: string; // 추후 이미지에 넣을 부분
-    key?: number;
 }
 
-const Message = ({ text, isReverse = false, avatarUrl, key }: MessageProps) => {
+const Message = ({ text, isReverse = false, avatarUrl }: MessageProps) => {
     return (
         <div
-            key={key}
             className={cls(
                 "flex items-start space-x-2",
                 isReverse ? "flex-row-reverse space-x-reverse" : ""

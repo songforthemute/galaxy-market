@@ -2,7 +2,6 @@ import Link from "next/link";
 import Badge from "./badge";
 
 interface MessageProps {
-    key: number;
     badge: string;
     text: string;
     creator: string;
@@ -13,7 +12,6 @@ interface MessageProps {
 }
 
 const Ask = ({
-    key,
     badge,
     text,
     creator,
@@ -24,10 +22,7 @@ const Ask = ({
 }: MessageProps) => {
     return (
         <Link href={href}>
-            <a
-                key={key}
-                className="flex flex-col items-start cursor-pointer hover:opacity-50 transition-all"
-            >
+            <a className="flex flex-col items-start cursor-pointer hover:opacity-50 transition-all">
                 <Badge text={badge} />
 
                 <div className="px-4 text-gray-700">
