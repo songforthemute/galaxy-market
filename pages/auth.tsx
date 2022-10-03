@@ -1,13 +1,51 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import Btn from "../components/btn";
 import Input from "../components/input";
 import Layout from "../components/layout";
 import { cls } from "../libs/util";
 
+interface AuthForm {
+    email?: string;
+    phone?: string;
+}
+
 export default function Enter() {
+    const {
+        register,
+        // watch,
+        reset,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<AuthForm>();
+
+    // console.log(watch()); // debug input status
+
+    const [loading, setLoading] = useState(false);
     const [method, setMethod] = useState<"email" | "phone">("email");
-    const onEmailClick = () => setMethod("email");
-    const onPhoneClick = () => setMethod("phone");
+    function _onEmailClick() {
+        setMethod("email");
+        reset(); // reset input fields
+    }
+    function _onPhoneClick() {
+        setMethod("phone");
+        reset(); // reset input fields
+    }
+    function _onValid(data: AuthForm) {
+        console.log("entered data: \n", data, "\nfrom _onValid()"); // Debug
+
+        setLoading(true);
+
+        fetch("/api/users/auth", {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then(() => {
+            setLoading(false);
+        });
+    }
 
     return (
         <Layout title="로그인" canGoBack>
@@ -29,7 +67,7 @@ export default function Enter() {
                                         ? "border-purple-400 text-purple-400 font-medium"
                                         : "border-transparent text-gray-400"
                                 )}
-                                onClick={onEmailClick}
+                                onClick={_onEmailClick}
                             >
                                 이메일
                             </button>
@@ -40,7 +78,7 @@ export default function Enter() {
                                         ? "border-purple-400 text-purple-400 font-medium"
                                         : "border-transparent text-gray-400"
                                 )}
-                                onClick={onPhoneClick}
+                                onClick={_onPhoneClick}
                             >
                                 전화번호
                             </button>
@@ -48,25 +86,31 @@ export default function Enter() {
                     </div>
 
                     {/* 로그인 폼 컴포넌트 */}
-                    <form className="flex flex-col mt-8">
+                    <form
+                        onSubmit={handleSubmit(_onValid)}
+                        className="flex flex-col mt-8"
+                    >
                         <Input
+                            register={register(method, { required: true })}
                             label={
                                 method === "email" ? "이메일 주소" : "전화번호"
                             }
-                            name={method === "email" ? "email" : "phone"}
-                            type={method === "email" ? "email" : "phone"}
+                            name={method}
+                            type={method}
+                            required
                             placeholder={
                                 method === "email"
                                     ? "galaxy@market.co"
                                     : "010-1234-5678"
                             }
-                            required
                         />
 
                         <Btn
                             isLarge
                             text={
-                                method === "email"
+                                loading
+                                    ? "로그인 요청 중이에요"
+                                    : method === "email"
                                     ? "이메일로 로그인하기"
                                     : "전화번호로 로그인 하기"
                             }
