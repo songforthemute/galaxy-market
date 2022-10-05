@@ -11,7 +11,7 @@ interface AuthForm {
     phone?: string;
 }
 
-export default function Enter() {
+const Auth = () => {
     const {
         register,
         // watch,
@@ -148,4 +148,6 @@ export default function Enter() {
             </div>
         </Layout>
     );
-}
+};
+
+export default Auth;
