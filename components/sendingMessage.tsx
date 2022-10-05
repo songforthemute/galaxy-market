@@ -1,5 +1,3 @@
-import React from "react";
-
 interface SendingProps {
     placeholder?: string;
     children?: React.ReactNode | "→";

@@ -1,10 +1,10 @@
+import Btn from "@components/btn";
+import Input from "@components/input";
+import Layout from "@components/layout";
+import useMutation from "@libs/client/useMutation";
+import { cls } from "@libs/client/util";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import Btn from "../components/btn";
-import Input from "../components/input";
-import Layout from "../components/layout";
-import useMutation from "../libs/client/useMutation";
-import { cls } from "../libs/client/util";
 
 interface AuthForm {
     email?: string;

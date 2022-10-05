@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
-import Badge from "../../components/badge";
-import Btn from "../../components/btn";
-import Layout from "../../components/layout";
-import TxtArea from "../../components/txtArea";
+import Badge from "@components/badge";
+import Btn from "@components/btn";
+import Layout from "@components/layout";
+import TxtArea from "@components/txtArea";
 
 const NewAsking: NextPage = () => {
     return (

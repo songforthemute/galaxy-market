@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import HelperBtn from "../../components/helperBtn";
-import Layout from "../../components/layout";
+import Layout from "@components/layout";
 
 const Stream: NextPage = () => {
     return (

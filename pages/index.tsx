@@ -1,7 +1,7 @@
+import HelperBtn from "@components/helperBtn";
+import Item from "@components/item";
+import Layout from "@components/layout";
 import type { NextPage } from "next";
-import HelperBtn from "../components/helperBtn";
-import Item from "../components/item";
-import Layout from "../components/layout";
 
 const Home: NextPage = () => {
     return (

@@ -1,4 +1,4 @@
-import { cls } from "../libs/client/util";
+import { cls } from "@libs/client/util";
 
 interface BtnProps {
     _onClick?: (params?: any) => void;

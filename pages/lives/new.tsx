@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
-import Btn from "../../components/btn";
-import Input from "../../components/input";
-import Layout from "../../components/layout";
-import TxtArea from "../../components/txtArea";
+import Btn from "@components/btn";
+import Input from "@components/input";
+import Layout from "@components/layout";
+import TxtArea from "@components/txtArea";
 
 const NewStream: NextPage = () => {
     return (

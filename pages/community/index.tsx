@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
-import Ask from "../../components/ask";
-import HelperBtn from "../../components/helperBtn";
-import Layout from "../../components/layout";
+import Ask from "@components/ask";
+import HelperBtn from "@components/helperBtn";
+import Layout from "@components/layout";
 
 const Community: NextPage = () => {
     return (

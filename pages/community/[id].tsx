@@ -1,11 +1,11 @@
 import type { NextPage } from "next";
-import Badge from "../../components/badge";
-import Btn from "../../components/btn";
-import Comment from "../../components/reply";
-import Layout from "../../components/layout";
-import Reaction from "../../components/reaction";
-import TxtArea from "../../components/txtArea";
-import UserCard from "../../components/userCard";
+import Badge from "@components/badge";
+import Btn from "@components/btn";
+import Comment from "@components/reply";
+import Layout from "@components/layout";
+import Reaction from "@components/reaction";
+import TxtArea from "@components/txtArea";
+import UserCard from "@components/userCard";
 
 const CommunityPosting: NextPage = () => {
     return (

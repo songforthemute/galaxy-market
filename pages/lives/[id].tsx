@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { Fragment } from "react";
-import Layout from "../../components/layout";
+import Layout from "@components/layout";
 
 const StreamDetail: NextPage = () => {
     return (

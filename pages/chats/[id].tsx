@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
 import { Fragment } from "react";
-import Layout from "../../components/layout";
-import Message from "../../components/message";
-import Sending from "../../components/sendingMessage";
+import Layout from "@components/layout";
+import Message from "@components/message";
+import Sending from "@components/sendingMessage";
 
 const ChatDetail: NextPage = () => {
     return (

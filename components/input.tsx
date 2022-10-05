@@ -6,7 +6,7 @@ interface InputProps {
     type?: "text" | "phone" | "price" | "email";
     placeholder?: string;
     required?: boolean;
-    register: UseFormRegisterReturn;
+    register?: UseFormRegisterReturn; // no undefined
     [key: string]: any;
 }
 
