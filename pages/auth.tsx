@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import Btn from "../components/btn";
 import Input from "../components/input";
 import Layout from "../components/layout";
+import useMutation from "../libs/client/useMutation";
 import { cls } from "../libs/client/util";
 
 interface AuthForm {
@@ -18,34 +19,24 @@ export default function Enter() {
         handleSubmit,
         formState: { errors },
     } = useForm<AuthForm>();
-
     // console.log(watch()); // debug input status
-
-    const [loading, setLoading] = useState(false);
     const [method, setMethod] = useState<"email" | "phone">("email");
-    function _onEmailClick() {
+    const [authentification, { loading, data, error }] =
+        useMutation("/api/users/auth");
+
+    // functions
+    const _onEmailClick = () => {
         setMethod("email");
         reset(); // reset input fields
-    }
-    function _onPhoneClick() {
+    };
+    const _onPhoneClick = () => {
         setMethod("phone");
         reset(); // reset input fields
-    }
-    function _onValid(data: AuthForm) {
-        console.log("entered data: \n", data, "\nfrom _onValid()"); // Debug
-
-        setLoading(true);
-
-        fetch("/api/users/auth", {
-            method: "POST",
-            body: JSON.stringify(data),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        }).then(() => {
-            setLoading(false);
-        });
-    }
+    };
+    const _onValid = (validFormData: AuthForm) => {
+        authentification(validFormData);
+        console.log(loading, data, error);
+    };
 
     return (
         <Layout title="로그인" canGoBack>
