@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { cls } from "../libs/util";
+import { cls } from "../libs/client/util";
 
 interface DockBtnProps {
     children: React.ReactNode;

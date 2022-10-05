@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { priceConverter } from "../libs/util";
+import { priceConverter } from "../libs/client/util";
 
 interface ItemProps {
     href: string;

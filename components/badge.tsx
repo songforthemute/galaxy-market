@@ -1,4 +1,4 @@
-import { cls } from "../libs/util";
+import { cls } from "../libs/client/util";
 
 interface BadgeProps {
     text: string;

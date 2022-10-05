@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import { cls } from "../libs/util";
+import { cls } from "../libs/client/util";
 
 interface HelperBtnProps {
     href: string;
