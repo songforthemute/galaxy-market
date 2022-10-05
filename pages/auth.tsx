@@ -35,6 +35,7 @@ const Auth = () => {
     };
     const _onValid = (validFormData: AuthForm) => {
         authentification(validFormData);
+
         console.log(loading, data, error);
     };
 
@@ -92,7 +93,7 @@ const Auth = () => {
                             placeholder={
                                 method === "email"
                                     ? "galaxy@market.co"
-                                    : "010-1234-5678"
+                                    : "전화번호 뒤 8자리를 '-' 없이 입력해주세요."
                             }
                         />
 

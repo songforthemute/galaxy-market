@@ -14,7 +14,7 @@ datasource db {
 
 model User {
   id Int @id @default(autoincrement()) // 필드명 자료형 식별자 옵션
-  phone String? @unique
+  phone Int? @unique
   email String? @unique
   name String
   avatarUrl String?
