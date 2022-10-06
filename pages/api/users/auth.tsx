@@ -6,34 +6,21 @@ import crypto from "crypto";
 const authHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     // console.log(req.body); // test transmitted body
     // console.log("by authController: ", req.method); // test method
-    const { phone, email } = req.body;
-    let user;
+    const { email, phone } = req.body;
+    const payload = email ? { email } : { phone: Number(phone) };
 
-    if (phone) {
-        user = await client.user.upsert({
-            where: {
-                phone: Number(phone), // search
-            },
-            create: {
-                // not found, create
-                name: `Anonymous${crypto.randomUUID().slice(0, 10)}`,
-                phone: Number(phone),
-            },
-            update: {}, // no update now
-        });
-    } else if (email) {
-        user = await client.user.upsert({
-            where: {
-                email, // search
-            },
-            create: {
-                // not found, create
-                name: `Anonymous${crypto.randomUUID().slice(0, 10)}`,
-                email,
-            },
-            update: {}, // no update now
-        });
-    }
+    const user = await client.user.upsert({
+        where: {
+            // search
+            ...payload,
+        },
+        create: {
+            // not found & create new user
+            name: `Anonymous${crypto.randomUUID().slice(0, 10)}`,
+            ...payload,
+        },
+        update: {}, // no update yet
+    });
 
     console.log(user);
 
