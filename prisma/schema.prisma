@@ -2,22 +2,32 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
   referentialIntegrity = "prisma"
 }
 
 model User {
-  id Int @id @default(autoincrement()) // 필드명 자료형 식별자 옵션
-  phone Int? @unique
-  email String? @unique
-  name String
+  id        Int      @id @default(autoincrement()) // 필드명 자료형 식별자 옵션
+  phone     Int?     @unique
+  email     String?  @unique
+  name      String
   avatarUrl String?
-  created DateTime @default(now()) // now() : 해당 시점의 날짜를 가져옴.
+  created   DateTime @default(now()) // now() : 해당 시점의 날짜를 가져옴.
+  updated   DateTime @updatedAt
+  tokens    Token[]
+}
+
+model Token {
+  id      Int      @id @default(autoincrement())
+  data    String   @unique
+  user    User     @relation(fields: [userId], references: [id]) // 실제 데이터베이스에 저장 X
+  created DateTime @default(now())
   updated DateTime @updatedAt
+  userId  Int
 }
