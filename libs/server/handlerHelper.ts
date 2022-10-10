@@ -1,6 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-const handler = (
+export interface ResponseInterface {
+    status: boolean;
+    [key: string]: any;
+}
+
+const handlerHelper = (
     method: "GET" | "POST" | "PUT" | "DELETE",
     fn: (req: NextApiRequest, res: NextApiResponse) => void
 ) => {
@@ -20,4 +25,4 @@ const handler = (
     };
 };
 
-export default handler;
+export default handlerHelper;

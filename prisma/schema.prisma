@@ -25,7 +25,7 @@ model User {
 
 model Token {
   id      Int      @id @default(autoincrement())
-  data    String   @unique
+  value   String   @unique
   user    User     @relation(fields: [userId], references: [id]) // 실제 데이터베이스에 저장 X
   created DateTime @default(now())
   updated DateTime @updatedAt
