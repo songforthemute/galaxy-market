@@ -1,4 +1,5 @@
 import Btn from "@components/btn";
+import ErrorMessage from "@components/errMessage";
 import Input from "@components/input";
 import Layout from "@components/layout";
 import useMutation from "@libs/client/useMutation";
@@ -7,8 +8,9 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface AuthForm {
-    email?: string;
-    phone?: string;
+    email: string;
+    password: string;
+    passwordConfirm?: string;
 }
 
 const Auth = () => {
@@ -17,30 +19,43 @@ const Auth = () => {
         // watch,
         reset,
         handleSubmit,
+        setError,
         formState: { errors },
     } = useForm<AuthForm>();
     // console.log(watch()); // debug input status
-    const [method, setMethod] = useState<"email" | "phone">("email");
+    const [method, setMethod] = useState<"login" | "join">("login");
     const [authentification, { loading, data, error }] =
         useMutation("/api/users/auth");
 
     // functions
-    const _onEmailClick = () => {
-        setMethod("email");
+    const _onLoginClick = () => {
+        setMethod("login");
         reset(); // reset input fields
     };
-    const _onPhoneClick = () => {
-        setMethod("phone");
+    const _onJoinClick = () => {
+        setMethod("join");
         reset(); // reset input fields
     };
     const _onValid = (validFormData: AuthForm) => {
+        if (
+            method === "join" &&
+            validFormData.password !== validFormData.passwordConfirm
+        ) {
+            setError("passwordConfirm", {
+                type: "passwordMismatch",
+                message: "비밀번호가 일치하지 않아요.",
+            });
+            return;
+        }
+
+        // console.log(validFormData);
         authentification(validFormData);
 
         console.log(loading, data, error);
     };
 
     return (
-        <Layout title="로그인" canGoBack>
+        <Layout title={method === "login" ? "로그인" : "회원가입"} canGoBack>
             <div className="mt-12 px-4">
                 <h3 className="text-3xl font-bold text-center">
                     Join now in Galaxy!
@@ -48,31 +63,31 @@ const Auth = () => {
 
                 <div className="mt-12">
                     <div className="flex flex-col items-center">
-                        <h5 className="text-sm text-gray-400 font-medium">
-                            다음의 방법으로 로그인하기
-                        </h5>
+                        {/* <h5 className="text-sm text-gray-400 font-medium">
+                            로그인하기 & 가입하기
+                        </h5> */}
                         <div className="grid grid-cols-2 mt-8 gap-16 border-b w-full">
                             <button
                                 className={cls(
                                     "pb-4 font-medium border-b-2",
-                                    method === "email"
+                                    method === "login"
                                         ? "border-purple-400 text-purple-400 font-medium"
                                         : "border-transparent text-gray-400"
                                 )}
-                                onClick={_onEmailClick}
+                                onClick={_onLoginClick}
                             >
-                                이메일
+                                로그인하기
                             </button>
                             <button
                                 className={cls(
                                     "pb-4 font-medium border-b-2",
-                                    method === "phone"
+                                    method === "join"
                                         ? "border-purple-400 text-purple-400 font-medium"
                                         : "border-transparent text-gray-400"
                                 )}
-                                onClick={_onPhoneClick}
+                                onClick={_onJoinClick}
                             >
-                                전화번호
+                                회원가입
                             </button>
                         </div>
                     </div>
@@ -83,28 +98,62 @@ const Auth = () => {
                         className="flex flex-col mt-8"
                     >
                         <Input
-                            register={register(method, { required: true })}
-                            label={
-                                method === "email" ? "이메일 주소" : "전화번호"
-                            }
-                            name={method}
-                            type={method}
+                            register={register("email", { required: true })}
+                            label={"이메일 주소"}
+                            name={"email"}
+                            type={"email"}
                             required
-                            placeholder={
-                                method === "email"
-                                    ? "galaxy@market.co"
-                                    : "전화번호 뒤 8자리를 '-' 없이 입력해주세요."
-                            }
+                            placeholder={"galaxy@email.com"}
                         />
+
+                        <Input
+                            register={register("password", {
+                                required: true,
+                                minLength: {
+                                    message:
+                                        "4~16자 사이의 비밀번호를 입력해주세요.",
+                                    value: 4,
+                                },
+                                maxLength: {
+                                    message:
+                                        "4~16자 사이의 비밀번호를 입력해주세요.",
+                                    value: 16,
+                                },
+                            })}
+                            label={"비밀번호"}
+                            name={"password"}
+                            type={"password"}
+                            required
+                            placeholder="비밀번호를 입력해주세요."
+                        />
+
+                        {method === "join" && (
+                            <Input
+                                register={register("passwordConfirm", {
+                                    required: true,
+                                })}
+                                label={"비밀번호 확인"}
+                                name={"password"}
+                                type={"password"}
+                                required
+                                placeholder="비밀번호를 다시 한 번 입력해주세요."
+                            />
+                        )}
+
+                        {errors.passwordConfirm && (
+                            <ErrorMessage
+                                text={errors.passwordConfirm.message!}
+                            />
+                        )}
 
                         <Btn
                             isLarge
                             text={
                                 loading
-                                    ? "로그인 요청 중이에요"
-                                    : method === "email"
-                                    ? "이메일로 로그인하기"
-                                    : "전화번호로 로그인 하기"
+                                    ? "요청 중이에요"
+                                    : method === "login"
+                                    ? "지금 로그인하기"
+                                    : "지금 바로 가입하기"
                             }
                         />
                     </form>
@@ -114,7 +163,9 @@ const Auth = () => {
                             <div className="absolute w-full border-t border-gray-400" />
                             <div className="relative -top-3 text-center">
                                 <span className="bg-white px-2 text-sm text-gray-400 select-none">
-                                    혹은 다른 방법으로 로그인 하기
+                                    혹은 다른 방법으로{" "}
+                                    {method === "login" ? "로그인" : "가입"}
+                                    하기
                                 </span>
                             </div>
                         </div>
