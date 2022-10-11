@@ -31,7 +31,9 @@ const authHandler = async (
     if (passwordConfirm) {
         // Already exist user
         if (user) {
-            return res.status(401).json({ status: false });
+            return res
+                .status(401)
+                .json({ status: false, error: "AlreadyExistUser" });
         }
         // Normal case - create new user
         else {
@@ -46,16 +48,20 @@ const authHandler = async (
     }
     // Login Case - !passwordConfirm
     else {
-        // Not exist user
+        // Not Found user
         if (!user) {
-            return res.status(401).json({ status: false });
+            return res
+                .status(401)
+                .json({ status: false, error: "NotFoundUser" });
         }
         // Normal case - validation password
         else {
             const isCorrect = await bcrypt.compare(password, user.password);
             // Not correct password
             if (!isCorrect) {
-                return res.status(401).json({ status: false });
+                return res
+                    .status(401)
+                    .json({ status: false, error: "InvalidPassword" });
             }
         }
     }

@@ -14,7 +14,7 @@ datasource db {
 
 model User {
   id        Int      @id @default(autoincrement()) // 필드명 자료형 식별자 옵션
-  phone     Int?     @unique
+  phone     String?     @unique
   email     String   @unique
   name      String
   password  String
@@ -27,7 +27,7 @@ model User {
 model Token {
   id      Int      @id @default(autoincrement())
   value   String   @unique
-  user    User     @relation(fields: [userId], references: [id]) // 실제 데이터베이스에 저장 X
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade) // 실제 데이터베이스에 저장 X
   created DateTime @default(now())
   updated DateTime @updatedAt
   userId  Int

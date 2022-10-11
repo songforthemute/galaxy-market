@@ -13,6 +13,11 @@ interface AuthForm {
     passwordConfirm?: string;
 }
 
+interface AuthentificationReturn {
+    status: boolean;
+    error?: "AlreadyExistUser" | "NotFoundUser" | "InvalidPassword" | string;
+}
+
 const Auth = () => {
     const {
         register,
@@ -25,7 +30,7 @@ const Auth = () => {
     // console.log(watch()); // debug input status
     const [method, setMethod] = useState<"login" | "join">("login");
     const [authentification, { loading, data, error }] =
-        useMutation("/api/users/auth");
+        useMutation<AuthentificationReturn>("/api/users/auth");
 
     // functions
     const _onLoginClick = () => {
@@ -37,6 +42,7 @@ const Auth = () => {
         reset(); // reset input fields
     };
     const _onValid = (validFormData: AuthForm) => {
+        if (loading) return;
         if (
             method === "join" &&
             validFormData.password !== validFormData.passwordConfirm
@@ -50,9 +56,10 @@ const Auth = () => {
 
         // console.log(validFormData);
         authentification(validFormData);
-
-        console.log(loading, data, error);
     };
+
+    console.log(data);
+    console.log("err: ", data?.error);
 
     return (
         <Layout title={method === "login" ? "로그인" : "회원가입"} canGoBack>
@@ -103,7 +110,7 @@ const Auth = () => {
                             name={"email"}
                             type={"email"}
                             required
-                            placeholder={"galaxy@email.com"}
+                            placeholder={"이메일 주소를 입력해주세요."}
                         />
 
                         <Input
