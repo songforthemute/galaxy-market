@@ -3,6 +3,7 @@ import client from "@libs/server/client";
 import handlerHelper, { ResponseInterface } from "@libs/server/handlerHelper";
 import crypto from "crypto";
 import bcrypt from "bcrypt";
+import { withApiSession } from "@libs/server/sessionHelper";
 
 const authHandler = async (
     req: NextApiRequest,
@@ -31,9 +32,7 @@ const authHandler = async (
     if (passwordConfirm) {
         // Already exist user
         if (user) {
-            return res
-                .status(401)
-                .json({ status: false, error: "AlreadyExistUser" });
+            return res.json({ status: false, error: "AlreadyExistUser" });
         }
         // Normal case - create new user
         else {
@@ -50,52 +49,28 @@ const authHandler = async (
     else {
         // Not Found user
         if (!user) {
-            return res
-                .status(401)
-                .json({ status: false, error: "NotFoundUser" });
+            return res.json({ status: false, error: "NotFoundUser" });
         }
         // Normal case - validation password
         else {
             const isCorrect = await bcrypt.compare(password, user.password);
             // Not correct password
             if (!isCorrect) {
-                return res
-                    .status(401)
-                    .json({ status: false, error: "InvalidPassword" });
+                return res.json({ status: false, error: "InvalidPassword" });
             }
         }
     }
 
     console.log(user);
 
-    // ---- issuing token ----
+    req.session.user! = {
+        id: user.id,
+    }; // cookie has stroage limitation
+    await req.session.save(); // logout: req.session.destroy()
 
-    // const tokenValue = `${crypto.randomUUID()}`;
-    /**
-     * connect 사용해도 상관없으나, db에 없던 신규 유저 join시 문제 발생
-     * connectOrCreate를 쓰면 유저를 찾지 못했을 때 유저도 생성해줌.
-     * 결과적으로 user를 찾는 코드가 따로 필요없음.
-     */
-    // const token = await client.token.create({
-    //     data: {
-    //         value: tokenValue,
-    //         user: {
-    //             connectOrCreate: {
-    //                 where: {
-    //                     ...user,
-    //                 },
-    //                 create: {
-    //                     name: `Anonymous${crypto.randomUUID().slice(0, 10)}`,
-    //                     ...user,
-    //                 },
-    //             },
-    //         },
-    //     },
-    // });
+    console.log("req.session: ", req.session);
 
-    // console.log("token: ", token);
-
-    res.status(200).json({ status: true });
+    res.json({ status: true });
 };
 
-export default handlerHelper("POST", authHandler);
+export default withApiSession(handlerHelper("POST", authHandler));

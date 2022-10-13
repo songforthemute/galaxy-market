@@ -4,7 +4,8 @@ import Input from "@components/input";
 import Layout from "@components/layout";
 import useMutation from "@libs/client/useMutation";
 import { cls } from "@libs/client/util";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface AuthForm {
@@ -58,8 +59,15 @@ const Auth = () => {
         authentification(validFormData);
     };
 
-    console.log(data);
-    console.log("err: ", data?.error);
+    const router = useRouter();
+    useEffect(() => {
+        if (data?.status) {
+            router.push("/");
+        }
+    }, [data, router]);
+
+    // login fail: Showing Login Failed Modal
+    // console.log("err: ", data?.error);
 
     return (
         <Layout title={method === "login" ? "로그인" : "회원가입"} canGoBack>
