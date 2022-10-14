@@ -5,19 +5,32 @@ export interface ResponseInterface {
     [key: string]: any;
 }
 
-const handlerHelper = (
-    method: "GET" | "POST" | "PUT" | "DELETE",
-    fn: (req: NextApiRequest, res: NextApiResponse) => void
-) => {
+interface ConfigurationInterface {
+    method: "GET" | "POST" | "PUT" | "DELETE";
+    handlerFn: (req: NextApiRequest, res: NextApiResponse) => void;
+    isPrivate?: boolean;
+}
+
+const handlerHelper = ({
+    method,
+    handlerFn,
+    isPrivate = false,
+}: ConfigurationInterface) => {
     return async (req: NextApiRequest, res: NextApiResponse) => {
-        console.log("by handler: ", req.method);
+        console.log("requested method: ", req.method);
 
         if (req.method !== method) {
             return res.status(405).end();
         }
 
+        if (isPrivate && !req.session.user) {
+            return res
+                .status(401)
+                .json({ status: false, error: "Please Login first." });
+        }
+
         try {
-            await fn(req, res);
+            await handlerFn(req, res);
         } catch (error) {
             console.log(error);
             return res.status(500).json({ error });

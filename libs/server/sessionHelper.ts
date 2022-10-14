@@ -11,8 +11,8 @@ declare module "iron-session" {
 
 const sessionOpts = {
     cookieName: "galaxySessions",
-    password: process.env.COOKIE_PW!,
-    secure: process.env.NODE_ENV === "production",
+    password: process.env.NEXT_PUBLIC_COOKIE_PW!,
+    cookieOptions: { secure: process.env.NODE_ENV === "production" },
     // at least 32 characters
 };
 

@@ -3,11 +3,15 @@ import { NextApiRequest, NextApiResponse } from "next";
 import handlerHelper, { ResponseInterface } from "@libs/server/handlerHelper";
 import client from "@libs/server/client";
 
-const authHandler = async (
+const handler = async (
     req: NextApiRequest,
     res: NextApiResponse<ResponseInterface>
 ) => {
     console.log("req.session: ", req.session);
+
+    if (!req.session.user) {
+        return res.json({ status: false });
+    }
 
     const profile = await client.user.findUnique({
         where: {
@@ -18,4 +22,10 @@ const authHandler = async (
     res.json({ status: true, profile });
 };
 
-export default withApiSession(handlerHelper("GET", authHandler));
+export default withApiSession(
+    handlerHelper({
+        method: "GET",
+        handlerFn: handler,
+        isPrivate: true,
+    })
+);

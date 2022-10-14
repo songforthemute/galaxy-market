@@ -30,7 +30,7 @@ const Auth = () => {
     } = useForm<AuthForm>();
     // console.log(watch()); // debug input status
     const [method, setMethod] = useState<"login" | "join">("login");
-    const [authentification, { loading, data, error }] =
+    const [authentication, { loading, data, error }] =
         useMutation<AuthentificationReturn>("/api/users/auth");
 
     // functions
@@ -56,7 +56,7 @@ const Auth = () => {
         }
 
         // console.log(validFormData);
-        authentification(validFormData);
+        authentication(validFormData);
     };
 
     const router = useRouter();

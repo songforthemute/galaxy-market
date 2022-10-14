@@ -73,4 +73,9 @@ const authHandler = async (
     res.json({ status: true });
 };
 
-export default withApiSession(handlerHelper("POST", authHandler));
+export default withApiSession(
+    handlerHelper({
+        method: "POST",
+        handlerFn: authHandler,
+    })
+);
