@@ -13,22 +13,25 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement()) // 필드명 자료형 식별자 옵션
-  phone     String?     @unique
-  email     String   @unique
+  id        Int       @id @default(autoincrement()) // 필드명 자료형 식별자 옵션
+  phone     String?   @unique
+  email     String    @unique
   name      String
   password  String
   avatarUrl String?
-  created   DateTime @default(now()) // now() : 해당 시점의 날짜를 가져옴.
-  updated   DateTime @updatedAt
-  tokens    Token[]
+  created   DateTime  @default(now()) // now() : 해당 시점의 날짜를 가져옴.
+  updated   DateTime  @updatedAt
+  Item   Item[]
 }
 
-model Token {
-  id      Int      @id @default(autoincrement())
-  value   String   @unique
-  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade) // 실제 데이터베이스에 저장 X
-  created DateTime @default(now())
-  updated DateTime @updatedAt
-  userId  Int
+model Item {
+  id          Int      @id @default(autoincrement()) // 필드명 자료형 식별자 옵션
+  created     DateTime @default(now()) // now() : 해당 시점의 날짜를 가져옴.
+  updated     DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      Int
+  imageUrls   String   @db.Text
+  name        String
+  price       Int
+  description String   @db.Text
 }
