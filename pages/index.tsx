@@ -1,11 +1,18 @@
 import HelperBtn from "@components/helperBtn";
 import Item from "@components/item";
 import Layout from "@components/layout";
+import useUser from "@libs/client/useUser";
 import type { NextPage } from "next";
+import Head from "next/head";
 
 const Home: NextPage = () => {
+    const user = useUser();
+
     return (
         <Layout title="홈" hasTabBar canGoBack hasConfig>
+            <Head>
+                <title>Home - GalaxyMarket</title>
+            </Head>
             <div className="flex flex-col divide-y-[1px]">
                 {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => (
                     <Item
