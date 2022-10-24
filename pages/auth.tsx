@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 
 interface AuthForm {
     email: string;
+    username: string;
     password: string;
     passwordConfirm?: string;
 }
@@ -61,7 +62,7 @@ const Auth = () => {
 
     const router = useRouter();
 
-    // ########## ISSUE: Can't push "/" #################
+    // ############## ISSUE: Can't push "/" #################
     useEffect(() => {
         console.log(data);
 
@@ -77,7 +78,9 @@ const Auth = () => {
         <Layout title={method === "login" ? "로그인" : "회원가입"} canGoBack>
             <div className="mt-12 px-4">
                 <h3 className="text-3xl font-bold text-center">
-                    Join now in Galaxy!
+                    {method === "login"
+                        ? "Login now into Galaxy!"
+                        : "Join now into Galaxy!"}
                 </h3>
 
                 <div className="mt-12">

@@ -24,7 +24,7 @@ const Home: NextPage = () => {
                 <title>Home - GalaxyMarket</title>
             </Head>
             <div className="flex flex-col divide-y-[1px]">
-                {data?.products.map((product) => (
+                {data?.products?.map((product) => (
                     <Item
                         href={`/products/${product.id}`}
                         name={product.name}

@@ -8,6 +8,7 @@ import { withApiSession } from "@libs/server/sessionHelper";
 interface AuthInterface {
     email: string;
     password: string;
+    username?: string;
     passwordConfirm?: string;
 }
 
@@ -20,6 +21,7 @@ const authHandler = async (
 
     const {
         email,
+        username = undefined,
         password,
         passwordConfirm = undefined,
     }: AuthInterface = req.body;
@@ -31,7 +33,7 @@ const authHandler = async (
     });
 
     // Join Case
-    if (passwordConfirm) {
+    if (username && passwordConfirm) {
         // Already exist user
         if (user) {
             return res.json({ status: false, error: "AlreadyExistUser" });
@@ -42,7 +44,7 @@ const authHandler = async (
                 data: {
                     email,
                     password: await bcrypt.hash(password, 12),
-                    name: `Anonymous${crypto.randomUUID().slice(0, 10)}`,
+                    username,
                 },
             });
         }

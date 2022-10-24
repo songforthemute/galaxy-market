@@ -38,11 +38,11 @@ const UserCard = ({
                 <a className="flex items-center space-x-4 cursor-pointer hover:opacity-50 transition-all">
                     <div
                         className={cls(
-                            "rounded-full bg-slate-400",
+                            "rounded-full bg-gray-400",
                             isLarge ? "w-16 h-16" : "w-12 h-12"
                         )}
                     />
-                    <div>
+                    <div className="space-y-1">
                         <p
                             className={cls(
                                 type === "message"
