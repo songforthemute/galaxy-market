@@ -16,7 +16,7 @@ model User {
   id        Int       @id @default(autoincrement()) // 필드명 자료형 식별자 옵션
   phone     String?   @unique
   email     String    @unique
-  name      String
+  username  String
   password  String
   avatarUrl String?
   created   DateTime  @default(now()) // now() : 해당 시점의 날짜를 가져옴.
