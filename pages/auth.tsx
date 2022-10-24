@@ -14,7 +14,7 @@ interface AuthForm {
     passwordConfirm?: string;
 }
 
-interface AuthentificationReturn {
+interface AuthenticationReturn {
     status: boolean;
     error?: "AlreadyExistUser" | "NotFoundUser" | "InvalidPassword" | string;
 }
@@ -31,7 +31,7 @@ const Auth = () => {
     // console.log(watch()); // debug input status
     const [method, setMethod] = useState<"login" | "join">("login");
     const [authentication, { loading, data, error }] =
-        useMutation<AuthentificationReturn>("/api/users/auth");
+        useMutation<AuthenticationReturn>("/api/users/auth");
 
     // functions
     const _onLoginClick = () => {
@@ -60,9 +60,13 @@ const Auth = () => {
     };
 
     const router = useRouter();
+
+    // ########## ISSUE: Can't push "/" #################
     useEffect(() => {
+        console.log(data);
+
         if (data?.status) {
-            router.push("/");
+            router.replace("/");
         }
     }, [data, router]);
 
