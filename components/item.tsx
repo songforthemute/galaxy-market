@@ -6,7 +6,7 @@ interface ItemProps {
     name: string;
     imgUrl?: string;
     opt: string;
-    price: string;
+    price: number;
     likes: number;
     reply: number;
 }
@@ -23,7 +23,7 @@ const Item = ({ href, name, imgUrl, opt, price, likes, reply }: ItemProps) => {
                         </h3>
                         <span className="text-xs text-gray-400">{opt}</span>
                         <span className="font-medium mt-2 text-gray-700">
-                            ₩{priceConverter(price)}
+                            ₩ {priceConverter(String(price))}
                         </span>
                     </div>
                 </div>

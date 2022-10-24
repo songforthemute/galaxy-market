@@ -1,8 +1,11 @@
+import { UseFormRegisterReturn } from "react-hook-form";
+
 interface TxtAreaProps {
     placeholder?: string;
     name: string;
     label?: string;
     rows?: number;
+    register?: UseFormRegisterReturn; // no undefined
     [key: string]: any;
 }
 
@@ -11,6 +14,7 @@ const TxtArea = ({
     name,
     label,
     rows = 4,
+    register,
     ...properties
 }: TxtAreaProps) => {
     return (
@@ -27,6 +31,7 @@ const TxtArea = ({
                 name={name}
                 placeholder={placeholder}
                 {...properties}
+                {...register}
                 className="mt-1 shadow-md w-full rounded-md border border-transparent
                 focus:ring-purple-400 focus:border-purple-400 placeholder:text-gray-400"
             />

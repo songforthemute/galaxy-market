@@ -5,6 +5,12 @@ import crypto from "crypto";
 import bcrypt from "bcrypt";
 import { withApiSession } from "@libs/server/sessionHelper";
 
+interface AuthInterface {
+    email: string;
+    password: string;
+    passwordConfirm?: string;
+}
+
 const authHandler = async (
     req: NextApiRequest,
     res: NextApiResponse<ResponseInterface>
@@ -16,11 +22,7 @@ const authHandler = async (
         email,
         password,
         passwordConfirm = undefined,
-    }: {
-        email: string;
-        password: string;
-        passwordConfirm?: string;
-    } = req.body;
+    }: AuthInterface = req.body;
 
     let user = await client.user.findUnique({
         where: {
@@ -61,21 +63,21 @@ const authHandler = async (
         }
     }
 
-    console.log(user);
+    console.log("auth.tsx: ", user);
 
-    req.session.user! = {
+    req.session.user = {
         id: user.id,
     }; // cookie has stroage limitation
     await req.session.save(); // logout: req.session.destroy()
 
-    console.log("req.session: ", req.session);
+    console.log("auth.tsx - req.session: ", req.session);
 
     res.json({ status: true });
 };
 
 export default withApiSession(
     handlerHelper({
-        method: "POST",
+        methods: ["POST"],
         handlerFn: authHandler,
     })
 );

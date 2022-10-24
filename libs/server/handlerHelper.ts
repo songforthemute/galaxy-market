@@ -5,21 +5,23 @@ export interface ResponseInterface {
     [key: string]: any;
 }
 
+type method = "GET" | "POST" | "PUT" | "DELETE";
+
 interface ConfigurationInterface {
-    method: "GET" | "POST" | "PUT" | "DELETE";
+    methods: method[];
     handlerFn: (req: NextApiRequest, res: NextApiResponse) => void;
     isPrivate?: boolean;
 }
 
 const handlerHelper = ({
-    method,
+    methods,
     handlerFn,
     isPrivate = false,
 }: ConfigurationInterface) => {
     return async (req: NextApiRequest, res: NextApiResponse) => {
         console.log("requested method: ", req.method);
 
-        if (req.method !== method) {
+        if (req.method && !methods.includes(req.method as any)) {
             return res.status(405).end();
         }
 

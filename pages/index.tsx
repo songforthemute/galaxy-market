@@ -2,11 +2,21 @@ import HelperBtn from "@components/helperBtn";
 import Item from "@components/item";
 import Layout from "@components/layout";
 import useUser from "@libs/client/useUser";
+import { Product } from "@prisma/client";
 import type { NextPage } from "next";
 import Head from "next/head";
+import useSWR from "swr";
+
+interface ProductsReturn {
+    status: boolean;
+    products: Product[];
+}
 
 const Home: NextPage = () => {
     const user = useUser();
+    const { data } = useSWR<ProductsReturn>("/api/products");
+
+    console.log(data);
 
     return (
         <Layout title="홈" hasTabBar canGoBack hasConfig>
@@ -14,19 +24,19 @@ const Home: NextPage = () => {
                 <title>Home - GalaxyMarket</title>
             </Head>
             <div className="flex flex-col divide-y-[1px]">
-                {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => (
+                {data?.products.map((product) => (
                     <Item
-                        href="/items/1"
-                        name="iPhone 14 Pro Max"
+                        href={`/products/${product.id}`}
+                        name={product.name}
                         opt="Deep purple"
-                        price={"130000"}
+                        price={product.price}
                         likes={2}
                         reply={0}
-                        key={i}
+                        key={product.id}
                     />
                 ))}
 
-                <HelperBtn href="/items/upload">
+                <HelperBtn href="/products/upload">
                     <svg
                         className="h-6 w-6"
                         xmlns="http://www.w3.org/2000/svg"

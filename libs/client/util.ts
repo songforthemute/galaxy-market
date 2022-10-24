@@ -2,16 +2,17 @@ export const cls = (...classNames: string[]) => {
     return classNames.join(" ");
 };
 
-export const priceConverter = (p: string) => {
-    const converted: string[] = [];
+export const priceConverter = (price: string) => {
+    let converted = "";
+    const divider = price.length % 3 === 2 ? 1 : price.length % 3 === 0 ? 2 : 0;
 
-    for (let i = p.length - 1; i >= 0; i--) {
-        if (i % 3 === 2 && i !== p.length - 1) {
-            converted.push(",");
+    for (let i = price.length - 1; i >= 0; i--) {
+        if (i !== price.length - 1 && i % 3 === divider) {
+            converted = "," + converted;
         }
 
-        converted.push(p[i]);
+        converted = price[i] + converted;
     }
 
-    return converted.reverse().join("");
+    return converted;
 };

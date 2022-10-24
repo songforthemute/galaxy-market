@@ -3,8 +3,42 @@ import Btn from "@components/btn";
 import Input from "@components/input";
 import Layout from "@components/layout";
 import TxtArea from "@components/txtArea";
+import { useForm } from "react-hook-form";
+import useMutation from "@libs/client/useMutation";
+import { useEffect } from "react";
+import { Product } from "@prisma/client";
+import { useRouter } from "next/router";
+
+interface UploadProductFormInterface {
+    name: string;
+    price: number;
+    description?: string;
+}
+
+interface UploadProductReturn {
+    status: boolean;
+    product: Product;
+}
 
 const Upload: NextPage = () => {
+    const router = useRouter();
+    const { register, handleSubmit } = useForm<UploadProductFormInterface>();
+    const [uploadProduct, { loading, data }] =
+        useMutation<UploadProductReturn>("/api/products");
+
+    const _onValid = (data: UploadProductFormInterface) => {
+        if (loading) return;
+
+        uploadProduct(data);
+    };
+
+    // 데이터베이스에 생성 잘 되나 프론트단에 product 안넘어옴
+    useEffect(() => {
+        console.log(data);
+        if (data?.status) {
+            router.push(`/products/${data.product.id}`);
+        }
+    }, [data, router]);
 
     return (
         <Layout title="상품 등록" hasTabBar canGoBack>
@@ -44,6 +78,7 @@ const Upload: NextPage = () => {
                         label="상품명"
                         required
                         placeholder="상품명을 입력해주세요."
+                        register={register("name", { required: true })}
                     />
 
                     <Input
@@ -52,15 +87,18 @@ const Upload: NextPage = () => {
                         type="price"
                         required
                         placeholder="0"
+                        register={register("price", { required: true })}
                     />
 
                     <TxtArea
                         label="상품 설명"
                         placeholder="상품 설명을 입력해주세요."
                         name="description"
+                        register={register("description")}
                     />
                 </div>
 
+                <Btn text={loading ? "등록 중이에요" : "상품 등록하기"} />
             </form>
         </Layout>
     );

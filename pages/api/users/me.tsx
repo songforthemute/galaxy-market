@@ -7,7 +7,7 @@ const handler = async (
     req: NextApiRequest,
     res: NextApiResponse<ResponseInterface>
 ) => {
-    console.log("req.session: ", req.session);
+    console.log("me.tsx - req.session: ", req.session);
 
     if (!req.session.user) {
         return res.json({ status: false });
@@ -24,7 +24,7 @@ const handler = async (
 
 export default withApiSession(
     handlerHelper({
-        method: "GET",
+        methods: ["GET"],
         handlerFn: handler,
         isPrivate: true,
     })
