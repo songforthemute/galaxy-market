@@ -129,6 +129,25 @@ const Auth = () => {
                         />
 
                         <Input
+                            register={register("username", {
+                                required: true,
+                                minLength: {
+                                    message: "2~12자 사이로 입력해주세요.",
+                                    value: 2,
+                                },
+                                maxLength: {
+                                    message: "2~12자 사이로 입력해주세요.",
+                                    value: 12,
+                                },
+                            })}
+                            label={"닉네임"}
+                            name={"username"}
+                            type={"text"}
+                            required
+                            placeholder={"사용할 닉네임을 입력해주세요."}
+                        />
+
+                        <Input
                             register={register("password", {
                                 required: true,
                                 minLength: {
