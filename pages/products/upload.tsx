@@ -5,9 +5,10 @@ import Layout from "@components/layout";
 import TxtArea from "@components/txtArea";
 
 const Upload: NextPage = () => {
+
     return (
         <Layout title="상품 등록" hasTabBar canGoBack>
-            <div className="px-4 pt-10">
+            <form className="px-4 pt-10" onSubmit={handleSubmit(_onValid)}>
                 <div>
                     <label
                         className="w-full h-48 flex items-center justify-center
@@ -60,8 +61,7 @@ const Upload: NextPage = () => {
                     />
                 </div>
 
-                <Btn text="상품 등록" ㅋ />
-            </div>
+            </form>
         </Layout>
     );
 };
