@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { Product } from "@prisma/client";
 import { priceConverter } from "@libs/client/util";
+import Link from "next/link";
 
 interface ProductWithUserInterface extends Product {
     user: {
@@ -17,6 +18,7 @@ interface ProductWithUserInterface extends Product {
 interface ProductReturn {
     status: boolean;
     product: ProductWithUserInterface;
+    relatedProducts: Product[];
 }
 
 const ItemDetail: NextPage = () => {
@@ -85,16 +87,24 @@ const ItemDetail: NextPage = () => {
                                 유사한 상품
                             </h2>
                             <div className="grid grid-cols-2 gap-4 mt-4">
-                                {[1, 2, 3, 4, 5, 6].map((_, i) => (
-                                    <div key={i} className="">
-                                        <div className="h-56 w-56 mb-2 bg-gray-400" />
-                                        <h3 className="text-sm font-semibold text-gray-700 -mb-1">
-                                            아이폰 SE3
-                                        </h3>
-                                        <span className="text-sm font-medium text-gray-400">
-                                            ₩ 10,000
-                                        </span>
-                                    </div>
+                                {data?.relatedProducts?.map((prod) => (
+                                    <Link href={`/products/${prod.id}`}>
+                                        <a
+                                            key={prod.id}
+                                            className="cursor-pointer transition-all hover:opacity-50"
+                                        >
+                                            <div className="h-56 w-56 mb-2 bg-gray-400" />
+                                            <h3 className="text-sm font-semibold text-gray-700 -mb-1">
+                                                {prod.name}
+                                            </h3>
+                                            <span className="text-sm font-medium text-gray-400">
+                                                ₩{" "}
+                                                {priceConverter(
+                                                    String(prod.price)
+                                                )}
+                                            </span>
+                                        </a>
+                                    </Link>
                                 ))}
                             </div>
                         </div>

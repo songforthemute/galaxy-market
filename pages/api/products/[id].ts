@@ -9,21 +9,43 @@ const handler = async (
 ) => {
     const { id } = req.query;
 
-    await client.product
-        .findUnique({
-            where: {
-                id: Number(id),
-            },
-            include: {
-                user: {
-                    select: {
-                        username: true,
-                        avatarUrl: true,
-                    },
+    const product = await client.product.findUnique({
+        where: {
+            id: Number(id),
+        },
+        include: {
+            user: {
+                select: {
+                    username: true,
+                    avatarUrl: true,
                 },
             },
-        })
-        .then((response) => res.json({ status: true, product: response }));
+        },
+    });
+    // .then((response) => res.json({ status: true, product: response }));
+
+    const terms = product?.name.split(" ").map((word) => ({
+        name: {
+            contains: word,
+        },
+    }));
+
+    const relatedProducts = await client.product.findMany({
+        where: {
+            OR: terms,
+            AND: {
+                id: {
+                    not: Number(id),
+                },
+            },
+        },
+        orderBy: {
+            created: "desc",
+        },
+        take: 4,
+    });
+
+    res.json({ status: true, product, relatedProducts });
 };
 
 export default withApiSession(
