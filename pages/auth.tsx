@@ -21,15 +21,14 @@ interface AuthenticationReturn {
 }
 
 const Auth = () => {
+    const router = useRouter();
     const {
         register,
-        // watch,
         reset,
         handleSubmit,
         setError,
         formState: { errors },
     } = useForm<AuthForm>();
-    // console.log(watch()); // debug input status
     const [method, setMethod] = useState<"login" | "join">("login");
     const [authentication, { loading, data, error }] =
         useMutation<AuthenticationReturn>("/api/users/auth");
@@ -56,22 +55,20 @@ const Auth = () => {
             return;
         }
 
-        // console.log(validFormData);
         authentication(validFormData);
     };
-
-    const router = useRouter();
 
     // ############## ISSUE: Can't push "/" #################
     useEffect(() => {
         console.log(data);
 
         if (data?.status) {
-            router.replace("/");
+            // router.replace("/");
+            router.reload();
         }
     }, [data, router]);
 
-    // login fail: Showing Login Failed Modal
+    // login fail: Showing Login Failed Modal?
     // console.log("err: ", data?.error);
 
     return (
@@ -128,24 +125,26 @@ const Auth = () => {
                             placeholder={"이메일 주소를 입력해주세요."}
                         />
 
-                        <Input
-                            register={register("username", {
-                                required: true,
-                                minLength: {
-                                    message: "2~12자 사이로 입력해주세요.",
-                                    value: 2,
-                                },
-                                maxLength: {
-                                    message: "2~12자 사이로 입력해주세요.",
-                                    value: 12,
-                                },
-                            })}
-                            label={"닉네임"}
-                            name={"username"}
-                            type={"text"}
-                            required
-                            placeholder={"사용할 닉네임을 입력해주세요."}
-                        />
+                        {method === "join" && (
+                            <Input
+                                register={register("username", {
+                                    required: true,
+                                    minLength: {
+                                        message: "2~12자 사이로 입력해주세요.",
+                                        value: 2,
+                                    },
+                                    maxLength: {
+                                        message: "2~12자 사이로 입력해주세요.",
+                                        value: 12,
+                                    },
+                                })}
+                                label={"닉네임"}
+                                name={"username"}
+                                type={"text"}
+                                required
+                                placeholder={"사용할 닉네임을 입력해주세요."}
+                            />
+                        )}
 
                         <Input
                             register={register("password", {

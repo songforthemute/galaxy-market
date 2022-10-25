@@ -8,7 +8,7 @@ const useUser = () => {
 
     useEffect(() => {
         if (data && !data.status) {
-            router.replace("/auth");
+            router.replace("/auth", "/");
         }
     }, [data, router]);
 
