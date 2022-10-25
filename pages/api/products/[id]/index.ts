@@ -14,7 +14,7 @@ const handler = async (
             id: Number(id),
         },
         include: {
-            user: {
+            User: {
                 select: {
                     username: true,
                     avatarUrl: true,

@@ -13,7 +13,7 @@ const handler = async (
     } = req; // product id, user
 
     // Is alreay checked product's Like?
-    const exists = await client.favor.findFirst({
+    const exists = await client.like.findFirst({
         where: {
             productId: Number(id),
             userId: user?.id,
@@ -22,21 +22,21 @@ const handler = async (
 
     if (exists) {
         // delete exist
-        await client.favor.delete({
+        await client.like.delete({
             where: {
                 id: exists.id,
             },
         });
     } else {
         // create new
-        await client.favor.create({
+        await client.like.create({
             data: {
-                user: {
+                User: {
                     connect: {
                         id: user?.id,
                     },
                 },
-                product: {
+                Product: {
                     connect: {
                         id: Number(id),
                     },

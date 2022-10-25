@@ -10,7 +10,7 @@ const Like: NextPage = () => {
                     <Item
                         name="아이폰 14 프로 맥스"
                         opt="Deep purple"
-                        price="130000"
+                        price={130000}
                         reply={0}
                         likes={2}
                         key={i}
