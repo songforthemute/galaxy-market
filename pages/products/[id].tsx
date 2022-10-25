@@ -88,11 +88,11 @@ const ItemDetail: NextPage = () => {
                             </h2>
                             <div className="grid grid-cols-2 gap-4 mt-4">
                                 {data?.relatedProducts?.map((prod) => (
-                                    <Link href={`/products/${prod.id}`}>
-                                        <a
-                                            key={prod.id}
-                                            className="cursor-pointer transition-all hover:opacity-50"
-                                        >
+                                    <Link
+                                        key={prod.id}
+                                        href={`/products/${prod.id}`}
+                                    >
+                                        <a className="cursor-pointer transition-all hover:opacity-50">
                                             <div className="h-56 w-56 mb-2 bg-gray-400" />
                                             <h3 className="text-sm font-semibold text-gray-700 -mb-1">
                                                 {prod.name}
