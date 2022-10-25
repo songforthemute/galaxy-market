@@ -21,29 +21,29 @@ model User {
   avatarUrl String?
   created   DateTime  @default(now()) // now() : 해당 시점의 날짜를 가져옴.
   updated   DateTime  @updatedAt
-  Product   Product[]
-  Like     Like[]
+  product   Product[]
+  like     Like[]
 }
 
 model Product {
   id          Int      @id @default(autoincrement()) // 필드명 자료형 식별자 옵션
   created     DateTime @default(now()) // now() : 해당 시점의 날짜를 가져옴.
   updated     DateTime @updatedAt
-  User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      Int
   image       String   @db.Text
   name        String
   price       Int
   description String?  @db.Text
-  Like       Like[]
+  like       Like[]
 }
 
 model Like {
   id        Int      @id @default(autoincrement()) // 필드명 자료형 식별자 옵션
   created   DateTime @default(now()) // now() : 해당 시점의 날짜를 가져옴.
   updated   DateTime @updatedAt
-  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    Int
-  Product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId Int
 }

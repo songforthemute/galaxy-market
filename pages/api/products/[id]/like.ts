@@ -31,12 +31,12 @@ const handler = async (
         // create new
         await client.like.create({
             data: {
-                User: {
+                user: {
                     connect: {
                         id: user?.id,
                     },
                 },
-                Product: {
+                product: {
                     connect: {
                         id: Number(id),
                     },

@@ -7,14 +7,17 @@ const handler = async (
     req: NextApiRequest,
     res: NextApiResponse<ResponseInterface>
 ) => {
-    const { id } = req.query;
+    const {
+        query: { id },
+        session: { user },
+    } = req;
 
     const product = await client.product.findUnique({
         where: {
             id: Number(id),
         },
         include: {
-            User: {
+            user: {
                 select: {
                     username: true,
                     avatarUrl: true,
@@ -45,7 +48,19 @@ const handler = async (
         take: 4,
     });
 
-    res.json({ status: true, product, relatedProducts });
+    const isLiked = Boolean(
+        await client.like.findFirst({
+            where: {
+                productId: product?.id,
+                userId: user?.id,
+            },
+            select: {
+                id: true,
+            },
+        })
+    );
+
+    res.json({ status: true, product, isLiked, relatedProducts });
 };
 
 export default withApiSession(
