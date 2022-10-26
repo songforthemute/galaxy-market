@@ -21,7 +21,7 @@ const Community: NextPage = () => {
                 ))}
             </div>
 
-            <HelperBtn href={"/community/ask"}>
+            <HelperBtn href={"/community/posting"}>
                 <svg
                     className="w-6 h-6"
                     fill="none"
