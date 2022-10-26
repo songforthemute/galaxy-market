@@ -58,6 +58,7 @@ model Post {
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      Int
   title       String   @db.Text
+  description String   @db.MediumText
   reply       Reply[]
   interest Interest[]
 }

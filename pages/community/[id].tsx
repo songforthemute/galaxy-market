@@ -18,9 +18,18 @@ const CommunityPosting: NextPage = () => {
                     type="profile"
                 />
 
-                <div className="mt-2 px-4 text-gray-700">
+                <div className="mt-2 px-4 text-gray-700 text-xl">
                     <span className="text-purple-400 font-medium">Q. </span>
-                    어느 피자 가게가 제일 맛있나요?
+                    <span className="font-medium">
+                        어느 피자 가게가 제일 맛있나요?
+                    </span>
+                </div>
+
+                <div className="mt-2 ml-6 px-4 text-gray-700">
+                    <p className="">
+                        서울에 살고 있고, 삼성중앙역으로 출퇴근 하고 있어요.
+                        삼성역에서 가까우면 좋아요!
+                    </p>
                 </div>
 
                 <Reaction likes={1} reply={2} />
