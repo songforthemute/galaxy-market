@@ -7,9 +7,15 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import useSWR from "swr";
 
+interface ProductWithLike extends Product {
+    _count: {
+        like: number;
+    };
+}
+
 interface ProductsReturn {
     status: boolean;
-    products: Product[];
+    products: ProductWithLike[];
 }
 
 const Home: NextPage = () => {
@@ -30,7 +36,7 @@ const Home: NextPage = () => {
                         name={product.name}
                         opt="Deep purple"
                         price={product.price}
-                        likes={2}
+                        likes={product._count.like}
                         reply={0}
                         key={product.id}
                     />

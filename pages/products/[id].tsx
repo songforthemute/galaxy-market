@@ -25,14 +25,16 @@ interface ProductReturn {
 
 const ItemDetail: NextPage = () => {
     const router = useRouter();
-    const { data } = useSWR<ProductReturn | undefined>(
+    const { data, mutate } = useSWR<ProductReturn | undefined>(
         router.query.id ? `/api/products/${router.query?.id}` : null
     );
 
     const [toggleLike] = useMutation(`/api/products/${router.query?.id}/like`);
     const _onLikeClick = () => {
+        if (!data) return;
+
         toggleLike({});
-        console.log("toggle Like!");
+        mutate({ ...data, isLiked: !data?.isLiked }, false);
     };
 
     return (
