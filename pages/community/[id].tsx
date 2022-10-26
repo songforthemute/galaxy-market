@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
-import Badge from "@components/badge";
 import Btn from "@components/btn";
-import Comment from "@components/reply";
+import Reply from "@components/reply";
 import Layout from "@components/layout";
 import Reaction from "@components/reaction";
 import TxtArea from "@components/txtArea";
@@ -12,7 +11,6 @@ const CommunityPosting: NextPage = () => {
         // 스테이트 전달로 동적 타이틀 변화
         <Layout title={"동네이야기"} hasTabBar canGoBack>
             <div className="">
-                <Badge isLarge text="궁금해요" />
                 <UserCard
                     username="조이"
                     text="프로필 보기 →"
@@ -28,16 +26,12 @@ const CommunityPosting: NextPage = () => {
                 <Reaction likes={1} reply={2} />
 
                 <div className="pb-4 px-4 my-4 space-y-4 border-b">
-                    <Comment
+                    <Reply
                         creator="스티브"
                         createdAt="2시간 전"
                         text="우리 집 앞!"
                     />
-                    <Comment
-                        creator="아이브"
-                        createdAt="7시간 전"
-                        text="서울!"
-                    />
+                    <Reply creator="아이브" createdAt="7시간 전" text="서울!" />
                 </div>
 
                 <div className="px-4">

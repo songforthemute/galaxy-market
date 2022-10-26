@@ -37,7 +37,6 @@ const Home: NextPage = () => {
                         opt="Deep purple"
                         price={product.price}
                         likes={product._count.like}
-                        reply={0}
                         key={product.id}
                     />
                 ))}

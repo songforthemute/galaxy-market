@@ -22,12 +22,15 @@ model User {
   created   DateTime  @default(now()) // now() : 해당 시점의 날짜를 가져옴.
   updated   DateTime  @updatedAt
   product   Product[]
-  like     Like[]
+  like      Like[]
+  post      Post[]
+  reply     Reply[]
+  interest Interest[]
 }
 
 model Product {
-  id          Int      @id @default(autoincrement()) // 필드명 자료형 식별자 옵션
-  created     DateTime @default(now()) // now() : 해당 시점의 날짜를 가져옴.
+  id          Int      @id @default(autoincrement())
+  created     DateTime @default(now())
   updated     DateTime @updatedAt
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      Int
@@ -35,15 +38,47 @@ model Product {
   name        String
   price       Int
   description String?  @db.Text
-  like       Like[]
+  like        Like[]
 }
 
 model Like {
-  id        Int      @id @default(autoincrement()) // 필드명 자료형 식별자 옵션
-  created   DateTime @default(now()) // now() : 해당 시점의 날짜를 가져옴.
+  id        Int      @id @default(autoincrement())
+  created   DateTime @default(now())
   updated   DateTime @updatedAt
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    Int
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId Int
+}
+
+model Post {
+  id          Int      @id @default(autoincrement())
+  created     DateTime @default(now())
+  updated     DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      Int
+  title       String   @db.Text
+  reply       Reply[]
+  interest Interest[]
+}
+
+model Reply {
+  id      Int      @id @default(autoincrement())
+  created DateTime @default(now())
+  updated DateTime @updatedAt
+  reply   String   @db.MediumText
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  Int
+  post    Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId  Int
+}
+
+model Interest {
+  id      Int      @id @default(autoincrement())
+  created DateTime @default(now())
+  updated DateTime @updatedAt
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  Int
+  post    Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId  Int
 }

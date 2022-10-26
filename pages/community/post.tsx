@@ -1,19 +1,25 @@
 import type { NextPage } from "next";
-import Badge from "@components/badge";
 import Btn from "@components/btn";
 import Layout from "@components/layout";
 import TxtArea from "@components/txtArea";
+import Input from "@components/input";
 
-const NewAsking: NextPage = () => {
+const NewPost: NextPage = () => {
     return (
         <Layout title="질문하기" hasTabBar canGoBack>
             <form className="p-4">
-                <Badge text="궁금해요" />
+                <Input
+                    name="title"
+                    label="제목"
+                    required
+                    placeholder="제목을 적어주세요."
+                />
 
                 <TxtArea
-                    name="ask"
-                    label="질문하기"
+                    name="description"
+                    label="내용"
                     placeholder="궁금한 내용을 적어주세요."
+                    required
                 />
 
                 <Btn text="질문 등록하기" />
@@ -22,4 +28,4 @@ const NewAsking: NextPage = () => {
     );
 };
 
-export default NewAsking;
+export default NewPost;

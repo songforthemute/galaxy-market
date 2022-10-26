@@ -11,7 +11,7 @@ interface MessageProps {
     href: string;
 }
 
-const Ask = ({
+const Post = ({
     badge,
     text,
     creator,
@@ -78,4 +78,4 @@ const Ask = ({
     );
 };
 
-export default Ask;
+export default Post;

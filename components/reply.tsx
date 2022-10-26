@@ -5,7 +5,7 @@ interface CommentProps {
     imgUrl?: string; // 추후 추가
 }
 
-const Comment = ({ text, creator, createdAt, imgUrl }: CommentProps) => {
+const Reply = ({ text, creator, createdAt, imgUrl }: CommentProps) => {
     return (
         <div className="flex items-start space-x-4">
             <div className="w-8 h-8 bg-neutral-200 rounded-full" />
@@ -20,4 +20,4 @@ const Comment = ({ text, creator, createdAt, imgUrl }: CommentProps) => {
     );
 };
 
-export default Comment;
+export default Reply;

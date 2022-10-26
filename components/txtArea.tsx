@@ -5,6 +5,7 @@ interface TxtAreaProps {
     name: string;
     label?: string;
     rows?: number;
+    required?: boolean;
     register?: UseFormRegisterReturn; // no undefined
     [key: string]: any;
 }
@@ -14,6 +15,7 @@ const TxtArea = ({
     name,
     label,
     rows = 4,
+    required = false,
     register,
     ...properties
 }: TxtAreaProps) => {
@@ -26,6 +28,7 @@ const TxtArea = ({
                 {label}
             </label>
             <textarea
+                required={required}
                 rows={rows}
                 id={name}
                 name={name}

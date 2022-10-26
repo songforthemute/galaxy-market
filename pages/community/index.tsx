@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import Ask from "@components/ask";
+import Post from "@components/post";
 import HelperBtn from "@components/helperBtn";
 import Layout from "@components/layout";
 
@@ -8,7 +8,7 @@ const Community: NextPage = () => {
         <Layout title="동네이야기" hasTabBar canGoBack hasConfig>
             <div className="-mb-2">
                 {[1, 2, 3, 4, 5, 6, 7, 8].map((v, i) => (
-                    <Ask
+                    <Post
                         href="/community/1"
                         key={i}
                         badge="궁금해요"
