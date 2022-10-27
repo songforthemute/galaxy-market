@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import Btn from "@components/btn";
-import Reply from "@components/reply";
 import Layout from "@components/layout";
 import TxtArea from "@components/txtArea";
 import UserCard from "@components/userCard";
@@ -8,8 +7,9 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { Post, Replies } from "@prisma/client";
 import useMutation from "@libs/client/useMutation";
-import { count } from "console";
 import { cls } from "@libs/client/util";
+import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 
 interface RepliesWithUser extends Replies {
     user: {
@@ -37,19 +37,27 @@ interface PostReturn {
     isInterest: boolean;
 }
 
+interface ReplyForm {
+    reply: string;
+}
+
+interface ReplyReturn {
+    status: boolean;
+    newReply: Replies;
+}
+
 const PostDetail: NextPage = () => {
     const router = useRouter();
+    // Click Interest
     const { data, mutate } = useSWR<PostReturn | undefined>(
         router.query.id ? `/api/posts/${router.query.id}` : null
     );
-
-    const [toggleInterest] = useMutation(
+    const [toggleInterest, { loading: interestLoading }] = useMutation(
         `/api/posts/${router.query.id}/interest`
     );
     const _onClickInterest = () => {
         if (!data) return;
 
-        toggleInterest({});
         mutate(
             {
                 ...data,
@@ -66,9 +74,27 @@ const PostDetail: NextPage = () => {
             },
             false
         );
+
+        // Preventing the occurrence of Race condition due to clicking hard
+        if (!interestLoading) toggleInterest({});
     };
 
-    console.log(data);
+    // Register new reply
+    const { register, handleSubmit, reset } = useForm<ReplyForm>();
+    const [replying, { data: replyData, loading: replyLoading }] =
+        useMutation<ReplyReturn>(`/api/posts/${router.query.id}/replies`);
+    const _onValid = (form: ReplyForm) => {
+        if (replyLoading) return;
+
+        replying(form);
+    };
+
+    useEffect(() => {
+        if (replyData && replyData.status) {
+            reset();
+            mutate();
+        }
+    }, [replyData, reset, mutate]);
 
     return (
         // 스테이트 전달로 동적 타이틀 변화
@@ -82,14 +108,19 @@ const PostDetail: NextPage = () => {
                         href="/profile"
                         type="profile"
                     />
-
-                    <div className="mt-2 px-4 text-gray-700 text-xl">
-                        <span className="text-purple-400 font-medium">Q. </span>
-                        <span className="font-medium">{data.post.title}</span>
+                    <div className="mt-2 px-4 text-xl font-medium">
+                        <span className="text-purple-400">Q. </span>
+                        <span className="text-neutral-700">
+                            {data.post.title}
+                        </span>
                     </div>
-
-                    <div className="mt-2 ml-6 px-4 text-gray-700">
-                        <p className="">{data.post.description}</p>
+                    <div className="mt-2 ml-6 px-4 space-y-2">
+                        <p className="text-neutral-700">
+                            {data.post.description}
+                        </p>
+                        <div className="text-xs text-neutral-400">
+                            {String(data.post.created)}
+                        </div>
                     </div>
 
                     {/* Post's Reactions */}
@@ -139,40 +170,59 @@ const PostDetail: NextPage = () => {
                     </div>
 
                     {/* Post's Replies */}
-                    {data.post.replies.map((reply) => {
-                        <div className="pb-4 px-4 my-4 space-y-4 border-b">
-                            <Reply
-                                key={reply?.id}
-                                creator={reply?.user.username}
-                                createdAt={reply.created.toDateString()}
-                                imgUrl={reply.user.avatarUrl}
-                                text={reply.text}
-                            />
-                        </div>;
-                    })}
+                    <div className="pb-4 px-4 my-4 space-y-4 border-b">
+                        {data.post.replies.map((r) => (
+                            <div
+                                key={r.id}
+                                className="flex items-start space-x-4"
+                            >
+                                {/* avatarUrl */}
+                                <div className="w-8 h-8 bg-neutral-200 rounded-full" />
+                                <div>
+                                    <div className="text-sm font-medium text-gray-700">
+                                        {r.user.username}
+                                    </div>
+                                    <div className="text-xs text-gray-400">
+                                        {String(r.created)}
+                                    </div>
+                                    <p className="text-gray-700 mt-2">
+                                        {r.text}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
 
                     {/* Post's Textarea to Register new Reply */}
-                    <div className="px-4">
+                    <form onSubmit={handleSubmit(_onValid)} className="px-4">
                         <TxtArea
+                            required
+                            register={register("reply", { required: true })}
                             name="reply"
                             label="댓글"
                             placeholder="댓글을 적어주세요."
                         />
 
-                        <Btn text="답변하기" />
-                    </div>
+                        <Btn
+                            text={
+                                replyLoading
+                                    ? "댓글을 업로드하고 있어요"
+                                    : "답변하기"
+                            }
+                        />
+                    </form>
                 </>
             ) : (
                 // Skeleton Loading Component
-                <div className="p-4 flex w-full flex-1 flex-col items-center mb-8">
-                    <div className="w-full animate-pulse flex-row items-center justfiy-center space-x-1 space-y-4">
-                        <div className="h-20 rounded-md bg-gray-400" />
+                <div className="p-4 flex w-full flex-1 flex-col items-center mb-8 transition-all">
+                    <div className="w-full animate-pulse flex-row items-center justfiy-center space-y-4">
+                        <div className="h-20 rounded-md bg-gray-200" />
                         <div className="flex flex-col mt-8 space-y-2">
-                            <div className="h-10 w-1/2 rounded-md bg-gray-400" />
-                            <div className="h-16 w-2/3 rounded-md bg-gray-400" />
-                            <div className="h-10 rounded-md bg-gray-400" />
+                            <div className="h-10 w-1/2 rounded-md bg-gray-200" />
+                            <div className="h-16 w-2/3 rounded-md bg-gray-200" />
+                            <div className="h-10 rounded-md bg-gray-200" />
                         </div>
-                        <div className="h-32 rounded-md bg-gray-400" />
+                        <div className="h-32 rounded-md bg-gray-200" />
                     </div>
                 </div>
             )}

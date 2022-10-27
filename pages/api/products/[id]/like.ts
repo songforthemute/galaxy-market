@@ -12,6 +12,20 @@ const handler = async (
         session: { user },
     } = req; // product id, user
 
+    const product = await client.product.findUnique({
+        where: {
+            id: Number(id),
+        },
+        select: {
+            id: true,
+        },
+    });
+
+    if (!product)
+        return res
+            .status(404)
+            .json({ status: false, error: "Product not found." });
+
     // Is alreay checked product's Like?
     const exists = await client.like.findFirst({
         where: {
@@ -44,8 +58,6 @@ const handler = async (
             },
         });
     }
-
-    console.log(id);
 
     res.json({ status: true });
 };

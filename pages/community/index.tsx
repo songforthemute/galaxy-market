@@ -1,25 +1,56 @@
 import type { NextPage } from "next";
-import Post from "@components/post";
+import Posting from "@components/post";
 import HelperBtn from "@components/helperBtn";
 import Layout from "@components/layout";
+import useSWR from "swr";
+import { Post } from "@prisma/client";
+
+interface PostWithReaction extends Post {
+    user: {
+        username: string;
+    };
+    _count: {
+        replies: number;
+        interest: number;
+    };
+}
+
+interface PostsReturn {
+    status: boolean;
+    post: PostWithReaction[];
+}
 
 const Community: NextPage = () => {
+    const { data } = useSWR<PostsReturn>("/api/posts");
+
     return (
         <Layout title="동네이야기" hasTabBar canGoBack hasConfig>
-            <div className="-mb-2">
-                {[1, 2, 3, 4, 5, 6, 7, 8].map((v, i) => (
-                    <Post
-                        href="/community/1"
-                        key={i}
-                        badge="궁금해요"
-                        text="이 주변의 어디 피자집이 제일 맛있나요?"
-                        creator="조이"
-                        createdAt="11 hours ago"
-                        interested={2}
-                        reply={1}
-                    />
-                ))}
-            </div>
+            {data?.post ? (
+                <div className="-mb-2">
+                    {data?.post.map((p) => (
+                        <Posting
+                            href={`/community/${p.id}`}
+                            key={p.id}
+                            badge="궁금해요"
+                            text={p.title}
+                            creator={p.user.username}
+                            createdAt={String(p.created)}
+                            interested={p._count.interest}
+                            reply={p._count.replies}
+                        />
+                    ))}
+                </div>
+            ) : (
+                // Skeleton Loading Component
+                <div className="p-4 flex w-full flex-1 flex-col items-center mb-8 transition-all">
+                    <div className="w-full animate-pulse flex-row items-center justfiy-center space-y-4">
+                        <div className="h-24 rounded-md bg-gray-200" />
+                        <div className="h-8 rounded-md bg-gray-200" />
+                        <div className="h-24 rounded-md bg-gray-200" />
+                        <div className="h-8 rounded-md bg-gray-200" />
+                    </div>
+                </div>
+            )}
 
             <HelperBtn href={"/community/posting"}>
                 <svg
