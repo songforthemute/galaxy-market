@@ -49,8 +49,9 @@ const handler = async (
     });
 
     const isLiked = Boolean(
-        await client.like.findFirst({
+        await client.record.findFirst({
             where: {
+                kind: "Like",
                 productId: product?.id,
                 userId: user?.id,
             },

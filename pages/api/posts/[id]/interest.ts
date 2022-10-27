@@ -12,6 +12,20 @@ const handler = async (
         session: { user },
     } = req;
 
+    const post = await client.post.findUnique({
+        where: {
+            id: Number(id),
+        },
+        select: {
+            id: true,
+        },
+    });
+
+    if (!post)
+        return res
+            .status(404)
+            .json({ status: false, error: "Post not found." });
+
     const exists = await client.interest.findFirst({
         where: {
             userId: user?.id,
