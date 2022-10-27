@@ -35,7 +35,7 @@ const handler = async (
 
     if (req.method === "POST") {
         const {
-            body: { name, price, description },
+            body: { name, price, description, option },
             session: { user },
         } = req;
 
@@ -43,9 +43,10 @@ const handler = async (
             .create({
                 data: {
                     name,
+                    option: option ? option : "None",
                     price: Number(price),
                     description,
-                    image: "x",
+                    image: "xxx",
                     user: { connect: { id: user?.id } },
                 },
             })

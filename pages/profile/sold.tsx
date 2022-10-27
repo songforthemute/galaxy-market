@@ -27,6 +27,7 @@ const Sold: NextPage = () => {
                     data.record?.map((sell) => (
                         <Item
                             name={sell.product.name}
+                            opt={sell.product.option}
                             price={sell.product.price}
                             likes={sell.product._count.record}
                             key={sell.id}

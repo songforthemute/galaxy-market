@@ -27,6 +27,7 @@ const Like: NextPage = () => {
                     data.record?.map((like) => (
                         <Item
                             name={like.product.name}
+                            opt={like.product.option}
                             price={like.product.price}
                             likes={like.product._count.record}
                             key={like.id}

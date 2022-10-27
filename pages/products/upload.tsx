@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 interface UploadProductFormInterface {
     name: string;
     price: number;
+    option?: string;
     description?: string;
 }
 
@@ -32,9 +33,8 @@ const Upload: NextPage = () => {
         uploadProduct(data);
     };
 
-    // 데이터베이스에 생성 잘 되나 프론트단에 product 안넘어옴
+    // 데이터베이스에 생성 잘 되나 프론트단에 product 안넘어옴 => then으로 해결
     useEffect(() => {
-        console.log(data);
         if (data?.status) {
             router.push(`/products/${data.product.id}`);
         }
@@ -46,8 +46,8 @@ const Upload: NextPage = () => {
                 <div>
                     <label
                         className="w-full h-48 flex items-center justify-center
-            border-2 border-dashed border-slate-700 py-8 rounded-md
-            text-slate-700 hover:text-purple-400 hover:border-purple-400 transition-colors cursor-pointer"
+                            border-2 border-dashed border-slate-700 py-8 rounded-md
+                          text-slate-700 hover:text-purple-400 hover:border-purple-400 transition-colors cursor-pointer"
                     >
                         <svg
                             className="h-12 w-12"
@@ -79,6 +79,14 @@ const Upload: NextPage = () => {
                         required
                         placeholder="상품명을 입력해주세요."
                         register={register("name", { required: true })}
+                    />
+
+                    <Input
+                        name="option"
+                        label="옵션"
+                        required
+                        placeholder="옵션을 입력해주세요."
+                        register={register("option")}
                     />
 
                     <Input

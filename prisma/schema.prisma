@@ -38,6 +38,7 @@ model Product {
   userId      Int
   image       String   @db.Text
   name        String
+  option      String   @default("None")
   price       Int
   description String?  @db.Text
   isSoldOut   Boolean  @default(false)

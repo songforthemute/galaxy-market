@@ -36,7 +36,7 @@ const Home: NextPage = () => {
                         <Item
                             href={`/products/${product.id}`}
                             name={product.name}
-                            opt="Deep purple"
+                            opt={product.option}
                             price={product.price}
                             likes={product._count.record}
                             key={product.id}
