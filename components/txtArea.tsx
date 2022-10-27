@@ -22,7 +22,7 @@ const TxtArea = ({
     return (
         <div className="my-4">
             <label
-                className="text-sm font-medium text-gray-400 block mb-1"
+                className="text-sm font-medium text-slate-400 block mb-1"
                 htmlFor={name}
             >
                 {label}
@@ -36,7 +36,7 @@ const TxtArea = ({
                 {...properties}
                 {...register}
                 className="mt-1 shadow-md w-full rounded-md border border-transparent
-                focus:ring-purple-400 focus:border-purple-400 placeholder:text-gray-400"
+                focus:ring-purple-400 focus:border-purple-400 placeholder:text-slate-400"
             />
         </div>
     );

@@ -46,8 +46,8 @@ const Upload: NextPage = () => {
                 <div>
                     <label
                         className="w-full h-48 flex items-center justify-center
-            border-2 border-dashed border-gray-700 py-8 rounded-md
-            text-gray-700 hover:text-purple-400 hover:border-purple-400 transition-colors cursor-pointer"
+            border-2 border-dashed border-slate-700 py-8 rounded-md
+            text-slate-700 hover:text-purple-400 hover:border-purple-400 transition-colors cursor-pointer"
                     >
                         <svg
                             className="h-12 w-12"

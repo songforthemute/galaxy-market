@@ -82,7 +82,7 @@ const Auth = () => {
 
                 <div className="mt-12">
                     <div className="flex flex-col items-center">
-                        {/* <h5 className="text-sm text-gray-400 font-medium">
+                        {/* <h5 className="text-sm text-slate-400 font-medium">
                             로그인하기 & 가입하기
                         </h5> */}
                         <div className="grid grid-cols-2 mt-8 gap-16 border-b w-full">
@@ -91,7 +91,7 @@ const Auth = () => {
                                     "pb-4 font-medium border-b-2",
                                     method === "login"
                                         ? "border-purple-400 text-purple-400 font-medium"
-                                        : "border-transparent text-gray-400"
+                                        : "border-transparent text-slate-400"
                                 )}
                                 onClick={_onLoginClick}
                             >
@@ -102,7 +102,7 @@ const Auth = () => {
                                     "pb-4 font-medium border-b-2",
                                     method === "join"
                                         ? "border-purple-400 text-purple-400 font-medium"
-                                        : "border-transparent text-gray-400"
+                                        : "border-transparent text-slate-400"
                                 )}
                                 onClick={_onJoinClick}
                             >
@@ -200,9 +200,9 @@ const Auth = () => {
 
                     <div className="mt-6">
                         <div className="relative">
-                            <div className="absolute w-full border-t border-gray-400" />
+                            <div className="absolute w-full border-t border-slate-400" />
                             <div className="relative -top-3 text-center">
-                                <span className="bg-white px-2 text-sm text-gray-400 select-none">
+                                <span className="bg-white px-2 text-sm text-slate-400 select-none">
                                     혹은 다른 방법으로{" "}
                                     {method === "login" ? "로그인" : "가입"}
                                     하기
@@ -210,7 +210,7 @@ const Auth = () => {
                             </div>
                         </div>
                         <div className="grid grid-cols-2 gap-4 mt-4">
-                            <button className="flex justify-center items-center py-2 px-4 border border-gray-400 rounded-md shadow-md bg-white text-gray-400 text-sm font-medium hover:bg-gray-50">
+                            <button className="flex justify-center items-center py-2 px-4 border border-slate-400 rounded-md shadow-md bg-white text-slate-400 text-sm font-medium hover:bg-slate-50">
                                 <svg
                                     className="w-5 h-5"
                                     aria-hidden="true"
@@ -220,7 +220,7 @@ const Auth = () => {
                                     <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84" />
                                 </svg>
                             </button>
-                            <button className="flex justify-center items-center py-2 px-4 border border-gray-400 rounded-md shadow-md bg-white text-gray-400 text-sm font-medium hover:bg-gray-50">
+                            <button className="flex justify-center items-center py-2 px-4 border border-slate-400 rounded-md shadow-md bg-white text-slate-400 text-sm font-medium hover:bg-slate-50">
                                 <svg
                                     className="w-5 h-5"
                                     aria-hidden="true"

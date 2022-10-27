@@ -8,10 +8,10 @@ const EditProfile: NextPage = () => {
         <Layout title="프로필 수정" hasTabBar canGoBack>
             <div className="p-4 space-y-8">
                 <div className="flex items-center space-x-2">
-                    <div className="w-20 h-20 rounded-full bg-gray-400 mr-4 cursor-pointer" />
+                    <div className="w-20 h-20 rounded-full bg-slate-400 mr-4 cursor-pointer" />
                     <label
                         htmlFor="photo"
-                        className="cursor-pointer p-2 border border-gray-400 text-gray-400 rounded-md shadow-md font-medium
+                        className="cursor-pointer p-2 border border-slate-400 text-slate-400 rounded-md shadow-md font-medium
                 hover:text-purple-400 hover:border-purple-400 focus:ring-2 focus:ring-offset-2 focus:ring-purple-400 transition-all"
                     >
                         Change Photo

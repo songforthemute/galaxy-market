@@ -15,20 +15,20 @@ const Item = ({ href, name, imgUrl, opt, price, likes }: ItemProps) => {
         <Link href={href}>
             <a className="flex p-4 cursor-pointer justify-between hover:opacity-50 transition-opacity">
                 <div className="flex space-x-4">
-                    <div className="w-20 h-20 bg-gray-400 rounded-md" />
+                    <div className="w-20 h-20 bg-slate-400 rounded-md" />
                     <div className="py-1.5 flex flex-col">
-                        <h3 className="text-sm font-medium text-gray-700">
+                        <h3 className="text-sm font-medium text-slate-700">
                             {name}
                         </h3>
-                        <span className="text-xs text-gray-400">{opt}</span>
-                        <span className="font-medium mt-2 text-gray-700">
+                        <span className="text-xs text-slate-400">{opt}</span>
+                        <span className="font-medium mt-2 text-slate-700">
                             ₩ {priceConverter(String(price))}
                         </span>
                     </div>
                 </div>
 
                 <div className="flex items-end justify-end space-x-4">
-                    <div className="flex items-center text-sm text-gray-400 space-x-1">
+                    <div className="flex items-center text-sm text-slate-400 space-x-1">
                         <svg
                             className="w-4 h-4"
                             fill="none"

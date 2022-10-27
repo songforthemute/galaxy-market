@@ -43,7 +43,7 @@ const ItemDetail: NextPage = () => {
                 {data?.product ? (
                     <>
                         <div className="mb-8">
-                            <div className="h-96 bg-gray-400 mb-4" />
+                            <div className="h-96 bg-slate-400 mb-4" />
 
                             <UserCard
                                 text="프로필 보기 &rarr;"
@@ -58,13 +58,13 @@ const ItemDetail: NextPage = () => {
                                 <h1 className="text-3xl font-bold text-black">
                                     {data?.product?.name}
                                 </h1>
-                                <div className="text-2xl mt-1 text-gray-700">
+                                <div className="text-2xl mt-1 text-slate-700">
                                     {priceConverter(
                                         String(data?.product?.price)
                                     )}{" "}
                                     원
                                 </div>
-                                <p className="text-base mt-4 text-gray-700">
+                                <p className="text-base mt-4 text-slate-700">
                                     {data?.product?.description}
                                 </p>
                                 <div className="flex items-center justify-between space-x-2 my-4">
@@ -76,8 +76,8 @@ const ItemDetail: NextPage = () => {
                                         className={cls(
                                             "p-2 flex items-center justify-center transition-all hover:animate-bounce",
                                             data.isLiked
-                                                ? "text-red-400 hover:text-gray-400"
-                                                : "text-gray-400 hover:text-red-400"
+                                                ? "text-red-400 hover:text-slate-400"
+                                                : "text-slate-400 hover:text-red-400"
                                         )}
                                     >
                                         {data.isLiked ? (
@@ -116,7 +116,7 @@ const ItemDetail: NextPage = () => {
                         </div>
 
                         <div className="">
-                            <h2 className="text-xl font-medium text-gray-700">
+                            <h2 className="text-xl font-medium text-slate-700">
                                 유사한 상품
                             </h2>
                             <div className="grid grid-cols-2 gap-4 mt-4">
@@ -126,11 +126,11 @@ const ItemDetail: NextPage = () => {
                                         href={`/products/${prod.id}`}
                                     >
                                         <a className="cursor-pointer transition-all hover:opacity-50">
-                                            <div className="h-56 w-56 mb-2 bg-gray-400" />
-                                            <h3 className="text-sm font-semibold text-gray-700 -mb-1">
+                                            <div className="h-56 w-56 mb-2 bg-slate-400" />
+                                            <h3 className="text-sm font-semibold text-slate-700 -mb-1">
                                                 {prod.name}
                                             </h3>
-                                            <span className="text-sm font-medium text-gray-400">
+                                            <span className="text-sm font-medium text-slate-400">
                                                 ₩{" "}
                                                 {priceConverter(
                                                     String(prod.price)
@@ -146,12 +146,12 @@ const ItemDetail: NextPage = () => {
                     // Skeleton Loading Component
                     <div className="flex w-full flex-1 flex-col items-center mb-8">
                         <div className="w-full animate-pulse flex-row items-center justfiy-center space-x-1 space-y-4">
-                            <div className="h-96 bg-gray-200 rounded-xl" />
-                            <div className="h-16 rounded-md bg-gray-200" />
+                            <div className="h-96 bg-slate-200 rounded-xl" />
+                            <div className="h-16 rounded-md bg-slate-200" />
                             <div className="flex flex-col mt-8 space-y-2">
-                                <div className="h-10 w-1/2 rounded-md bg-gray-200" />
-                                <div className="h-10 w-1/3 rounded-md bg-gray-200" />
-                                <div className="h-32 w-3/4 rounded-md bg-gray-200" />
+                                <div className="h-10 w-1/2 rounded-md bg-slate-200" />
+                                <div className="h-10 w-1/3 rounded-md bg-slate-200" />
+                                <div className="h-32 w-3/4 rounded-md bg-slate-200" />
                             </div>
                         </div>
                     </div>

@@ -29,12 +29,12 @@ const Layout = ({
             <div
                 className={cls(
                     !canGoBack ? "justify-center" : "justify-evenly",
-                    "bg-white w-full text-lg font-medium py-4 fixed text-gray-700 border-b top-0 flex items-center"
+                    "bg-white w-full text-lg font-medium py-4 fixed text-slate-700 border-b top-0 flex items-center"
                 )}
             >
                 {canGoBack && (
                     <button
-                        className="absolute left-6 p-1 text-gray-700 text-2xl font-light focus:text-purple-400 hover:text-purple-400 transition-all"
+                        className="absolute left-6 p-1 text-slate-700 text-2xl font-light focus:text-purple-400 hover:text-purple-400 transition-all"
                         onClick={_onClickBack}
                     >
                         <svg
@@ -58,7 +58,7 @@ const Layout = ({
                 )}
                 {hasConfig && (
                     <button
-                        className="absolute right-6 p-1 text-gray-700 text-2xl font-light focus:text-purple-400 hover:text-purple-400 transition-all"
+                        className="absolute right-6 p-1 text-slate-700 text-2xl font-light focus:text-purple-400 hover:text-purple-400 transition-all"
                         onClick={_onClickConfig}
                     >
                         <svg
@@ -82,7 +82,7 @@ const Layout = ({
                 {children}
             </div>
             {hasTabBar && (
-                <nav className="bg-white w-full text-gray-700 border-t fixed bottom-0 py-4 flex justify-evenly items-center">
+                <nav className="bg-white w-full text-slate-700 border-t fixed bottom-0 py-4 flex justify-evenly items-center">
                     <DockBtn
                         text="홈"
                         href="/"

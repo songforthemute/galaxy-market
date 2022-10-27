@@ -25,17 +25,17 @@ const Posting = ({
             <a className="flex flex-col items-start cursor-pointer hover:opacity-50 transition-all">
                 <Badge text={badge} />
 
-                <div className="px-4 text-gray-700">
+                <div className="px-4 text-slate-700">
                     <span className="text-purple-400 font-medium">Q. </span>
                     {text}
                 </div>
 
-                <div className="mt-4 px-4 flex items-center justify-between w-full text-gray-400 text-xs font-medium">
+                <div className="mt-4 px-4 flex items-center justify-between w-full text-slate-400 text-xs font-medium">
                     <span>{creator}</span>
                     <span>{createdAt}</span>
                 </div>
 
-                <div className="flex px-4 space-x-4 mt-4 text-gray-700 py-2 border-y w-full">
+                <div className="flex px-4 space-x-4 mt-4 text-slate-700 py-2 border-y w-full">
                     <span className="flex space-x-2 items-center text-sm">
                         <svg
                             className="w-4 h-4"

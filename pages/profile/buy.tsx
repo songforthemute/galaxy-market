@@ -10,8 +10,7 @@ const Buy: NextPage = () => {
                     <Item
                         name="아이폰 14 프로 맥스"
                         opt="Deep purple"
-                        price="130000"
-                        reply={0}
+                        price={130000}
                         likes={2}
                         key={i}
                         href={"/items/2"}

@@ -5,7 +5,7 @@ import UserCard from "@components/userCard";
 const Chats: NextPage = () => {
     return (
         <Layout title="메시지" hasTabBar canGoBack hasConfig>
-            <div className="divide-y-[1px] divide-gray-100">
+            <div className="divide-y-[1px] divide-slate-100">
                 {[1, 2, 3, 4, 5].map((v, i) => (
                     <UserCard
                         text="See you tomorrow in the corner at 11:00!"

@@ -9,8 +9,8 @@ const Stream: NextPage = () => {
                 {[1, 2, 3, 4].map((v, i) => (
                     <div key={i} className="pb-2 pt-8 px-4">
                         <div className="cursor-pointer hover:opacity-70 transition-all">
-                            <div className="w-full bg-gray-400 aspect-video rounded-md shadow-md" />
-                            <h3 className="text-gray-700 text-xl mt-2">
+                            <div className="w-full bg-slate-400 aspect-video rounded-md shadow-md" />
+                            <h3 className="text-slate-700 text-xl mt-2">
                                 Let's cook pizza
                             </h3>
                         </div>

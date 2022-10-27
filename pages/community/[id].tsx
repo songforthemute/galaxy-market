@@ -110,27 +110,27 @@ const PostDetail: NextPage = () => {
                     />
                     <div className="mt-2 px-4 text-xl font-medium">
                         <span className="text-purple-400">Q. </span>
-                        <span className="text-neutral-700">
+                        <span className="text-slate-700">
                             {data.post.title}
                         </span>
                     </div>
                     <div className="mt-2 ml-6 px-4 space-y-2">
-                        <p className="text-neutral-700">
+                        <p className="text-slate-700">
                             {data.post.description}
                         </p>
-                        <div className="text-xs text-neutral-400">
+                        <div className="text-xs text-slate-400">
                             {String(data.post.created)}
                         </div>
                     </div>
 
                     {/* Post's Reactions */}
-                    <div className="flex px-4 space-x-4 mt-4 text-gray-700 py-2 border-t border-b w-full">
+                    <div className="flex px-4 space-x-4 mt-4 text-slate-700 py-2 border-t border-b w-full">
                         <button
                             onClick={_onClickInterest}
                             className={cls(
                                 "flex space-x-2 items-center text-sm transition-all cursor-pointer hover:animate-bounce",
                                 data.isInterest
-                                    ? "font-semibold text-emerald-400 text- hover:text-gray-400 hover:font-normal"
+                                    ? "font-semibold text-emerald-400 text- hover:text-slate-400 hover:font-normal"
                                     : "font-normal hover:text-emerald-400 hover:font-semibold"
                             )}
                         >
@@ -177,15 +177,15 @@ const PostDetail: NextPage = () => {
                                 className="flex items-start space-x-4"
                             >
                                 {/* avatarUrl */}
-                                <div className="w-8 h-8 bg-neutral-200 rounded-full" />
+                                <div className="w-8 h-8 bg-slate-200 rounded-full" />
                                 <div>
-                                    <div className="text-sm font-medium text-gray-700">
+                                    <div className="text-sm font-medium text-slate-700">
                                         {r.user.username}
                                     </div>
-                                    <div className="text-xs text-gray-400">
+                                    <div className="text-xs text-slate-400">
                                         {String(r.created)}
                                     </div>
-                                    <p className="text-gray-700 mt-2">
+                                    <p className="text-slate-700 mt-2">
                                         {r.text}
                                     </p>
                                 </div>
@@ -216,13 +216,13 @@ const PostDetail: NextPage = () => {
                 // Skeleton Loading Component
                 <div className="p-4 flex w-full flex-1 flex-col items-center mb-8 transition-all">
                     <div className="w-full animate-pulse flex-row items-center justfiy-center space-y-4">
-                        <div className="h-20 rounded-md bg-gray-200" />
+                        <div className="h-20 rounded-md bg-slate-200" />
                         <div className="flex flex-col mt-8 space-y-2">
-                            <div className="h-10 w-1/2 rounded-md bg-gray-200" />
-                            <div className="h-16 w-2/3 rounded-md bg-gray-200" />
-                            <div className="h-10 rounded-md bg-gray-200" />
+                            <div className="h-10 w-1/2 rounded-md bg-slate-200" />
+                            <div className="h-16 w-2/3 rounded-md bg-slate-200" />
+                            <div className="h-10 rounded-md bg-slate-200" />
                         </div>
-                        <div className="h-32 rounded-md bg-gray-200" />
+                        <div className="h-32 rounded-md bg-slate-200" />
                     </div>
                 </div>
             )}

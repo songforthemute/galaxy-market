@@ -13,7 +13,7 @@ const Sending = ({
                 <input
                     type="text"
                     placeholder={placeholder}
-                    className="shadow-md rounded-full w-full border-gray-400 pr-12
+                    className="shadow-md rounded-full w-full border-slate-400 pr-12
                     focus:ring-purple-400 focus:outline-none focus:border-purple-400
                     hover:border-purple-400 hover:bg-purple-50 transition-colors"
                 />

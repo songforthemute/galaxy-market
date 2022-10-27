@@ -7,8 +7,8 @@ const StreamDetail: NextPage = () => {
         // 타이틀 동적 할당
         <Layout title={"라이브 커머스"} canGoBack>
             <div className="pt-4 px-4 space-y-4">
-                <div className="w-full bg-gray-400 aspect-video rounded-md shadow-md" />
-                <h3 className="text-gray-700 text-2xl font-medium mt-2 text-center">
+                <div className="w-full bg-slate-400 aspect-video rounded-md shadow-md" />
+                <h3 className="text-slate-700 text-2xl font-medium mt-2 text-center">
                     Session: Let's cook cheese pizza
                 </h3>
 
@@ -16,14 +16,14 @@ const StreamDetail: NextPage = () => {
                     {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((v, i) => (
                         <Fragment key={i}>
                             <div className="flex items-start space-x-2">
-                                <div className="rounded-full w-8 h-8 bg-gray-400" />
-                                <div className="w-1/2 text-sm text-gray-700 p-2 border border-gray-400 rounded-md ">
+                                <div className="rounded-full w-8 h-8 bg-slate-400" />
+                                <div className="w-1/2 text-sm text-slate-700 p-2 border border-slate-400 rounded-md ">
                                     <p>Hi how much are you selling them for?</p>
                                 </div>
                             </div>
                             <div className="flex flex-row-reverse items-start space-x-2 space-x-reverse">
-                                <div className="rounded-full w-8 h-8 bg-gray-400" />
-                                <div className="w-1/2 text-sm text-gray-700 p-2 border border-gray-400 rounded-md ">
+                                <div className="rounded-full w-8 h-8 bg-slate-400" />
+                                <div className="w-1/2 text-sm text-slate-700 p-2 border border-slate-400 rounded-md ">
                                     <p>I want ￦20,000</p>
                                 </div>
                             </div>
@@ -35,7 +35,7 @@ const StreamDetail: NextPage = () => {
                             <input
                                 type="text"
                                 placeholder="Write here sending message..."
-                                className="shadow-md rounded-full w-full border-gray-400 pr-12
+                                className="shadow-md rounded-full w-full border-slate-400 pr-12
                     focus:ring-purple-400 focus:outline-none focus:border-purple-400
                     hover:border-purple-400 hover:bg-purple-50 transition-colors"
                             />

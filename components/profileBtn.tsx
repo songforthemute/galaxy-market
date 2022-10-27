@@ -13,7 +13,7 @@ const ProfileBtn = ({ text, children, href }: ProfileBtn) => {
                 <div className="w-14 h-14 text-white bg-purple-400 rounded-full flex items-center justify-center">
                     {children}
                 </div>
-                <span className="mt-2 text-sm font-medium text-gray-700">
+                <span className="mt-2 text-sm font-medium text-slate-700">
                     {text}
                 </span>
             </a>

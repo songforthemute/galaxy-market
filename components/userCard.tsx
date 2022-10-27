@@ -38,7 +38,7 @@ const UserCard = ({
                 <a className="flex items-center space-x-4 cursor-pointer hover:opacity-50 transition-all">
                     <div
                         className={cls(
-                            "rounded-full bg-gray-400",
+                            "rounded-full bg-slate-400",
                             isLarge ? "w-16 h-16" : "w-12 h-12"
                         )}
                     />
@@ -46,10 +46,10 @@ const UserCard = ({
                         <p
                             className={cls(
                                 type === "message"
-                                    ? "text-xs text-gray-400"
+                                    ? "text-xs text-slate-400"
                                     : isLarge
-                                    ? "text-md font-semibold text-gray-700"
-                                    : "text-sm font-medium text-gray-700"
+                                    ? "text-md font-semibold text-slate-700"
+                                    : "text-sm font-medium text-slate-700"
                             )}
                         >
                             {username}
@@ -58,10 +58,10 @@ const UserCard = ({
                             className={cls(
                                 "font-medium",
                                 type === "message"
-                                    ? "text-sm text-gray-700"
+                                    ? "text-sm text-slate-700"
                                     : isLarge
-                                    ? "text-sm text-gray-400"
-                                    : "text-xs text-gray-400"
+                                    ? "text-sm text-slate-400"
+                                    : "text-xs text-slate-400"
                             )}
                         >
                             {text}

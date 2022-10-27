@@ -44,10 +44,10 @@ const Community: NextPage = () => {
                 // Skeleton Loading Component
                 <div className="p-4 flex w-full flex-1 flex-col items-center mb-8 transition-all">
                     <div className="w-full animate-pulse flex-row items-center justfiy-center space-y-4">
-                        <div className="h-24 rounded-md bg-gray-200" />
-                        <div className="h-8 rounded-md bg-gray-200" />
-                        <div className="h-24 rounded-md bg-gray-200" />
-                        <div className="h-8 rounded-md bg-gray-200" />
+                        <div className="h-24 rounded-md bg-slate-200" />
+                        <div className="h-8 rounded-md bg-slate-200" />
+                        <div className="h-24 rounded-md bg-slate-200" />
+                        <div className="h-8 rounded-md bg-slate-200" />
                     </div>
                 </div>
             )}

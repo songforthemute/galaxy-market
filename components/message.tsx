@@ -14,8 +14,8 @@ const Message = ({ text, isReverse = false, avatarUrl }: MessageProps) => {
                 isReverse ? "flex-row-reverse space-x-reverse" : ""
             )}
         >
-            <div className="rounded-full w-8 h-8 bg-gray-400" />
-            <div className="w-1/2 text-sm text-gray-700 p-2 border border-gray-400 rounded-md ">
+            <div className="rounded-full w-8 h-8 bg-slate-400" />
+            <div className="w-1/2 text-sm text-slate-700 p-2 border border-slate-400 rounded-md ">
                 <p>{text}</p>
             </div>
         </div>

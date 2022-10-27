@@ -88,12 +88,12 @@ const Profile: NextPage = () => {
                     </ProfileBtn>
                 </div>
 
-                <div className="mt-6 px-4 divide-y-[1px] divied-gray-400">
+                <div className="mt-6 px-4 divide-y-[1px] divied-slate-400">
                     {data?.status
                         ? data?.reviews.map((review) => (
                               <div key={review.id} className="py-4">
                                   <div className="flex items-center space-x-4">
-                                      <div className="w-12 h-12 rounded-full bg-gray-400" />
+                                      <div className="w-12 h-12 rounded-full bg-slate-400" />
                                       <div>
                                           <h4 className="ml-0.5 text-sm font-bold">
                                               {review.createdBy.username}
@@ -106,7 +106,7 @@ const Profile: NextPage = () => {
                                                           "h-4 w-4",
                                                           i < review.star
                                                               ? "text-yellow-400"
-                                                              : "text-gray-400"
+                                                              : "text-slate-400"
                                                       )}
                                                       xmlns="http://www.w3.org/2000/svg"
                                                       viewBox="0 0 20 20"
@@ -119,7 +119,7 @@ const Profile: NextPage = () => {
                                           </div>
                                       </div>
                                   </div>
-                                  <div className="mt-4 text-gray-700 text-sm">
+                                  <div className="mt-4 text-slate-700 text-sm">
                                       <p>{review.text}</p>
                                   </div>
                               </div>
