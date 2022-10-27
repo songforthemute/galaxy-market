@@ -10,12 +10,24 @@ const handler = async (
     if (req.method === "GET") {
         await client.product
             .findMany({
+                where: {
+                    AND: {
+                        isSoldOut: false,
+                    },
+                },
                 include: {
                     _count: {
                         select: {
-                            like: true,
+                            record: {
+                                where: {
+                                    kind: "Like",
+                                },
+                            },
                         },
                     },
+                },
+                orderBy: {
+                    created: "desc",
                 },
             })
             .then((response) => res.json({ status: true, products: response }));

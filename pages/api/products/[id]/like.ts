@@ -27,8 +27,9 @@ const handler = async (
             .json({ status: false, error: "Product not found." });
 
     // Is alreay checked product's Like?
-    const exists = await client.like.findFirst({
+    const exists = await client.record.findFirst({
         where: {
+            kind: "Like",
             productId: Number(id),
             userId: user?.id,
         },
@@ -36,15 +37,16 @@ const handler = async (
 
     if (exists) {
         // delete exist
-        await client.like.delete({
+        await client.record.delete({
             where: {
                 id: exists.id,
             },
         });
     } else {
         // create new
-        await client.like.create({
+        await client.record.create({
             data: {
+                kind: "Like",
                 user: {
                     connect: {
                         id: user?.id,

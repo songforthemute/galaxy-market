@@ -3,7 +3,7 @@
 
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
+  previewFeatures = ["referentialIntegrity", "filteredRelationCount"]
 }
 
 datasource db {
@@ -13,19 +13,21 @@ datasource db {
 }
 
 model User {
-  id        Int        @id @default(autoincrement()) // 필드명 자료형 식별자 옵션
-  phone     String?    @unique
-  email     String     @unique
-  username  String
-  password  String
-  avatarUrl String?
-  created   DateTime   @default(now()) // now() : 해당 시점의 날짜를 가져옴.
-  updated   DateTime   @updatedAt
-  product   Product[]
-  like      Like[]
-  post      Post[]
-  replies   Replies[]
-  interest  Interest[]
+  id              Int        @id @default(autoincrement()) // 필드명 자료형 식별자 옵션
+  phone           String?    @unique
+  email           String     @unique
+  username        String
+  password        String
+  avatarUrl       String?
+  created         DateTime   @default(now()) // now() : 해당 시점의 날짜를 가져옴.
+  updated         DateTime   @updatedAt
+  product         Product[]
+  post            Post[]
+  replies         Replies[]
+  interest        Interest[]
+  writtenReviews  Review[]   @relation(name: "writtenReviews")
+  receivedReviews Review[]   @relation(name: "receivedReviews")
+  record          Record[]
 }
 
 model Product {
@@ -38,17 +40,8 @@ model Product {
   name        String
   price       Int
   description String?  @db.Text
-  like        Like[]
-}
-
-model Like {
-  id        Int      @id @default(autoincrement())
-  created   DateTime @default(now())
-  updated   DateTime @updatedAt
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    Int
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  productId Int
+  isSoldOut   Boolean  @default(false)
+  record      Record[]
 }
 
 model Post {
@@ -82,4 +75,20 @@ model Interest {
   userId  Int
   post    Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId  Int
+}
+enum Kind {
+  Like
+  Buy
+  Sell
+}
+
+model Record {
+  id        Int      @id @default(autoincrement())
+  created   DateTime @default(now())
+  updated   DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId Int
+  kind      Kind
 }

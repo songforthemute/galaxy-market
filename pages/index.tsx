@@ -9,7 +9,7 @@ import useSWR from "swr";
 
 interface ProductWithLike extends Product {
     _count: {
-        like: number;
+        record: number;
     };
 }
 
@@ -29,17 +29,30 @@ const Home: NextPage = () => {
             <Head>
                 <title>Home - GalaxyMarket</title>
             </Head>
+
             <div className="flex flex-col divide-y-[1px]">
-                {data?.products?.map((product) => (
-                    <Item
-                        href={`/products/${product.id}`}
-                        name={product.name}
-                        opt="Deep purple"
-                        price={product.price}
-                        likes={product._count.like}
-                        key={product.id}
-                    />
-                ))}
+                {data?.products ? (
+                    data?.products?.map((product) => (
+                        <Item
+                            href={`/products/${product.id}`}
+                            name={product.name}
+                            opt="Deep purple"
+                            price={product.price}
+                            likes={product._count.record}
+                            key={product.id}
+                        />
+                    ))
+                ) : (
+                    // Skeleton Loading Component
+                    <div className="p-4 flex w-full flex-1 flex-col items-center mb-8 transition-all">
+                        <div className="w-full animate-pulse flex-row items-center justfiy-center space-y-4">
+                            <div className="flex flex-row items-start">
+                                <div className="h-24 w-24 mr-4 rounded-md bg-gray-200" />
+                                <div className="h-24 w-full rounded-md bg-gray-200" />
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 <HelperBtn href="/products/upload">
                     <svg
