@@ -46,6 +46,11 @@ const handler = async (
         },
     });
 
+    if (!post)
+        return res
+            .status(404)
+            .json({ status: false, error: "Post not found." });
+
     const isInterest = Boolean(
         await client.interest.findFirst({
             where: {
@@ -57,11 +62,6 @@ const handler = async (
             },
         })
     );
-
-    if (!post)
-        return res
-            .status(404)
-            .json({ status: false, error: "Post not found." });
 
     res.json({ status: true, post, isInterest });
 };

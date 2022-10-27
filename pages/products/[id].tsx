@@ -146,12 +146,12 @@ const ItemDetail: NextPage = () => {
                     // Skeleton Loading Component
                     <div className="flex w-full flex-1 flex-col items-center mb-8">
                         <div className="w-full animate-pulse flex-row items-center justfiy-center space-x-1 space-y-4">
-                            <div className="h-96 bg-gray-400 rounded-xl" />
-                            <div className="h-16 rounded-md bg-gray-400" />
+                            <div className="h-96 bg-gray-200 rounded-xl" />
+                            <div className="h-16 rounded-md bg-gray-200" />
                             <div className="flex flex-col mt-8 space-y-2">
-                                <div className="h-10 w-1/2 rounded-md bg-gray-400" />
-                                <div className="h-10 w-1/3 rounded-md bg-gray-400" />
-                                <div className="h-32 w-3/4 rounded-md bg-gray-400" />
+                                <div className="h-10 w-1/2 rounded-md bg-gray-200" />
+                                <div className="h-10 w-1/3 rounded-md bg-gray-200" />
+                                <div className="h-32 w-3/4 rounded-md bg-gray-200" />
                             </div>
                         </div>
                     </div>

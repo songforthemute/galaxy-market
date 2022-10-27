@@ -28,7 +28,14 @@ const EditProfile: NextPage = () => {
                     label="이메일 주소"
                     name="email"
                     type="email"
-                    placeholder="galaxy@market.co"
+                    disabled
+                    required
+                />
+
+                <Input
+                    label="닉네임"
+                    name="username"
+                    placeholder="닉네임을 적어주세요."
                     required
                 />
 
@@ -36,7 +43,7 @@ const EditProfile: NextPage = () => {
                     label="전화번호"
                     name="phone"
                     type="phone"
-                    placeholder="010-1234-5678"
+                    placeholder="12345678"
                     required
                 />
 

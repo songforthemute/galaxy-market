@@ -7,8 +7,6 @@ const handler = async (
     req: NextApiRequest,
     res: NextApiResponse<ResponseInterface>
 ) => {
-    console.log("me.tsx - req.session: ", req.session);
-
     if (!req.session.user) {
         return res.json({ status: false });
     }

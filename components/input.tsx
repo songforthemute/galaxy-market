@@ -1,3 +1,4 @@
+import { cls } from "@libs/client/util";
 import React, { useState } from "react";
 import type { UseFormRegisterReturn } from "react-hook-form";
 
@@ -7,6 +8,7 @@ interface InputProps {
     type?: "text" | "phone" | "price" | "email" | "password";
     placeholder?: string;
     required?: boolean;
+    disabled?: boolean;
     register?: UseFormRegisterReturn; // no undefined
     [key: string]: any;
 }
@@ -16,6 +18,7 @@ const Input = ({
     name,
     type = "text",
     register,
+    disabled = false,
     required,
     placeholder,
     ...properties
@@ -50,11 +53,17 @@ const Input = ({
             {type === "email" && (
                 <div className="rounded-md shadow-md relative flex items-center my-2">
                     <input
+                        disabled={disabled}
                         id={name}
                         type={type}
                         placeholder={placeholder}
                         required={required}
-                        className="appearance-none w-full px-4 py-2 border border-transparent rounded-md placeholder-gray-400 focus:outline-none focus:ring-purple-400 focus:border-purple-400 hover:bg-gray-50 focus:bg-white"
+                        className={cls(
+                            "appearance-none w-full px-4 py-2 border border-transparent rounded-md placeholder-gray-400",
+                            disabled
+                                ? "bg-gray-100"
+                                : "focus:outline-none focus:ring-purple-400 focus:border-purple-400 hover:bg-gray-50 focus:bg-white"
+                        )}
                         {...register}
                         {...properties}
                     />
