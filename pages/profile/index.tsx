@@ -20,7 +20,7 @@ interface ReviewsReturn {
 }
 
 const Profile: NextPage = () => {
-    const { data } = useSWR<ReviewsReturn>("api/reviews");
+    const { data } = useSWR<ReviewsReturn>("/api/reviews");
 
     console.log(data);
 

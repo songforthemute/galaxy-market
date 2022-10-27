@@ -58,6 +58,7 @@ const ItemDetail: NextPage = () => {
                                 <h1 className="text-3xl font-bold text-black">
                                     {data?.product?.name}
                                 </h1>
+
                                 <div className="text-2xl mt-1 text-slate-700">
                                     {priceConverter(
                                         String(data?.product?.price)
