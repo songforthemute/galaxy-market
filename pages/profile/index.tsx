@@ -2,8 +2,28 @@ import type { NextPage } from "next";
 import Layout from "@components/layout";
 import ProfileBtn from "@components/profileBtn";
 import UserCard from "@components/userCard";
+import useSWR from "swr";
+import { Review } from "@prisma/client";
+import { cls } from "@libs/client/util";
+
+interface ReviewWithCreator extends Review {
+    createdBy: {
+        id: number;
+        username: string;
+        avatarUrl?: string;
+    };
+}
+
+interface ReviewsReturn {
+    status: boolean;
+    reviews: ReviewWithCreator[];
+}
 
 const Profile: NextPage = () => {
+    const { data } = useSWR<ReviewsReturn>("api/reviews");
+
+    console.log(data);
+
     return (
         <Layout title="프로필" hasTabBar canGoBack hasConfig>
             <div className="">
@@ -69,44 +89,42 @@ const Profile: NextPage = () => {
                 </div>
 
                 <div className="mt-6 px-4 divide-y-[1px] divied-gray-400">
-                    {[1, 2, 3, 4, 5].map((v, i) => (
-                        <div key={i} className="py-4">
-                            <div className="flex items-center space-x-4">
-                                <div className="w-12 h-12 rounded-full bg-gray-400" />
-                                <div key={i}>
-                                    <h4 className="ml-0.5 text-sm font-bold">
-                                        Joey
-                                    </h4>
-                                    <div className="mt-0.5 flex items-center">
-                                        {[1, 2, 3, 4, 5].map((v, j) => (
-                                            <svg
-                                                key={j}
-                                                className="text-yellow-400 h-4 w-4"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 20 20"
-                                                fill="currentColor"
-                                                aria-hidden="true"
-                                            >
-                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                            </svg>
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="mt-4 text-gray-700 text-sm">
-                                <p>
-                                    우리는 단순히 제품을 만들기만 하는 게 아니라
-                                    사용자에게 마법과 같은 경험을 선사해요.
-                                    Apple에서는 있는 그대로의 모습으로 당당하게
-                                    성장하고 발전할 수 있습니다. 각기 다른
-                                    배경을 지닌 사람들이 모였을 때, 부족한
-                                    부분을 더 온전히 채울 수 있어요. Apple은
-                                    제가 한 사람으로서 다른 사람에게 어떤 도움을
-                                    줄 수 있는지를 봐주었어요.
-                                </p>
-                            </div>
-                        </div>
-                    ))}
+                    {data?.status
+                        ? data?.reviews.map((review) => (
+                              <div key={review.id} className="py-4">
+                                  <div className="flex items-center space-x-4">
+                                      <div className="w-12 h-12 rounded-full bg-gray-400" />
+                                      <div>
+                                          <h4 className="ml-0.5 text-sm font-bold">
+                                              {review.createdBy.username}
+                                          </h4>
+                                          <div className="mt-0.5 flex items-center">
+                                              {[0, 0, 0, 0, 0].map((v, i) => (
+                                                  <svg
+                                                      key={i}
+                                                      className={cls(
+                                                          "h-4 w-4",
+                                                          i < review.star
+                                                              ? "text-yellow-400"
+                                                              : "text-gray-400"
+                                                      )}
+                                                      xmlns="http://www.w3.org/2000/svg"
+                                                      viewBox="0 0 20 20"
+                                                      fill="currentColor"
+                                                      aria-hidden="true"
+                                                  >
+                                                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                  </svg>
+                                              ))}
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div className="mt-4 text-gray-700 text-sm">
+                                      <p>{review.text}</p>
+                                  </div>
+                              </div>
+                          ))
+                        : null}
                 </div>
             </div>
         </Layout>

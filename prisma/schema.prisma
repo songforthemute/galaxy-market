@@ -76,6 +76,19 @@ model Interest {
   post    Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId  Int
 }
+
+model Review {
+  id          Int      @id @default(autoincrement())
+  created     DateTime @default(now())
+  updated     DateTime @updatedAt
+  text        String   @db.MediumText
+  star        Int
+  createdBy   User     @relation(name: "writtenReviews", fields: [createdById], references: [id], onDelete: Cascade)
+  createdById Int
+  createdTo   User     @relation(name: "receivedReviews", fields: [createdToId], references: [id], onDelete: Cascade)
+  createdToId Int
+}
+
 enum Kind {
   Like
   Buy
