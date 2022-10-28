@@ -4,7 +4,6 @@ import HelperBtn from "@components/helperBtn";
 import Layout from "@components/layout";
 import useSWR from "swr";
 import { Post } from "@prisma/client";
-import useUser from "@libs/client/useUser";
 
 interface PostWithReaction extends Post {
     user: {
@@ -22,7 +21,6 @@ interface PostsReturn {
 }
 
 const Community: NextPage = () => {
-    const { user } = useUser();
     const { data } = useSWR<PostsReturn>("/api/posts");
 
     return (

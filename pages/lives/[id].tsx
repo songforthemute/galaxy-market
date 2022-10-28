@@ -1,11 +1,8 @@
 import type { NextPage } from "next";
 import { Fragment } from "react";
 import Layout from "@components/layout";
-import useUser from "@libs/client/useUser";
 
 const StreamDetail: NextPage = () => {
-    const { user } = useUser();
-
     return (
         // 타이틀 동적 할당
         <Layout title={"라이브 커머스"} canGoBack>

@@ -24,8 +24,6 @@ const Profile: NextPage = () => {
     const { user } = useUser();
     const { data } = useSWR<ReviewsReturn>("/api/reviews");
 
-    console.log(data);
-
     return (
         <Layout title="프로필" hasTabBar canGoBack hasConfig>
             {user ? (

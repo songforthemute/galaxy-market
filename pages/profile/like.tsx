@@ -3,7 +3,6 @@ import Item from "@components/item";
 import Layout from "@components/layout";
 import useSWR from "swr";
 import { Product, Record } from "@prisma/client";
-import useUser from "@libs/client/useUser";
 
 interface ProductWithLikes extends Product {
     _count: { record: number };
@@ -19,7 +18,6 @@ interface RecordReturn {
 }
 
 const Like: NextPage = () => {
-    const { user } = useUser();
     const { data } = useSWR<RecordReturn>("/api/users/me/record?kind=Like");
 
     return (

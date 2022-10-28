@@ -19,10 +19,7 @@ interface ProductsReturn {
 }
 
 const Home: NextPage = () => {
-    const user = useUser();
     const { data } = useSWR<ProductsReturn>("/api/products");
-
-    console.log(data);
 
     return (
         <Layout title="홈" hasTabBar canGoBack hasConfig>

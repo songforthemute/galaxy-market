@@ -8,7 +8,6 @@ import { Product } from "@prisma/client";
 import { cls, priceConverter } from "@libs/client/util";
 import Link from "next/link";
 import useMutation from "@libs/client/useMutation";
-import useUser from "@libs/client/useUser";
 
 interface ProductWithUserInterface extends Product {
     user: {
@@ -25,7 +24,6 @@ interface ProductReturn {
 }
 
 const ItemDetail: NextPage = () => {
-    const { user } = useUser();
     const router = useRouter();
     const { data, mutate } = useSWR<ProductReturn | undefined>(
         router.query.id ? `/api/products/${router.query?.id}` : null

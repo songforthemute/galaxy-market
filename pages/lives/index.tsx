@@ -1,11 +1,8 @@
 import type { NextPage } from "next";
 import HelperBtn from "../../components/helperBtn";
 import Layout from "@components/layout";
-import useUser from "@libs/client/useUser";
 
 const Stream: NextPage = () => {
-    const { user } = useUser();
-
     return (
         <Layout title="라이브 커머스" hasTabBar canGoBack hasConfig>
             <div className="px-4 pb-2 space-y-4 divide-y-2">
