@@ -2,8 +2,11 @@ import type { NextPage } from "next";
 import Btn from "@components/btn";
 import Input from "@components/input";
 import Layout from "@components/layout";
+import useUser from "@libs/client/useUser";
 
 const EditProfile: NextPage = () => {
+    const { user } = useUser();
+
     return (
         <Layout title="프로필 수정" hasTabBar canGoBack>
             <div className="p-4 space-y-8">

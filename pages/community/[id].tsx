@@ -10,6 +10,7 @@ import useMutation from "@libs/client/useMutation";
 import { cls } from "@libs/client/util";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
+import useUser from "@libs/client/useUser";
 
 interface RepliesWithUser extends Replies {
     user: {
@@ -47,6 +48,7 @@ interface ReplyReturn {
 }
 
 const PostDetail: NextPage = () => {
+    const { user } = useUser();
     const router = useRouter();
     // Click Interest
     const { data, mutate } = useSWR<PostReturn | undefined>(

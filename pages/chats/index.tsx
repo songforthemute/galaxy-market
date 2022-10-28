@@ -1,8 +1,11 @@
 import type { NextPage } from "next";
 import Layout from "@components/layout";
 import UserCard from "@components/userCard";
+import useUser from "@libs/client/useUser";
 
 const Chats: NextPage = () => {
+    const { user } = useUser();
+
     return (
         <Layout title="메시지" hasTabBar canGoBack hasConfig>
             <div className="divide-y-[1px] divide-slate-100">

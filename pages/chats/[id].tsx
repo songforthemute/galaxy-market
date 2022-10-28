@@ -3,8 +3,11 @@ import { Fragment } from "react";
 import Layout from "@components/layout";
 import Message from "@components/message";
 import Sending from "@components/sendingMessage";
+import useUser from "@libs/client/useUser";
 
 const ChatDetail: NextPage = () => {
+    const { user } = useUser();
+
     return (
         // 스테이트로 유저 네임 동적 할당
         <Layout title={"메시지"} canGoBack>

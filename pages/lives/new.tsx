@@ -3,8 +3,11 @@ import Btn from "@components/btn";
 import Input from "@components/input";
 import Layout from "@components/layout";
 import TxtArea from "@components/txtArea";
+import useUser from "@libs/client/useUser";
 
 const NewStream: NextPage = () => {
+    const { user } = useUser();
+
     return (
         <Layout title="새 라이브 커머스" hasTabBar canGoBack>
             <div className="space-y-4 py-10 px-4">

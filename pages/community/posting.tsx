@@ -8,6 +8,7 @@ import useMutation from "@libs/client/useMutation";
 import { Post } from "@prisma/client";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import useUser from "@libs/client/useUser";
 
 interface PostingFormInterface {
     title: string;
@@ -20,6 +21,7 @@ interface PostingReturn {
 }
 
 const Posting: NextPage = () => {
+    const { user } = useUser();
     const router = useRouter();
     const { register, handleSubmit } = useForm<PostingFormInterface>();
     const [post, { loading, data }] = useMutation<PostingReturn>("/api/posts");
