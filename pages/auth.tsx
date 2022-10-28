@@ -28,7 +28,7 @@ const Auth = () => {
         handleSubmit,
         setError,
         formState: { errors },
-    } = useForm<AuthForm>();
+    } = useForm<AuthForm>({ reValidateMode: "onBlur" });
     const [method, setMethod] = useState<"login" | "join">("login");
     const [authentication, { loading, data, error }] =
         useMutation<AuthenticationReturn>("/api/users/auth");
@@ -117,13 +117,24 @@ const Auth = () => {
                         className="flex flex-col mt-8"
                     >
                         <Input
-                            register={register("email", { required: true })}
+                            register={register("email", {
+                                required: true,
+                                pattern: {
+                                    value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+                                    message:
+                                        "올바른 이메일 주소를 입력해 주세요.",
+                                },
+                            })}
                             label={"이메일 주소"}
                             name={"email"}
                             type={"email"}
                             required
                             placeholder={"이메일 주소를 입력해주세요."}
+                            isCheckOk={!errors.email}
                         />
+                        {errors.email && (
+                            <ErrorMessage text={errors.email.message} />
+                        )}
 
                         {method === "join" && (
                             <Input
@@ -137,13 +148,22 @@ const Auth = () => {
                                         message: "2~12자 사이로 입력해주세요.",
                                         value: 12,
                                     },
+                                    pattern: {
+                                        value: /^[a-zA-Zㄱ-힣0-9|s]*$/,
+                                        message:
+                                            "특수문자는 사용할 수 없습니다.",
+                                    },
                                 })}
                                 label={"닉네임"}
                                 name={"username"}
                                 type={"text"}
                                 required
                                 placeholder={"사용할 닉네임을 입력해주세요."}
+                                isCheckOk={!errors.username}
                             />
+                        )}
+                        {errors.username && (
+                            <ErrorMessage text={errors.username.message} />
                         )}
 
                         <Input
@@ -182,7 +202,7 @@ const Auth = () => {
 
                         {errors.passwordConfirm && (
                             <ErrorMessage
-                                text={errors.passwordConfirm.message!}
+                                text={errors.passwordConfirm.message}
                             />
                         )}
 
