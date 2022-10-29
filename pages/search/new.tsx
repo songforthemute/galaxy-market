@@ -6,7 +6,7 @@ import TxtArea from "@components/txtArea";
 
 const NewStream: NextPage = () => {
     return (
-        <Layout title="새 라이브 커머스" hasTabBar canGoBack>
+        <Layout title="찾아보기" hasTabBar canGoBack>
             <div className="space-y-4 py-10 px-4">
                 <Input
                     placeholder="제목을 적어주세요."
