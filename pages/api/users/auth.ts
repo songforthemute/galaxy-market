@@ -16,9 +16,6 @@ const authHandler = async (
     req: NextApiRequest,
     res: NextApiResponse<ResponseInterface>
 ) => {
-    // console.log(req.body); // test transmitted body
-    // console.log("by authController: ", req.method); // test meth
-
     const {
         email,
         username = undefined,
@@ -65,14 +62,10 @@ const authHandler = async (
         }
     }
 
-    console.log("auth.tsx: ", user);
-
     req.session.user = {
         id: user.id,
     }; // cookie has stroage limitation
     await req.session.save(); // logout: req.session.destroy()
-
-    console.log("auth.tsx - req.session: ", req.session);
 
     res.json({ status: true });
 };

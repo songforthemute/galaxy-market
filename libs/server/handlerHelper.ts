@@ -19,7 +19,7 @@ const handlerHelper = ({
     isPrivate = false,
 }: ConfigurationInterface) => {
     return async (req: NextApiRequest, res: NextApiResponse) => {
-        console.log("requested method: ", req.method);
+        console.log("requested method:", req.method, "- by handlerHelper.ts");
 
         if (req.method && !methods.includes(req.method as any)) {
             return res.status(405).end();
