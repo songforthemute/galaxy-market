@@ -22,7 +22,10 @@ interface PostingReturn {
 const Posting: NextPage = () => {
     const router = useRouter();
     const { register, handleSubmit } = useForm<PostingFormInterface>();
-    const [post, { loading, data }] = useMutation<PostingReturn>("/api/posts");
+    const [post, { loading, data }] = useMutation<PostingReturn>(
+        "/api/posts",
+        "POST"
+    );
     const _onValid = (data: PostingFormInterface) => {
         if (loading) return;
 

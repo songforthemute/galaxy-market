@@ -24,8 +24,10 @@ interface UploadProductReturn {
 const Upload: NextPage = () => {
     const router = useRouter();
     const { register, handleSubmit } = useForm<UploadProductFormInterface>();
-    const [uploadProduct, { loading, data }] =
-        useMutation<UploadProductReturn>("/api/products");
+    const [uploadProduct, { loading, data }] = useMutation<UploadProductReturn>(
+        "/api/products",
+        "POST"
+    );
 
     const _onValid = (data: UploadProductFormInterface) => {
         if (loading) return;

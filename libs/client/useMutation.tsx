@@ -5,9 +5,15 @@ interface UseMutationState<T> {
     data?: T;
     error?: any;
 }
+
+type MethodType = "GET" | "POST" | "PUT" | "DELETE";
+
 type UseMutationReturn<T> = [(data: any) => void, UseMutationState<T>];
 
-const useMutation = <T extends any>(url: string): UseMutationReturn<T> => {
+const useMutation = <T extends any>(
+    url: string,
+    method: MethodType
+): UseMutationReturn<T> => {
     const [state, setState] = useState<UseMutationState<T>>({
         loading: false,
         data: undefined,
@@ -18,7 +24,7 @@ const useMutation = <T extends any>(url: string): UseMutationReturn<T> => {
         setState((prev) => ({ ...prev, loading: true }));
 
         fetch(url, {
-            method: "POST",
+            method: method,
             headers: {
                 "Content-Type": "application/json",
             },
