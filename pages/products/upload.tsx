@@ -23,7 +23,11 @@ interface UploadProductReturn {
 
 const Upload: NextPage = () => {
     const router = useRouter();
-    const { register, handleSubmit } = useForm<UploadProductFormInterface>();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<UploadProductFormInterface>();
     const [uploadProduct, { loading, data }] = useMutation<UploadProductReturn>(
         "/api/products",
         "POST"
@@ -81,14 +85,15 @@ const Upload: NextPage = () => {
                         required
                         placeholder="상품명을 입력해주세요."
                         register={register("name", { required: true })}
+                        isCheckOk={Boolean(!errors.name)}
                     />
 
                     <Input
                         name="option"
                         label="옵션"
-                        required
                         placeholder="옵션을 입력해주세요."
                         register={register("option")}
+                        isCheckOk={Boolean(!errors.option)}
                     />
 
                     <Input

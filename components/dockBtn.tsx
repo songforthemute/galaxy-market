@@ -14,7 +14,7 @@ const DockBtn = ({ children, text, href, isActive = false }: DockBtnProps) => {
             <a
                 className={cls(
                     isActive ? "text-purple-400" : "",
-                    "flex flex-col items-center space-y-2 cursor-pointer hover:opacity-50 transition-all"
+                    "flex flex-col items-center space-y-2 cursor-pointer hover:opacity-30 transition-all"
                 )}
             >
                 {children}
