@@ -21,7 +21,7 @@ const Search: NextPage = () => {
     const router = useRouter();
     const { data } = useSWR<SearchReturn>(
         router.query.name
-            ? `/api/search?name=${router.query.name}&lowestPrice=${router.query.lowestPrice}&highestPrice=${router.query.highestPrice}`
+            ? `/api/search?name=${router.query.name}&lowestPrice=${router.query.lowestPrice}&highestPrice=${router.query.highestPrice}&sort=${router.query.sort}`
             : null
     );
 
@@ -32,32 +32,35 @@ const Search: NextPage = () => {
     return (
         <Layout title="검색" hasTabBar canGoBack hasConfig>
             <div className="flex flex-col divide-y-[1px]">
-                {data?.result ? (
-                    data.result.map((product) => (
-                        <Item
-                            key={product.id}
-                            href={`/products/${product.id}`}
-                            name={product.name}
-                            opt={product.option}
-                            price={product.price}
-                            likes={product._count.record}
-                        />
-                    ))
-                ) : (
-                    // Skeleton Loading Component
-                    <div className="p-4 flex w-full flex-1 flex-col items-center mb-8 transition-all">
-                        <div className="w-full animate-pulse flex-row items-center justfiy-center space-y-4">
-                            <div className="flex flex-row items-start">
-                                <div className="h-24 w-24 mr-4 rounded-md bg-slate-200" />
-                                <div className="h-24 w-full rounded-md bg-slate-200" />
+                {data ? (
+                    data.result ? (
+                        data.result.map((product) => (
+                            <Item
+                                key={product.id}
+                                href={`/products/${product.id}`}
+                                name={product.name}
+                                opt={product.option}
+                                price={product.price}
+                                likes={product._count.record}
+                            />
+                        ))
+                    ) : (
+                        // Skeleton Loading Component
+                        <div className="p-4 flex w-full flex-1 flex-col items-center mb-8 transition-all">
+                            <div className="w-full animate-pulse flex-row items-center justfiy-center space-y-4">
+                                <div className="flex flex-row items-start">
+                                    <div className="h-24 w-24 mr-4 rounded-md bg-slate-200" />
+                                    <div className="h-24 w-full rounded-md bg-slate-200" />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                )}
+                    )
+                ) : null}
                 <button
                     onClick={_onClick}
                     className={cls(
-                        "fixed bottom-28 right-4 shadow-xl border-transparent bg-purple-400 rounded-full p-4 text-white hover:bg-purple-700 transition-colors"
+                        "fixed bottom-28 right-4 shadow-xl border-transparent bg-purple-400 rounded-full p-4 text-white hover:bg-purple-700 transition-colors",
+                        data ? "hover:animate-bounce" : "animate-bounce"
                     )}
                 >
                     <svg

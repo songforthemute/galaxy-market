@@ -8,8 +8,7 @@ const handler = async (
     res: NextApiResponse<ResponseInterface>
 ) => {
     const {
-        session: { user },
-        query: { name, lowestPrice, highestPrice },
+        query: { name, lowestPrice, highestPrice, sort },
     } = req;
 
     const keyword = (name as string).split(" ").map((word) => ({
@@ -17,6 +16,16 @@ const handler = async (
             contains: word,
         },
     }));
+
+    let orderBy: { [key: string]: string };
+
+    if (sort === "최신등록순") {
+        orderBy = { created: "desc" };
+    } else if (sort === "높은가격순") {
+        orderBy = { price: "desc" };
+    } else {
+        orderBy = { price: "asc" };
+    }
 
     const querying = await client.product.findMany({
         where: {
@@ -32,9 +41,7 @@ const handler = async (
                 },
             },
         },
-        orderBy: {
-            created: "desc",
-        },
+        orderBy,
         include: {
             _count: {
                 select: {
