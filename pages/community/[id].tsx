@@ -109,7 +109,7 @@ const PostDetail: NextPage = () => {
                         username={data.post.user?.username}
                         avatarUrl={data.post.user?.avatarUrl}
                         text="프로필 보기 →"
-                        href="/profile"
+                        href={`/profile/${data.post.userId}`}
                         type="profile"
                     />
                     <div className="mt-2 px-4 text-xl font-medium">

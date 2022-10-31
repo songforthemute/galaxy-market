@@ -1,16 +1,24 @@
+import { UseFormRegisterReturn } from "react-hook-form";
+
 interface SendingProps {
     placeholder?: string;
+    register?: UseFormRegisterReturn;
     children?: React.ReactNode | "→";
+    required?: boolean;
 }
 
 const Sending = ({
-    placeholder = "Write here sending message...",
+    placeholder = "메시지를 입력해주세요.",
+    required = false,
+    register,
     children = "→",
 }: SendingProps) => {
     return (
         <div className="fixed w-full mx-auto max-w-md bottom-4 inset-x-0">
             <div className="flex items-center relative">
                 <input
+                    required={required}
+                    {...register}
                     type="text"
                     placeholder={placeholder}
                     className="shadow-md rounded-full w-full border-slate-400 pr-12

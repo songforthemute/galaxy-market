@@ -1,12 +1,12 @@
 import { cls } from "@libs/client/util";
 
-interface MessageProps {
-    text: string;
+interface MessagesProps {
+    text?: string;
     isReverse?: boolean;
     avatarUrl?: string; // 추후 이미지에 넣을 부분
 }
 
-const Message = ({ text, isReverse = false, avatarUrl }: MessageProps) => {
+const Messages = ({ text, isReverse = false, avatarUrl }: MessagesProps) => {
     return (
         <div
             className={cls(
@@ -22,4 +22,4 @@ const Message = ({ text, isReverse = false, avatarUrl }: MessageProps) => {
     );
 };
 
-export default Message;
+export default Messages;

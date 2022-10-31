@@ -1,7 +1,7 @@
 import { cls } from "@libs/client/util";
 
 interface BtnProps {
-    _onClick?: (params?: any) => void;
+    _onClick?: () => void;
     text: string;
     isLarge?: boolean;
     [key: string]: any;

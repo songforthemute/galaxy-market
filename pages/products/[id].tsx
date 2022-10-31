@@ -29,8 +29,11 @@ const ItemDetail: NextPage = () => {
         router.query.id ? `/api/products/${router.query?.id}` : null
     );
 
-    const [toggleLike] = useMutation(`/api/products/${router.query?.id}/like`);
-    const _onLikeClick = () => {
+    const [toggleLike] = useMutation(
+        `/api/products/${router.query?.id}/like`,
+        "POST"
+    );
+    const _onClickLike = () => {
         if (!data) return;
 
         toggleLike({});
