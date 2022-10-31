@@ -28,6 +28,8 @@ model User {
   writtenReviews  Review[]   @relation(name: "writtenReviews")
   receivedReviews Review[]   @relation(name: "receivedReviews")
   record          Record[]
+  sentMessage     Message[]  @relation(name: "sentMessage")
+  receivedMessage Message[]  @relation(name: "receivedMessage")
 }
 
 model Product {
@@ -105,4 +107,15 @@ model Record {
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId Int
   kind      Kind
+}
+
+model Message {
+  id           Int      @id @default(autoincrement())
+  created      DateTime @default(now())
+  updated      DateTime @updatedAt
+  text         String   @db.MediumText
+  messagedBy   User     @relation(name: "sentMessage", fields: [messagedById], references: [id], onDelete: Cascade)
+  messagedById Int
+  messagedTo   User     @relation(name: "receivedMessage", fields: [messagedToId], references: [id], onDelete: Cascade)
+  messagedToId Int
 }

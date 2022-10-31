@@ -1,26 +1,66 @@
 import type { NextPage } from "next";
 import { Fragment } from "react";
 import Layout from "@components/layout";
-import Message from "@components/message";
+import Messages from "@components/message";
 import Sending from "@components/sendingMessage";
+import { useForm } from "react-hook-form";
+import useMutation from "@libs/client/useMutation";
+import { useRouter } from "next/router";
+import useSWR from "swr";
+import { Message } from "@prisma/client";
+import useUser from "@libs/client/useUser";
+
+interface SendingForm {
+    message: string;
+}
+
+interface MessageWithUser extends Message {
+    messagedBy: {
+        id: number;
+        avatarUrl?: string | null;
+        username: string;
+    };
+}
+
+interface MessagesReturn {
+    status: boolean;
+    messages: MessageWithUser[];
+}
 
 const ChatDetail: NextPage = () => {
+    const { user } = useUser();
+    const router = useRouter();
+    const [send, { loading }] = useMutation(
+        `/api/message/${router.query.id}`,
+        "POST"
+    );
+
+    const { register, handleSubmit, reset } = useForm<SendingForm>();
+    const _onValid = ({ message }: SendingForm) => {
+        send({ message });
+        reset();
+    };
+
+    const { data } = useSWR<MessagesReturn>(`/api/message/${router.query.id}`);
+
     return (
-        // 스테이트로 유저 네임 동적 할당
         <Layout title={"메시지"} canGoBack>
             <div className="p-4 pb-20 space-y-4">
-                {[1, 2, 3, 4, 5, 6, 7].map((v, i) => (
-                    <Fragment key={i}>
-                        <Message text="올려 둔 상품 얼마에 판매하시나요?" />
-                        <Message
-                            text="130,000원까지 생각하고 있어요!"
-                            isReverse={true}
-                        />
-                        <Message text="오!" />
-                    </Fragment>
+                {data?.messages?.map((message) => (
+                    <Messages
+                        avatarUrl={message.messagedBy.avatarUrl || undefined}
+                        key={message.id}
+                        text={message.text}
+                        isReverse={message.messagedById !== user?.id}
+                    />
                 ))}
 
-                <Sending placeholder="Write here sending message..." />
+                <form onSubmit={handleSubmit(_onValid)}>
+                    <Sending
+                        register={register("message", { required: true })}
+                        placeholder="메시지를 입력해주세요."
+                    />
+                </form>
             </div>
         </Layout>
     );

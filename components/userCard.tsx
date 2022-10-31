@@ -7,7 +7,6 @@ interface UserCardProps {
     avatarUrl?: string;
     href: string;
     type?: "message" | "profile"; // default: "profile"
-
     isLarge?: boolean;
     hasBorder?: boolean;
     [key: string]: any;
@@ -20,7 +19,6 @@ const UserCard = ({
     href,
     type = "profile",
     isLarge = false,
-
     hasBorder,
     ...properties
 }: UserCardProps) => {
