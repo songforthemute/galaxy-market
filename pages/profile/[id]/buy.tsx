@@ -3,6 +3,7 @@ import Item from "@components/item";
 import Layout from "@components/layout";
 import useSWR from "swr";
 import { Product, Record } from "@prisma/client";
+import { useRouter } from "next/router";
 
 interface ProductWithLikes extends Product {
     _count: { record: number };
@@ -17,21 +18,26 @@ interface RecordReturn {
     record: RecordWithProduct[];
 }
 
-const Like: NextPage = () => {
-    const { data } = useSWR<RecordReturn>("/api/users/me/record?kind=Like");
+const Buy: NextPage = () => {
+    const {
+        query: { id },
+    } = useRouter();
+    const { data } = useSWR<RecordReturn>(
+        `/api/users/me/record?id=${id}&kind=Buy`
+    );
 
     return (
-        <Layout title="관심목록" hasTabBar canGoBack>
+        <Layout title="구매내역" hasTabBar canGoBack>
             <div className="flex flex-col divide-y-[1px]">
                 {data ? (
-                    data.record?.map((like) => (
+                    data.record?.map((buy) => (
                         <Item
-                            name={like.product.name}
-                            opt={like.product.option}
-                            price={like.product.price}
-                            likes={like.product._count.record}
-                            key={like.id}
-                            href={`/products/${like.product.id}`}
+                            name={buy.product.name}
+                            opt={buy.product.option}
+                            price={buy.product.price}
+                            likes={buy.product._count.record}
+                            key={buy.id}
+                            href={`/products/${buy.product.id}`}
                         />
                     )) // Skeleton Loading Component
                 ) : (
@@ -49,4 +55,4 @@ const Like: NextPage = () => {
     );
 };
 
-export default Like;
+export default Buy;

@@ -12,22 +12,23 @@ const handler = async (
         query: { id },
     } = req;
 
-    const reviews = await client.review.findMany({
-        where: {
-            createdToId: Number(id) || user?.id,
-        },
-        include: {
-            createdBy: {
-                select: {
-                    id: true,
-                    username: true,
-                    avatarUrl: true,
+    if (user?.id !== Number(id)) {
+        await client.user
+            .findUnique({
+                where: {
+                    id: Number(id),
                 },
-            },
-        },
-    });
-
-    res.json({ status: true, reviews });
+            })
+            .then((response) => res.json({ status: true, profile: response }));
+    } else {
+        await client.user
+            .findUnique({
+                where: {
+                    id: user?.id,
+                },
+            })
+            .then((response) => res.json({ status: true, profile: response }));
+    }
 };
 
 export default withApiSession(

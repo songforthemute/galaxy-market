@@ -3,9 +3,10 @@ import Layout from "@components/layout";
 import ProfileBtn from "@components/profileBtn";
 import UserCard from "@components/userCard";
 import useSWR from "swr";
-import { Review } from "@prisma/client";
+import { Review, User } from "@prisma/client";
 import { cls } from "@libs/client/util";
 import useUser from "@libs/client/useUser";
+import { useRouter } from "next/router";
 
 interface ReviewWithUser extends Review {
     createdBy: {
@@ -20,25 +21,44 @@ interface ReviewsReturn {
     reviews: ReviewWithUser[];
 }
 
+interface ProfileReturn {
+    status: boolean;
+    profile: User;
+}
+
 const Profile: NextPage = () => {
+    const {
+        query: { id },
+    } = useRouter();
     const { user } = useUser();
-    const { data } = useSWR<ReviewsReturn>("/api/reviews");
+    const { data } = useSWR<ReviewsReturn>(`/api/reviews?id=${id as String}`);
+    const { data: profile } = useSWR<ProfileReturn>(
+        `/api/users/info?id=${id as String}`
+    );
 
     return (
         <Layout title="프로필" hasTabBar canGoBack hasConfig>
-            {user ? (
+            {profile?.profile ? (
                 <div className="">
                     <UserCard
-                        username={user?.username}
-                        text="프로필 수정 →"
+                        username={profile?.profile.username}
+                        text={
+                            user?.id === Number(id)
+                                ? "프로필 수정 →"
+                                : "메시지 보내기 →"
+                        }
                         type="profile"
-                        href="/profile/edit"
+                        href={
+                            user?.id === Number(id)
+                                ? "/profile/edit"
+                                : `/chats/${id}`
+                        }
                         isLarge
                     />
 
                     <div className="mt-10 flex justify-around">
                         <ProfileBtn
-                            href={`/profile/${user?.id}/sell`}
+                            href={`/profile/${id}/sell`}
                             text="판매내역"
                         >
                             <svg
@@ -57,10 +77,7 @@ const Profile: NextPage = () => {
                             </svg>
                         </ProfileBtn>
 
-                        <ProfileBtn
-                            href={`/profile/${user?.id}/buy`}
-                            text="구매내역"
-                        >
+                        <ProfileBtn href={`/profile/${id}/buy`} text="구매내역">
                             <svg
                                 className="w-6 h-6"
                                 fill="none"
@@ -78,7 +95,7 @@ const Profile: NextPage = () => {
                         </ProfileBtn>
 
                         <ProfileBtn
-                            href={`/profile/${user?.id}/like`}
+                            href={`/profile/${id}/like`}
                             text="관심목록"
                         >
                             <svg

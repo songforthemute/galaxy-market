@@ -8,15 +8,14 @@ const handler = async (
     res: NextApiResponse<ResponseInterface>
 ) => {
     const {
-        session: { user },
-        query: { kind },
+        query: { kind, id },
     } = req;
 
     if (kind === "Like" || kind === "Buy" || kind === "Sell") {
         const record = await client.record.findMany({
             where: {
                 kind: kind,
-                userId: user?.id,
+                userId: Number(id),
             },
             include: {
                 product: {
