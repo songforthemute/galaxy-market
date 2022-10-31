@@ -8,6 +8,7 @@ import { Product } from "@prisma/client";
 import { cls, priceConverter } from "@libs/client/util";
 import Link from "next/link";
 import useMutation from "@libs/client/useMutation";
+import useUser from "@libs/client/useUser";
 
 interface ProductWithUserInterface extends Product {
     user: {
@@ -24,6 +25,7 @@ interface ProductReturn {
 }
 
 const ItemDetail: NextPage = () => {
+    const { user } = useUser();
     const router = useRouter();
     const { data, mutate } = useSWR<ProductReturn | undefined>(
         router.query.id ? `/api/products/${router.query?.id}` : null
@@ -38,6 +40,28 @@ const ItemDetail: NextPage = () => {
 
         toggleLike({});
         mutate({ ...data, isLiked: !data?.isLiked }, false);
+    };
+    const [toggleSoldout] = useMutation(
+        `/api/products/${router.query?.id}/soldout`,
+        "PUT"
+    );
+    const _onClickSoldout = () => {
+        if (!data) return;
+
+        toggleSoldout({ isSoldout: data.product.isSoldOut });
+        mutate(
+            {
+                ...data,
+                product: {
+                    ...data.product,
+                    isSoldOut: !data.product.isSoldOut,
+                },
+            },
+            false
+        );
+    };
+    const _onClickTalkSeller = () => {
+        router.push(`/chats/${data?.product.userId}`);
     };
 
     return (
@@ -72,11 +96,25 @@ const ItemDetail: NextPage = () => {
                                     {data?.product?.description}
                                 </p>
                                 <div className="flex items-center justify-between space-x-2 my-4">
-                                    <Btn text={"판매자에게 연락하기"} />
+                                    {user?.id === data.product.userId ? (
+                                        <Btn
+                                            text={"판매자에게 연락하기"}
+                                            _onClick={_onClickTalkSeller}
+                                        />
+                                    ) : (
+                                        <Btn
+                                            text={
+                                                data.product.isSoldOut
+                                                    ? "판매 재개하기"
+                                                    : "판매 완료하기"
+                                            }
+                                            _onClick={_onClickSoldout}
+                                        />
+                                    )}
 
                                     {/* Like Toggle Btn */}
                                     <button
-                                        onClick={_onLikeClick}
+                                        onClick={_onClickLike}
                                         className={cls(
                                             "p-2 flex items-center justify-center transition-all hover:animate-bounce",
                                             data.isLiked

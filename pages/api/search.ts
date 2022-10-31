@@ -32,10 +32,10 @@ const handler = async (
             OR: keyword,
             AND: {
                 price: {
-                    gt: (lowestPrice as string).length
+                    gte: (lowestPrice as string).length
                         ? Number(lowestPrice)
                         : undefined,
-                    lt: (highestPrice as string).length
+                    lte: (highestPrice as string).length
                         ? Number(highestPrice)
                         : undefined,
                 },
