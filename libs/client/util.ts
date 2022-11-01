@@ -20,6 +20,13 @@ export const priceConverter = (price?: string) => {
     return converted;
 };
 
+export const dateConverter = (date: Date, opts?: "Full" | "Time" | "Date") => {
+    return new Date(date).toLocaleString("ko-kr", {
+        dateStyle: opts === "Time" ? undefined : "full",
+        timeStyle: opts === "Date" ? undefined : "medium",
+    });
+};
+
 export const fetcher = async (url: string) => {
     const response = await fetch(url);
     return await response.json();

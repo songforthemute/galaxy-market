@@ -46,7 +46,6 @@ const ChatDetail: NextPage = () => {
     return (
         <Layout title={"메시지"} canGoBack>
             <div className="p-4 pb-20 space-y-4">
-                        isReverse={message.messagedById !== user?.id}
                 {data?.status === true ? (
                     data?.messages?.map((message) => (
                         <Messages
@@ -55,6 +54,8 @@ const ChatDetail: NextPage = () => {
                             }
                             key={message.id}
                             text={message.text}
+                            isReverse={message.messagedById === user?.id}
+                            createdAt={message.created}
                         />
                     ))
                 ) : (

@@ -21,7 +21,9 @@ const handler = async (
         orderBy: {
             created: "desc",
         },
-        include: {
+        select: {
+            created: true,
+            id: true,
             messagedBy: {
                 select: {
                     id: true,

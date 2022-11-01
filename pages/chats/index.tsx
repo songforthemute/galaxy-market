@@ -4,6 +4,7 @@ import UserCard from "@components/userCard";
 import useUser from "@libs/client/useUser";
 import useSWR from "swr";
 import { Message } from "@prisma/client";
+import { dateConverter } from "@libs/client/util";
 
 interface MessageWithUser extends Message {
     messagedBy: {
@@ -22,16 +23,16 @@ const Chats: NextPage = () => {
     const { user } = useUser();
     const { data } = useSWR<MessageListReturn>(`/api/message?id=${user?.id}`);
 
-    console.log(data);
-
     return (
         <Layout title="메시지" hasTabBar canGoBack hasConfig>
             <div className="divide-y-[1px] divide-slate-100">
-                        text={message.text}
                 {data?.status === true ? (
                     data?.messages.map((message) => (
                         <UserCard
                             key={message.id}
+                            text={`마지막으로 받은 메시지: ${dateConverter(
+                                message.created
+                            )}`}
                             username={message.messagedBy.username}
                             type="message"
                             href={`/chats/${message.messagedBy.id}`}
