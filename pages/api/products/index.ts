@@ -39,19 +39,34 @@ const handler = async (
             session: { user },
         } = req;
 
-        await client.product
-            .create({
-                data: {
-                    name,
-                    option: option ? option : "None",
-                    price: Number(price),
-                    description,
-                    image: "xxx",
-                    user: { connect: { id: user?.id } },
-                },
-            })
-            .then((response) => res.json({ status: true, product: response }));
+        const product = await client.product.create({
+            data: {
+                name,
+                option: option ? option : "None",
+                price: Number(price),
+                description,
+                image: "xxx",
+                user: { connect: { id: user?.id } },
+            },
+        });
 
+        await client.record.create({
+            data: {
+                kind: "Sell",
+                product: {
+                    connect: {
+                        id: product.id,
+                    },
+                },
+                user: {
+                    connect: {
+                        id: user?.id,
+                    },
+                },
+            },
+        });
+
+        res.json({ status: true, product });
         /**
          * return res.status(202).json({ status: true, product });
          * 해당 코드 사용시 에러 발생

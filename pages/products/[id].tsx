@@ -96,7 +96,7 @@ const ItemDetail: NextPage = () => {
                                     {data?.product?.description}
                                 </p>
                                 <div className="flex items-center justify-between space-x-2 my-4">
-                                    {user?.id === data.product.userId ? (
+                                    {user?.id !== data.product.userId ? (
                                         <Btn
                                             text={"판매자에게 연락하기"}
                                             _onClick={_onClickTalkSeller}
