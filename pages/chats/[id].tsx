@@ -46,14 +46,32 @@ const ChatDetail: NextPage = () => {
     return (
         <Layout title={"메시지"} canGoBack>
             <div className="p-4 pb-20 space-y-4">
-                {data?.messages?.map((message) => (
-                    <Messages
-                        avatarUrl={message.messagedBy.avatarUrl || undefined}
-                        key={message.id}
-                        text={message.text}
                         isReverse={message.messagedById !== user?.id}
-                    />
-                ))}
+                {data?.status === true ? (
+                    data?.messages?.map((message) => (
+                        <Messages
+                            avatarUrl={
+                                message.messagedBy.avatarUrl || undefined
+                            }
+                            key={message.id}
+                            text={message.text}
+                        />
+                    ))
+                ) : (
+                    // Skeleton Loading Component
+                    <div className="flex w-full flex-1 flex-col items-center mb-8 transition-all">
+                        <div className="w-full animate-pulse flex-row items-center justfiy-center space-y-4">
+                            <div className="flex flex-row items-start">
+                                <div className="h-12 w-12 mr-4 rounded-md bg-slate-200" />
+                                <div className="h-16 w-full rounded-md bg-slate-200" />
+                            </div>
+                            <div className="flex flex-row items-start">
+                                <div className="h-16 mr-4 w-full rounded-md bg-slate-200" />
+                                <div className="h-12 w-12 rounded-md bg-slate-200" />
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 <form onSubmit={handleSubmit(_onValid)}>
                     <Sending

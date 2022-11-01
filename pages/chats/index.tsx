@@ -27,15 +27,27 @@ const Chats: NextPage = () => {
     return (
         <Layout title="메시지" hasTabBar canGoBack hasConfig>
             <div className="divide-y-[1px] divide-slate-100">
-                {data?.messages.map((message) => (
-                    <UserCard
-                        key={message.id}
                         text={message.text}
-                        username={message.messagedBy.username}
-                        type="message"
-                        href={`/chats/${message.messagedById}`}
-                    />
-                ))}
+                {data?.status === true ? (
+                    data?.messages.map((message) => (
+                        <UserCard
+                            key={message.id}
+                            username={message.messagedBy.username}
+                            type="message"
+                            href={`/chats/${message.messagedBy.id}`}
+                        />
+                    ))
+                ) : (
+                    // Skeleton Loading Component
+                    <div className="p-4 flex w-full flex-1 flex-col items-center mb-8 transition-all">
+                        <div className="w-full animate-pulse flex-row items-center justfiy-center space-y-4">
+                            <div className="flex flex-row items-start">
+                                <div className="h-16 w-16 mr-4 rounded-md bg-slate-200" />
+                                <div className="h-24 w-full rounded-md bg-slate-200" />
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         </Layout>
     );

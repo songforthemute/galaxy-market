@@ -44,10 +44,10 @@ const UserCard = ({
                         <p
                             className={cls(
                                 type === "message"
-                                    ? "text-xs text-slate-400"
+                                    ? "text-sm text-slate-400"
                                     : isLarge
                                     ? "text-md font-semibold text-slate-700"
-                                    : "text-sm font-medium text-slate-700"
+                                    : "font-medium text-slate-700"
                             )}
                         >
                             {username}

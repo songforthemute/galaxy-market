@@ -139,8 +139,9 @@ const Profile: NextPage = () => {
                               ))
                             : null}
                     </div>
-                </div> // Skeleton Loading Component
+                </div>
             ) : (
+                // Skeleton Loading Component
                 <div className="p-4 flex w-full flex-1 flex-col items-center mb-8 transition-all">
                     <div className="w-full animate-pulse flex-row items-center justfiy-center space-y-4">
                         <div className="flex flex-row items-start">
