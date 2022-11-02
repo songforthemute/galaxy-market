@@ -23,7 +23,7 @@ export const priceConverter = (price?: string) => {
 export const dateConverter = (date: Date, opts?: "Full" | "Time" | "Date") => {
     return new Date(date).toLocaleString("ko-kr", {
         dateStyle: opts === "Time" ? undefined : "full",
-        timeStyle: opts === "Date" ? undefined : "medium",
+        timeStyle: opts === "Date" ? undefined : "short",
     });
 };
 

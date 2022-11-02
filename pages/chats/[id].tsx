@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { Fragment } from "react";
+import { useEffect } from "react";
 import Layout from "@components/layout";
 import Messages from "@components/message";
 import Sending from "@components/sendingMessage";
@@ -37,11 +37,49 @@ const ChatDetail: NextPage = () => {
 
     const { register, handleSubmit, reset } = useForm<SendingForm>();
     const _onValid = ({ message }: SendingForm) => {
+        if (loading) return;
+        mutate(
+            (prev) =>
+                prev && {
+                    ...prev,
+                    messages: [
+                        ...prev.messages,
+                        {
+                            id: Date.now(),
+                            text: message,
+                            created: Date.now(),
+                            updated: Date.now(),
+                            messagedById: user?.id,
+                            messagedToId: router.query.id,
+                            messagedBy: {
+                                username: user?.username,
+                                id: user?.id,
+                                avatarUrl: user?.avatarUrl,
+                            },
+                        },
+                    ] as any,
+                },
+            false
+        );
+        scrollTo({ top: scrollY + 100, behavior: "smooth" });
         send({ message });
         reset();
     };
 
-    const { data } = useSWR<MessagesReturn>(`/api/message/${router.query.id}`);
+    const { data, mutate } = useSWR<MessagesReturn>(
+        router.query.id ? `/api/message/${router.query.id}` : null,
+        { refreshInterval: 1000 }
+    );
+
+    useEffect(() => {
+        if (data && data.status) {
+            scrollTo({ top: scrollY + 100, behavior: "smooth" });
+        }
+    }, [data]);
+
+    useEffect(() => {
+        scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    }, []);
 
     return (
         <Layout title={"메시지"} canGoBack>
@@ -78,7 +116,40 @@ const ChatDetail: NextPage = () => {
                     <Sending
                         register={register("message", { required: true })}
                         placeholder="메시지를 입력해주세요."
-                    />
+                        isLoading={loading}
+                    >
+                        {loading ? (
+                            <svg
+                                className="w-6 h-6"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                                />
+                            </svg>
+                        ) : (
+                            <svg
+                                className="w-6 h-6"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"
+                                />
+                            </svg>
+                        )}
+                    </Sending>
                 </form>
             </div>
         </Layout>
