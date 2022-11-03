@@ -5,7 +5,7 @@ import Layout from "@components/layout";
 import { useForm } from "react-hook-form";
 import ErrorMessage from "@components/errMessage";
 import { useRouter } from "next/router";
-import React, { ReactEventHandler, useState } from "react";
+import React, { useState } from "react";
 import { cls } from "@libs/client/util";
 
 interface SearchOptsForm {
@@ -136,13 +136,15 @@ const SearchOpts: NextPage = () => {
                             <div
                                 key={i}
                                 onClick={_onDropDownClick}
-                                className="block cursor-pointer py-2 px-5 text-sm font-medium hover:bg-opacity-5 hover:text-purple-400 transition-all"
+                                className="block cursor-pointer py-2 px-5 text-sm font-medium hover:bg-opacity-5 hover:text-purple-400 hover:bg-purple-400 transition-all"
                             >
                                 {item}
                             </div>
                         ))}
                     </div>
                 </div>
+
+                <div className="py-1" />
 
                 <Btn text="입력한 조건으로 검색하기" />
             </form>
