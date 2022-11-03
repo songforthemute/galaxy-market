@@ -55,6 +55,7 @@ model Post {
   userId      Int
   title       String     @db.Text
   description String     @db.MediumText
+  tag         String
   replies     Replies[]
   interest    Interest[]
 }

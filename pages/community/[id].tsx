@@ -7,9 +7,10 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { Post, Replies } from "@prisma/client";
 import useMutation from "@libs/client/useMutation";
-import { cls } from "@libs/client/util";
+import { cls, dateConverter } from "@libs/client/util";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
+import Badge from "@components/badge";
 
 interface RepliesWithUser extends Replies {
     user: {
@@ -112,18 +113,20 @@ const PostDetail: NextPage = () => {
                         href={`/profile/${data.post.userId}`}
                         type="profile"
                     />
-                    <div className="mt-2 px-4 text-xl font-medium">
+                    <Badge text={data.post.tag} isLarge />
+                    <div className="px-4 text-xl font-medium">
                         <span className="text-purple-400">Q. </span>
                         <span className="text-slate-700">
                             {data.post.title}
                         </span>
                     </div>
-                    <div className="mt-2 ml-6 px-4 space-y-2">
+                    <div className="mt-2 px-4 space-y-2">
                         <p className="text-slate-700">
                             {data.post.description}
                         </p>
+
                         <div className="text-xs text-slate-400">
-                            {String(data.post.created)}
+                            {dateConverter(data.post.created, "Full")}
                         </div>
                     </div>
 
@@ -175,22 +178,22 @@ const PostDetail: NextPage = () => {
 
                     {/* Post's Replies */}
                     <div className="pb-4 px-4 my-4 space-y-4 border-b">
-                        {data.post.replies.map((r) => (
+                        {data.post.replies.map((reply) => (
                             <div
-                                key={r.id}
+                                key={reply.id}
                                 className="flex items-start space-x-4"
                             >
                                 {/* avatarUrl */}
                                 <div className="w-8 h-8 bg-slate-200 rounded-full" />
                                 <div>
                                     <div className="text-sm font-medium text-slate-700">
-                                        {r.user.username}
+                                        {reply.user.username}
                                     </div>
                                     <div className="text-xs text-slate-400">
-                                        {String(r.created)}
+                                        {dateConverter(reply.created, "Full")}
                                     </div>
                                     <p className="text-slate-700 mt-2">
-                                        {r.text}
+                                        {reply.text}
                                     </p>
                                 </div>
                             </div>
