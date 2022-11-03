@@ -21,7 +21,10 @@ interface ProductsReturn {
 }
 
 const Home: NextPage = () => {
-    const getKey = useGetKey<ProductsReturn>(`/api/products`, false);
+    const getKey = useGetKey<ProductsReturn>({
+        url: `/api/products`,
+        hasQuery: false,
+    });
     const { data, setSize } = useSWRInfinite<ProductsReturn>(getKey);
     const products = !data?.[0]?.error
         ? data?.map((data) => data.products).flat()
