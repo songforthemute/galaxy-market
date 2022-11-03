@@ -31,7 +31,10 @@ const Auth = () => {
     } = useForm<AuthForm>({ reValidateMode: "onBlur" });
     const [method, setMethod] = useState<"login" | "join">("login");
     const [authentication, { loading, data, error }] =
-        useMutation<AuthenticationReturn>("/api/users/auth", "POST");
+        useMutation<AuthenticationReturn>({
+            url: "/api/users/auth",
+            method: "POST",
+        });
 
     // functions
     const _onLoginClick = () => {

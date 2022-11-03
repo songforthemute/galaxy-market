@@ -24,7 +24,10 @@ const EditProfile: NextPage = () => {
     const { user } = useUser();
     const router = useRouter();
     const [editProfile, { data, loading, error }] =
-        useMutation<EditProfileReturn>(`/api/users/me`, "PUT");
+        useMutation<EditProfileReturn>({
+            url: "/api/users/me",
+            method: "PUT",
+        });
     const {
         register,
         handleSubmit,

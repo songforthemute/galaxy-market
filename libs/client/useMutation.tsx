@@ -10,10 +10,15 @@ type MethodType = "GET" | "POST" | "PUT" | "DELETE";
 
 type UseMutationReturn<T> = [(data: any) => void, UseMutationState<T>];
 
-const useMutation = <T extends any>(
-    url: string,
-    method: MethodType
-): UseMutationReturn<T> => {
+interface useMutationProps {
+    url: string;
+    method: MethodType;
+}
+
+const useMutation = <T extends any>({
+    url,
+    method,
+}: useMutationProps): UseMutationReturn<T> => {
     const [state, setState] = useState<UseMutationState<T>>({
         loading: false,
         data: undefined,

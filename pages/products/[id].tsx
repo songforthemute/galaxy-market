@@ -31,20 +31,21 @@ const ItemDetail: NextPage = () => {
         router.query.id ? `/api/products/${router.query?.id}` : null
     );
 
-    const [toggleLike] = useMutation(
-        `/api/products/${router.query?.id}/like`,
-        "POST"
-    );
+    const [toggleLike] = useMutation({
+        url: `/api/products/${router.query?.id}/like`,
+        method: "POST",
+    });
     const _onClickLike = () => {
         if (!data) return;
 
         toggleLike({});
         mutate({ ...data, isLiked: !data?.isLiked }, false);
     };
-    const [toggleSoldout] = useMutation(
-        `/api/products/${router.query?.id}/soldout`,
-        "PUT"
-    );
+
+    const [toggleSoldout] = useMutation({
+        url: `/api/products/${router.query?.id}/soldout`,
+        method: "PUT",
+    });
     const _onClickSoldout = () => {
         if (!data) return;
 

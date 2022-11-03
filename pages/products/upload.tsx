@@ -29,8 +29,7 @@ const Upload: NextPage = () => {
         formState: { errors },
     } = useForm<UploadProductFormInterface>();
     const [uploadProduct, { loading, data }] = useMutation<UploadProductReturn>(
-        "/api/products",
-        "POST"
+        { url: "/api/products", method: "POST" }
     );
 
     const _onValid = (data: UploadProductFormInterface) => {

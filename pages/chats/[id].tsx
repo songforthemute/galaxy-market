@@ -30,10 +30,10 @@ interface MessagesReturn {
 const ChatDetail: NextPage = () => {
     const { user } = useUser();
     const router = useRouter();
-    const [send, { loading }] = useMutation(
-        `/api/message/${router.query.id}`,
-        "POST"
-    );
+    const [send, { loading }] = useMutation({
+        url: `/api/message/${router.query.id}`,
+        method: "POST",
+    });
 
     const { register, handleSubmit, reset } = useForm<SendingForm>();
     const _onValid = ({ message }: SendingForm) => {

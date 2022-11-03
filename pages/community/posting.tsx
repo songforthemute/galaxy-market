@@ -28,10 +28,10 @@ const Posting: NextPage = () => {
         handleSubmit,
         formState: { errors },
     } = useForm<PostingFormInterface>();
-    const [post, { loading, data }] = useMutation<PostingReturn>(
-        "/api/posts",
-        "POST"
-    );
+    const [post, { loading, data }] = useMutation<PostingReturn>({
+        url: "/api/posts",
+        method: "POST",
+    });
     const _onValid = (form: PostingFormInterface) => {
         if (loading) return;
 

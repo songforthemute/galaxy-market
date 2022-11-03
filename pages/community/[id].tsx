@@ -53,10 +53,10 @@ const PostDetail: NextPage = () => {
     const { data, mutate } = useSWR<PostReturn | undefined>(
         router.query.id ? `/api/posts/${router.query.id}` : null
     );
-    const [toggleInterest, { loading: interestLoading }] = useMutation(
-        `/api/posts/${router.query.id}/interest`,
-        "POST"
-    );
+    const [toggleInterest, { loading: interestLoading }] = useMutation({
+        url: `/api/posts/${router.query.id}/interest`,
+        method: "POST",
+    });
     const _onClickInterest = () => {
         if (!data) return;
 
@@ -84,10 +84,10 @@ const PostDetail: NextPage = () => {
     // Register new reply
     const { register, handleSubmit, reset } = useForm<ReplyForm>();
     const [replying, { data: replyData, loading: replyLoading }] =
-        useMutation<ReplyReturn>(
-            `/api/posts/${router.query.id}/replies`,
-            "POST"
-        );
+        useMutation<ReplyReturn>({
+            url: `/api/posts/${router.query.id}/replies`,
+            method: "POST",
+        });
     const _onValid = (form: ReplyForm) => {
         if (replyLoading) return;
 

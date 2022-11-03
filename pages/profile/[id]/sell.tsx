@@ -22,9 +22,10 @@ const Sold: NextPage = () => {
     const {
         query: { id },
     } = useRouter();
-    const { data } = useSWR<RecordReturn>(
-        `/api/users/me/record?id=${id}&kind=Sell`
-    );
+    const getKey = useGetKey<RecordReturn>({
+        url: `/api/users/me/record?id=${id}&kind=Sell`,
+        hasQuery: true,
+    });
 
     return (
         <Layout title="판매내역" hasTabBar canGoBack>
@@ -39,8 +40,9 @@ const Sold: NextPage = () => {
                             key={sell.id}
                             href={`/products/${sell.product.id}`}
                         />
-                    )) // Skeleton Loading Component
+                    ))
                 ) : (
+                    // Skeleton Loading Component
                     <div className="p-4 flex w-full flex-1 flex-col items-center mb-8 transition-all">
                         <div className="w-full animate-pulse flex-row items-center justfiy-center space-y-4">
                             <div className="flex flex-row items-start">
