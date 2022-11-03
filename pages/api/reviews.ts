@@ -9,30 +9,81 @@ const handler = async (
 ) => {
     const {
         session: { user },
-        query: { id },
     } = req;
 
-    const reviews = await client.review.findMany({
-        where: {
-            createdToId: Number(id) || user?.id,
-        },
-        include: {
-            createdBy: {
-                select: {
-                    id: true,
-                    username: true,
-                    avatarUrl: true,
+    if (req.method === "GET") {
+        const {
+            query: { id },
+        } = req;
+
+        const reviews = await client.review.findMany({
+            where: {
+                createdToId: Number(id) || user?.id,
+            },
+            include: {
+                createdBy: {
+                    select: {
+                        id: true,
+                        username: true,
+                        avatarUrl: true,
+                    },
                 },
             },
-        },
-    });
+        });
 
-    res.json({ status: true, reviews });
+        return res.json({ status: true, reviews });
+    }
+
+    if (req.method === "POST") {
+        const {
+            body: { description, star, productId, createdTo },
+        } = req;
+
+        await client.review.create({
+            data: {
+                text: description,
+                star,
+                createdBy: {
+                    connect: {
+                        id: user?.id,
+                    },
+                },
+                createdTo: {
+                    connect: {
+                        id: Number(createdTo),
+                    },
+                },
+                product: {
+                    connect: {
+                        id: Number(productId),
+                    },
+                },
+            },
+        });
+
+        await client.record.create({
+            data: {
+                kind: "Buy",
+                user: {
+                    connect: {
+                        id: user?.id,
+                    },
+                },
+                product: {
+                    connect: {
+                        id: Number(productId),
+                    },
+                },
+            },
+        });
+
+        return res.json({ status: true });
+    }
 };
 
 export default withApiSession(
     handlerHelper({
-        methods: ["GET"],
+        methods: ["GET", "POST"],
         handlerFn: handler,
         isPrivate: true,
     })

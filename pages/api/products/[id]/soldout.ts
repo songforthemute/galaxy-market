@@ -8,27 +8,51 @@ const handler = async (
     res: NextApiResponse<ResponseInterface>
 ) => {
     const {
-        query: { id },
         session: { user },
-    } = req; // product id, user
+        query: { id },
+    } = req;
 
-    if (!id) return res.json({ status: false });
+    if (!user) return res.json({ status: false });
 
-    await client.product.update({
-        where: {
-            id: Number(id),
-        },
-        data: {
-            isSoldOut: !req.body.isSoldout,
-        },
-    });
+    if (req.method === "GET") {
+        const soldoutProducts = await client.product.findMany({
+            orderBy: {
+                updated: "desc",
+            },
+            where: {
+                AND: {
+                    isSoldOut: true,
+                    userId: Number(id),
+                },
+            },
+            select: {
+                name: true,
+                option: true,
+                price: true,
+                id: true,
+            },
+        });
 
-    return res.json({ status: true });
+        return res.json({ status: true, soldoutProducts });
+    }
+
+    if (req.method === "PUT") {
+        await client.product.update({
+            where: {
+                id: Number(id),
+            },
+            data: {
+                isSoldOut: !req.body.isSoldout,
+            },
+        });
+
+        return res.json({ status: true });
+    }
 };
 
 export default withApiSession(
     handlerHelper({
-        methods: ["PUT"],
+        methods: ["GET", "PUT"],
         handlerFn: handler,
         isPrivate: true,
     })
