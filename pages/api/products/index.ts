@@ -7,36 +7,54 @@ const handler = async (
     req: NextApiRequest,
     res: NextApiResponse<ResponseInterface>
 ) => {
+    const {
+        session: { user },
+    } = req;
+
+    if (!user) {
+        return res.json({ status: false });
+    }
+
     if (req.method === "GET") {
-        await client.product
-            .findMany({
-                where: {
-                    AND: {
-                        isSoldOut: false,
-                    },
-                },
-                include: {
-                    _count: {
-                        select: {
-                            record: {
-                                where: {
-                                    kind: "Like",
-                                },
+        const {
+            query: { page },
+        } = req;
+
+        const productsCount = await client.product.count();
+        const products = await client.product.findMany({
+            // where: {
+            //     AND: {
+            //         isSoldOut: false,
+            //     },
+            // },
+            include: {
+                _count: {
+                    select: {
+                        record: {
+                            where: {
+                                kind: "Like",
                             },
                         },
                     },
                 },
-                orderBy: {
-                    created: "desc",
-                },
-            })
-            .then((response) => res.json({ status: true, products: response }));
+            },
+            orderBy: {
+                created: "desc",
+            },
+            take: 10,
+            skip: (Number(page) - 1) * 10,
+        });
+
+        return res.json({
+            status: true,
+            products,
+            pageNum: Math.ceil(productsCount / 10),
+        });
     }
 
     if (req.method === "POST") {
         const {
             body: { name, price, description, option },
-            session: { user },
         } = req;
 
         const product = await client.product.create({
@@ -66,12 +84,7 @@ const handler = async (
             },
         });
 
-        res.json({ status: true, product });
-        /**
-         * return res.status(202).json({ status: true, product });
-         * 해당 코드 사용시 에러 발생
-         * => 성공적으로 데이터베이스에 억세스되나, 프론트에서 데이터를 넘겨받을 수 없음.
-         */
+        return res.json({ status: true, product });
     }
 };
 

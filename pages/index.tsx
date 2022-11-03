@@ -1,11 +1,11 @@
 import HelperBtn from "@components/helperBtn";
 import Item from "@components/item";
 import Layout from "@components/layout";
-import useUser from "@libs/client/useUser";
 import { Product } from "@prisma/client";
 import type { NextPage } from "next";
 import Head from "next/head";
-import useSWR from "swr";
+import { useGetKey } from "@libs/client/useGetKey";
+import useSWRInfinite from "swr/infinite";
 
 interface ProductWithLike extends Product {
     _count: {
@@ -16,10 +16,16 @@ interface ProductWithLike extends Product {
 interface ProductsReturn {
     status: boolean;
     products: ProductWithLike[];
+    pageNum: number;
+    error?: string;
 }
 
 const Home: NextPage = () => {
-    const { data } = useSWR<ProductsReturn>("/api/products");
+    const getKey = useGetKey<ProductsReturn>(`/api/products`, false);
+    const { data, setSize } = useSWRInfinite<ProductsReturn>(getKey);
+    const products = !data?.[0]?.error
+        ? data?.map((data) => data.products).flat()
+        : undefined;
 
     return (
         <Layout title="홈" hasTabBar canGoBack hasConfig>
@@ -28,8 +34,8 @@ const Home: NextPage = () => {
             </Head>
 
             <div className="flex flex-col divide-y-[1px]">
-                {data?.products ? (
-                    data?.products?.map((product) => (
+                {data && products ? (
+                    products?.map((product) => (
                         <Item
                             href={`/products/${product.id}`}
                             name={product.name}
