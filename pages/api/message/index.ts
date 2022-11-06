@@ -9,10 +9,12 @@ const handler = async (
 ) => {
     const {
         session: { user },
+        query: { page },
     } = req;
 
     if (!user) return res.json({ status: false });
 
+    const messagesCount = await client.message.count();
     const messages = await client.message.findMany({
         where: {
             messagedToId: user.id,
@@ -32,9 +34,15 @@ const handler = async (
                 },
             },
         },
+        take: 10,
+        skip: (Number(page) - 1) * 10,
     });
 
-    return res.json({ status: true, messages });
+    return res.json({
+        status: true,
+        messages,
+        pageNum: Math.ceil(messagesCount / 10),
+    });
 };
 
 export default withApiSession(

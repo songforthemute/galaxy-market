@@ -2,9 +2,12 @@ import type { NextPage } from "next";
 import Layout from "@components/layout";
 import UserCard from "@components/userCard";
 import useUser from "@libs/client/useUser";
-import useSWR from "swr";
 import { Message } from "@prisma/client";
 import { dateConverter } from "@libs/client/util";
+import useGetKey from "@libs/client/useGetKey";
+import useSWRInfinite from "swr/infinite";
+import useInfiniteScroll from "@libs/client/useInfiniteScroll";
+import { useEffect } from "react";
 
 interface MessageWithUser extends Message {
     messagedBy: {
@@ -17,17 +20,31 @@ interface MessageWithUser extends Message {
 interface MessageListReturn {
     status: boolean;
     messages: MessageWithUser[];
+    pageNum: number;
+    error?: string;
 }
 
 const Chats: NextPage = () => {
-    const { user } = useUser();
-    const { data } = useSWR<MessageListReturn>(`/api/message?id=${user?.id}`);
+    const getKey = useGetKey<MessageListReturn>({
+        url: `/api/message`,
+        hasQuery: false,
+    });
+    const { data, setSize } = useSWRInfinite<MessageListReturn>(getKey);
+    const page = useInfiniteScroll();
+
+    const messages = !data?.[0]?.error
+        ? data?.map((data) => data.messages).flat()
+        : undefined;
+
+    useEffect(() => {
+        setSize(page);
+    }, [setSize, page]);
 
     return (
         <Layout title="메시지" hasTabBar canGoBack hasConfig>
             <div className="divide-y-[1px] divide-slate-100">
-                {data?.status === true ? (
-                    data?.messages.map((message) => (
+                {data && messages ? (
+                    messages.map((message) => (
                         <UserCard
                             key={message.id}
                             text={`마지막으로 받은 메시지: ${dateConverter(
@@ -45,6 +62,10 @@ const Chats: NextPage = () => {
                             <div className="flex flex-row items-start">
                                 <div className="h-16 w-16 mr-4 rounded-md bg-slate-200" />
                                 <div className="h-24 w-full rounded-md bg-slate-200" />
+                            </div>
+                            <div className="flex flex-row items-start">
+                                <div className="h-16 w-16 mr-4 rounded-md bg-slate-100" />
+                                <div className="h-24 w-full rounded-md bg-slate-100" />
                             </div>
                         </div>
                     </div>

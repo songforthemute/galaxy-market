@@ -5,6 +5,10 @@ import Item from "@components/item";
 import { Product } from "@prisma/client";
 import { useRouter } from "next/router";
 import { cls } from "@libs/client/util";
+import useGetKey from "@libs/client/useGetKey";
+import useSWRInfinite from "swr/infinite";
+import useInfiniteScroll from "@libs/client/useInfiniteScroll";
+import { useEffect } from "react";
 
 interface ProductWithLikes extends Product {
     _count: {
@@ -15,33 +19,46 @@ interface ProductWithLikes extends Product {
 interface SearchReturn {
     status: boolean;
     result: ProductWithLikes[];
+    pageNum: number;
+    error?: string;
 }
 
 const Search: NextPage = () => {
     const router = useRouter();
-    const { data } = useSWR<SearchReturn>(
-        router.query.name
+    const getKey = useGetKey<SearchReturn>({
+        url: router.query.name
             ? `/api/search?name=${router.query.name}&lowestPrice=${router.query.lowestPrice}&highestPrice=${router.query.highestPrice}&sort=${router.query.sort}`
-            : null
-    );
+            : null,
+        hasQuery: true,
+    });
+    const { data, setSize } = useSWRInfinite<SearchReturn>(getKey);
+    const page = useInfiniteScroll();
+
+    const results = !data?.[0]?.error
+        ? data?.map((data) => data.result).flat()
+        : undefined;
+
+    useEffect(() => {
+        setSize(page);
+    }, [setSize, page]);
 
     const _onClick = () => {
-        router.push("/search/opts", "/search");
+        router.push("/search/opts");
     };
 
     return (
         <Layout title="검색" hasTabBar canGoBack hasConfig>
             <div className="flex flex-col divide-y-[1px]">
                 {data ? (
-                    data.result ? (
-                        data.result.map((product) => (
+                    results ? (
+                        results.map((result) => (
                             <Item
-                                key={product.id}
-                                href={`/products/${product.id}`}
-                                name={product.name}
-                                opt={product.option}
-                                price={product.price}
-                                likes={product._count.record}
+                                key={result.id}
+                                href={`/products/${result.id}`}
+                                name={result.name}
+                                opt={result.option}
+                                price={result.price}
+                                likes={result._count.record}
                             />
                         ))
                     ) : (

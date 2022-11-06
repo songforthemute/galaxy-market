@@ -6,6 +6,10 @@ import useSWR from "swr";
 import { Review } from "@prisma/client";
 import { cls } from "@libs/client/util";
 import useUser from "@libs/client/useUser";
+import useGetKey from "@libs/client/useGetKey";
+import useSWRInfinite from "swr/infinite";
+import useInfiniteScroll from "@libs/client/useInfiniteScroll";
+import { useEffect } from "react";
 
 interface ReviewWithUser extends Review {
     createdBy: {
@@ -18,11 +22,26 @@ interface ReviewWithUser extends Review {
 interface ReviewsReturn {
     status: boolean;
     reviews: ReviewWithUser[];
+    pageNum: number;
+    error?: string;
 }
 
 const Profile: NextPage = () => {
     const { user } = useUser();
-    const { data } = useSWR<ReviewsReturn>("/api/reviews");
+    const getKey = useGetKey<ReviewsReturn>({
+        url: `/api/reviews?id=${user?.id}`,
+        hasQuery: true,
+    });
+    const { data, setSize } = useSWRInfinite<ReviewsReturn>(getKey);
+    const page = useInfiniteScroll();
+
+    const reviews = !data?.[0]?.error
+        ? data?.map((data) => data.reviews).flat()
+        : undefined;
+
+    useEffect(() => {
+        setSize(page);
+    }, [setSize, page]);
 
     return (
         <Layout title="프로필" hasTabBar canGoBack hasConfig>
@@ -98,9 +117,10 @@ const Profile: NextPage = () => {
                         </ProfileBtn>
                     </div>
 
+                    {/* 리뷰란 */}
                     <div className="mt-6 px-4 divide-y-[1px] divied-slate-400">
-                        {data?.status
-                            ? data?.reviews.map((review) => (
+                        {data && reviews
+                            ? reviews.map((review) => (
                                   <div key={review.id} className="py-4">
                                       <div className="flex items-center space-x-4">
                                           <div className="w-12 h-12 rounded-full bg-slate-400" />

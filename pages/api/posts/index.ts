@@ -8,28 +8,42 @@ const handler = async (
     res: NextApiResponse<ResponseInterface>
 ) => {
     if (req.method === "GET") {
-        await client.post
-            .findMany({
-                include: {
-                    _count: {
-                        select: {
-                            interest: true,
-                            replies: true,
-                        },
-                    },
-                    user: {
-                        select: {
-                            username: true,
-                        },
+        const {
+            query: { page },
+        } = req;
+
+        const postsCount = await client.post.count();
+        const posts = await client.post.findMany({
+            include: {
+                _count: {
+                    select: {
+                        interest: true,
+                        replies: true,
                     },
                 },
-            })
-            .then((response) => res.json({ status: true, post: response }));
+                user: {
+                    select: {
+                        username: true,
+                    },
+                },
+            },
+            orderBy: {
+                created: "desc",
+            },
+            take: 10,
+            skip: (Number(page) - 1) * 10,
+        });
+
+        return res.json({
+            status: true,
+            posts,
+            pageNum: Math.ceil(postsCount / 10),
+        });
     }
 
     if (req.method === "POST") {
         const {
-            body: { title, description },
+            body: { title, description, tag },
             session: { user },
         } = req;
 
@@ -37,6 +51,7 @@ const handler = async (
             data: {
                 title,
                 description,
+                tag,
                 user: {
                     connect: {
                         id: user?.id,
@@ -45,7 +60,7 @@ const handler = async (
             },
         });
 
-        res.json({ status: true, post });
+        return res.json({ status: true, post });
     }
 };
 

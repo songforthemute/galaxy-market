@@ -4,8 +4,10 @@ import Layout from "@components/layout";
 import { Product } from "@prisma/client";
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useGetKey } from "@libs/client/useGetKey";
+import useGetKey from "@libs/client/useGetKey";
 import useSWRInfinite from "swr/infinite";
+import useInfiniteScroll from "@libs/client/useInfiniteScroll";
+import { useEffect } from "react";
 
 interface ProductWithLike extends Product {
     _count: {
@@ -26,9 +28,15 @@ const Home: NextPage = () => {
         hasQuery: false,
     });
     const { data, setSize } = useSWRInfinite<ProductsReturn>(getKey);
+    const page = useInfiniteScroll();
+
     const products = !data?.[0]?.error
         ? data?.map((data) => data.products).flat()
         : undefined;
+
+    useEffect(() => {
+        setSize(page);
+    }, [setSize, page]);
 
     return (
         <Layout title="홈" hasTabBar canGoBack hasConfig>
@@ -55,6 +63,10 @@ const Home: NextPage = () => {
                             <div className="flex flex-row items-start">
                                 <div className="h-24 w-24 mr-4 rounded-md bg-slate-200" />
                                 <div className="h-24 w-full rounded-md bg-slate-200" />
+                            </div>
+                            <div className="flex flex-row items-start">
+                                <div className="h-24 w-24 mr-4 rounded-md bg-slate-100" />
+                                <div className="h-24 w-full rounded-md bg-slate-100" />
                             </div>
                         </div>
                     </div>

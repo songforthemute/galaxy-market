@@ -2,8 +2,12 @@ import type { NextPage } from "next";
 import Posting from "@components/post";
 import HelperBtn from "@components/helperBtn";
 import Layout from "@components/layout";
-import useSWR from "swr";
 import { Post } from "@prisma/client";
+import useGetKey from "@libs/client/useGetKey";
+import useSWRInfinite from "swr/infinite";
+import { dateConverter } from "@libs/client/util";
+import { useEffect } from "react";
+import useInfiniteScroll from "@libs/client/useInfiniteScroll";
 
 interface PostWithReaction extends Post {
     user: {
@@ -17,26 +21,41 @@ interface PostWithReaction extends Post {
 
 interface PostsReturn {
     status: boolean;
-    post: PostWithReaction[];
+    posts: PostWithReaction[];
+    pageNum: number;
+    error?: string;
 }
 
 const Community: NextPage = () => {
-    const { data } = useSWR<PostsReturn>("/api/posts");
+    const getKey = useGetKey<PostsReturn>({
+        url: `/api/posts`,
+        hasQuery: false,
+    });
+    const { data, setSize } = useSWRInfinite<PostsReturn>(getKey);
+    const page = useInfiniteScroll();
+
+    const posts = !data?.[0]?.error
+        ? data?.map((data) => data.posts).flat()
+        : undefined;
+
+    useEffect(() => {
+        setSize(page);
+    }, [setSize, page]);
 
     return (
-        <Layout title="동네이야기" hasTabBar canGoBack hasConfig>
-            {data?.post ? (
+        <Layout title="커뮤니티" hasTabBar canGoBack hasConfig>
+            {data && posts ? (
                 <div className="-mb-2">
-                    {data?.post.map((p) => (
+                    {posts?.map((post) => (
                         <Posting
-                            href={`/community/${p.id}`}
-                            key={p.id}
-                            badge="궁금해요"
-                            text={p.title}
-                            creator={p.user.username}
-                            createdAt={String(p.created)}
-                            interested={p._count.interest}
-                            reply={p._count.replies}
+                            href={`/community/${post.id}`}
+                            key={post.id}
+                            badge={post.tag}
+                            text={post.title}
+                            creator={post.user.username}
+                            createdAt={dateConverter(post.created, "Full")}
+                            interested={post._count.interest}
+                            reply={post._count.replies}
                         />
                     ))}
                 </div>
@@ -46,8 +65,8 @@ const Community: NextPage = () => {
                     <div className="w-full animate-pulse flex-row items-center justfiy-center space-y-4">
                         <div className="h-24 rounded-md bg-slate-200" />
                         <div className="h-8 rounded-md bg-slate-200" />
-                        <div className="h-24 rounded-md bg-slate-200" />
-                        <div className="h-8 rounded-md bg-slate-200" />
+                        <div className="h-24 rounded-md bg-slate-100" />
+                        <div className="h-8 rounded-md bg-slate-100" />
                     </div>
                 </div>
             )}

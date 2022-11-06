@@ -1,9 +1,12 @@
 import Layout from "@components/layout";
 import type { NextPage } from "next";
 import Item from "@components/item";
-import useSWR from "swr";
 import { Product, Record } from "@prisma/client";
 import { useRouter } from "next/router";
+import useGetKey from "@libs/client/useGetKey";
+import useSWRInfinite from "swr/infinite";
+import useInfiniteScroll from "@libs/client/useInfiniteScroll";
+import { useEffect } from "react";
 
 interface ProductWithLikes extends Product {
     _count: { record: number };
@@ -16,6 +19,8 @@ interface RecordWithProduct extends Record {
 interface RecordReturn {
     status: boolean;
     record: RecordWithProduct[];
+    pageNum: number;
+    error?: string;
 }
 
 const Sold: NextPage = () => {
@@ -26,12 +31,22 @@ const Sold: NextPage = () => {
         url: `/api/users/me/record?id=${id}&kind=Sell`,
         hasQuery: true,
     });
+    const { data, setSize } = useSWRInfinite<RecordReturn>(getKey);
+    const page = useInfiniteScroll();
+
+    const records = !data?.[0]?.error
+        ? data?.map((data) => data.record).flat()
+        : undefined;
+
+    useEffect(() => {
+        setSize(page);
+    }, [setSize, page]);
 
     return (
         <Layout title="판매내역" hasTabBar canGoBack>
             <div className="flex flex-col divide-y-[1px]">
-                {data ? (
-                    data.record?.map((sell) => (
+                {data && records ? (
+                    records?.map((sell) => (
                         <Item
                             name={sell.product.name}
                             opt={sell.product.option}

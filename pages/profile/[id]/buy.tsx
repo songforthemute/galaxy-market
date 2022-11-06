@@ -1,9 +1,12 @@
 import type { NextPage } from "next";
 import Item from "@components/item";
 import Layout from "@components/layout";
-import useSWR from "swr";
 import { Product, Record } from "@prisma/client";
 import { useRouter } from "next/router";
+import useGetKey from "@libs/client/useGetKey";
+import useSWRInfinite from "swr/infinite";
+import useInfiniteScroll from "@libs/client/useInfiniteScroll";
+import { useEffect } from "react";
 
 interface ProductWithLikes extends Product {
     _count: { record: number };
@@ -16,21 +19,34 @@ interface RecordWithProduct extends Record {
 interface RecordReturn {
     status: boolean;
     record: RecordWithProduct[];
+    pageNum: number;
+    error?: string;
 }
 
 const Buy: NextPage = () => {
     const {
         query: { id },
     } = useRouter();
-    const { data } = useSWR<RecordReturn>(
-        `/api/users/me/record?id=${id}&kind=Buy`
-    );
+    const getKey = useGetKey<RecordReturn>({
+        url: `/api/users/me/record?id=${id}&kind=Buy`,
+        hasQuery: true,
+    });
+    const { data, setSize } = useSWRInfinite<RecordReturn>(getKey);
+    const page = useInfiniteScroll();
+
+    const records = !data?.[0]?.error
+        ? data?.map((data) => data.record).flat()
+        : undefined;
+
+    useEffect(() => {
+        setSize(page);
+    }, [setSize, page]);
 
     return (
         <Layout title="구매내역" hasTabBar canGoBack>
             <div className="flex flex-col divide-y-[1px]">
-                {data ? (
-                    data.record?.map((buy) => (
+                {data && records ? (
+                    records?.map((buy) => (
                         <Item
                             name={buy.product.name}
                             opt={buy.product.option}
@@ -39,8 +55,9 @@ const Buy: NextPage = () => {
                             key={buy.id}
                             href={`/products/${buy.product.id}`}
                         />
-                    )) // Skeleton Loading Component
+                    ))
                 ) : (
+                    // Skeleton Loading Component
                     <div className="p-4 flex w-full flex-1 flex-col items-center mb-8 transition-all">
                         <div className="w-full animate-pulse flex-row items-center justfiy-center space-y-4">
                             <div className="flex flex-row items-start">

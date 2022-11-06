@@ -7,6 +7,11 @@ import { Review, User } from "@prisma/client";
 import { cls } from "@libs/client/util";
 import useUser from "@libs/client/useUser";
 import { useRouter } from "next/router";
+import HelperBtn from "@components/helperBtn";
+import useGetKey from "@libs/client/useGetKey";
+import useSWRInfinite from "swr/infinite";
+import useInfiniteScroll from "@libs/client/useInfiniteScroll";
+import { useEffect } from "react";
 
 interface ReviewWithUser extends Review {
     createdBy: {
@@ -19,6 +24,8 @@ interface ReviewWithUser extends Review {
 interface ReviewsReturn {
     status: boolean;
     reviews: ReviewWithUser[];
+    pageNum: number;
+    error?: string;
 }
 
 interface ProfileReturn {
@@ -31,17 +38,32 @@ const Profile: NextPage = () => {
         query: { id },
     } = useRouter();
     const { user } = useUser();
-    const { data } = useSWR<ReviewsReturn>(`/api/reviews?id=${id as String}`);
-    const { data: profile } = useSWR<ProfileReturn>(
+    const { data: profileData } = useSWR<ProfileReturn>(
         `/api/users/info?id=${id as String}`
     );
 
+    const getKey = useGetKey<ReviewsReturn>({
+        url: `/api/reviews?id=${id as String}`,
+        hasQuery: true,
+    });
+    const { data: reviewData, setSize } = useSWRInfinite<ReviewsReturn>(getKey);
+    const page = useInfiniteScroll();
+
+    const reviews = !reviewData?.[0]?.error
+        ? reviewData?.map((data) => data.reviews).flat()
+        : undefined;
+
+    useEffect(() => {
+        setSize(page);
+    }, [setSize, page]);
+
     return (
         <Layout title="프로필" hasTabBar canGoBack hasConfig>
-            {profile?.profile ? (
+            {/* 프로필 */}
+            {profileData?.profile ? (
                 <div className="">
                     <UserCard
-                        username={profile?.profile.username}
+                        username={profileData?.profile.username}
                         text={
                             user?.id === Number(id)
                                 ? "프로필 수정 →"
@@ -115,9 +137,10 @@ const Profile: NextPage = () => {
                         </ProfileBtn>
                     </div>
 
+                    {/* 리뷰란 */}
                     <div className="mt-6 px-4 divide-y-[1px] divied-slate-400">
-                        {data?.status
-                            ? data?.reviews.map((review) => (
+                        {reviews
+                            ? reviews.map((review) => (
                                   <div key={review.id} className="py-4">
                                       <div className="flex items-center space-x-4">
                                           <div className="w-12 h-12 rounded-full bg-slate-400" />
@@ -169,6 +192,24 @@ const Profile: NextPage = () => {
                         </div>
                     </div>
                 </div>
+            )}
+
+            {user?.id !== Number(id) && (
+                <HelperBtn href={`/profile/${id}/review`}>
+                    <svg
+                        className="w-6 h-6"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+                        <path
+                            fillRule="evenodd"
+                            d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                            clipRule="evenodd"
+                        />
+                    </svg>
+                </HelperBtn>
             )}
         </Layout>
     );

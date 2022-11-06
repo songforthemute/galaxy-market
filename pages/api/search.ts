@@ -8,7 +8,7 @@ const handler = async (
     res: NextApiResponse<ResponseInterface>
 ) => {
     const {
-        query: { name, lowestPrice, highestPrice, sort },
+        query: { name, lowestPrice, highestPrice, sort, page },
     } = req;
 
     const keyword = (name as string).split(" ").map((word) => ({
@@ -27,7 +27,22 @@ const handler = async (
         orderBy = { price: "asc" };
     }
 
-    const querying = await client.product.findMany({
+    const resultCount = await client.product.count({
+        where: {
+            OR: keyword,
+            AND: {
+                price: {
+                    gte: (lowestPrice as string).length
+                        ? Number(lowestPrice)
+                        : undefined,
+                    lte: (highestPrice as string).length
+                        ? Number(highestPrice)
+                        : undefined,
+                },
+            },
+        },
+    });
+    const result = await client.product.findMany({
         where: {
             OR: keyword,
             AND: {
@@ -53,9 +68,11 @@ const handler = async (
                 },
             },
         },
+        take: 10,
+        skip: (Number(page) - 1) * 10,
     });
 
-    res.json({ status: true, result: querying });
+    res.json({ status: true, result, pageNum: Math.ceil(resultCount / 10) });
 };
 
 export default withApiSession(

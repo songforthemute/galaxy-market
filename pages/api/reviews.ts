@@ -13,9 +13,14 @@ const handler = async (
 
     if (req.method === "GET") {
         const {
-            query: { id },
+            query: { id, page },
         } = req;
 
+        const reviewsCount = await client.review.count({
+            where: {
+                createdToId: Number(id) || user?.id,
+            },
+        });
         const reviews = await client.review.findMany({
             where: {
                 createdToId: Number(id) || user?.id,
@@ -29,9 +34,15 @@ const handler = async (
                     },
                 },
             },
+            take: 10,
+            skip: (Number(page) - 1) * 10,
         });
 
-        return res.json({ status: true, reviews });
+        return res.json({
+            status: true,
+            reviews,
+            pageNum: Math.ceil(reviewsCount / 10),
+        });
     }
 
     if (req.method === "POST") {

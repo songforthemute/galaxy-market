@@ -3,17 +3,20 @@ interface getKeyInterface {
 }
 
 interface useGetKeyProps {
-    url: string;
+    url: string | null;
     hasQuery?: boolean;
 }
 
-export const useGetKey = <T extends getKeyInterface>({
+const useGetKey = <T extends getKeyInterface>({
     url,
     hasQuery = false,
 }: useGetKeyProps) => {
     return (pageIdx: number, prevPageData: T) => {
-        if (pageIdx === 0) return `${url}${hasQuery ? "&" : "?"}page=1`;
-        if (pageIdx + 1 > prevPageData.pageNum) return null;
+        if (pageIdx === 0 && url !== null)
+            return `${url}${hasQuery ? "&" : "?"}page=1`;
+        if (pageIdx + 1 > prevPageData.pageNum || url === null) return null;
         return `${url}?page=${pageIdx + 1}`;
     };
 };
+
+export default useGetKey;
