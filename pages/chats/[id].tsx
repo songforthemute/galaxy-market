@@ -77,8 +77,14 @@ const ChatDetail: NextPage = () => {
         }
     }, [data]);
 
+    // 초기설정 - 맨 아래가 보이도록
     useEffect(() => {
-        scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+        scrollTo({
+            top:
+                document.body.scrollHeight ||
+                document.documentElement.scrollHeight,
+            behavior: "smooth",
+        });
     }, []);
 
     return (

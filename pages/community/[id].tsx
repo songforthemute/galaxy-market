@@ -103,7 +103,7 @@ const PostDetail: NextPage = () => {
 
     return (
         // 스테이트 전달로 동적 타이틀 변화
-        <Layout title={"동네이야기"} hasTabBar canGoBack>
+        <Layout title={"커뮤니티"} hasTabBar canGoBack>
             {data?.post ? (
                 <>
                     <UserCard

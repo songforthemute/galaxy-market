@@ -64,7 +64,7 @@ const handler = async (
                 price: Number(price),
                 description,
                 image: "xxx",
-                user: { connect: { id: user?.id } },
+                user: { connect: { id: user.id } },
             },
         });
 
