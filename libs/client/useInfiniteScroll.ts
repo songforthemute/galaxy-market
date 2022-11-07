@@ -24,3 +24,22 @@ export const useInfiniteScrollDown = () => {
     return page;
 };
 
+export const useInfiniteScrollUp = () => {
+    const [page, setPage] = useState(1);
+    const _handleScroll = () => {
+        if (window.scrollY === 0) {
+            setPage((prev) => prev + 1);
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener("scroll", _handleScroll);
+
+        // Clean up for ComponentDidUnmount
+        return () => {
+            window.removeEventListener("scroll", _handleScroll);
+        };
+    }, []);
+
+    return page;
+};

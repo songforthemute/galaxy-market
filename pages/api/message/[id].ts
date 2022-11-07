@@ -9,7 +9,7 @@ const handler = async (
 ) => {
     const {
         session: { user },
-        query: { id },
+        query: { id, page },
         body: { message },
     } = req;
 
@@ -18,6 +18,20 @@ const handler = async (
     }
 
     if (req.method === "GET") {
+        const messagesCount = await client.message.count({
+            where: {
+                OR: [
+                    {
+                        messagedById: Number(id),
+                        messagedToId: user.id,
+                    },
+                    {
+                        messagedById: user.id,
+                        messagedToId: Number(id),
+                    },
+                ],
+            },
+        });
         const messages = await client.message.findMany({
             where: {
                 OR: [
@@ -41,11 +55,17 @@ const handler = async (
                 },
             },
             orderBy: {
-                created: "asc",
+                created: "desc",
             },
+            take: 10,
+            skip: (Number(page) - 1) * 10,
         });
 
-        return res.json({ status: true, messages });
+        return res.json({
+            status: true,
+            messages,
+            pageNum: Math.ceil(messagesCount / 10),
+        });
     }
 
     if (req.method === "POST") {

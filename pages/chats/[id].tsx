@@ -6,9 +6,11 @@ import Sending from "@components/sendingMessage";
 import { useForm } from "react-hook-form";
 import useMutation from "@libs/client/useMutation";
 import { useRouter } from "next/router";
-import useSWR from "swr";
 import { Message } from "@prisma/client";
 import useUser from "@libs/client/useUser";
+import useSWRInfinite from "swr/infinite";
+import useGetKey from "@libs/client/useGetKey";
+import { useInfiniteScrollUp } from "@libs/client/useInfiniteScroll";
 
 interface SendingForm {
     message: string;
@@ -25,6 +27,8 @@ interface MessageWithUser extends Message {
 interface MessagesReturn {
     status: boolean;
     messages: MessageWithUser[];
+    pageNum: number;
+    error?: string;
 }
 
 const ChatDetail: NextPage = () => {
@@ -35,73 +39,87 @@ const ChatDetail: NextPage = () => {
         method: "POST",
     });
 
+    const page = useInfiniteScrollUp();
+    const getKey = useGetKey<MessagesReturn>({
+        url: router.query.id ? `/api/message/${router.query.id}` : null,
+        hasQuery: false,
+    });
+    const { data, mutate, setSize } = useSWRInfinite<MessagesReturn>(getKey, {
+        refreshInterval: 1000,
+    });
+
     const { register, handleSubmit, reset } = useForm<SendingForm>();
     const _onValid = ({ message }: SendingForm) => {
         if (loading) return;
+
         mutate(
             (prev) =>
-                prev && {
-                    ...prev,
-                    messages: [
-                        ...prev.messages,
-                        {
-                            id: Date.now(),
-                            text: message,
-                            created: Date.now(),
-                            updated: Date.now(),
-                            messagedById: user?.id,
-                            messagedToId: router.query.id,
-                            messagedBy: {
-                                username: user?.username,
-                                id: user?.id,
-                                avatarUrl: user?.avatarUrl,
+                prev && [
+                    {
+                        status: true,
+                        messages: [
+                            {
+                                id: Date.now(),
+                                text: message,
+                                created: new Date(),
+                                updated: new Date(),
+                                messagedById: user?.id!,
+                                messagedToId: Number(router.query.id),
+                                messagedBy: {
+                                    username: user?.username!,
+                                    id: user?.id!,
+                                    avatarUrl: user?.avatarUrl!,
+                                },
                             },
-                        },
-                    ] as any,
-                },
+                        ],
+                        pageNum: 1,
+                    },
+                    ...prev,
+                ],
             false
         );
-        scrollTo({ top: scrollY + 100, behavior: "smooth" });
         send({ message });
         reset();
     };
 
-    const { data, mutate } = useSWR<MessagesReturn>(
-        router.query.id ? `/api/message/${router.query.id}` : null,
-        { refreshInterval: 1000 }
-    );
+    const messages = !data?.[0]?.error
+        ? data?.map((data) => data.messages).flat()
+        : undefined;
 
     useEffect(() => {
-        if (data && data.status) {
-            scrollTo({ top: scrollY + 100, behavior: "smooth" });
-        }
-    }, [data]);
+        setSize(page);
+    }, [setSize, page]);
 
     // 초기설정 - 맨 아래가 보이도록
+    // 메시지 전송했을 경우 - 아래로 끌어내림
     useEffect(() => {
-        scrollTo({
-            top:
-                document.body.scrollHeight ||
-                document.documentElement.scrollHeight,
-            behavior: "smooth",
-        });
-    }, []);
+        if (data) {
+            scrollTo({
+                top:
+                    document.body.scrollHeight ||
+                    document.documentElement.scrollHeight,
+                behavior: "smooth",
+            });
+        }
+    }, [data]); // messages로 설정시 에러
 
     return (
         <Layout title={"메시지"} canGoBack>
             <div className="p-4 pb-20 space-y-4">
-                {data?.status === true ? (
-                    data?.messages?.map((message) => (
-                        <Messages
-                            avatarUrl={
-                                message.messagedBy.avatarUrl || undefined
-                            }
-                            key={message.id}
-                            text={message.text}
-                            isReverse={message.messagedById === user?.id}
-                            createdAt={message.created}
-                        />
-                    ))
+                {data ? (
+                    messages
+                        ?.reverse()
+                        .map((message) => (
+                            <Messages
+                                avatarUrl={
+                                    message.messagedBy.avatarUrl || undefined
+                                }
+                                key={message.id}
+                                text={message.text}
+                                isReverse={message.messagedById === user?.id}
+                                createdAt={message.created}
+                            />
+                        ))
                 ) : (
                     // Skeleton Loading Component
                     <div className="flex w-full flex-1 flex-col items-center mb-8 transition-all">
