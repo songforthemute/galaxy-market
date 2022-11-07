@@ -6,8 +6,9 @@ import { Post } from "@prisma/client";
 import useGetKey from "@libs/client/useGetKey";
 import useSWRInfinite from "swr/infinite";
 import { dateConverter } from "@libs/client/util";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
+import Badge from "@components/badge";
 
 interface PostWithReaction extends Post {
     user: {
@@ -27,11 +28,18 @@ interface PostsReturn {
 }
 
 const Community: NextPage = () => {
+    const [selected, setSelected] = useState("모두");
+    const _onTagClick = (e: React.MouseEvent<HTMLSpanElement>) => {
+        const { innerHTML } = e.target as HTMLSpanElement;
+        setSelected(innerHTML);
+        mutate();
+    };
+
     const getKey = useGetKey<PostsReturn>({
-        url: `/api/posts`,
-        hasQuery: false,
+        url: `/api/posts?tag=${selected}`,
+        hasQuery: true,
     });
-    const { data, setSize } = useSWRInfinite<PostsReturn>(getKey);
+    const { data, setSize, mutate } = useSWRInfinite<PostsReturn>(getKey);
     const page = useInfiniteScrollDown();
 
     const posts = !data?.[0]?.error
@@ -44,6 +52,16 @@ const Community: NextPage = () => {
 
     return (
         <Layout title="커뮤니티" hasTabBar canGoBack hasConfig>
+            {["모두", "질문", "정보", "후기", "자유"].map((v, i) => (
+                <Badge
+                    text={v}
+                    key={i}
+                    isLarge
+                    _onClick={_onTagClick}
+                    isSelected={selected === v}
+                />
+            ))}
+
             {data && posts ? (
                 <div className="-mb-2">
                     {posts?.map((post) => (

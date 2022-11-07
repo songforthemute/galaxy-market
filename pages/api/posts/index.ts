@@ -9,11 +9,18 @@ const handler = async (
 ) => {
     if (req.method === "GET") {
         const {
-            query: { page },
+            query: { page, tag },
         } = req;
 
-        const postsCount = await client.post.count();
+        const postsCount = await client.post.count({
+            where: {
+                tag: tag === "모두" ? undefined : (tag as string),
+            },
+        });
         const posts = await client.post.findMany({
+            where: {
+                tag: tag === "모두" ? undefined : (tag as string),
+            },
             include: {
                 _count: {
                     select: {
