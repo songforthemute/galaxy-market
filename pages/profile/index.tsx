@@ -2,13 +2,12 @@ import type { NextPage } from "next";
 import Layout from "@components/layout";
 import ProfileBtn from "@components/profileBtn";
 import UserCard from "@components/userCard";
-import useSWR from "swr";
 import { Review } from "@prisma/client";
 import { cls } from "@libs/client/util";
 import useUser from "@libs/client/useUser";
 import useGetKey from "@libs/client/useGetKey";
 import useSWRInfinite from "swr/infinite";
-import useInfiniteScroll from "@libs/client/useInfiniteScroll";
+import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
 import { useEffect } from "react";
 
 interface ReviewWithUser extends Review {
@@ -33,7 +32,7 @@ const Profile: NextPage = () => {
         hasQuery: true,
     });
     const { data, setSize } = useSWRInfinite<ReviewsReturn>(getKey);
-    const page = useInfiniteScroll();
+    const page = useInfiniteScrollDown();
 
     const reviews = !data?.[0]?.error
         ? data?.map((data) => data.reviews).flat()

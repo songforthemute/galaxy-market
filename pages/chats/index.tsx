@@ -1,12 +1,11 @@
 import type { NextPage } from "next";
 import Layout from "@components/layout";
 import UserCard from "@components/userCard";
-import useUser from "@libs/client/useUser";
 import { Message } from "@prisma/client";
 import { dateConverter } from "@libs/client/util";
 import useGetKey from "@libs/client/useGetKey";
 import useSWRInfinite from "swr/infinite";
-import useInfiniteScroll from "@libs/client/useInfiniteScroll";
+import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
 import { useEffect } from "react";
 
 interface MessageWithUser extends Message {
@@ -30,7 +29,7 @@ const Chats: NextPage = () => {
         hasQuery: false,
     });
     const { data, setSize } = useSWRInfinite<MessageListReturn>(getKey);
-    const page = useInfiniteScroll();
+    const page = useInfiniteScrollDown();
 
     const messages = !data?.[0]?.error
         ? data?.map((data) => data.messages).flat()

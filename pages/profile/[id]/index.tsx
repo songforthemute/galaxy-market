@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 import HelperBtn from "@components/helperBtn";
 import useGetKey from "@libs/client/useGetKey";
 import useSWRInfinite from "swr/infinite";
-import useInfiniteScroll from "@libs/client/useInfiniteScroll";
+import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
 import { useEffect } from "react";
 
 interface ReviewWithUser extends Review {
@@ -47,7 +47,7 @@ const Profile: NextPage = () => {
         hasQuery: true,
     });
     const { data: reviewData, setSize } = useSWRInfinite<ReviewsReturn>(getKey);
-    const page = useInfiniteScroll();
+    const page = useInfiniteScrollDown();
 
     const reviews = !reviewData?.[0]?.error
         ? reviewData?.map((data) => data.reviews).flat()

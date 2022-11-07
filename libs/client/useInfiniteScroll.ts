@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useInfiniteScroll = () => {
+export const useInfiniteScrollDown = () => {
     const [page, setPage] = useState(1);
     const _handleScroll = () => {
         if (
@@ -24,4 +24,3 @@ const useInfiniteScroll = () => {
     return page;
 };
 
-export default useInfiniteScroll;

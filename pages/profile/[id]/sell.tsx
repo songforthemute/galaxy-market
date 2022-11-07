@@ -5,7 +5,7 @@ import { Product, Record } from "@prisma/client";
 import { useRouter } from "next/router";
 import useGetKey from "@libs/client/useGetKey";
 import useSWRInfinite from "swr/infinite";
-import useInfiniteScroll from "@libs/client/useInfiniteScroll";
+import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
 import { useEffect } from "react";
 
 interface ProductWithLikes extends Product {
@@ -32,7 +32,7 @@ const Sold: NextPage = () => {
         hasQuery: true,
     });
     const { data, setSize } = useSWRInfinite<RecordReturn>(getKey);
-    const page = useInfiniteScroll();
+    const page = useInfiniteScrollDown();
 
     const records = !data?.[0]?.error
         ? data?.map((data) => data.record).flat()

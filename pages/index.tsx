@@ -6,7 +6,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import useGetKey from "@libs/client/useGetKey";
 import useSWRInfinite from "swr/infinite";
-import useInfiniteScroll from "@libs/client/useInfiniteScroll";
+import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
 import { useEffect } from "react";
 
 interface ProductWithLike extends Product {
@@ -28,7 +28,7 @@ const Home: NextPage = () => {
         hasQuery: false,
     });
     const { data, setSize } = useSWRInfinite<ProductsReturn>(getKey);
-    const page = useInfiniteScroll();
+    const page = useInfiniteScrollDown();
 
     const products = !data?.[0]?.error
         ? data?.map((data) => data.products).flat()

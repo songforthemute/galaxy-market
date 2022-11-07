@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { cls } from "@libs/client/util";
 import useGetKey from "@libs/client/useGetKey";
 import useSWRInfinite from "swr/infinite";
-import useInfiniteScroll from "@libs/client/useInfiniteScroll";
+import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
 import { useEffect } from "react";
 
 interface ProductWithLikes extends Product {
@@ -32,7 +32,7 @@ const Search: NextPage = () => {
         hasQuery: true,
     });
     const { data, setSize } = useSWRInfinite<SearchReturn>(getKey);
-    const page = useInfiniteScroll();
+    const page = useInfiniteScrollDown();
 
     const results = !data?.[0]?.error
         ? data?.map((data) => data.result).flat()

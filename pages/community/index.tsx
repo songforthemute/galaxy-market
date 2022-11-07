@@ -7,7 +7,7 @@ import useGetKey from "@libs/client/useGetKey";
 import useSWRInfinite from "swr/infinite";
 import { dateConverter } from "@libs/client/util";
 import { useEffect } from "react";
-import useInfiniteScroll from "@libs/client/useInfiniteScroll";
+import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
 
 interface PostWithReaction extends Post {
     user: {
@@ -32,7 +32,7 @@ const Community: NextPage = () => {
         hasQuery: false,
     });
     const { data, setSize } = useSWRInfinite<PostsReturn>(getKey);
-    const page = useInfiniteScroll();
+    const page = useInfiniteScrollDown();
 
     const posts = !data?.[0]?.error
         ? data?.map((data) => data.posts).flat()
