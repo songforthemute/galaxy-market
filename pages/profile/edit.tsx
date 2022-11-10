@@ -80,9 +80,9 @@ const EditProfile: NextPage = () => {
 
         if (avatarUrl && avatarUrl.length > 0 && user) {
             // request Cloudflare url for upload
-            const { uploadURL }: CloudflareURLInterface = await (
-                await fetch(`/api/files`)
-            ).json();
+            const { uploadURL }: CloudflareURLInterface = await fetcher(
+                `/api/files`
+            );
 
             // create form
             const form = new FormData();
@@ -91,12 +91,10 @@ const EditProfile: NextPage = () => {
             // upload img
             const {
                 result: { id },
-            }: CloudflareURLResponseInterface = await (
-                await fetch(uploadURL, {
-                    method: "POST",
-                    body: form,
-                })
-            ).json();
+            }: CloudflareURLResponseInterface = await fetcher(uploadURL, {
+                method: "POST",
+                body: form,
+            });
 
             editProfile({ phone, username, avatarUrlId: id });
         } else {
@@ -109,8 +107,7 @@ const EditProfile: NextPage = () => {
     // 프로필 변경 미리보기
     useEffect(() => {
         if (avatarUrl && avatarUrl.length > 0) {
-            const img = avatarUrl[0];
-            const imgUrl = URL.createObjectURL(img);
+            const imgUrl = URL.createObjectURL(avatarUrl[0]);
             setAvatarUrlPreview(imgUrl);
         }
     }, [avatarUrl]);

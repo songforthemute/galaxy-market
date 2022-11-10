@@ -27,8 +27,8 @@ export const dateConverter = (date: Date, opts?: "Full" | "Time" | "Date") => {
     });
 };
 
-export const fetcher = async (url: string) => {
-    const response = await fetch(url);
+export const fetcher = async (url: string, opts?: any) => {
+    const response = await fetch(url, opts);
     return await response.json();
 };
 
