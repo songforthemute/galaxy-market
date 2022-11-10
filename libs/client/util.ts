@@ -31,3 +31,13 @@ export const fetcher = async (url: string) => {
     const response = await fetch(url);
     return await response.json();
 };
+
+export const getImgSource = (avatarUrl?: string | null, variants?: string) => {
+    if (!avatarUrl) {
+        return undefined;
+    }
+
+    return `https://imagedelivery.net/${
+        process.env.NEXT_PUBLIC_CLOUDFLARE_HASH
+    }/${avatarUrl}/${variants ? variants : "public"}`;
+};

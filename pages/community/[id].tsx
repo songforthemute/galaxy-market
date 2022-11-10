@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { Post, Replies } from "@prisma/client";
 import useMutation from "@libs/client/useMutation";
-import { cls, dateConverter } from "@libs/client/util";
+import { cls, dateConverter, getImgSource } from "@libs/client/util";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import Badge from "@components/badge";
@@ -108,12 +108,17 @@ const PostDetail: NextPage = () => {
                 <>
                     <UserCard
                         username={data.post.user?.username}
-                        avatarUrl={data.post.user?.avatarUrl}
+                        avatarUrl={getImgSource(
+                            data.post.user?.avatarUrl,
+                            "avatar"
+                        )}
                         text="프로필 보기 →"
                         href={`/profile/${data.post.userId}`}
                         type="profile"
                     />
+
                     <Badge text={data.post.tag} isLarge />
+
                     <div className="px-4 text-xl font-medium">
                         <span className="text-purple-400">Q. </span>
                         <span className="text-slate-700">
@@ -184,7 +189,19 @@ const PostDetail: NextPage = () => {
                                 className="flex items-start space-x-4"
                             >
                                 {/* avatarUrl */}
-                                <div className="w-8 h-8 bg-slate-200 rounded-full" />
+                                {reply.user.avatarUrl ? (
+                                    <img
+                                        src={getImgSource(
+                                            reply.user.avatarUrl,
+                                            "avatar"
+                                        )}
+                                        alt="avatar"
+                                        className="w-8 h-8 bg-slate-400 rounded-full"
+                                    />
+                                ) : (
+                                    <div className="w-8 h-8 bg-slate-400 rounded-full" />
+                                )}
+
                                 <div>
                                     <div className="text-sm font-medium text-slate-700">
                                         {reply.user.username}

@@ -4,7 +4,7 @@ import ProfileBtn from "@components/profileBtn";
 import UserCard from "@components/userCard";
 import useSWR from "swr";
 import { Review, User } from "@prisma/client";
-import { cls } from "@libs/client/util";
+import { cls, getImgSource } from "@libs/client/util";
 import useUser from "@libs/client/useUser";
 import { useRouter } from "next/router";
 import HelperBtn from "@components/helperBtn";
@@ -63,7 +63,11 @@ const Profile: NextPage = () => {
             {profileData?.profile ? (
                 <div className="">
                     <UserCard
-                        username={profileData?.profile.username}
+                        username={profileData.profile.username}
+                        avatarUrl={getImgSource(
+                            profileData.profile.avatarUrl,
+                            "avatar"
+                        )}
                         text={
                             user?.id === Number(id)
                                 ? "프로필 수정 →"
@@ -143,7 +147,19 @@ const Profile: NextPage = () => {
                             ? reviews.map((review) => (
                                   <div key={review.id} className="py-4">
                                       <div className="flex items-center space-x-4">
-                                          <div className="w-12 h-12 rounded-full bg-slate-400" />
+                                          {review.createdBy.avatarUrl ? (
+                                              <img
+                                                  src={getImgSource(
+                                                      review.createdBy
+                                                          .avatarUrl,
+                                                      "avatar"
+                                                  )}
+                                                  alt="avatar"
+                                                  className="w-12 h-12 rounded-full"
+                                              />
+                                          ) : (
+                                              <div className="w-12 h-12 rounded-full bg-slate-400" />
+                                          )}
                                           <div>
                                               <h4 className="ml-0.5 text-sm font-bold">
                                                   {review.createdBy.username}

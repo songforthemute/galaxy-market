@@ -20,7 +20,15 @@ const Messages = ({
                 isReverse ? "flex-row-reverse space-x-reverse" : ""
             )}
         >
-            <div className="rounded-full w-8 h-8 bg-slate-400" />
+            {avatarUrl ? (
+                <img
+                    src={avatarUrl}
+                    alt="avatar"
+                    className="rounded-full w-8 h-8 bg-slate-400"
+                />
+            ) : (
+                <div className="rounded-full w-8 h-8 bg-slate-400" />
+            )}
             <div className="w-1/3 max-w-max text-sm text-slate-700 p-2 border border-slate-400 rounded-md ">
                 <p>{text}</p>
             </div>

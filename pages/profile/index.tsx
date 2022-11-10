@@ -3,7 +3,7 @@ import Layout from "@components/layout";
 import ProfileBtn from "@components/profileBtn";
 import UserCard from "@components/userCard";
 import { Review } from "@prisma/client";
-import { cls } from "@libs/client/util";
+import { cls, getImgSource } from "@libs/client/util";
 import useUser from "@libs/client/useUser";
 import useGetKey from "@libs/client/useGetKey";
 import useSWRInfinite from "swr/infinite";
@@ -47,6 +47,7 @@ const Profile: NextPage = () => {
             {user ? (
                 <div className="">
                     <UserCard
+                        avatarUrl={getImgSource(user?.avatarUrl, "avatar")}
                         username={user?.username}
                         text="프로필 수정 →"
                         type="profile"
@@ -122,7 +123,19 @@ const Profile: NextPage = () => {
                             ? reviews.map((review) => (
                                   <div key={review.id} className="py-4">
                                       <div className="flex items-center space-x-4">
-                                          <div className="w-12 h-12 rounded-full bg-slate-400" />
+                                          {review.createdBy.avatarUrl ? (
+                                              <img
+                                                  src={getImgSource(
+                                                      review.createdBy
+                                                          .avatarUrl,
+                                                      "avatar"
+                                                  )}
+                                                  alt="avatar"
+                                                  className="w-12 h-12 rounded-full"
+                                              />
+                                          ) : (
+                                              <div className="w-12 h-12 rounded-full bg-slate-400" />
+                                          )}
                                           <div>
                                               <h4 className="ml-0.5 text-sm font-bold">
                                                   {review.createdBy.username}

@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Layout from "@components/layout";
 import UserCard from "@components/userCard";
 import { Message } from "@prisma/client";
-import { dateConverter } from "@libs/client/util";
+import { dateConverter, getImgSource } from "@libs/client/util";
 import useGetKey from "@libs/client/useGetKey";
 import useSWRInfinite from "swr/infinite";
 import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
@@ -49,6 +49,10 @@ const Chats: NextPage = () => {
                             text={`마지막으로 받은 메시지: ${dateConverter(
                                 message.created
                             )}`}
+                            avatarUrl={getImgSource(
+                                message.messagedBy.avatarUrl,
+                                "avatar"
+                            )}
                             username={message.messagedBy.username}
                             type="message"
                             href={`/chats/${message.messagedBy.id}`}

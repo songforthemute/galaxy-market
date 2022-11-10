@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import ErrorMessage from "@components/errMessage";
 import useMutation from "@libs/client/useMutation";
 import { useRouter } from "next/router";
+import { fetcher, getImgSource } from "@libs/client/util";
 
 interface EditProfileForm {
     avatarUrl?: FileList;
@@ -62,7 +63,7 @@ const EditProfile: NextPage = () => {
     useEffect(() => {
         if (user?.phone) setValue("phone", user.phone);
         if (user?.username) setValue("username", user.username);
-        // if (user?.avatarUrl) setValue("avatarUrl", user.avatarUrl);
+        if (user?.avatarUrl) setAvatarUrlPreview(getImgSource(user.avatarUrl)!);
     }, [user]);
 
     const _onValid = async ({
@@ -135,7 +136,7 @@ const EditProfile: NextPage = () => {
                     {avatarUrlPreview.length > 0 ? (
                         <img
                             src={avatarUrlPreview}
-                            alt="avatarUrl"
+                            alt="avatar"
                             className="w-24 h-24 rounded-full bg-slate-400 mr-4 cursor-pointer"
                         />
                     ) : (

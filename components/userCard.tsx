@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { cls } from "@libs/client/util";
+import { cls, getImgSource } from "@libs/client/util";
 
 interface UserCardProps {
     text: string;
@@ -20,7 +20,6 @@ const UserCard = ({
     type = "profile",
     isLarge = false,
     hasBorder,
-    ...properties
 }: UserCardProps) => {
     return (
         <div
@@ -34,12 +33,23 @@ const UserCard = ({
         >
             <Link href={href}>
                 <a className="flex items-center space-x-4 cursor-pointer hover:opacity-50 transition-all">
-                    <div
-                        className={cls(
-                            "rounded-full bg-slate-400",
-                            isLarge ? "w-16 h-16" : "w-12 h-12"
-                        )}
-                    />
+                    {avatarUrl ? (
+                        <img
+                            src={avatarUrl}
+                            alt="avatar"
+                            className={cls(
+                                "rounded-full bg-slate-400",
+                                isLarge ? "w-16 h-16" : "w-12 h-12"
+                            )}
+                        />
+                    ) : (
+                        <div
+                            className={cls(
+                                "rounded-full bg-slate-400",
+                                isLarge ? "w-16 h-16" : "w-12 h-12"
+                            )}
+                        />
+                    )}
                     <div className="space-y-1">
                         <p
                             className={cls(
