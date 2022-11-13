@@ -1,9 +1,9 @@
-import { cls, dateConverter } from "@libs/client/util";
+import { cls, dateConverter, getImgSource } from "@libs/client/util";
 
 interface MessagesProps {
     text?: string;
     isReverse?: boolean;
-    avatarUrl?: string; // 추후 이미지에 넣을 부분
+    avatarUrl?: string | null; // 추후 이미지에 넣을 부분
     createdAt: Date;
 }
 
@@ -20,7 +20,15 @@ const Messages = ({
                 isReverse ? "flex-row-reverse space-x-reverse" : ""
             )}
         >
-            <div className="rounded-full w-8 h-8 bg-slate-400" />
+            {avatarUrl ? (
+                <img
+                    src={getImgSource(avatarUrl, "avatar")}
+                    alt="avatar"
+                    className="rounded-full w-8 h-8 bg-slate-400"
+                />
+            ) : (
+                <div className="rounded-full w-8 h-8 bg-slate-400" />
+            )}
             <div className="w-1/3 max-w-max text-sm text-slate-700 p-2 border border-slate-400 rounded-md ">
                 <p>{text}</p>
             </div>

@@ -11,6 +11,7 @@ import useUser from "@libs/client/useUser";
 import useSWRInfinite from "swr/infinite";
 import useGetKey from "@libs/client/useGetKey";
 import { useInfiniteScrollUp } from "@libs/client/useInfiniteScroll";
+import { getImgSource } from "@libs/client/util";
 
 interface SendingForm {
     message: string;
@@ -111,9 +112,7 @@ const ChatDetail: NextPage = () => {
                         ?.reverse()
                         .map((message) => (
                             <Messages
-                                avatarUrl={
-                                    message.messagedBy.avatarUrl || undefined
-                                }
+                                avatarUrl={message.messagedBy.avatarUrl}
                                 key={message.id}
                                 text={message.text}
                                 isReverse={message.messagedById === user?.id}

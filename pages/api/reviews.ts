@@ -33,6 +33,13 @@ const handler = async (
                         avatarUrl: true,
                     },
                 },
+                product: {
+                    select: {
+                        name: true,
+                        option: true,
+                        image: true,
+                    },
+                },
             },
             take: 10,
             skip: (Number(page) - 1) * 10,
