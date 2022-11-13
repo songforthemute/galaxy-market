@@ -35,7 +35,7 @@ const UserCard = ({
                 <a className="flex items-center space-x-4 cursor-pointer hover:opacity-50 transition-all">
                     {avatarUrl ? (
                         <img
-                            src={getImgSource(avatarUrl, "avatar")}
+                            src={avatarUrl}
                             alt="avatar"
                             className={cls(
                                 "rounded-full bg-slate-400",

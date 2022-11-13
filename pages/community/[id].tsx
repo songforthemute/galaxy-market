@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { Post, Replies } from "@prisma/client";
 import useMutation from "@libs/client/useMutation";
-import { cls, dateConverter } from "@libs/client/util";
+import { cls, dateConverter, getImgSource } from "@libs/client/util";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import Badge from "@components/badge";
@@ -109,7 +109,10 @@ const PostDetail: NextPage = () => {
                 <>
                     <UserCard
                         username={data.post.user?.username}
-                        avatarUrl={data.post.user?.avatarUrl}
+                        avatarUrl={getImgSource(
+                            data.post.user?.avatarUrl,
+                            "avatar"
+                        )}
                         text="프로필 보기 →"
                         href={`/profile/${data.post.userId}`}
                         type="profile"

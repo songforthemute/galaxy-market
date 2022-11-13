@@ -5,7 +5,7 @@ import UserCard from "@components/userCard";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import { Product } from "@prisma/client";
-import { cls, priceConverter } from "@libs/client/util";
+import { cls, getImgSource, priceConverter } from "@libs/client/util";
 import Link from "next/link";
 import useMutation from "@libs/client/useMutation";
 import useUser from "@libs/client/useUser";
@@ -76,7 +76,10 @@ const ItemDetail: NextPage = () => {
                             <UserCard
                                 text="프로필 보기 &rarr;"
                                 username={data.product.user?.username}
-                                avatarUrl={data.product.user?.avatarUrl}
+                                avatarUrl={getImgSource(
+                                    data.product.user?.avatarUrl,
+                                    "avatar"
+                                )}
                                 type="profile"
                                 href={`/profile/${data.product.userId}`}
                                 hasBorder
