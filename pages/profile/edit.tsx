@@ -4,13 +4,14 @@ import Input from "@components/input";
 import Layout from "@components/layout";
 import useUser from "@libs/client/useUser";
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ErrorMessage from "@components/errMessage";
 import useMutation from "@libs/client/useMutation";
 import { useRouter } from "next/router";
+import { fetcher, getImgSource } from "@libs/client/util";
 
 interface EditProfileForm {
-    avatarUrl?: string;
+    avatarUrl?: FileList;
     username?: string;
     phone?: string;
 }
@@ -18,6 +19,25 @@ interface EditProfileForm {
 interface EditProfileReturn {
     status: boolean;
     error?: string;
+}
+
+interface CloudflareURLInterface {
+    status: boolean;
+    id: string;
+    uploadURL: string;
+}
+
+interface CloudflareURLResponseInterface {
+    errors?: any[];
+    messages?: any[];
+    success: boolean;
+    result: {
+        id: string;
+        filename: string;
+        uploaded: string;
+        requireSignedURLs: boolean;
+        variants: string[];
+    };
 }
 
 const EditProfile: NextPage = () => {
@@ -33,25 +53,62 @@ const EditProfile: NextPage = () => {
         handleSubmit,
         setValue,
         setError,
+        watch,
         formState: { errors },
     } = useForm<EditProfileForm>({ reValidateMode: "onBlur" });
+    const avatarUrl = watch("avatarUrl");
+    const [avatarUrlPreview, setAvatarUrlPreview] = useState("");
 
     // form initialization
     useEffect(() => {
         if (user?.phone) setValue("phone", user.phone);
         if (user?.username) setValue("username", user.username);
-        // if (user?.avatarUrl) setValue("avatarUrl", user.avatarUrl);
+        if (user?.avatarUrl) setAvatarUrlPreview(getImgSource(user.avatarUrl)!);
     }, [user]);
 
-    const _onValid = ({ phone, username, avatarUrl }: EditProfileForm) => {
+    const _onValid = async ({
+        phone,
+        username,
+        avatarUrl,
+    }: EditProfileForm) => {
         if (loading) return;
+
         if (errors?.phone || errors?.username) {
             console.log("error!", errors);
             return;
         }
 
-        editProfile({ phone, username, avatarUrl });
+        if (avatarUrl && avatarUrl.length > 0 && user) {
+            // request Cloudflare url for upload
+            const { uploadURL }: CloudflareURLInterface = await fetcher(
+                `/api/files`
+            );
+
+            // create form
+            const form = new FormData();
+            form.append("file", avatarUrl[0], String(user.id));
+
+            // upload img
+            const {
+                result: { id },
+            }: CloudflareURLResponseInterface = await fetcher(uploadURL, {
+                method: "POST",
+                body: form,
+            });
+
+            editProfile({ phone, username, avatarUrlId: id });
+        } else {
+            editProfile({ phone, username });
+        }
     };
+
+    // 프로필 변경 미리보기
+    useEffect(() => {
+        if (avatarUrl && avatarUrl.length > 0) {
+            const imgUrl = URL.createObjectURL(avatarUrl[0]);
+            setAvatarUrlPreview(imgUrl);
+        }
+    }, [avatarUrl]);
 
     // 이미 존재하는 전화번호
     useEffect(() => {
@@ -71,14 +128,24 @@ const EditProfile: NextPage = () => {
         <Layout title="프로필 수정" hasTabBar canGoBack>
             <form onSubmit={handleSubmit(_onValid)} className="p-4 space-y-8">
                 <div className="flex items-center space-x-2">
-                    <div className="w-20 h-20 rounded-full bg-slate-400 mr-4 cursor-pointer" />
+                    {avatarUrlPreview.length > 0 ? (
+                        <img
+                            src={avatarUrlPreview}
+                            alt="avatar"
+                            className="w-24 h-24 rounded-full bg-slate-400 mr-4 cursor-pointer"
+                        />
+                    ) : (
+                        <div className="w-24 h-24 rounded-full bg-slate-400 mr-4" />
+                    )}
+
                     <label
                         htmlFor="photo"
                         className="cursor-pointer p-2 border border-slate-400 text-slate-400 rounded-md shadow-md font-medium
                 hover:text-purple-400 hover:border-purple-400 focus:ring-2 focus:ring-offset-2 focus:ring-purple-400 transition-all"
                     >
-                        Change Photo
+                        프로필 사진 바꾸기
                         <input
+                            {...register("avatarUrl")}
                             id="photo"
                             type="file"
                             className="hidden"

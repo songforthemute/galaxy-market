@@ -3,7 +3,7 @@ import Layout from "@components/layout";
 import ProfileBtn from "@components/profileBtn";
 import UserCard from "@components/userCard";
 import { Review } from "@prisma/client";
-import { cls } from "@libs/client/util";
+import { getImgSource } from "@libs/client/util";
 import useUser from "@libs/client/useUser";
 import useGetKey from "@libs/client/useGetKey";
 import useSWRInfinite from "swr/infinite";
@@ -47,6 +47,7 @@ const Profile: NextPage = () => {
             {user ? (
                 <div className="">
                     <UserCard
+                        avatarUrl={getImgSource(user?.avatarUrl, "avatar")}
                         username={user?.username}
                         text="프로필 수정 →"
                         type="profile"

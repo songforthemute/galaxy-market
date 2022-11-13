@@ -9,12 +9,7 @@ const handler = async (
 ) => {
     const {
         session: { user },
-        body: { username, phone, avatarUrl },
     } = req;
-
-    if (!user) {
-        return res.json({ status: false });
-    }
 
     const currentUser = await client.user.findUnique({
         where: {
@@ -27,6 +22,10 @@ const handler = async (
     }
 
     if (req.method === "PUT") {
+        const {
+            body: { username, phone, avatarUrlId },
+        } = req;
+
         if (
             phone &&
             phone !== currentUser?.phone &&
@@ -52,16 +51,29 @@ const handler = async (
             }
         }
 
-        await client.user.update({
-            where: {
-                id: user?.id,
-            },
-            data: {
-                username,
-                phone,
-                // avatarUrl,
-            },
-        });
+        // 이미지 업로드 케이스 분기
+        if (avatarUrlId) {
+            await client.user.update({
+                where: {
+                    id: user?.id,
+                },
+                data: {
+                    username,
+                    phone,
+                    avatarUrl: avatarUrlId,
+                },
+            });
+        } else {
+            await client.user.update({
+                where: {
+                    id: user?.id,
+                },
+                data: {
+                    username,
+                    phone,
+                },
+            });
+        }
 
         return res.json({ status: true });
     }
