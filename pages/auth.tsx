@@ -63,8 +63,6 @@ const Auth = () => {
 
     // ############## ISSUE: Can't push "/" #################
     useEffect(() => {
-        console.log(data);
-
         if (data?.status) {
             // router.replace("/");
             router.reload();
