@@ -76,10 +76,7 @@ const ItemDetail: NextPage = () => {
                             <UserCard
                                 text="프로필 보기 &rarr;"
                                 username={data.product.user?.username}
-                                avatarUrl={getImgSource(
-                                    data.product.user?.avatarUrl,
-                                    "avatar"
-                                )}
+                                avatarUrl={data.product.user?.avatarUrl}
                                 type="profile"
                                 href={`/profile/${data.product.userId}`}
                                 hasBorder

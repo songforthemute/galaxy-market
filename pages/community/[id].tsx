@@ -109,10 +109,7 @@ const PostDetail: NextPage = () => {
                 <>
                     <UserCard
                         username={data.post.user?.username}
-                        avatarUrl={getImgSource(
-                            data.post.user?.avatarUrl,
-                            "avatar"
-                        )}
+                        avatarUrl={data.post.user?.avatarUrl}
                         text="프로필 보기 →"
                         href={`/profile/${data.post.userId}`}
                         type="profile"

@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Layout from "@components/layout";
 import UserCard from "@components/userCard";
 import { Message } from "@prisma/client";
-import { dateConverter, getImgSource } from "@libs/client/util";
+import { dateConverter } from "@libs/client/util";
 import useGetKey from "@libs/client/useGetKey";
 import useSWRInfinite from "swr/infinite";
 import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";

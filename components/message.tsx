@@ -22,7 +22,7 @@ const Messages = ({
         >
             {avatarUrl ? (
                 <img
-                    src={avatarUrl}
+                    src={getImgSource(avatarUrl, "avatar")}
                     alt="avatar"
                     className="rounded-full w-8 h-8 bg-slate-400"
                 />

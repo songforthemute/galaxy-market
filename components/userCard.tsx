@@ -33,9 +33,9 @@ const UserCard = ({
         >
             <Link href={href}>
                 <a className="flex items-center space-x-4 cursor-pointer hover:opacity-50 transition-all">
-                    {avatarUrl ? (
+                    {avatarUrl && avatarUrl.length > 0 ? (
                         <img
-                            src={avatarUrl}
+                            src={getImgSource(avatarUrl, "avatar")}
                             alt="avatar"
                             className={cls(
                                 "rounded-full bg-slate-400",
@@ -45,7 +45,7 @@ const UserCard = ({
                     ) : (
                         <div
                             className={cls(
-                                "rounded-full bg-slate-400",
+                                "aspect-square rounded-full bg-slate-400",
                                 isLarge ? "w-16 h-16" : "w-12 h-12"
                             )}
                         />

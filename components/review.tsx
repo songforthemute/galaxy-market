@@ -69,9 +69,13 @@ const Reviews = ({
                 <Link href={`/products/${productId}`}>
                     <a className="flex mt-4 space-x-2 rounded-lg hover:opacity-50 hover:text-purple-400 transition-all">
                         {productImg ? (
-                            <img src={getImgSource(productImg, "avatar")} />
+                            <img
+                                src={getImgSource(productImg, "avatar")}
+                                alt="image"
+                                className="w-12 rounded-lg"
+                            />
                         ) : (
-                            <div className="w-12 h-12 bg-slate-400 rounded-xl" />
+                            <div className="w-12 h-12 bg-slate-400 rounded-lg" />
                         )}
                         <div className="flex flex-col space-y-1 justify-center">
                             <span className="text-sm font-medium text-slate-00">

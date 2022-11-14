@@ -53,8 +53,8 @@ const Profile: NextPage = () => {
             {user ? (
                 <div className="">
                     <UserCard
-                        avatarUrl={getImgSource(user?.avatarUrl, "avatar")}
-                        username={user?.username}
+                        avatarUrl={user.avatarUrl}
+                        username={user.username}
                         text="프로필 수정 →"
                         type="profile"
                         href="/profile/edit"
@@ -63,7 +63,7 @@ const Profile: NextPage = () => {
 
                     <div className="mt-10 flex justify-around">
                         <ProfileBtn
-                            href={`/profile/${user?.id}/sell`}
+                            href={`/profile/${user.id}/sell`}
                             text="판매내역"
                         >
                             <svg

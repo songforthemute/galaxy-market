@@ -18,7 +18,6 @@ const handler = async (
         }
     );
     const url = await cloudflareRes.json();
-    console.log(url);
 
     return res.json({ status: true, ...url.result });
 };
