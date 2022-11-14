@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
 import handlerHelper, { ResponseInterface } from "@libs/server/handlerHelper";
-import crypto from "crypto";
 import bcrypt from "bcrypt";
 import { withApiSession } from "@libs/server/sessionHelper";
 
