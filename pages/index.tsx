@@ -51,6 +51,7 @@ const Home: NextPage = () => {
                             href={`/products/${product.id}`}
                             name={product.name}
                             opt={product.option}
+                            imageUrl={product.image}
                             price={product.price}
                             likes={product._count.record}
                             key={product.id}

@@ -48,6 +48,7 @@ const Like: NextPage = () => {
                 {data && records ? (
                     records?.map((like) => (
                         <Item
+                            imageUrl={like.product.image}
                             name={like.product.name}
                             opt={like.product.option}
                             price={like.product.price}

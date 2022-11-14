@@ -48,6 +48,7 @@ const Sold: NextPage = () => {
                 {data && records ? (
                     records?.map((sell) => (
                         <Item
+                            imageUrl={sell.product.image}
                             name={sell.product.name}
                             opt={sell.product.option}
                             price={sell.product.price}

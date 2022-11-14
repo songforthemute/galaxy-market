@@ -71,7 +71,15 @@ const ItemDetail: NextPage = () => {
                 {data?.product ? (
                     <>
                         <div className="mb-8">
-                            <div className="h-96 bg-slate-400 mb-4" />
+                            {data.product.image ? (
+                                <img
+                                    src={getImgSource(data.product.image)}
+                                    alt="image"
+                                    className="w-full mb-4"
+                                />
+                            ) : (
+                                <div className="w-full aspect-video bg-slate-200 mb-4" />
+                            )}
 
                             <UserCard
                                 text="프로필 보기 &rarr;"

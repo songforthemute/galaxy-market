@@ -1,21 +1,30 @@
 import Link from "next/link";
-import { priceConverter } from "@libs/client/util";
+import { getImgSource, priceConverter } from "@libs/client/util";
 
 interface ItemProps {
     href: string;
     name: string;
-    imgUrl?: string;
+    imageUrl?: string | null;
     opt: string;
     price: number;
     likes: number;
 }
 
-const Item = ({ href, name, imgUrl, opt, price, likes }: ItemProps) => {
+const Item = ({ href, name, imageUrl, opt, price, likes }: ItemProps) => {
     return (
         <Link href={href}>
             <a className="flex p-4 cursor-pointer justify-between hover:opacity-50 transition-opacity">
                 <div className="flex space-x-4">
-                    <div className="w-20 h-20 bg-slate-400 rounded-md" />
+                    {imageUrl ? (
+                        <img
+                            src={getImgSource(imageUrl, "thumbnail")}
+                            alt="image"
+                            className="w-20 rounded-md"
+                        />
+                    ) : (
+                        <div className="w-20 h-20 bg-slate-400 rounded-md" />
+                    )}
+
                     <div className="py-1.5 flex flex-col">
                         <h3 className="text-sm font-medium text-slate-700">
                             {name}

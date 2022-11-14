@@ -5,15 +5,17 @@ import Layout from "@components/layout";
 import TxtArea from "@components/txtArea";
 import { useForm } from "react-hook-form";
 import useMutation from "@libs/client/useMutation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Product } from "@prisma/client";
 import { useRouter } from "next/router";
+import { cls, fetcher } from "@libs/client/util";
 
 interface UploadProductFormInterface {
     name: string;
     price: number;
     option?: string;
     description?: string;
+    image: FileList;
 }
 
 interface UploadProductReturn {
@@ -21,21 +23,80 @@ interface UploadProductReturn {
     product: Product;
 }
 
+interface CloudflareURLInterface {
+    status: boolean;
+    id: string;
+    uploadURL: string;
+}
+
+interface CloudflareURLResponseInterface {
+    errors?: any[];
+    messages?: any[];
+    success: boolean;
+    result: {
+        id: string;
+        filename: string;
+        uploaded: string;
+        requireSignedURLs: boolean;
+        variants: string[];
+    };
+}
+
 const Upload: NextPage = () => {
     const router = useRouter();
     const {
         register,
         handleSubmit,
+        watch,
         formState: { errors },
     } = useForm<UploadProductFormInterface>();
     const [uploadProduct, { loading, data }] = useMutation<UploadProductReturn>(
         { url: "/api/products", method: "POST" }
     );
 
-    const _onValid = (data: UploadProductFormInterface) => {
+    // attach image
+    const attachment = watch("image");
+    const [attachmentPreview, setAttachmentPreview] = useState("");
+
+    useEffect(() => {
+        if (attachment && attachment.length > 0) {
+            const imgUrl = URL.createObjectURL(attachment[0]);
+            setAttachmentPreview(imgUrl);
+        }
+    }, [attachment]);
+
+    // submit
+    const _onValid = async ({
+        name,
+        description,
+        image,
+        price,
+        option,
+    }: UploadProductFormInterface) => {
         if (loading) return;
 
-        uploadProduct(data);
+        if (image && image.length > 0) {
+            // request Cloudflare url for upload
+            const { uploadURL }: CloudflareURLInterface = await fetcher(
+                `/api/files`
+            );
+
+            // create form
+            const form = new FormData();
+            form.append("file", attachment[0], name);
+
+            // upload img
+            const {
+                result: { id },
+            }: CloudflareURLResponseInterface = await fetcher(uploadURL, {
+                method: "POST",
+                body: form,
+            });
+
+            uploadProduct({ name, price, option, description, imageUrlId: id });
+        } else {
+            uploadProduct({ name, price, option, description });
+        }
     };
 
     // 데이터베이스에 생성 잘 되나 프론트단에 product 안넘어옴 => then으로 해결
@@ -47,29 +108,43 @@ const Upload: NextPage = () => {
 
     return (
         <Layout title="상품 등록" hasTabBar canGoBack>
-            <form className="px-4 pt-10" onSubmit={handleSubmit(_onValid)}>
+            <form className="p-4" onSubmit={handleSubmit(_onValid)}>
                 <div>
                     <label
-                        className="w-full h-48 flex items-center justify-center
-                            border-2 border-dashed border-slate-700 py-8 rounded-md
-                          text-slate-700 hover:text-purple-400 hover:border-purple-400 transition-colors cursor-pointer"
+                        htmlFor="image"
+                        className={cls(
+                            "w-full rounded-md hover:border-purple-400 transition-colors cursor-pointer",
+                            attachmentPreview
+                                ? "p-2"
+                                : "flex items-center justify-center py-24 border-2 border-dashed border-slate-700 text-slate-700 hover:text-purple-400"
+                        )}
                     >
-                        <svg
-                            className="h-12 w-12"
-                            stroke="currentColor"
-                            fill="none"
-                            viewBox="0 0 48 48"
-                            aria-hidden="true"
-                        >
-                            <path
-                                d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                                strokeWidth={2}
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
+                        {attachmentPreview ? (
+                            <img
+                                src={attachmentPreview}
+                                alt="image"
+                                className="w-full border-2 border-dashed border-slate-700 p-2 rounded-md
+                            hover:border-purple-400 transition-colors cursor-pointer"
                             />
-                        </svg>
-
+                        ) : (
+                            <svg
+                                className="h-14 w-14"
+                                stroke="currentColor"
+                                fill="none"
+                                viewBox="0 0 48 48"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                    strokeWidth={2}
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                />
+                            </svg>
+                        )}
                         <input
+                            {...register("image")}
+                            id="image"
                             type="file"
                             className="hidden"
                             accept="image/*"
