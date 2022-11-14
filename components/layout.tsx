@@ -1,6 +1,8 @@
 import { useRouter } from "next/router";
 import { cls } from "@libs/client/util";
 import DockBtn from "./dockBtn";
+import { useState } from "react";
+import ConfigTab from "./configTab";
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -22,14 +24,18 @@ const Layout = ({
     const _onClickBack = () => {
         router.back();
     };
-    const _onClickConfig = () => {};
+
+    const [showingConfig, setShowingConfig] = useState(false);
+    const _onClickConfig = () => {
+        setShowingConfig((prev) => !prev);
+    };
 
     return (
         <div className="">
             <div
                 className={cls(
                     !canGoBack ? "justify-center" : "justify-evenly",
-                    "bg-white w-full text-lg font-medium py-4 fixed text-slate-700 border-b top-0 flex items-center"
+                    "bg-white w-full text-lg font-medium py-4 fixed text-slate-700 border-b top-0 flex items-center z-50"
                 )}
             >
                 {canGoBack && (
@@ -58,7 +64,7 @@ const Layout = ({
                 )}
                 {hasConfig && (
                     <button
-                        className="absolute right-6 p-1 text-slate-700 text-2xl font-light focus:text-purple-400 hover:text-purple-400 transition-all"
+                        className="absolute right-6 p-1 text-slate-700 text-2xl font-light hover:text-purple-400 transition-all"
                         onClick={_onClickConfig}
                     >
                         <svg
@@ -78,9 +84,26 @@ const Layout = ({
                     </button>
                 )}
             </div>
+
+            {/* 뷰 */}
             <div className={cls("pt-16", hasTabBar ? "pb-24" : "")}>
+                {/* 설정 OF & OFF */}
+                {/* {showingConfig && (
+                )} */}
+                <div
+                    className={cls(
+                        "fixed transition-all border-none",
+                        showingConfig
+                            ? "top-14 w-full h-full z-10 transition-transform"
+                            : "w-0 h-0 -z-100 -bottom-[1000px] text-transparent bg-transparent"
+                    )}
+                >
+                    <ConfigTab />
+                </div>
+
                 {children}
             </div>
+
             {hasTabBar && (
                 <nav className="bg-white w-full text-slate-700 border-t fixed bottom-0 py-4 flex justify-evenly items-center">
                     <DockBtn
