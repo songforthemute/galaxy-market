@@ -1,4 +1,5 @@
 import { cls, dateConverter, getImgSource } from "@libs/client/util";
+import Image from "next/image";
 
 interface MessagesProps {
     text?: string;
@@ -21,11 +22,17 @@ const Messages = ({
             )}
         >
             {avatarUrl ? (
-                <img
-                    src={getImgSource(avatarUrl, "avatar")}
-                    alt="avatar"
-                    className="rounded-full w-8 h-8 bg-slate-400"
-                />
+                <div className="relative rounded-full p-4">
+                    <Image
+                        src={getImgSource(avatarUrl, "avatar")}
+                        alt="avatar"
+                        className="rounded-full"
+                        layout="fill"
+                        objectFit="scale-down"
+                        quality={100}
+                        priority
+                    />
+                </div>
             ) : (
                 <div className="rounded-full w-8 h-8 bg-slate-400" />
             )}

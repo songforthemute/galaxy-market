@@ -9,6 +9,7 @@ import ErrorMessage from "@components/errMessage";
 import useMutation from "@libs/client/useMutation";
 import { useRouter } from "next/router";
 import { fetcher, getImgSource } from "@libs/client/util";
+import Image from "next/image";
 
 interface EditProfileForm {
     avatarUrl?: FileList;
@@ -129,11 +130,17 @@ const EditProfile: NextPage = () => {
             <form onSubmit={handleSubmit(_onValid)} className="p-4 space-y-8">
                 <div className="flex items-center space-x-2">
                     {avatarUrlPreview.length > 0 ? (
-                        <img
-                            src={avatarUrlPreview}
-                            alt="avatar"
-                            className="w-24 h-24 rounded-full bg-slate-400 mr-4 cursor-pointer"
-                        />
+                        <div className="relative rounded-full cursor-pointer mr-4 p-12">
+                            <Image
+                                src={avatarUrlPreview}
+                                alt="avatar"
+                                className="rounded-full"
+                                layout="fill"
+                                objectFit="scale-down"
+                                quality={100}
+                                priority
+                            />
+                        </div>
                     ) : (
                         <div className="w-24 h-24 rounded-full bg-slate-400 mr-4" />
                     )}

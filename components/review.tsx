@@ -1,4 +1,5 @@
 import { cls, dateConverter, getImgSource } from "@libs/client/util";
+import Image from "next/image";
 import Link from "next/link";
 
 interface reviewProps {
@@ -28,11 +29,17 @@ const Reviews = ({
         <div className="py-4">
             <div className="mb-4 flex items-center space-x-4">
                 {avatarUrl ? (
-                    <img
-                        src={getImgSource(avatarUrl, "avatar")}
-                        alt="avatar"
-                        className="w-12 h-12 rounded-full"
-                    />
+                    <div className="relative rounded-full p-6">
+                        <Image
+                            src={getImgSource(avatarUrl, "avatar")}
+                            alt="avatar"
+                            className="rounded-full"
+                            layout="fill"
+                            objectFit="scale-down"
+                            quality={100}
+                            priority
+                        />
+                    </div>
                 ) : (
                     <div className="w-12 h-12 rounded-full bg-slate-400" />
                 )}
@@ -69,11 +76,17 @@ const Reviews = ({
                 <Link href={`/products/${productId}`}>
                     <a className="flex mt-4 space-x-2 rounded-lg hover:opacity-50 hover:text-purple-400 transition-all">
                         {productImg ? (
-                            <img
-                                src={getImgSource(productImg, "avatar")}
-                                alt="image"
-                                className="w-12 rounded-lg"
-                            />
+                            <div className="relative rounded-md p-12">
+                                <Image
+                                    src={getImgSource(productImg, "avatar")}
+                                    alt="avatar"
+                                    className="rounded-md"
+                                    layout="fill"
+                                    objectFit="scale-down"
+                                    quality={100}
+                                    priority
+                                />
+                            </div>
                         ) : (
                             <div className="w-12 h-12 bg-slate-400 rounded-lg" />
                         )}

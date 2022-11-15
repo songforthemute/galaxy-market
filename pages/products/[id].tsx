@@ -9,6 +9,7 @@ import { cls, getImgSource, priceConverter } from "@libs/client/util";
 import Link from "next/link";
 import useMutation from "@libs/client/useMutation";
 import useUser from "@libs/client/useUser";
+import Image from "next/image";
 
 interface ProductWithUserInterface extends Product {
     user: {
@@ -72,11 +73,17 @@ const ItemDetail: NextPage = () => {
                     <>
                         <div className="mb-8">
                             {data.product.image ? (
-                                <img
-                                    src={getImgSource(data.product.image)}
-                                    alt="image"
-                                    className="w-full mb-4"
-                                />
+                                <div className="mx-auto mb-4 py-48 relative">
+                                    <Image
+                                        src={getImgSource(data.product.image)}
+                                        alt="image"
+                                        className=""
+                                        layout="fill"
+                                        objectFit="scale-down"
+                                        quality={100}
+                                        priority
+                                    />
+                                </div>
                             ) : (
                                 <div className="w-full aspect-video bg-slate-200 mb-4" />
                             )}

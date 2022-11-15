@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { cls, getImgSource } from "@libs/client/util";
+import Image from "next/image";
 
 interface UserCardProps {
     text: string;
@@ -34,14 +35,22 @@ const UserCard = ({
             <Link href={href}>
                 <a className="flex items-center space-x-4 cursor-pointer hover:opacity-50 transition-all">
                     {avatarUrl && avatarUrl.length > 0 ? (
-                        <img
-                            src={getImgSource(avatarUrl, "avatar")}
-                            alt="avatar"
+                        <div
                             className={cls(
-                                "rounded-full bg-slate-400",
-                                isLarge ? "w-16 h-16" : "w-12 h-12"
+                                "relative rounded-full",
+                                isLarge ? "p-8" : "p-6"
                             )}
-                        />
+                        >
+                            <Image
+                                src={getImgSource(avatarUrl, "avatar")}
+                                alt="avatar"
+                                className="rounded-full"
+                                layout="fill"
+                                objectFit="scale-down"
+                                quality={100}
+                                priority
+                            />
+                        </div>
                     ) : (
                         <div
                             className={cls(

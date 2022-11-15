@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getImgSource, priceConverter } from "@libs/client/util";
+import Image from "next/image";
 
 interface ItemProps {
     href: string;
@@ -16,11 +17,17 @@ const Item = ({ href, name, imageUrl, opt, price, likes }: ItemProps) => {
             <a className="flex p-4 cursor-pointer justify-between hover:opacity-50 transition-opacity">
                 <div className="flex space-x-4">
                     {imageUrl ? (
-                        <img
-                            src={getImgSource(imageUrl, "thumbnail")}
-                            alt="image"
-                            className="w-20 rounded-md"
-                        />
+                        <div className="relative rounded-md p-10">
+                            <Image
+                                src={getImgSource(imageUrl, "thumbnail")}
+                                alt="thumbnail"
+                                className="rounded-md"
+                                layout="fill"
+                                objectFit="scale-down"
+                                quality={100}
+                                priority
+                            />
+                        </div>
                     ) : (
                         <div className="w-20 h-20 bg-slate-400 rounded-md" />
                     )}

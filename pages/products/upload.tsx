@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { Product } from "@prisma/client";
 import { useRouter } from "next/router";
 import { cls, fetcher } from "@libs/client/util";
+import Image from "next/image";
 
 interface UploadProductFormInterface {
     name: string;
@@ -115,17 +116,22 @@ const Upload: NextPage = () => {
                         className={cls(
                             "w-full rounded-md hover:border-purple-400 transition-colors cursor-pointer",
                             attachmentPreview
-                                ? "p-2"
+                                ? ""
                                 : "flex items-center justify-center py-24 border-2 border-dashed border-slate-700 text-slate-700 hover:text-purple-400"
                         )}
                     >
                         {attachmentPreview ? (
-                            <img
-                                src={attachmentPreview}
-                                alt="image"
-                                className="w-full border-2 border-dashed border-slate-700 p-2 rounded-md
-                            hover:border-purple-400 transition-colors cursor-pointer"
-                            />
+                            <div className="mx-auto py-48 relative rounded-md hover:opacity-50 transition-all cursor-pointer">
+                                <Image
+                                    src={attachmentPreview}
+                                    alt="image"
+                                    className="rounded-md"
+                                    layout="fill"
+                                    objectFit="scale-down"
+                                    quality={100}
+                                    priority
+                                />
+                            </div>
                         ) : (
                             <svg
                                 className="h-14 w-14"
