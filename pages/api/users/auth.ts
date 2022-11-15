@@ -32,7 +32,10 @@ const authHandler = async (
     if (username && passwordConfirm) {
         // Already exist user
         if (user) {
-            return res.json({ status: false, error: "AlreadyExistUser" });
+            return res.json({
+                status: false,
+                error: "이미 존재하는 이메일 주소입니다.",
+            });
         }
         // Normal case - create new user
         else {
@@ -49,14 +52,20 @@ const authHandler = async (
     else {
         // Not Found user
         if (!user) {
-            return res.json({ status: false, error: "NotFoundUser" });
+            return res.json({
+                status: false,
+                error: "존재하지 않는 이메일입니다.",
+            });
         }
         // Normal case - validation password
         else {
             const isCorrect = await bcrypt.compare(password, user.password);
             // Not correct password
             if (!isCorrect) {
-                return res.json({ status: false, error: "InvalidPassword" });
+                return res.json({
+                    status: false,
+                    error: "비밀번호가 일치하지 않습니다.",
+                });
             }
         }
     }

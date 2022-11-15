@@ -19,7 +19,7 @@ const Sending = ({
 }: SendingProps) => {
     return (
         <div className="fixed w-full mx-auto max-w-md bottom-4 inset-x-0">
-            <div className="flex items-center relative">
+            <div className="flex mx-2.5 items-center relative">
                 <input
                     required={required}
                     {...register}

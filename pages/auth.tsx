@@ -61,16 +61,20 @@ const Auth = () => {
         authentication(validFormData);
     };
 
-    // ############## ISSUE: Can't push "/" #################
+    useEffect(() => {
+        if (data?.error) {
+            if (data?.error !== "비밀번호가 일치하지 않습니다.")
+                setError("email", { message: data?.error });
+            else setError("password", { message: data?.error });
+        }
+    }, [data]);
+
     useEffect(() => {
         if (data?.status) {
             // router.replace("/");
             router.reload();
         }
     }, [data, router]);
-
-    // login fail: Showing Login Failed Modal?
-    // console.log("err: ", data?.error);
 
     return (
         <Layout title={method === "login" ? "로그인" : "회원가입"} canGoBack>
@@ -134,7 +138,7 @@ const Auth = () => {
                             isCheckOk={!errors.email}
                         />
                         {errors.email && (
-                            <ErrorMessage text={errors.email.message} />
+                            <ErrorMessage text={errors.email?.message} />
                         )}
 
                         {method === "join" && (
@@ -187,6 +191,10 @@ const Auth = () => {
                             required
                             placeholder="비밀번호를 입력해주세요."
                         />
+
+                        {errors.password && (
+                            <ErrorMessage text={errors.password.message} />
+                        )}
 
                         {method === "join" && (
                             <Input
