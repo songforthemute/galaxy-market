@@ -71,8 +71,8 @@ const Auth = () => {
 
     useEffect(() => {
         if (data?.status) {
-            // router.replace("/");
-            router.reload();
+            router.replace("/");
+            // router.reload();
         }
     }, [data, router]);
 

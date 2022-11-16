@@ -5,7 +5,7 @@ import useUser from "@libs/client/useUser";
 import { fetcher } from "@libs/client/util";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-    useUser();
+    // useUser();
 
     return (
         <SWRConfig
