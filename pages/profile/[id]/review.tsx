@@ -96,7 +96,7 @@ const WriteReview = () => {
     };
 
     return (
-        <Layout title="리뷰하기" hasTabBar canGoBack>
+        <Layout title="리뷰하기" canGoBack>
             <form className="px-4 pt-10" onSubmit={handleSubmit(_onValid)}>
                 <div className="space-y-8 -mt-4 mb-4">
                     {/*  드롭다운  */}

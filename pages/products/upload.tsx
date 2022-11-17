@@ -9,7 +9,11 @@ import { useEffect, useState } from "react";
 import { Product } from "@prisma/client";
 import { useRouter } from "next/router";
 import { cls, fetcher } from "@libs/client/util";
-import Image from "next/image";
+import dynamic from "next/dynamic";
+
+const Image = dynamic(() => import("next/image"), {
+    ssr: false,
+});
 
 interface UploadProductFormInterface {
     name: string;

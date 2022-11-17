@@ -1,12 +1,19 @@
 import { useRouter } from "next/router";
 import { cls } from "@libs/client/util";
-import DockBtn from "./dockBtn";
 import { useState } from "react";
-import ConfigTab from "./configTab";
+import Head from "next/head";
+import dynamic from "next/dynamic";
+
+const DockBtn = dynamic(() => import("./dockBtn"), {
+    ssr: false,
+});
+const ConfigTab = dynamic(() => import("./configTab"), {
+    ssr: false,
+});
 
 interface LayoutProps {
     children: React.ReactNode;
-    title?: string;
+    title: string;
     canGoBack?: boolean;
     hasTabBar?: boolean;
     hasConfig?: boolean;
@@ -32,6 +39,10 @@ const Layout = ({
 
     return (
         <div className="">
+            <Head>
+                <title>{`${title} - Galaxy Market`}</title>
+            </Head>
+
             <div
                 className={cls(
                     !canGoBack ? "justify-center" : "justify-evenly",
@@ -88,18 +99,11 @@ const Layout = ({
             {/* 뷰 */}
             <div className={cls("pt-16", hasTabBar ? "pb-24" : "")}>
                 {/* 설정 OF & OFF */}
-                {/* {showingConfig && (
-                )} */}
-                <div
-                    className={cls(
-                        "fixed transition-all border-none",
-                        showingConfig
-                            ? "top-14 w-full h-full z-10 transition-transform"
-                            : "w-0 h-0 -z-100 -bottom-[1000px] text-transparent bg-transparent"
-                    )}
-                >
-                    <ConfigTab />
-                </div>
+                {showingConfig && (
+                    <div className="fixed transition-all border-none top-14 w-full h-full z-10">
+                        <ConfigTab />
+                    </div>
+                )}
 
                 {children}
             </div>

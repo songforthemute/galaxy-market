@@ -1,6 +1,5 @@
 import { UseFormRegisterReturn } from "react-hook-form";
 import { cls } from "@libs/client/util";
-import React from "react";
 
 interface SendingProps {
     placeholder?: string;

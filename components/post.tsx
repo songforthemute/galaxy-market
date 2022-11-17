@@ -1,3 +1,4 @@
+import { dateConverter } from "@libs/client/util";
 import Link from "next/link";
 import Badge from "./badge";
 
@@ -5,7 +6,8 @@ interface MessageProps {
     badge: string;
     text: string;
     creator: string;
-    createdAt: string;
+    createdAt: Date;
+    createdAtOpts?: "Full" | "Time" | "Date";
     interested: number;
     reply: number;
     href: string;
@@ -16,6 +18,7 @@ const Posting = ({
     text,
     creator,
     createdAt,
+    createdAtOpts,
     interested,
     reply,
     href,
@@ -32,7 +35,7 @@ const Posting = ({
 
                 <div className="mt-4 px-4 flex items-center justify-between w-full text-slate-400 text-xs font-medium">
                     <span>{creator}</span>
-                    <span>{createdAt}</span>
+                    <span>{dateConverter(createdAt, createdAtOpts)}</span>
                 </div>
 
                 <div className="flex px-4 space-x-4 mt-4 text-slate-700 py-2 border-y w-full">

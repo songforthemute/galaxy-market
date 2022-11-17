@@ -1,6 +1,10 @@
 import { cls, dateConverter, getImgSource } from "@libs/client/util";
-import Image from "next/image";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+
+const Image = dynamic(() => import("next/image"), {
+    ssr: false,
+});
 
 interface reviewProps {
     avatarUrl?: string;

@@ -3,13 +3,16 @@ import Layout from "@components/layout";
 import ProfileBtn from "@components/profileBtn";
 import UserCard from "@components/userCard";
 import { Review } from "@prisma/client";
-import { getImgSource } from "@libs/client/util";
 import useUser from "@libs/client/useUser";
 import useGetKey from "@libs/client/useGetKey";
 import useSWRInfinite from "swr/infinite";
 import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
 import { useEffect } from "react";
-import Reviews from "@components/review";
+import dynamic from "next/dynamic";
+
+const Reviews = dynamic(() => import("@components/review"), {
+    ssr: false,
+});
 
 interface ReviewWithUser extends Review {
     createdBy: {

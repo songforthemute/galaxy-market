@@ -44,11 +44,10 @@ interface CloudflareURLResponseInterface {
 const EditProfile: NextPage = () => {
     const { user } = useUser();
     const router = useRouter();
-    const [editProfile, { data, loading, error }] =
-        useMutation<EditProfileReturn>({
-            url: "/api/users/me",
-            method: "PUT",
-        });
+    const [editProfile, { data, loading }] = useMutation<EditProfileReturn>({
+        url: "/api/users/me",
+        method: "PUT",
+    });
     const {
         register,
         handleSubmit,
@@ -126,7 +125,7 @@ const EditProfile: NextPage = () => {
     }, [data, router]);
 
     return (
-        <Layout title="프로필 수정" hasTabBar canGoBack>
+        <Layout title="프로필 수정" canGoBack>
             <form onSubmit={handleSubmit(_onValid)} className="p-4 space-y-8">
                 <div className="flex items-center space-x-2">
                     {avatarUrlPreview.length > 0 ? (

@@ -1,5 +1,9 @@
 import { cls, dateConverter, getImgSource } from "@libs/client/util";
-import Image from "next/image";
+import dynamic from "next/dynamic";
+
+const Image = dynamic(() => import("next/image"), {
+    ssr: false,
+});
 
 interface MessagesProps {
     text?: string;

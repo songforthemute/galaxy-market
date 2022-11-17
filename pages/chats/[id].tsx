@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
 import { useEffect } from "react";
 import Layout from "@components/layout";
-import Messages from "@components/message";
 import Sending from "@components/sendingMessage";
 import { useForm } from "react-hook-form";
 import useMutation from "@libs/client/useMutation";
@@ -11,7 +10,11 @@ import useUser from "@libs/client/useUser";
 import useSWRInfinite from "swr/infinite";
 import useGetKey from "@libs/client/useGetKey";
 import { useInfiniteScrollUp } from "@libs/client/useInfiniteScroll";
-import { getImgSource } from "@libs/client/util";
+import dynamic from "next/dynamic";
+
+const Messages = dynamic(() => import("@components/message"), {
+    ssr: false,
+});
 
 interface SendingForm {
     message: string;

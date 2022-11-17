@@ -1,14 +1,17 @@
 import type { NextPage } from "next";
-import Posting from "@components/post";
 import HelperBtn from "@components/helperBtn";
 import Layout from "@components/layout";
 import { Post } from "@prisma/client";
 import useGetKey from "@libs/client/useGetKey";
 import useSWRInfinite from "swr/infinite";
-import { dateConverter } from "@libs/client/util";
 import React, { useEffect, useState } from "react";
 import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
 import Badge from "@components/badge";
+import dynamic from "next/dynamic";
+
+const Posting = dynamic(() => import("@components/post"), {
+    ssr: false,
+});
 
 interface PostWithReaction extends Post {
     user: {
@@ -71,7 +74,8 @@ const Community: NextPage = () => {
                             badge={post.tag}
                             text={post.title}
                             creator={post.user.username}
-                            createdAt={dateConverter(post.created, "Full")}
+                            createdAt={post.created}
+                            createdAtOpts="Full"
                             interested={post._count.interest}
                             reply={post._count.replies}
                         />

@@ -7,11 +7,15 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { Post, Replies } from "@prisma/client";
 import useMutation from "@libs/client/useMutation";
-import { cls, dateConverter, getImgSource } from "@libs/client/util";
+import { cls, dateConverter } from "@libs/client/util";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import Badge from "@components/badge";
-import Reply from "@components/reply";
+import dynamic from "next/dynamic";
+
+const Reply = dynamic(() => import("@components/reply"), {
+    ssr: false,
+});
 
 interface RepliesWithUser extends Replies {
     user: {
@@ -104,7 +108,7 @@ const PostDetail: NextPage = () => {
 
     return (
         // 스테이트 전달로 동적 타이틀 변화
-        <Layout title={"커뮤니티"} hasTabBar canGoBack>
+        <Layout title={"커뮤니티"} canGoBack>
             {data?.post ? (
                 <>
                     <UserCard
@@ -117,9 +121,11 @@ const PostDetail: NextPage = () => {
 
                     <Badge text={data.post.tag} isLarge />
 
-                    <div className="px-4 text-xl font-medium">
-                        <span className="text-purple-400">Q. </span>
-                        <span className="text-slate-700">
+                    <div className="px-4">
+                        <span className="text-purple-400 text-xl font-medium">
+                            Q.{" "}
+                        </span>
+                        <span className="text-slate-700 text-xl font-medium">
                             {data.post.title}
                         </span>
                     </div>

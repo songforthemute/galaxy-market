@@ -3,7 +3,6 @@ import Item from "@components/item";
 import Layout from "@components/layout";
 import { Product } from "@prisma/client";
 import type { NextPage } from "next";
-import Head from "next/head";
 import useGetKey from "@libs/client/useGetKey";
 import useSWRInfinite from "swr/infinite";
 import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
@@ -40,10 +39,6 @@ const Home: NextPage = () => {
 
     return (
         <Layout title="홈" hasTabBar canGoBack hasConfig>
-            <Head>
-                <title>Home - GalaxyMarket</title>
-            </Head>
-
             <div className="flex flex-col divide-y-[1px]">
                 {data && products ? (
                     products?.map((product) => (

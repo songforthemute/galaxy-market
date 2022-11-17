@@ -9,7 +9,11 @@ import { Post } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { cls } from "@libs/client/util";
-import ErrorMessage from "@components/errMessage";
+import dynamic from "next/dynamic";
+
+const ErrorMessage = dynamic(() => import("@components/errMessage"), {
+    ssr: false,
+});
 
 interface PostingFormInterface {
     title: string;
@@ -54,7 +58,7 @@ const Posting: NextPage = () => {
     }, [data, router]);
 
     return (
-        <Layout title="질문하기" hasTabBar canGoBack>
+        <Layout title="질문하기" canGoBack>
             <form onSubmit={handleSubmit(_onValid)} className="p-4">
                 <Input
                     register={register("title", {

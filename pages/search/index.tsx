@@ -1,7 +1,5 @@
 import type { NextPage } from "next";
 import Layout from "@components/layout";
-import useSWR from "swr";
-import Item from "@components/item";
 import { Product } from "@prisma/client";
 import { useRouter } from "next/router";
 import { cls } from "@libs/client/util";
@@ -9,6 +7,11 @@ import useGetKey from "@libs/client/useGetKey";
 import useSWRInfinite from "swr/infinite";
 import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
 import { useEffect } from "react";
+import dynamic from "next/dynamic";
+
+const Item = dynamic(() => import("@components/item"), {
+    ssr: false,
+});
 
 interface ProductWithLikes extends Product {
     _count: {

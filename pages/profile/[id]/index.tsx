@@ -11,7 +11,11 @@ import useGetKey from "@libs/client/useGetKey";
 import useSWRInfinite from "swr/infinite";
 import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
 import { useEffect } from "react";
-import Reviews from "@components/review";
+import dynamic from "next/dynamic";
+
+const Reviews = dynamic(() => import("@components/review"), {
+    ssr: false,
+});
 
 interface ReviewWithUser extends Review {
     createdBy: {

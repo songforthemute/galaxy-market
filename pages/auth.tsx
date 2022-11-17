@@ -1,5 +1,4 @@
 import Btn from "@components/btn";
-import ErrorMessage from "@components/errMessage";
 import Input from "@components/input";
 import Layout from "@components/layout";
 import useMutation from "@libs/client/useMutation";
@@ -7,6 +6,11 @@ import { cls } from "@libs/client/util";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import dynamic from "next/dynamic";
+
+const ErrorMessage = dynamic(() => import("@components/errMessage"), {
+    ssr: false,
+});
 
 interface AuthForm {
     email: string;
@@ -17,7 +21,7 @@ interface AuthForm {
 
 interface AuthenticationReturn {
     status: boolean;
-    error?: "AlreadyExistUser" | "NotFoundUser" | "InvalidPassword" | string;
+    error?: string;
 }
 
 const Auth = () => {
@@ -30,7 +34,7 @@ const Auth = () => {
         formState: { errors },
     } = useForm<AuthForm>({ reValidateMode: "onBlur" });
     const [method, setMethod] = useState<"login" | "join">("login");
-    const [authentication, { loading, data, error }] =
+    const [authentication, { loading, data }] =
         useMutation<AuthenticationReturn>({
             url: "/api/users/auth",
             method: "POST",
@@ -77,7 +81,7 @@ const Auth = () => {
     }, [data, router]);
 
     return (
-        <Layout title={method === "login" ? "로그인" : "회원가입"} canGoBack>
+        <Layout title={method === "login" ? "로그인" : "회원가입"}>
             <div className="mt-12 px-4">
                 <h3 className="text-3xl font-bold text-center">
                     {method === "login"
@@ -227,7 +231,7 @@ const Auth = () => {
                         />
                     </form>
 
-                    <div className="mt-6">
+                    {/* <div className="mt-6">
                         <div className="relative">
                             <div className="absolute w-full border-t border-slate-400" />
                             <div className="relative -top-3 text-center">
@@ -264,7 +268,7 @@ const Auth = () => {
                                 </svg>
                             </button>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </Layout>

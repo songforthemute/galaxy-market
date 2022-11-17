@@ -1,12 +1,16 @@
 import type { NextPage } from "next";
 import Layout from "@components/layout";
-import UserCard from "@components/userCard";
 import { Message } from "@prisma/client";
 import { dateConverter } from "@libs/client/util";
 import useGetKey from "@libs/client/useGetKey";
 import useSWRInfinite from "swr/infinite";
 import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
 import { useEffect } from "react";
+import dynamic from "next/dynamic";
+
+const UserCard = dynamic(() => import("@components/userCard"), {
+    ssr: false,
+});
 
 interface MessageWithUser extends Message {
     messagedBy: {

@@ -3,10 +3,14 @@ import Btn from "@components/btn";
 import Input from "@components/input";
 import Layout from "@components/layout";
 import { useForm } from "react-hook-form";
-import ErrorMessage from "@components/errMessage";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { cls } from "@libs/client/util";
+import dynamic from "next/dynamic";
+
+const ErrorMessage = dynamic(() => import("@components/errMessage"), {
+    ssr: false,
+});
 
 interface SearchOptsForm {
     name: string;
@@ -47,7 +51,7 @@ const SearchOpts: NextPage = () => {
     };
 
     return (
-        <Layout title="찾아보기" hasTabBar canGoBack>
+        <Layout title="찾아보기" canGoBack>
             <form
                 onSubmit={handleSubmit(_onValid)}
                 className="space-y-4 py-10 px-4"

@@ -6,10 +6,16 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { Product } from "@prisma/client";
 import { cls, getImgSource, priceConverter } from "@libs/client/util";
-import Link from "next/link";
 import useMutation from "@libs/client/useMutation";
 import useUser from "@libs/client/useUser";
-import Image from "next/image";
+import dynamic from "next/dynamic";
+
+const Image = dynamic(() => import("next/image"), {
+    ssr: false,
+});
+const Related = dynamic(() => import("@components/related"), {
+    ssr: false,
+});
 
 interface ProductWithUserInterface extends Product {
     user: {
@@ -67,7 +73,7 @@ const ItemDetail: NextPage = () => {
     };
 
     return (
-        <Layout title="상품 상세" hasTabBar canGoBack>
+        <Layout title="상품 상세" canGoBack>
             <div className="p-4">
                 {data?.product ? (
                     <>
@@ -179,23 +185,12 @@ const ItemDetail: NextPage = () => {
                             </h2>
                             <div className="grid grid-cols-2 gap-4 mt-4">
                                 {data?.relatedProducts?.map((prod) => (
-                                    <Link
+                                    <Related
                                         key={prod.id}
                                         href={`/products/${prod.id}`}
-                                    >
-                                        <a className="cursor-pointer transition-all hover:opacity-50">
-                                            <div className="h-56 w-56 mb-2 bg-slate-400" />
-                                            <h3 className="text-sm font-semibold text-slate-700 -mb-1">
-                                                {prod.name}
-                                            </h3>
-                                            <span className="text-sm font-medium text-slate-400">
-                                                ₩{" "}
-                                                {priceConverter(
-                                                    String(prod.price)
-                                                )}
-                                            </span>
-                                        </a>
-                                    </Link>
+                                        name={prod.name}
+                                        price={prod.price}
+                                    />
                                 ))}
                             </div>
                         </div>

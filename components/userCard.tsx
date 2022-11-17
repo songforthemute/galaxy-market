@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { cls, getImgSource } from "@libs/client/util";
-import Image from "next/image";
+import dynamic from "next/dynamic";
+
+const Image = dynamic(() => import("next/image"), {
+    ssr: false,
+});
 
 interface UserCardProps {
     text: string;
