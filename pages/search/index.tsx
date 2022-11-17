@@ -6,11 +6,13 @@ import { cls } from "@libs/client/util";
 import useGetKey from "@libs/client/useGetKey";
 import useSWRInfinite from "swr/infinite";
 import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import dynamic from "next/dynamic";
+import SkeletonItem from "@components/skeleton/item";
 
 const Item = dynamic(() => import("@components/item"), {
     ssr: false,
+    suspense: true,
 });
 
 interface ProductWithLikes extends Product {
@@ -52,30 +54,20 @@ const Search: NextPage = () => {
     return (
         <Layout title="검색" hasTabBar canGoBack hasConfig>
             <div className="flex flex-col divide-y-[1px]">
-                {data ? (
-                    results ? (
-                        results.map((result) => (
-                            <Item
-                                key={result.id}
-                                href={`/products/${result.id}`}
-                                name={result.name}
-                                opt={result.option}
-                                price={result.price}
-                                likes={result._count.record}
-                            />
-                        ))
-                    ) : (
-                        // Skeleton Loading Component
-                        <div className="p-4 flex w-full flex-1 flex-col items-center mb-8 transition-all">
-                            <div className="w-full animate-pulse flex-row items-center justfiy-center space-y-4">
-                                <div className="flex flex-row items-start">
-                                    <div className="h-24 w-24 mr-4 rounded-md bg-slate-200" />
-                                    <div className="h-24 w-full rounded-md bg-slate-200" />
-                                </div>
-                            </div>
-                        </div>
-                    )
-                ) : null}
+                {results?.map((result) => (
+                    <Suspense fallback={<SkeletonItem />} key={result.id}>
+                        <Item
+                            key={result.id}
+                            href={`/products/${result.id}`}
+                            name={result.name}
+                            opt={result.option}
+                            price={result.price}
+                            likes={result._count.record}
+                            imageUrl={result.image}
+                        />
+                    </Suspense>
+                ))}
+
                 <button
                     onClick={_onClick}
                     className={cls(

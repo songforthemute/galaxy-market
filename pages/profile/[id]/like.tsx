@@ -5,11 +5,13 @@ import { useRouter } from "next/router";
 import useGetKey from "@libs/client/useGetKey";
 import useSWRInfinite from "swr/infinite";
 import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import dynamic from "next/dynamic";
+import SkeletonItem from "@components/skeleton/item";
 
 const Item = dynamic(() => import("@components/item"), {
     ssr: false,
+    suspense: true,
 });
 
 interface ProductWithLikes extends Product {
@@ -49,8 +51,8 @@ const Like: NextPage = () => {
     return (
         <Layout title="관심목록" hasTabBar canGoBack>
             <div className="flex flex-col divide-y-[1px]">
-                {data && records ? (
-                    records?.map((like) => (
+                {records?.map((like) => (
+                    <Suspense fallback={<SkeletonItem />} key={like.id}>
                         <Item
                             imageUrl={like.product.image}
                             name={like.product.name}
@@ -60,18 +62,8 @@ const Like: NextPage = () => {
                             key={like.id}
                             href={`/products/${like.product.id}`}
                         />
-                    ))
-                ) : (
-                    // Skeleton Loading Component
-                    <div className="p-4 flex w-full flex-1 flex-col items-center mb-8 transition-all">
-                        <div className="w-full animate-pulse flex-row items-center justfiy-center space-y-4">
-                            <div className="flex flex-row items-start">
-                                <div className="h-24 w-24 mr-4 rounded-md bg-slate-200" />
-                                <div className="h-24 w-full rounded-md bg-slate-200" />
-                            </div>
-                        </div>
-                    </div>
-                )}
+                    </Suspense>
+                ))}
             </div>
         </Layout>
     );

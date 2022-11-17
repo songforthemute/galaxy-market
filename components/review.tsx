@@ -92,7 +92,7 @@ const Reviews = ({
                                 />
                             </div>
                         ) : (
-                            <div className="w-12 h-12 bg-slate-400 rounded-lg" />
+                            <div className="w-12 h-12 bg-slate-400 rounded-md" />
                         )}
                         <div className="flex flex-col space-y-1 justify-center">
                             <span className="text-sm font-medium text-slate-00">

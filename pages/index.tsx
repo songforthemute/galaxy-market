@@ -1,12 +1,18 @@
 import HelperBtn from "@components/helperBtn";
-import Item from "@components/item";
 import Layout from "@components/layout";
 import { Product } from "@prisma/client";
 import type { NextPage } from "next";
 import useGetKey from "@libs/client/useGetKey";
 import useSWRInfinite from "swr/infinite";
 import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
+import dynamic from "next/dynamic";
+import SkeletonItem from "@components/skeleton/item";
+
+const Item = dynamic(() => import("@components/item"), {
+    ssr: false,
+    suspense: true,
+});
 
 interface ProductWithLike extends Product {
     _count: {
@@ -40,8 +46,8 @@ const Home: NextPage = () => {
     return (
         <Layout title="홈" hasTabBar canGoBack hasConfig>
             <div className="flex flex-col divide-y-[1px]">
-                {data && products ? (
-                    products?.map((product) => (
+                {products?.map((product) => (
+                    <Suspense fallback={<SkeletonItem />} key={product.id}>
                         <Item
                             href={`/products/${product.id}`}
                             name={product.name}
@@ -51,22 +57,8 @@ const Home: NextPage = () => {
                             likes={product._count.record}
                             key={product.id}
                         />
-                    ))
-                ) : (
-                    // Skeleton Loading Component
-                    <div className="p-4 flex w-full flex-1 flex-col items-center mb-8 transition-all">
-                        <div className="w-full animate-pulse flex-row items-center justfiy-center space-y-4">
-                            <div className="flex flex-row items-start">
-                                <div className="h-24 w-24 mr-4 rounded-md bg-slate-200" />
-                                <div className="h-24 w-full rounded-md bg-slate-200" />
-                            </div>
-                            <div className="flex flex-row items-start">
-                                <div className="h-24 w-24 mr-4 rounded-md bg-slate-100" />
-                                <div className="h-24 w-full rounded-md bg-slate-100" />
-                            </div>
-                        </div>
-                    </div>
-                )}
+                    </Suspense>
+                ))}
 
                 <HelperBtn href="/products/upload">
                     <svg

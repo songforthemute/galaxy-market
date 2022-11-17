@@ -5,10 +5,10 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 
 const DockBtn = dynamic(() => import("./dockBtn"), {
-    ssr: false,
+    ssr: true,
 });
 const ConfigTab = dynamic(() => import("./configTab"), {
-    ssr: false,
+    ssr: true,
 });
 
 interface LayoutProps {
