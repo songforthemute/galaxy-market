@@ -1,27 +1,48 @@
 import { NextResponse, userAgent } from "next/server";
 import type { NextRequest } from "next/server";
+import { getIronSession } from "iron-session/edge";
 
-export const middleware = (req: NextRequest) => {
-    const { device } = userAgent(req);
+export const middleware = async (req: NextRequest) => {
+    const { isBot, device } = userAgent(req);
 
-    if (req.cookies.get("galaxySessions")) {
-        const url = req.nextUrl.clone();
-        url.pathname = "/";
-        // if (device.type === "mobile") {
-        //     url.hostname = "m." + url.hostname;
-        //     return NextResponse.rewrite(url);
-        // }
-        return NextResponse.next();
-    }
-    const url = req.nextUrl.clone();
-    url.pathname = "/auth";
-    // if (device.type === "mobile") {
-    //     url.hostname = "m." + url.hostname;
+    // if (isBot) {
+    // need to error page
+    // error: return new Response("Bot is not available on this page.", {
+    //     status: 403,
+    // });
     // }
-    // url.searchParams.set("from", req.nextUrl.pathname);
-    return NextResponse.redirect(url);
+
+    const url = req.nextUrl;
+    const res = NextResponse.next();
+
+    if (device.type === "mobile") {
+        url.hostname = "m." + url.hostname;
+    }
+
+    const { user } = await getIronSession(req, res, {
+        cookieName: "galaxySessions",
+        password: process.env.NEXT_PUBLIC_COOKIE_PW!,
+        cookieOptions: {
+            secure: process.env.NODE_ENV! === "production",
+        },
+    });
+
+    if (!url.pathname.includes("/api")) {
+        if (!user && url.pathname !== "/auth") {
+            url.pathname = "/auth";
+            url.searchParams.set("from", req.nextUrl.pathname);
+            return NextResponse.redirect(url);
+        }
+
+        if (user && url.pathname === "/auth") {
+            url.pathname = "/";
+            return NextResponse.redirect(url);
+        }
+    }
+
+    return NextResponse.next();
 };
 
 export const config = {
-    matcher: ["/", "/products", "/search", "/profile", "/chats", "/community"],
+    matcher: ["/((?!api|_next/static|favicon.ico).*)"],
 };
