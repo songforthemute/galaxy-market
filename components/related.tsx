@@ -10,9 +10,9 @@ interface relatedInterface {
 const Related = ({ price, href, name }: relatedInterface) => {
     return (
         <Link href={href}>
-            <a className="cursor-pointer transition-all hover:opacity-50">
-                <div className="h-56 w-56 mb-2 bg-slate-400" />
-                <h3 className="text-sm font-semibold text-slate-700 -mb-1">
+            <a className="cursor-pointer transition-all hover:opacity-50 space-y-2">
+                <div className="aspect-square max-h-80 bg-slate-400 rounded-md" />
+                <h3 className="text-base font-semibold text-slate-700">
                     {name}
                 </h3>
                 <span className="text-sm font-medium text-slate-400">
