@@ -25,7 +25,7 @@ const UserCard = dynamic(() => import("@components/userCard"), {
     suspense: true,
 });
 const Btn = dynamic(() => import("@components/btn"), {
-    ssr: false,
+    ssr: true,
     suspense: true,
 });
 const ItemDetail = dynamic(() => import("@components/itemDetail"), {
@@ -90,33 +90,31 @@ const ItemDetailPage: NextPage = () => {
 
     return (
         <Layout title="상품 상세" canGoBack>
-            <div className="p-4">
-                <div className="mb-8">
+            <div className="p-4 space-y-10">
+                <div className="mb-10">
                     {data?.product && (
                         <>
-                            <Suspense
-                                fallback={
-                                    <div className="w-full max-h-96 aspect-video bg-slate-400 mb-4 rounded-md" />
-                                }
-                            >
-                                {data.product.image ? (
-                                    <div className="mx-auto mb-4 py-48 relative">
+                            {data.product.image ? (
+                                <Suspense
+                                    fallback={
+                                        <div className="w-full max-h-96 aspect-[4/3] bg-slate-400 mb-4 rounded-md" />
+                                    }
+                                >
+                                    <div className="mx-auto mb-4 max-h-96 aspect-[4/3] relative">
                                         <Image
                                             src={getImgSource(
                                                 data.product.image
                                             )}
                                             alt="image"
-                                            className=""
                                             layout="fill"
                                             objectFit="scale-down"
-                                            quality={100}
                                             priority
                                         />
                                     </div>
-                                ) : (
-                                    <div className="w-full max-h-96 aspect-video bg-slate-400 mb-4 rounded-md" />
-                                )}
-                            </Suspense>
+                                </Suspense>
+                            ) : (
+                                <div className="w-full max-h-96 aspect-[4/3] bg-slate-400 mb-4 rounded-md" />
+                            )}
 
                             <Suspense fallback={<SkeletonUserCard />}>
                                 <UserCard
@@ -158,12 +156,12 @@ const ItemDetailPage: NextPage = () => {
                     )}
                 </div>
 
-                {data?.relatedProducts && data.relatedProducts.length > 0 && (
+                {data?.relatedProducts?.length && (
                     <>
-                        <h2 className="text-xl font-medium text-slate-700">
+                        <h2 className="mb-8 text-2xl font-medium text-slate-700">
                             이런 상품은 어떠세요?
                         </h2>
-                        <div className="grid grid-cols-2 gap-4 mt-4">
+                        <div className="max-w-lg grid grid-cols-2 gap-4">
                             {data.relatedProducts.map((prod) => (
                                 <Suspense
                                     fallback={<SkeletonRelated />}
@@ -174,6 +172,7 @@ const ItemDetailPage: NextPage = () => {
                                         href={`/products/${prod.id}`}
                                         name={prod.name}
                                         price={prod.price}
+                                        imageUrl={prod.image}
                                     />
                                 </Suspense>
                             ))}

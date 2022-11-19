@@ -6,7 +6,7 @@ import { cls } from "@libs/client/util";
 import useGetKey from "@libs/client/useGetKey";
 import useSWRInfinite from "swr/infinite";
 import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import SkeletonItem from "@components/skeleton/item";
 
@@ -15,7 +15,7 @@ const Item = dynamic(() => import("@components/item"), {
     suspense: true,
 });
 
-interface ProductWithLikes extends Product {
+interface ProductWithLike extends Product {
     _count: {
         record: number;
     };
@@ -23,7 +23,7 @@ interface ProductWithLikes extends Product {
 
 interface SearchReturn {
     status: boolean;
-    result: ProductWithLikes[];
+    result: ProductWithLike[];
     pageNum: number;
     error?: string;
 }
@@ -39,9 +39,16 @@ const Search: NextPage = () => {
     const { data, setSize } = useSWRInfinite<SearchReturn>(getKey);
     const page = useInfiniteScrollDown();
 
-    const results = !data?.[0]?.error
-        ? data?.map((data) => data.result).flat()
-        : undefined;
+    // changed received dataset
+    const [results, setResults] = useState<ProductWithLike[]>([]);
+
+    useEffect(() => {
+        if (data && !data?.[0]?.error) {
+            setResults(() => data.map((data) => data.result).flat());
+        } else {
+            setResults([]);
+        }
+    }, [data]);
 
     useEffect(() => {
         setSize(page);
@@ -54,7 +61,7 @@ const Search: NextPage = () => {
     return (
         <Layout title="검색" hasTabBar canGoBack hasConfig>
             <div className="flex flex-col divide-y-[1px]">
-                {results?.map((result) => (
+                {results.map((result) => (
                     <Suspense fallback={<SkeletonItem />} key={result.id}>
                         <Item
                             key={result.id}

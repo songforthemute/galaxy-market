@@ -4,13 +4,15 @@ import Layout from "@components/layout";
 import { Post } from "@prisma/client";
 import useGetKey from "@libs/client/useGetKey";
 import useSWRInfinite from "swr/infinite";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
 import Badge from "@components/badge";
 import dynamic from "next/dynamic";
+import SkeletonPosting from "@components/skeleton/post";
 
 const Posting = dynamic(() => import("@components/post"), {
     ssr: false,
+    suspense: true,
 });
 
 interface PostWithReaction extends Post {
@@ -45,9 +47,16 @@ const Community: NextPage = () => {
     const { data, setSize, mutate } = useSWRInfinite<PostsReturn>(getKey);
     const page = useInfiniteScrollDown();
 
-    const posts = !data?.[0]?.error
-        ? data?.map((data) => data.posts).flat()
-        : undefined;
+    // received dataset
+    const [posts, setPosts] = useState<PostWithReaction[]>([]);
+
+    useEffect(() => {
+        if (data && !data?.[0]?.error) {
+            setPosts(() => data.map((data) => data.posts).flat());
+        } else {
+            setPosts([]);
+        }
+    }, [data]);
 
     useEffect(() => {
         setSize(page);
@@ -55,19 +64,21 @@ const Community: NextPage = () => {
 
     return (
         <Layout title="커뮤니티" hasTabBar canGoBack hasConfig>
-            {["모두", "질문", "정보", "후기", "자유"].map((v, i) => (
-                <Badge
-                    text={v}
-                    key={i}
-                    isLarge
-                    _onClick={_onTagClick}
-                    isSelected={selected === v}
-                />
-            ))}
+            <>
+                {["모두", "질문", "정보", "후기", "자유"].map((v, i) => (
+                    <Badge
+                        text={v}
+                        key={i}
+                        isLarge
+                        _onClick={_onTagClick}
+                        isSelected={selected === v}
+                    />
+                ))}
+            </>
 
-            {data && posts ? (
-                <div className="-mb-2">
-                    {posts?.map((post) => (
+            <div className="-mb-2">
+                {posts.map((post) => (
+                    <Suspense fallback={<SkeletonPosting />} key={post.id}>
                         <Posting
                             href={`/community/${post.id}`}
                             key={post.id}
@@ -79,19 +90,9 @@ const Community: NextPage = () => {
                             interested={post._count.interest}
                             reply={post._count.replies}
                         />
-                    ))}
-                </div>
-            ) : (
-                // Skeleton Loading Component
-                <div className="p-4 flex w-full flex-1 flex-col items-center mb-8 transition-all">
-                    <div className="w-full animate-pulse flex-row items-center justfiy-center space-y-4">
-                        <div className="h-24 rounded-md bg-slate-200" />
-                        <div className="h-8 rounded-md bg-slate-200" />
-                        <div className="h-24 rounded-md bg-slate-100" />
-                        <div className="h-8 rounded-md bg-slate-100" />
-                    </div>
-                </div>
-            )}
+                    </Suspense>
+                ))}
+            </div>
 
             <HelperBtn href={"/community/posting"}>
                 <svg

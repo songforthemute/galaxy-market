@@ -6,7 +6,7 @@ interface skeletonUserCardInterface {
 
 const SkeletonUserCard = ({ isLarge = false }: skeletonUserCardInterface) => {
     return (
-        <div className="flex items-center space-x-4 mt-2 animate-pulse">
+        <div className="p-4 flex items-center space-x-4 mt-2 animate-pulse">
             <a className="flex items-center space-x-4">
                 <div
                     className={cls(

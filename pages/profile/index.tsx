@@ -1,15 +1,23 @@
 import type { NextPage } from "next";
-import Layout from "@components/layout";
-import ProfileBtn from "@components/profileBtn";
-import UserCard from "@components/userCard";
+import { Suspense, useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+// type
 import { Review } from "@prisma/client";
+// hooks
 import useUser from "@libs/client/useUser";
 import useGetKey from "@libs/client/useGetKey";
 import useSWRInfinite from "swr/infinite";
 import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
-import { Suspense, useEffect } from "react";
-import dynamic from "next/dynamic";
+// components
+import Layout from "@components/layout";
+import ProfileBtn from "@components/profileBtn";
 import SkeletonReviews from "@components/skeleton/reivew";
+import SkeletonUserCard from "@components/skeleton/userCard";
+
+const UserCard = dynamic(() => import("@components/userCard"), {
+    ssr: false,
+    suspense: true,
+});
 
 const Reviews = dynamic(() => import("@components/review"), {
     ssr: false,
@@ -45,9 +53,16 @@ const Profile: NextPage = () => {
     const { data, setSize } = useSWRInfinite<ReviewsReturn>(getKey);
     const page = useInfiniteScrollDown();
 
-    const reviews = !data?.[0]?.error
-        ? data?.map((data) => data.reviews).flat()
-        : undefined;
+    // received dataset
+    const [reviews, setReviews] = useState<ReviewWithUser[]>([]);
+
+    useEffect(() => {
+        if (data && !data?.[0]?.error) {
+            setReviews(() => data.map((data) => data.reviews).flat());
+        } else {
+            setReviews([]);
+        }
+    }, [data]);
 
     useEffect(() => {
         setSize(page);
@@ -55,14 +70,16 @@ const Profile: NextPage = () => {
 
     return (
         <Layout title="프로필" hasTabBar canGoBack hasConfig>
-            <UserCard
-                avatarUrl={user?.avatarUrl}
-                username={user?.username!}
-                text="프로필 수정 →"
-                type="profile"
-                href="/profile/edit"
-                isLarge
-            />
+            <Suspense fallback={<SkeletonUserCard isLarge />}>
+                <UserCard
+                    avatarUrl={user?.avatarUrl}
+                    username={user?.username!}
+                    text="프로필 수정 →"
+                    type="profile"
+                    href="/profile/edit"
+                    isLarge
+                />
+            </Suspense>
 
             <div className="mt-8 flex justify-around">
                 <ProfileBtn href={`/profile/${user?.id}/sell`} text="판매내역">
@@ -119,7 +136,7 @@ const Profile: NextPage = () => {
 
             {/* 리뷰란 */}
             <div className="mt-6 px-4 divide-y-[1px] divied-slate-400">
-                {reviews?.map((review) => (
+                {reviews.map((review) => (
                     <Suspense fallback={<SkeletonReviews />} key={review.id}>
                         <Reviews
                             key={review.id}

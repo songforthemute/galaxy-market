@@ -1,6 +1,6 @@
 const SkeletonDetailedItem = () => {
     return (
-        <div className="transition-all animate-pulse">
+        <div className="animate-pulse">
             <div className="w-full h-32 mt-8 space-y-4">
                 <h1 className="w-1/3 h-1/3 bg-slate-400 rounded-md" />
 

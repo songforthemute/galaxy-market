@@ -1,9 +1,11 @@
 import { cls, dateConverter, getImgSource } from "@libs/client/util";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
 const Image = dynamic(() => import("next/image"), {
-    ssr: false,
+    ssr: true,
+    suspense: true,
 });
 
 interface reviewProps {
@@ -33,17 +35,23 @@ const Reviews = ({
         <div className="py-4">
             <div className="mb-4 flex items-center space-x-4">
                 {avatarUrl ? (
-                    <div className="relative rounded-full p-6">
-                        <Image
-                            src={getImgSource(avatarUrl, "avatar")}
-                            alt="avatar"
-                            className="rounded-full"
-                            layout="fill"
-                            objectFit="scale-down"
-                            quality={100}
-                            priority
-                        />
-                    </div>
+                    <Suspense
+                        fallback={
+                            <div className="w-12 h-12 rounded-full bg-slate-400" />
+                        }
+                    >
+                        <div className="relative rounded-full p-6">
+                            <Image
+                                src={getImgSource(avatarUrl, "avatar")}
+                                alt="avatar"
+                                className="rounded-full"
+                                layout="fill"
+                                objectFit="scale-down"
+                                quality={100}
+                                priority
+                            />
+                        </div>
+                    </Suspense>
                 ) : (
                     <div className="w-12 h-12 rounded-full bg-slate-400" />
                 )}
@@ -80,17 +88,23 @@ const Reviews = ({
                 <Link href={`/products/${productId}`}>
                     <a className="flex mt-4 space-x-2 rounded-lg hover:opacity-50 hover:text-purple-400 transition-all">
                         {productImg ? (
-                            <div className="relative rounded-md p-12">
-                                <Image
-                                    src={getImgSource(productImg, "avatar")}
-                                    alt="avatar"
-                                    className="rounded-md"
-                                    layout="fill"
-                                    objectFit="scale-down"
-                                    quality={100}
-                                    priority
-                                />
-                            </div>
+                            <Suspense
+                                fallback={
+                                    <div className="w-12 h-12 bg-slate-400 rounded-md" />
+                                }
+                            >
+                                <div className="relative rounded-md p-12">
+                                    <Image
+                                        src={getImgSource(productImg, "avatar")}
+                                        alt="avatar"
+                                        className="rounded-md"
+                                        layout="fill"
+                                        objectFit="scale-down"
+                                        quality={100}
+                                        priority
+                                    />
+                                </div>
+                            </Suspense>
                         ) : (
                             <div className="w-12 h-12 bg-slate-400 rounded-md" />
                         )}

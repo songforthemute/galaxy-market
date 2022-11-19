@@ -1,12 +1,15 @@
-import HelperBtn from "@components/helperBtn";
-import Layout from "@components/layout";
-import { Product } from "@prisma/client";
 import type { NextPage } from "next";
-import useGetKey from "@libs/client/useGetKey";
-import useSWRInfinite from "swr/infinite";
-import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
-import { useEffect, Suspense } from "react";
+import { useEffect, Suspense, useState } from "react";
 import dynamic from "next/dynamic";
+import useSWRInfinite from "swr/infinite";
+// type
+import { Product } from "@prisma/client";
+// hooks
+import useGetKey from "@libs/client/useGetKey";
+import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
+// components
+import Layout from "@components/layout";
+import HelperBtn from "@components/helperBtn";
 import SkeletonItem from "@components/skeleton/item";
 
 const Item = dynamic(() => import("@components/item"), {
@@ -35,9 +38,16 @@ const Home: NextPage = () => {
     const { data, setSize } = useSWRInfinite<ProductsReturn>(getKey);
     const page = useInfiniteScrollDown();
 
-    const products = !data?.[0]?.error
-        ? data?.map((data) => data.products).flat()
-        : undefined;
+    // changed received dataset
+    const [products, setProducts] = useState<ProductWithLike[]>([]);
+
+    useEffect(() => {
+        if (data && !data?.[0]?.error) {
+            setProducts(() => data.map((data) => data.products).flat());
+        } else {
+            setProducts([]);
+        }
+    }, [data]);
 
     useEffect(() => {
         setSize(page);

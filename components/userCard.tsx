@@ -1,11 +1,9 @@
 import Link from "next/link";
 import { cls, getImgSource } from "@libs/client/util";
 import dynamic from "next/dynamic";
-import { Suspense } from "react";
 
 const Image = dynamic(() => import("next/image"), {
     ssr: false,
-    suspense: true,
 });
 
 interface UserCardProps {
@@ -41,33 +39,22 @@ const UserCard = ({
             <Link href={href}>
                 <a className="flex items-center space-x-4 cursor-pointer hover:opacity-50 transition-all">
                     {avatarUrl && avatarUrl.length > 0 ? (
-                        <Suspense
-                            fallback={
-                                <div
-                                    className={cls(
-                                        "aspect-square rounded-full bg-slate-400",
-                                        isLarge ? "w-16 h-16" : "w-12 h-12"
-                                    )}
-                                />
-                            }
+                        <div
+                            className={cls(
+                                "relative rounded-full",
+                                isLarge ? "p-8" : "p-6"
+                            )}
                         >
-                            <div
-                                className={cls(
-                                    "relative rounded-full",
-                                    isLarge ? "p-8" : "p-6"
-                                )}
-                            >
-                                <Image
-                                    src={getImgSource(avatarUrl, "avatar")}
-                                    alt="avatar"
-                                    className="rounded-full"
-                                    layout="fill"
-                                    objectFit="scale-down"
-                                    quality={100}
-                                    priority
-                                />
-                            </div>
-                        </Suspense>
+                            <Image
+                                src={getImgSource(avatarUrl, "avatar")}
+                                alt="avatar"
+                                className="rounded-full"
+                                layout="fill"
+                                objectFit="scale-down"
+                                quality={100}
+                                priority={false}
+                            />
+                        </div>
                     ) : (
                         <div
                             className={cls(

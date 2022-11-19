@@ -1,22 +1,33 @@
 import type { NextPage } from "next";
+import { Suspense, useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
+import useSWR from "swr";
+import useSWRInfinite from "swr/infinite";
+// type
+import { Review, User } from "@prisma/client";
+// hooks
+import useUser from "@libs/client/useUser";
+import useGetKey from "@libs/client/useGetKey";
+import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
+// components
 import Layout from "@components/layout";
 import ProfileBtn from "@components/profileBtn";
-import UserCard from "@components/userCard";
-import useSWR from "swr";
-import { Review, User } from "@prisma/client";
-import useUser from "@libs/client/useUser";
-import { useRouter } from "next/router";
-import HelperBtn from "@components/helperBtn";
-import useGetKey from "@libs/client/useGetKey";
-import useSWRInfinite from "swr/infinite";
-import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
-import { Suspense, useEffect } from "react";
-import dynamic from "next/dynamic";
 import SkeletonReviews from "@components/skeleton/reivew";
+import SkeletonUserCard from "@components/skeleton/userCard";
+
+const UserCard = dynamic(() => import("@components/userCard"), {
+    ssr: false,
+    suspense: true,
+});
 
 const Reviews = dynamic(() => import("@components/review"), {
     ssr: false,
     suspense: true,
+});
+
+const HelperBtn = dynamic(() => import("@components/helperBtn"), {
+    ssr: true,
 });
 
 interface ReviewWithUser extends Review {
@@ -50,19 +61,26 @@ const Profile: NextPage = () => {
     } = useRouter();
     const { user } = useUser();
     const { data: profileData } = useSWR<ProfileReturn>(
-        `/api/users/info?id=${id as String}`
+        `/api/users/profile?id=${id}`
     );
 
     const getKey = useGetKey<ReviewsReturn>({
-        url: `/api/reviews?id=${id as String}`,
+        url: `/api/reviews?id=${id}`,
         hasQuery: true,
     });
     const { data: reviewData, setSize } = useSWRInfinite<ReviewsReturn>(getKey);
     const page = useInfiniteScrollDown();
 
-    const reviews = !reviewData?.[0]?.error
-        ? reviewData?.map((data) => data.reviews).flat()
-        : undefined;
+    // received dataset
+    const [reviews, setReviews] = useState<ReviewWithUser[]>([]);
+
+    useEffect(() => {
+        if (reviewData && !reviewData?.[0]?.error) {
+            setReviews(() => reviewData.map((data) => data.reviews).flat());
+        } else {
+            setReviews([]);
+        }
+    }, [reviewData]);
 
     useEffect(() => {
         setSize(page);
@@ -70,20 +88,24 @@ const Profile: NextPage = () => {
 
     return (
         <Layout title="프로필" hasTabBar canGoBack hasConfig>
-            <UserCard
-                username={profileData?.profile.username!}
-                avatarUrl={profileData?.profile.avatarUrl}
-                text={
-                    user?.id === Number(id)
-                        ? "프로필 수정 →"
-                        : "메시지 보내기 →"
-                }
-                type="profile"
-                href={
-                    user?.id === Number(id) ? "/profile/edit" : `/chats/${id}`
-                }
-                isLarge
-            />
+            <Suspense fallback={<SkeletonUserCard isLarge />}>
+                <UserCard
+                    username={profileData?.profile?.username as string}
+                    avatarUrl={profileData?.profile?.avatarUrl}
+                    text={
+                        user?.id === Number(id)
+                            ? "프로필 수정 →"
+                            : "메시지 보내기 →"
+                    }
+                    type="profile"
+                    href={
+                        user?.id === Number(id)
+                            ? "/profile/edit"
+                            : `/chats/${id}`
+                    }
+                    isLarge
+                />
+            </Suspense>
 
             <div className="mt-10 flex justify-around">
                 <ProfileBtn href={`/profile/${id}/sell`} text="판매내역">
@@ -140,7 +162,7 @@ const Profile: NextPage = () => {
 
             {/* 리뷰란 */}
             <div className="mt-6 px-4 divide-y-[1px] divied-slate-400">
-                {reviews?.map((review) => (
+                {reviews.map((review) => (
                     <Suspense fallback={<SkeletonReviews />} key={review.id}>
                         <Reviews
                             key={review.id}
