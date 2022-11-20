@@ -1,10 +1,10 @@
-import type { NextPage } from "next";
 import { useEffect, Suspense, useState } from "react";
 import dynamic from "next/dynamic";
 import useSWRInfinite from "swr/infinite";
 // type
-import { Product } from "@prisma/client";
-// hooks
+import type { NextPage } from "next";
+import type { Product } from "@prisma/client";
+// custom hooks
 import useGetKey from "@libs/client/useGetKey";
 import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
 // components
@@ -12,17 +12,18 @@ import Layout from "@components/layout";
 import HelperBtn from "@components/helperBtn";
 import SkeletonItem from "@components/skeleton/item";
 
+// dynamic imports
 const Item = dynamic(() => import("@components/item"), {
     ssr: false,
     suspense: true,
 });
 
+// interfaces
 interface ProductWithLike extends Product {
     _count: {
         record: number;
     };
 }
-
 interface ProductsReturn {
     status: boolean;
     products: ProductWithLike[];
@@ -30,17 +31,23 @@ interface ProductsReturn {
     error?: string;
 }
 
+// Page
 const Home: NextPage = () => {
+    // fetch Data
     const getKey = useGetKey<ProductsReturn>({
         url: `/api/products`,
         hasQuery: false,
     });
     const { data, setSize } = useSWRInfinite<ProductsReturn>(getKey);
+
+    // set page number for infinite sroll
     const page = useInfiniteScrollDown();
+    useEffect(() => {
+        setSize(page);
+    }, [setSize, page]);
 
     // changed received dataset
     const [products, setProducts] = useState<ProductWithLike[]>([]);
-
     useEffect(() => {
         if (data && !data?.[0]?.error) {
             setProducts(() => data.map((data) => data.products).flat());
@@ -48,10 +55,6 @@ const Home: NextPage = () => {
             setProducts([]);
         }
     }, [data]);
-
-    useEffect(() => {
-        setSize(page);
-    }, [setSize, page]);
 
     return (
         <Layout title="홈" hasTabBar canGoBack hasConfig>

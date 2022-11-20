@@ -1,26 +1,31 @@
-import type { NextPage } from "next";
-import Layout from "@components/layout";
-import { Product } from "@prisma/client";
-import { useRouter } from "next/router";
-import { cls } from "@libs/client/util";
-import useGetKey from "@libs/client/useGetKey";
-import useSWRInfinite from "swr/infinite";
-import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
 import { Suspense, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
+import useSWRInfinite from "swr/infinite";
+// types
+import type { NextPage } from "next";
+import type { Product } from "@prisma/client";
+// custom hooks
+import useGetKey from "@libs/client/useGetKey";
+import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
+// util
+import { cls } from "@libs/client/util";
+// components
+import Layout from "@components/layout";
 import SkeletonItem from "@components/skeleton/item";
 
+// dynamic imports
 const Item = dynamic(() => import("@components/item"), {
     ssr: false,
     suspense: true,
 });
 
+// interfaces
 interface ProductWithLike extends Product {
     _count: {
         record: number;
     };
 }
-
 interface SearchReturn {
     status: boolean;
     result: ProductWithLike[];
@@ -28,8 +33,10 @@ interface SearchReturn {
     error?: string;
 }
 
+// Page
 const Search: NextPage = () => {
     const router = useRouter();
+    // fatch data
     const getKey = useGetKey<SearchReturn>({
         url: router.query.name
             ? `/api/search?name=${router.query.name}&lowestPrice=${router.query.lowestPrice}&highestPrice=${router.query.highestPrice}&sort=${router.query.sort}`
@@ -37,11 +44,15 @@ const Search: NextPage = () => {
         hasQuery: true,
     });
     const { data, setSize } = useSWRInfinite<SearchReturn>(getKey);
+
+    // set page number for infinite sroll
     const page = useInfiniteScrollDown();
+    useEffect(() => {
+        setSize(page);
+    }, [setSize, page]);
 
     // changed received dataset
     const [results, setResults] = useState<ProductWithLike[]>([]);
-
     useEffect(() => {
         if (data && !data?.[0]?.error) {
             setResults(() => data.map((data) => data.result).flat());
@@ -50,10 +61,7 @@ const Search: NextPage = () => {
         }
     }, [data]);
 
-    useEffect(() => {
-        setSize(page);
-    }, [setSize, page]);
-
+    // event handler
     const _onClick = () => {
         router.push("/search/opts");
     };

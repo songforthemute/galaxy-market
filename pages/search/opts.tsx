@@ -1,27 +1,42 @@
+import { useState } from "react";
+import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
+import { useForm } from "react-hook-form";
+// types
 import type { NextPage } from "next";
+// util
+import { cls } from "@libs/client/util";
+// components
+import Layout from "@components/layout";
 import Btn from "@components/btn";
 import Input from "@components/input";
-import Layout from "@components/layout";
-import { useForm } from "react-hook-form";
-import { useRouter } from "next/router";
-import React, { useState } from "react";
-import { cls } from "@libs/client/util";
-import dynamic from "next/dynamic";
 
+// dynamic imports
 const ErrorMessage = dynamic(() => import("@components/errMessage"), {
     ssr: false,
 });
 
+// interface
 interface SearchOptsForm {
     name: string;
     lowestPrice?: number;
     highestPrice?: number;
 }
 
+// Page
 const SearchOpts: NextPage = () => {
     const router = useRouter();
+    // dropdown for sort order
     const [dropdownOpen, setdropdownOpen] = useState(false);
     const [dropdownValue, setDropdownValue] = useState("최신등록순");
+
+    // event handler
+    const _onDropDownClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        setDropdownValue((e.target as HTMLDivElement).innerHTML);
+        setdropdownOpen(false);
+    };
+
+    // search form
     const {
         register,
         handleSubmit,
@@ -30,6 +45,7 @@ const SearchOpts: NextPage = () => {
         formState: { errors },
     } = useForm<SearchOptsForm>({ reValidateMode: "onBlur" });
 
+    // submit form
     const _onValid = ({ name, lowestPrice, highestPrice }: SearchOptsForm) => {
         if (lowestPrice && highestPrice && lowestPrice > highestPrice) {
             setFocus("highestPrice");
@@ -43,11 +59,6 @@ const SearchOpts: NextPage = () => {
             `/search?name=${name}&lowestPrice=${lowestPrice}&highestPrice=${highestPrice}&sort=${dropdownValue}`,
             `/search`
         );
-    };
-
-    const _onDropDownClick = (e: React.MouseEvent<HTMLDivElement>) => {
-        setDropdownValue((e.target as HTMLDivElement).innerHTML);
-        setdropdownOpen(false);
     };
 
     return (

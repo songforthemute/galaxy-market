@@ -1,33 +1,43 @@
+import { useRouter } from "next/router";
+import { useEffect, useState, Suspense } from "react";
+import { useForm } from "react-hook-form";
+import dynamic from "next/dynamic";
+// type
 import type { NextPage } from "next";
+// custom hooks
+import useUser from "@libs/client/useUser";
+import useMutation from "@libs/client/useMutation";
+// utils
+import { fetcher, getImgSource } from "@libs/client/util";
+// components
+import Layout from "@components/layout";
 import Btn from "@components/btn";
 import Input from "@components/input";
-import Layout from "@components/layout";
-import useUser from "@libs/client/useUser";
-import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
-import ErrorMessage from "@components/errMessage";
-import useMutation from "@libs/client/useMutation";
-import { useRouter } from "next/router";
-import { fetcher, getImgSource } from "@libs/client/util";
-import Image from "next/image";
 
+// dynamic imports
+const Image = dynamic(() => import("next/image"), {
+    ssr: false,
+    suspense: true,
+});
+const ErrorMessage = dynamic(() => import("@components/errMessage"), {
+    ssr: false,
+});
+
+// interfaces
 interface EditProfileForm {
     avatarUrl?: FileList;
     username?: string;
     phone?: string;
 }
-
 interface EditProfileReturn {
     status: boolean;
     error?: string;
 }
-
 interface CloudflareURLInterface {
     status: boolean;
     id: string;
     uploadURL: string;
 }
-
 interface CloudflareURLResponseInterface {
     errors?: any[];
     messages?: any[];
@@ -41,13 +51,18 @@ interface CloudflareURLResponseInterface {
     };
 }
 
+// Page
 const EditProfile: NextPage = () => {
-    const { user } = useUser();
     const router = useRouter();
+    const { user } = useUser();
+
+    // request edited data
     const [editProfile, { data, loading }] = useMutation<EditProfileReturn>({
         url: "/api/users/me",
         method: "PUT",
     });
+
+    // edit form
     const {
         register,
         handleSubmit,
@@ -56,16 +71,19 @@ const EditProfile: NextPage = () => {
         watch,
         formState: { errors },
     } = useForm<EditProfileForm>({ reValidateMode: "onBlur" });
+
+    // avatar thumbnail
     const avatarUrl = watch("avatarUrl");
     const [avatarUrlPreview, setAvatarUrlPreview] = useState("");
 
-    // form initialization
+    // initialize form
     useEffect(() => {
         if (user?.phone) setValue("phone", user.phone);
         if (user?.username) setValue("username", user.username);
         if (user?.avatarUrl) setAvatarUrlPreview(getImgSource(user.avatarUrl)!);
     }, [user]);
 
+    // submit form
     const _onValid = async ({
         phone,
         username,
@@ -84,7 +102,7 @@ const EditProfile: NextPage = () => {
                 `/api/files`
             );
 
-            // create form
+            // create form for data
             const form = new FormData();
             form.append("file", avatarUrl[0], String(user.id));
 
@@ -102,7 +120,7 @@ const EditProfile: NextPage = () => {
         }
     };
 
-    // 프로필 변경 미리보기
+    // set preview thumbnail img
     useEffect(() => {
         if (avatarUrl && avatarUrl.length > 0) {
             const imgUrl = URL.createObjectURL(avatarUrl[0]);
@@ -110,14 +128,14 @@ const EditProfile: NextPage = () => {
         }
     }, [avatarUrl]);
 
-    // 이미 존재하는 전화번호
+    // already exist phone number
     useEffect(() => {
         if (data && !data.status && data.error) {
             setError("phone", { message: data.error });
         }
     }, [data, setError]);
 
-    // 성공시 프로파일 메인으로 이동
+    // if success
     useEffect(() => {
         if (data && data.status) {
             router.push("/profile");
@@ -129,17 +147,23 @@ const EditProfile: NextPage = () => {
             <form onSubmit={handleSubmit(_onValid)} className="p-4 space-y-8">
                 <div className="flex items-center space-x-2">
                     {avatarUrlPreview.length > 0 ? (
-                        <div className="relative rounded-full cursor-pointer mr-4 p-12">
-                            <Image
-                                src={avatarUrlPreview}
-                                alt="avatar"
-                                className="rounded-full"
-                                layout="fill"
-                                objectFit="scale-down"
-                                quality={100}
-                                priority
-                            />
-                        </div>
+                        <Suspense
+                            fallback={
+                                <div className="w-24 h-24 rounded-full bg-slate-400 mr-4" />
+                            }
+                        >
+                            <div className="relative rounded-full cursor-pointer mr-4 p-12">
+                                <Image
+                                    src={avatarUrlPreview}
+                                    alt="avatar"
+                                    className="rounded-full"
+                                    layout="fill"
+                                    objectFit="scale-down"
+                                    quality={100}
+                                    priority
+                                />
+                            </div>
+                        </Suspense>
                     ) : (
                         <div className="w-24 h-24 rounded-full bg-slate-400 mr-4" />
                     )}

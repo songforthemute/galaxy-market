@@ -1,12 +1,12 @@
-import type { NextPage } from "next";
-import { Suspense, useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { Suspense, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import useSWR from "swr";
 import useSWRInfinite from "swr/infinite";
-// type
-import { Review, User } from "@prisma/client";
-// hooks
+// types
+import type { NextPage } from "next";
+import type { Review, User } from "@prisma/client";
+// custom hooks
 import useUser from "@libs/client/useUser";
 import useGetKey from "@libs/client/useGetKey";
 import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
@@ -16,20 +16,20 @@ import ProfileBtn from "@components/profileBtn";
 import SkeletonReviews from "@components/skeleton/reivew";
 import SkeletonUserCard from "@components/skeleton/userCard";
 
+// dynamic imports
 const UserCard = dynamic(() => import("@components/userCard"), {
     ssr: false,
     suspense: true,
 });
-
 const Reviews = dynamic(() => import("@components/review"), {
     ssr: false,
     suspense: true,
 });
-
 const HelperBtn = dynamic(() => import("@components/helperBtn"), {
     ssr: true,
 });
 
+// interfaces
 interface ReviewWithUser extends Review {
     createdBy: {
         id: number;
@@ -42,38 +42,44 @@ interface ReviewWithUser extends Review {
         image: string;
     };
 }
-
 interface ReviewsReturn {
     status: boolean;
     reviews: ReviewWithUser[];
     pageNum: number;
     error?: string;
 }
-
 interface ProfileReturn {
     status: boolean;
     profile: User;
 }
 
+// Page
 const Profile: NextPage = () => {
     const {
         query: { id },
     } = useRouter();
     const { user } = useUser();
+
+    // fetch data: user profile
     const { data: profileData } = useSWR<ProfileReturn>(
         `/api/users/profile?id=${id}`
     );
 
+    // fetch data: user's reviews
     const getKey = useGetKey<ReviewsReturn>({
         url: `/api/reviews?id=${id}`,
         hasQuery: true,
     });
     const { data: reviewData, setSize } = useSWRInfinite<ReviewsReturn>(getKey);
+
+    // set page number for infinite scroll
     const page = useInfiniteScrollDown();
+    useEffect(() => {
+        setSize(page);
+    }, [setSize, page]);
 
     // received dataset
     const [reviews, setReviews] = useState<ReviewWithUser[]>([]);
-
     useEffect(() => {
         if (reviewData && !reviewData?.[0]?.error) {
             setReviews(() => reviewData.map((data) => data.reviews).flat());
@@ -81,10 +87,6 @@ const Profile: NextPage = () => {
             setReviews([]);
         }
     }, [reviewData]);
-
-    useEffect(() => {
-        setSize(page);
-    }, [setSize, page]);
 
     return (
         <Layout title="프로필" hasTabBar canGoBack hasConfig>

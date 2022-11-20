@@ -1,31 +1,41 @@
-import Btn from "@components/btn";
-import Input from "@components/input";
-import Layout from "@components/layout";
-import useMutation from "@libs/client/useMutation";
-import { cls } from "@libs/client/util";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import dynamic from "next/dynamic";
+// type
+import type { NextPage } from "next";
+// custom hooks
+import useMutation from "@libs/client/useMutation";
+// utill
+import { cls } from "@libs/client/util";
+// components
+import Layout from "@components/layout";
+import Input from "@components/input";
+import Btn from "@components/btn";
 
+// dynamic imports
 const ErrorMessage = dynamic(() => import("@components/errMessage"), {
     ssr: false,
 });
 
+// interfaces
 interface AuthForm {
     email: string;
     username: string;
     password: string;
     passwordConfirm?: string;
 }
-
 interface AuthenticationReturn {
     status: boolean;
     error?: string;
 }
 
-const Auth = () => {
+// Page
+const Auth: NextPage = () => {
     const router = useRouter();
+
+    // authentication form
+    const [method, setMethod] = useState<"login" | "join">("login");
     const {
         register,
         reset,
@@ -33,14 +43,15 @@ const Auth = () => {
         setError,
         formState: { errors },
     } = useForm<AuthForm>({ reValidateMode: "onBlur" });
-    const [method, setMethod] = useState<"login" | "join">("login");
+
+    // request authentication
     const [authentication, { loading, data }] =
         useMutation<AuthenticationReturn>({
             url: "/api/users/auth",
             method: "POST",
         });
 
-    // functions
+    // event handlers
     const _onLoginClick = () => {
         setMethod("login");
         reset(); // reset input fields
@@ -49,6 +60,8 @@ const Auth = () => {
         setMethod("join");
         reset(); // reset input fields
     };
+
+    // submit form
     const _onValid = (validFormData: AuthForm) => {
         if (loading) return;
         if (
@@ -65,6 +78,7 @@ const Auth = () => {
         authentication(validFormData);
     };
 
+    // if authentication error
     useEffect(() => {
         if (data?.error) {
             if (data?.error !== "비밀번호가 일치하지 않습니다.")
@@ -73,6 +87,7 @@ const Auth = () => {
         }
     }, [data]);
 
+    // if authentication success
     useEffect(() => {
         if (data?.status) {
             router.replace("/");

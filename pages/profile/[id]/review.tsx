@@ -1,40 +1,45 @@
-import Btn from "@components/btn";
-import ErrorMessage from "@components/errMessage";
-import Layout from "@components/layout";
-import TxtArea from "@components/txtArea";
-import useMutation from "@libs/client/useMutation";
-import { cls, priceConverter } from "@libs/client/util";
-import { Product } from "@prisma/client";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import dynamic from "next/dynamic";
 import useSWR from "swr";
+// types
+import type { Product } from "@prisma/client";
+import type { NextPage } from "next";
+// custom hook
+import useMutation from "@libs/client/useMutation";
+// utils
+import { cls, priceConverter } from "@libs/client/util";
+// components
+import Layout from "@components/layout";
+import Btn from "@components/btn";
+import TxtArea from "@components/txtArea";
 
+// dynamic imports
+const ErrorMessage = dynamic(() => import("@components/errMessage"), {
+    ssr: false,
+});
+
+// interfaces
 interface ReviewFormInteface {
     description: string;
 }
-
 interface SoldoutProductsReturn {
     status: boolean;
     soldoutProducts: Product[];
 }
-
 interface DropdownInterface {
     id?: string;
     text: string;
 }
-
 interface ReviewingInterface {
     status: boolean;
 }
 
-const WriteReview = () => {
+// Page
+const WriteReview: NextPage = () => {
     const router = useRouter();
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm<ReviewFormInteface>();
+    // dropdown soldout items
     const [dropdownOpen, setdropdownOpen] = useState(false);
     const [dropdownValue, setDropdownValue] = useState<DropdownInterface>({
         id: undefined,
@@ -46,13 +51,29 @@ const WriteReview = () => {
         setdropdownOpen(false);
     };
 
+    // review form
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        setError,
+    } = useForm<ReviewFormInteface>({ reValidateMode: "onBlur" });
+
+    // fetching for submit form
     const [reviewing, { data: mutationData, loading }] =
         useMutation<ReviewingInterface>({
             url: "/api/reviews",
             method: "POST",
         });
 
+    // submit form
     const _onValid = ({ description }: ReviewFormInteface) => {
+        // if no selected item
+        if (dropdownValue.id === undefined) {
+            setError("description", { message: "리뷰할 상품을 선택해주세요." });
+            return;
+        }
+
         reviewing({
             description,
             star: starScore.filter((s) => s === true).length,
@@ -61,19 +82,19 @@ const WriteReview = () => {
         });
     };
 
-    // 리뷰 등록되면 이동
+    // if success
     useEffect(() => {
         if (mutationData && mutationData.status) {
             router.push(`/profile/${router.query.id}`);
         }
     }, [mutationData, router]);
 
-    // 판매된 상품 리스트업
+    // initialize soldout items for review
     const { data } = useSWR<SoldoutProductsReturn>(
         `/api/products/${router.query.id}/soldout`
     );
 
-    // 별점
+    // scoring
     const [starScore, setStarScore] = useState([
         false,
         false,
@@ -100,11 +121,8 @@ const WriteReview = () => {
             <form className="px-4 pt-10" onSubmit={handleSubmit(_onValid)}>
                 <div className="space-y-8 -mt-4 mb-4">
                     {/*  드롭다운  */}
-                    <label
-                        // htmlFor={name}
-                        className="text-sm font-medium text-slate-400 block -mb-6"
-                    >
-                        {"상품 선택"}
+                    <label className="text-sm font-medium text-slate-400 block -mb-6">
+                        상품 선택
                     </label>
                     <div
                         onClick={() => setdropdownOpen(!dropdownOpen)}
@@ -158,16 +176,16 @@ const WriteReview = () => {
                     <div className="flex items-center justify-center space-x-2">
                         {starScore.map((star, i) => (
                             <div
-                                id={String(i)}
+                                id={`${i}`}
                                 key={i}
                                 onClick={_onClickStar}
                                 className={cls(
                                     "hover:cursor-pointer hover:text-purple-700 transition-all",
-                                    star ? "text-purple-400" : "text-gray-200"
+                                    star ? "text-purple-400" : "text-slate-200"
                                 )}
                             >
                                 <svg
-                                    className="w-20 h-20"
+                                    className="w-full aspect-square max-h-20"
                                     fill="currentColor"
                                     viewBox="0 0 20 20"
                                     xmlns="http://www.w3.org/2000/svg"

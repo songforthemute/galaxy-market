@@ -1,8 +1,8 @@
-import type { NextPage } from "next";
 import { Suspense, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-// type
-import { Review } from "@prisma/client";
+// types
+import type { NextPage } from "next";
+import type { Review } from "@prisma/client";
 // hooks
 import useUser from "@libs/client/useUser";
 import useGetKey from "@libs/client/useGetKey";
@@ -14,16 +14,17 @@ import ProfileBtn from "@components/profileBtn";
 import SkeletonReviews from "@components/skeleton/reivew";
 import SkeletonUserCard from "@components/skeleton/userCard";
 
+// dynamic imports
 const UserCard = dynamic(() => import("@components/userCard"), {
     ssr: false,
     suspense: true,
 });
-
 const Reviews = dynamic(() => import("@components/review"), {
     ssr: false,
     suspense: true,
 });
 
+// interfaces
 interface ReviewWithUser extends Review {
     createdBy: {
         id: number;
@@ -36,7 +37,6 @@ interface ReviewWithUser extends Review {
         image: string;
     };
 }
-
 interface ReviewsReturn {
     status: boolean;
     reviews: ReviewWithUser[];
@@ -44,18 +44,25 @@ interface ReviewsReturn {
     error?: string;
 }
 
+// Page Component
 const Profile: NextPage = () => {
     const { user } = useUser();
+
+    // fetch Data
     const getKey = useGetKey<ReviewsReturn>({
         url: `/api/reviews?id=${user?.id}`,
         hasQuery: true,
     });
     const { data, setSize } = useSWRInfinite<ReviewsReturn>(getKey);
+
+    // set page number for infinite scroll
     const page = useInfiniteScrollDown();
+    useEffect(() => {
+        setSize(page);
+    }, [setSize, page]);
 
     // received dataset
     const [reviews, setReviews] = useState<ReviewWithUser[]>([]);
-
     useEffect(() => {
         if (data && !data?.[0]?.error) {
             setReviews(() => data.map((data) => data.reviews).flat());
@@ -63,10 +70,6 @@ const Profile: NextPage = () => {
             setReviews([]);
         }
     }, [data]);
-
-    useEffect(() => {
-        setSize(page);
-    }, [setSize, page]);
 
     return (
         <Layout title="프로필" hasTabBar canGoBack hasConfig>
