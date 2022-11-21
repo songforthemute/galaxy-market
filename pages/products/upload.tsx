@@ -1,20 +1,26 @@
-import type { NextPage } from "next";
-import Btn from "@components/btn";
-import Input from "@components/input";
-import Layout from "@components/layout";
-import TxtArea from "@components/txtArea";
-import { useForm } from "react-hook-form";
-import useMutation from "@libs/client/useMutation";
 import { useEffect, useState } from "react";
-import { Product } from "@prisma/client";
 import { useRouter } from "next/router";
-import { cls, fetcher } from "@libs/client/util";
 import dynamic from "next/dynamic";
+import { useForm } from "react-hook-form";
+// types
+import type { NextPage } from "next";
+import type { Product } from "@prisma/client";
+// custom hooks
+import useMutation from "@libs/client/useMutation";
+// utils
+import { cls, fetcher } from "@libs/client/util";
+// components
+import Layout from "@components/layout";
+import Input from "@components/input";
+import TxtArea from "@components/txtArea";
+import Btn from "@components/btn";
 
+// dynamic imports
 const Image = dynamic(() => import("next/image"), {
     ssr: false,
 });
 
+// interfaces
 interface UploadProductFormInterface {
     name: string;
     price: number;
@@ -22,18 +28,15 @@ interface UploadProductFormInterface {
     description?: string;
     image: FileList;
 }
-
 interface UploadProductReturn {
     status: boolean;
     product: Product;
 }
-
 interface CloudflareURLInterface {
     status: boolean;
     id: string;
     uploadURL: string;
 }
-
 interface CloudflareURLResponseInterface {
     errors?: any[];
     messages?: any[];
@@ -47,22 +50,24 @@ interface CloudflareURLResponseInterface {
     };
 }
 
+// Page
 const Upload: NextPage = () => {
     const router = useRouter();
+
+    // for fetching data
+    const [uploadProduct, { loading, data }] = useMutation<UploadProductReturn>(
+        { url: "/api/products", method: "POST" }
+    );
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors },
     } = useForm<UploadProductFormInterface>();
-    const [uploadProduct, { loading, data }] = useMutation<UploadProductReturn>(
-        { url: "/api/products", method: "POST" }
-    );
 
-    // attach image
+    // attach image & set preview
     const attachment = watch("image");
     const [attachmentPreview, setAttachmentPreview] = useState("");
-
     useEffect(() => {
         if (attachment && attachment.length > 0) {
             const imgUrl = URL.createObjectURL(attachment[0]);
@@ -70,7 +75,7 @@ const Upload: NextPage = () => {
         }
     }, [attachment]);
 
-    // submit
+    // submit form
     const _onValid = async ({
         name,
         description,
@@ -104,7 +109,7 @@ const Upload: NextPage = () => {
         }
     };
 
-    // 데이터베이스에 생성 잘 되나 프론트단에 product 안넘어옴 => then으로 해결
+    // if success
     useEffect(() => {
         if (data?.status) {
             router.push(`/products/${data.product.id}`);
@@ -125,10 +130,10 @@ const Upload: NextPage = () => {
                         )}
                     >
                         {attachmentPreview ? (
-                            <div className="mx-auto py-48 relative rounded-md hover:opacity-50 transition-all cursor-pointer">
+                            <div className="mx-auto py-48 relative rounded-md hover:opacity-50 transition-all cursor-pointer hover:bg-slate-200">
                                 <Image
                                     src={attachmentPreview}
-                                    alt="image"
+                                    alt="preview"
                                     className="rounded-md"
                                     layout="fill"
                                     objectFit="scale-down"

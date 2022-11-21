@@ -1,4 +1,9 @@
 import { dateConverter, getImgSource } from "@libs/client/util";
+import dynamic from "next/dynamic";
+
+const Image = dynamic(() => import("next/image"), {
+    ssr: false,
+});
 
 interface replyProps {
     avatarUrl?: string | null;
@@ -10,12 +15,18 @@ interface replyProps {
 const Reply = ({ avatarUrl, text, username, created }: replyProps) => {
     return (
         <div className="flex items-start space-x-4">
-            {avatarUrl ? (
-                <img
-                    src={getImgSource(avatarUrl, "avatar")}
-                    alt="avatar"
-                    className="w-8 h-8 bg-slate-400 rounded-full"
-                />
+            {avatarUrl && avatarUrl.length > 0 ? (
+                <div className="relative rounded-full p-4">
+                    <Image
+                        src={getImgSource(avatarUrl, "avatar")}
+                        alt="avatar"
+                        className="rounded-full"
+                        layout="fill"
+                        objectFit="scale-down"
+                        quality={100}
+                        priority={false}
+                    />
+                </div>
             ) : (
                 <div className="w-8 h-8 bg-slate-400 rounded-full" />
             )}

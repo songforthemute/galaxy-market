@@ -1,30 +1,36 @@
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
+import dynamic from "next/dynamic";
+// types
 import type { NextPage } from "next";
+import type { Post } from "@prisma/client";
+// custom hooks
+import useMutation from "@libs/client/useMutation";
+// utils
+import { cls } from "@libs/client/util";
+// components
 import Btn from "@components/btn";
 import Layout from "@components/layout";
 import TxtArea from "@components/txtArea";
 import Input from "@components/input";
-import { useForm } from "react-hook-form";
-import useMutation from "@libs/client/useMutation";
-import { Post } from "@prisma/client";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { cls } from "@libs/client/util";
-import dynamic from "next/dynamic";
 
+// dynamic imports
 const ErrorMessage = dynamic(() => import("@components/errMessage"), {
     ssr: false,
 });
 
+// interfaces
 interface PostingFormInterface {
     title: string;
     description: string;
 }
-
 interface PostingReturn {
     status: boolean;
     post: Post;
 }
 
+// Page
 const Posting: NextPage = () => {
     const router = useRouter();
     const {
@@ -32,17 +38,21 @@ const Posting: NextPage = () => {
         handleSubmit,
         formState: { errors },
     } = useForm<PostingFormInterface>();
+
+    // for fetch data
     const [post, { loading, data }] = useMutation<PostingReturn>({
         url: "/api/posts",
         method: "POST",
     });
+
+    // submit form
     const _onValid = (form: PostingFormInterface) => {
         if (loading) return;
 
         post({ ...form, tag: dropdownValue });
     };
 
-    // Dropdown
+    // dropdown - tag
     const [dropdownOpen, setdropdownOpen] = useState(false);
     const [dropdownValue, setDropdownValue] = useState("질문");
     const _onDropDownClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -50,6 +60,7 @@ const Posting: NextPage = () => {
         setdropdownOpen(false);
     };
 
+    // if success
     useEffect(() => {
         // sending user to 'community/data.post.id' (warp user to correspond posting)
         if (data && data.status) {
@@ -85,7 +96,7 @@ const Posting: NextPage = () => {
                     // htmlFor={name}
                     className="text-sm font-medium text-slate-400 block mb-1"
                 >
-                    {"탭"}
+                    탭
                 </label>
 
                 <div

@@ -1,20 +1,25 @@
-import type { NextPage } from "next";
-import HelperBtn from "@components/helperBtn";
-import Layout from "@components/layout";
-import { Post } from "@prisma/client";
-import useGetKey from "@libs/client/useGetKey";
-import useSWRInfinite from "swr/infinite";
-import React, { Suspense, useEffect, useState } from "react";
-import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
-import Badge from "@components/badge";
+import { Suspense, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import SkeletonPosting from "@components/skeleton/post";
+import useSWRInfinite from "swr/infinite";
+// types
+import type { NextPage } from "next";
+import type { Post } from "@prisma/client";
+// custom hooks
+import useGetKey from "@libs/client/useGetKey";
+import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
+// components
+import Layout from "@components/layout";
+import Badge from "@components/badge";
+import HelperBtn from "@components/helperBtn";
+import SkeletonPosting from "@components/skeleton/posts";
 
-const Posting = dynamic(() => import("@components/post"), {
+// dynamic imports
+const Posting = dynamic(() => import("@components/posts"), {
     ssr: false,
     suspense: true,
 });
 
+// interfaes
 interface PostWithReaction extends Post {
     user: {
         username: string;
@@ -24,7 +29,6 @@ interface PostWithReaction extends Post {
         interest: number;
     };
 }
-
 interface PostsReturn {
     status: boolean;
     posts: PostWithReaction[];
@@ -32,7 +36,9 @@ interface PostsReturn {
     error?: string;
 }
 
+// Page
 const Community: NextPage = () => {
+    // tag for filter posts
     const [selected, setSelected] = useState("모두");
     const _onTagClick = (e: React.MouseEvent<HTMLSpanElement>) => {
         const { innerHTML } = e.target as HTMLSpanElement;
@@ -40,16 +46,21 @@ const Community: NextPage = () => {
         mutate();
     };
 
+    // fetch data
     const getKey = useGetKey<PostsReturn>({
         url: `/api/posts?tag=${selected}`,
         hasQuery: true,
     });
     const { data, setSize, mutate } = useSWRInfinite<PostsReturn>(getKey);
+
+    // set page number for infinite scroll
     const page = useInfiniteScrollDown();
+    useEffect(() => {
+        setSize(page);
+    }, [setSize, page]);
 
     // received dataset
     const [posts, setPosts] = useState<PostWithReaction[]>([]);
-
     useEffect(() => {
         if (data && !data?.[0]?.error) {
             setPosts(() => data.map((data) => data.posts).flat());
@@ -57,10 +68,6 @@ const Community: NextPage = () => {
             setPosts([]);
         }
     }, [data]);
-
-    useEffect(() => {
-        setSize(page);
-    }, [setSize, page]);
 
     return (
         <Layout title="커뮤니티" hasTabBar canGoBack hasConfig>

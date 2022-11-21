@@ -1,22 +1,43 @@
+import { Suspense, useEffect } from "react";
+import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
+import { useForm } from "react-hook-form";
+import useSWR from "swr";
+// types
 import type { NextPage } from "next";
+import type { Post, Replies } from "@prisma/client";
+// custom hooks
+import useMutation from "@libs/client/useMutation";
+// components
 import Btn from "@components/btn";
 import Layout from "@components/layout";
 import TxtArea from "@components/txtArea";
-import UserCard from "@components/userCard";
-import { useRouter } from "next/router";
-import useSWR from "swr";
-import { Post, Replies } from "@prisma/client";
-import useMutation from "@libs/client/useMutation";
-import { cls, dateConverter } from "@libs/client/util";
-import { useForm } from "react-hook-form";
-import { useEffect } from "react";
-import Badge from "@components/badge";
-import dynamic from "next/dynamic";
+import SkeletonUserCard from "@components/skeleton/userCard";
+import SkeletonBadge from "@components/skeleton/badge";
+import SkeletonPostingBody from "@components/skeleton/postingBody";
 
+// dynamic imports
 const Reply = dynamic(() => import("@components/reply"), {
+    ssr: false,
+    suspense: true,
+});
+const UserCard = dynamic(() => import("@components/userCard"), {
+    ssr: false,
+    suspense: true,
+});
+const Badge = dynamic(() => import("@components/badge"), {
+    ssr: false,
+    suspense: true,
+});
+const PostingBody = dynamic(() => import("@components/postingBody"), {
+    ssr: false,
+    suspense: true,
+});
+const ErrorMessage = dynamic(() => import("@components/errMessage"), {
     ssr: false,
 });
 
+// interfaces
 interface RepliesWithUser extends Replies {
     user: {
         id: number;
@@ -24,7 +45,6 @@ interface RepliesWithUser extends Replies {
         avatarUrl: string;
     };
 }
-
 interface PostWithUser extends Post {
     user: {
         username: string;
@@ -36,28 +56,29 @@ interface PostWithUser extends Post {
     };
     replies: RepliesWithUser[];
 }
-
 interface PostReturn {
     status: boolean;
     post: PostWithUser;
     isInterest: boolean;
 }
-
 interface ReplyForm {
     reply: string;
 }
-
 interface ReplyReturn {
     status: boolean;
     newReply: Replies;
 }
 
+// Page
 const PostDetail: NextPage = () => {
     const router = useRouter();
-    // Click Interest
+
+    // fetch post data
     const { data, mutate } = useSWR<PostReturn | undefined>(
         router.query.id ? `/api/posts/${router.query.id}` : null
     );
+
+    // toggle interested/cancel
     const [toggleInterest, { loading: interestLoading }] = useMutation({
         url: `/api/posts/${router.query.id}/interest`,
         method: "POST",
@@ -86,19 +107,27 @@ const PostDetail: NextPage = () => {
         if (!interestLoading) toggleInterest({});
     };
 
-    // Register new reply
-    const { register, handleSubmit, reset } = useForm<ReplyForm>();
+    // fetch for replying
     const [replying, { data: replyData, loading: replyLoading }] =
         useMutation<ReplyReturn>({
             url: `/api/posts/${router.query.id}/replies`,
             method: "POST",
         });
+
+    // submit reply form
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm<ReplyForm>();
     const _onValid = (form: ReplyForm) => {
         if (replyLoading) return;
 
         replying(form);
     };
 
+    // after submit reply form
     useEffect(() => {
         if (replyData && replyData.status) {
             reset();
@@ -109,85 +138,37 @@ const PostDetail: NextPage = () => {
     return (
         // 스테이트 전달로 동적 타이틀 변화
         <Layout title={"커뮤니티"} canGoBack>
-            {data?.post ? (
+            {data?.post && (
                 <>
-                    <UserCard
-                        username={data.post.user?.username}
-                        avatarUrl={data.post.user?.avatarUrl}
-                        text="프로필 보기 →"
-                        href={`/profile/${data.post.userId}`}
-                        type="profile"
-                    />
+                    <Suspense fallback={<SkeletonUserCard />}>
+                        <UserCard
+                            username={data.post.user.username}
+                            avatarUrl={data.post.user.avatarUrl}
+                            text="프로필 보기 →"
+                            href={`/profile/${data.post.userId}`}
+                            type="profile"
+                        />
+                    </Suspense>
 
-                    <Badge text={data.post.tag} isLarge />
+                    <Suspense fallback={<SkeletonBadge />}>
+                        <Badge text={data.post.tag} isLarge />
+                    </Suspense>
 
-                    <div className="px-4">
-                        <span className="text-purple-400 text-xl font-medium">
-                            Q.{" "}
-                        </span>
-                        <span className="text-slate-700 text-xl font-medium">
-                            {data.post.title}
-                        </span>
-                    </div>
-                    <div className="mt-2 px-4 space-y-2">
-                        <p className="text-slate-700">
-                            {data.post.description}
-                        </p>
-
-                        <div className="text-xs text-slate-400">
-                            {dateConverter(data.post.created, "Full")}
-                        </div>
-                    </div>
-
-                    {/* Post's Reactions */}
-                    <div className="flex px-4 space-x-4 mt-4 text-slate-700 py-2 border-t border-b w-full">
-                        <button
-                            onClick={_onClickInterest}
-                            className={cls(
-                                "flex space-x-2 items-center text-sm transition-all cursor-pointer hover:animate-bounce",
-                                data.isInterest
-                                    ? "font-semibold text-emerald-400 text- hover:text-slate-400 hover:font-normal"
-                                    : "font-normal hover:text-emerald-400 hover:font-semibold"
-                            )}
-                        >
-                            <svg
-                                className="w-4 h-4"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                                ></path>
-                            </svg>
-                            <span>궁금해요 {data.post._count.interest}</span>
-                        </button>
-                        <span className="flex space-x-2 items-center text-sm">
-                            <svg
-                                className="w-4 h-4"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                                ></path>
-                            </svg>
-                            <span>댓글 {data.post._count.replies}</span>
-                        </span>
-                    </div>
+                    <Suspense fallback={<SkeletonPostingBody />}>
+                        <PostingBody
+                            title={data.post.title}
+                            description={data.post.description}
+                            created={data.post.created}
+                            _onClickInterest={_onClickInterest}
+                            isInterested={data.isInterest}
+                            interest={data.post._count.interest}
+                            replies={data.post._count.replies}
+                        />
+                    </Suspense>
 
                     {/* Post's Replies */}
                     <div className="pb-4 px-4 my-4 space-y-4 border-b">
-                        {data.post.replies.map((reply) => (
+                        {data?.post.replies.map((reply) => (
                             <Reply
                                 key={reply.id}
                                 created={reply.created}
@@ -202,11 +183,17 @@ const PostDetail: NextPage = () => {
                     <form onSubmit={handleSubmit(_onValid)} className="px-4">
                         <TxtArea
                             required
-                            register={register("reply", { required: true })}
+                            register={register("reply", {
+                                required: "댓글을 입력해주세요.",
+                            })}
                             name="reply"
                             label="댓글"
                             placeholder="댓글을 적어주세요."
                         />
+
+                        {errors?.reply?.message && (
+                            <ErrorMessage text={errors.reply.message} />
+                        )}
 
                         <Btn
                             text={
@@ -217,19 +204,6 @@ const PostDetail: NextPage = () => {
                         />
                     </form>
                 </>
-            ) : (
-                // Skeleton Loading Component
-                <div className="p-4 flex w-full flex-1 flex-col items-center mb-8 transition-all">
-                    <div className="w-full animate-pulse flex-row items-center justfiy-center space-y-4">
-                        <div className="h-20 rounded-md bg-slate-200" />
-                        <div className="flex flex-col mt-8 space-y-2">
-                            <div className="h-10 w-1/2 rounded-md bg-slate-200" />
-                            <div className="h-16 w-2/3 rounded-md bg-slate-200" />
-                            <div className="h-10 rounded-md bg-slate-200" />
-                        </div>
-                        <div className="h-32 rounded-md bg-slate-200" />
-                    </div>
-                </div>
             )}
         </Layout>
     );

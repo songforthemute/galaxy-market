@@ -1,17 +1,22 @@
-import type { NextPage } from "next";
-import Layout from "@components/layout";
-import { useRouter } from "next/router";
-import useSWR from "swr";
-import { Product } from "@prisma/client";
-import { getImgSource } from "@libs/client/util";
-import useMutation from "@libs/client/useMutation";
-import useUser from "@libs/client/useUser";
-import dynamic from "next/dynamic";
 import { Suspense } from "react";
+import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
+import useSWR from "swr";
+// types
+import type { NextPage } from "next";
+import type { Product } from "@prisma/client";
+// custom hooks
+import useUser from "@libs/client/useUser";
+import useMutation from "@libs/client/useMutation";
+// utils
+import { getImgSource } from "@libs/client/util";
+// components
+import Layout from "@components/layout";
 import SkeletonRelated from "@components/skeleton/related";
 import SkeletonItemDetail from "@components/skeleton/detailedItem";
 import SkeletonUserCard from "@components/skeleton/userCard";
 
+// dynamic imports
 const Image = dynamic(() => import("next/image"), {
     ssr: false,
     suspense: true,
@@ -33,13 +38,13 @@ const ItemDetail = dynamic(() => import("@components/itemDetail"), {
     suspense: true,
 });
 
+// interfaces
 interface ProductWithUserInterface extends Product {
     user: {
         username: string;
         avatarUrl: string;
     };
 }
-
 interface ProductReturn {
     status: boolean;
     product: ProductWithUserInterface;
@@ -47,13 +52,17 @@ interface ProductReturn {
     isLiked: boolean;
 }
 
+// Page
 const ItemDetailPage: NextPage = () => {
-    const { user } = useUser();
     const router = useRouter();
+    const { user } = useUser();
+
+    // fetch data
     const { data, mutate } = useSWR<ProductReturn | undefined>(
         router.query.id ? `/api/products/${router.query?.id}` : null
     );
 
+    // toggle like/dislike
     const [toggleLike] = useMutation({
         url: `/api/products/${router.query?.id}/like`,
         method: "POST",
@@ -65,6 +74,7 @@ const ItemDetailPage: NextPage = () => {
         mutate({ ...data, isLiked: !data?.isLiked }, false);
     };
 
+    // toggle selling/soldout
     const [toggleSoldout] = useMutation({
         url: `/api/products/${router.query?.id}/soldout`,
         method: "PUT",
@@ -84,6 +94,8 @@ const ItemDetailPage: NextPage = () => {
             false
         );
     };
+
+    // event handler - talk to seller
     const _onClickTalkSeller = () => {
         router.push(`/chats/${data?.product.userId}`);
     };
