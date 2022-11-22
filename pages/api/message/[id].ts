@@ -57,14 +57,14 @@ const handler = async (
             orderBy: {
                 created: "desc",
             },
-            take: 10,
-            skip: (Number(page) - 1) * 10,
+            take: 15,
+            skip: (Number(page) - 1) * 15,
         });
 
         return res.json({
             status: true,
             messages,
-            pageNum: Math.ceil(messagesCount / 10),
+            pageNum: Math.ceil(messagesCount / 15),
         });
     }
 

@@ -1,25 +1,31 @@
-import type { NextPage } from "next";
-import { useEffect } from "react";
-import Layout from "@components/layout";
-import Sending from "@components/sendingMessage";
-import { useForm } from "react-hook-form";
-import useMutation from "@libs/client/useMutation";
+import { useEffect, Suspense, useState } from "react";
 import { useRouter } from "next/router";
-import { Message } from "@prisma/client";
-import useUser from "@libs/client/useUser";
-import useSWRInfinite from "swr/infinite";
-import useGetKey from "@libs/client/useGetKey";
-import { useInfiniteScrollUp } from "@libs/client/useInfiniteScroll";
 import dynamic from "next/dynamic";
+import { useForm } from "react-hook-form";
+import useSWRInfinite from "swr/infinite";
+// types
+import type { NextPage } from "next";
+import type { Message } from "@prisma/client";
+// custom hooks
+import useUser from "@libs/client/useUser";
+import useGetKey from "@libs/client/useGetKey";
+import useMutation from "@libs/client/useMutation";
+import { useInfiniteScrollUp } from "@libs/client/useInfiniteScroll";
+// components
+import Layout from "@components/layout";
+import SendingMessageForm from "@components/sendingForm";
+import SkeletonMessageBody from "@components/skeleton/message";
 
-const Messages = dynamic(() => import("@components/message"), {
+// dynamic imports
+const MessageBody = dynamic(() => import("@components/message"), {
     ssr: false,
+    suspense: true,
 });
 
+// interfaces
 interface SendingForm {
     message: string;
 }
-
 interface MessageWithUser extends Message {
     messagedBy: {
         id: number;
@@ -27,7 +33,6 @@ interface MessageWithUser extends Message {
         username: string;
     };
 }
-
 interface MessagesReturn {
     status: boolean;
     messages: MessageWithUser[];
@@ -35,15 +40,12 @@ interface MessagesReturn {
     error?: string;
 }
 
+// Page
 const ChatDetail: NextPage = () => {
-    const { user } = useUser();
     const router = useRouter();
-    const [send, { loading }] = useMutation({
-        url: `/api/message/${router.query.id}`,
-        method: "POST",
-    });
+    const { user } = useUser();
 
-    const page = useInfiniteScrollUp();
+    // fetch prev messages
     const getKey = useGetKey<MessagesReturn>({
         url: router.query.id ? `/api/message/${router.query.id}` : null,
         hasQuery: false,
@@ -52,6 +54,17 @@ const ChatDetail: NextPage = () => {
         refreshInterval: 1000,
     });
 
+    // set page number for infinite scroll
+    const page = useInfiniteScrollUp();
+    useEffect(() => {
+        setSize(page);
+    }, [setSize, page]);
+
+    // sending message - submit
+    const [send, { loading }] = useMutation({
+        url: `/api/message/${router.query.id}`,
+        method: "POST",
+    });
     const { register, handleSubmit, reset } = useForm<SendingForm>();
     const _onValid = ({ message }: SendingForm) => {
         if (loading) return;
@@ -76,70 +89,62 @@ const ChatDetail: NextPage = () => {
                                 },
                             },
                         ],
-                        pageNum: 1,
+                        pageNum: 0,
                     },
                     ...prev,
                 ],
             false
         );
+
         send({ message });
+        scrollTo({
+            top: Math.max(
+                document.body.scrollHeight,
+                document.documentElement.scrollHeight
+            ),
+            behavior: "smooth",
+        });
+
         reset();
     };
 
-    const messages = !data?.[0]?.error
-        ? data?.map((data) => data.messages).flat()
-        : undefined;
-
+    // received dataset
+    const [messages, setMessages] = useState<MessageWithUser[]>([]);
     useEffect(() => {
-        setSize(page);
-    }, [setSize, page]);
-
-    // 초기설정 - 맨 아래가 보이도록
-    // 메시지 전송했을 경우 - 아래로 끌어내림
-    useEffect(() => {
-        if (data) {
-            scrollTo({
-                top:
-                    document.body.scrollHeight ||
-                    document.documentElement.scrollHeight,
-                behavior: "smooth",
-            });
+        if (data && !data?.[0]?.error) {
+            setMessages(() => data.map((data) => data.messages).flat());
+        } else {
+            setMessages([]);
         }
-    }, [data]); // messages로 설정시 에러
+    }, [data]);
 
     return (
         <Layout title={"메시지"} canGoBack>
             <div className="p-4 pb-20 space-y-4">
-                {data ? (
-                    messages
-                        ?.reverse()
-                        .map((message) => (
-                            <Messages
+                {messages.length > 0 &&
+                    messages.reverse().map((message) => (
+                        <Suspense
+                            fallback={
+                                <SkeletonMessageBody
+                                    isReverse={
+                                        message.messagedById === user?.id
+                                    }
+                                />
+                            }
+                            key={message.id}
+                        >
+                            <MessageBody
                                 avatarUrl={message.messagedBy.avatarUrl}
                                 key={message.id}
                                 text={message.text}
                                 isReverse={message.messagedById === user?.id}
                                 createdAt={message.created}
                             />
-                        ))
-                ) : (
-                    // Skeleton Loading Component
-                    <div className="flex w-full flex-1 flex-col items-center mb-8 transition-all">
-                        <div className="w-full animate-pulse flex-row items-center justfiy-center space-y-4">
-                            <div className="flex flex-row items-start">
-                                <div className="h-12 w-12 mr-4 rounded-md bg-slate-200" />
-                                <div className="h-16 w-full rounded-md bg-slate-200" />
-                            </div>
-                            <div className="flex flex-row items-start">
-                                <div className="h-16 mr-4 w-full rounded-md bg-slate-200" />
-                                <div className="h-12 w-12 rounded-md bg-slate-200" />
-                            </div>
-                        </div>
-                    </div>
-                )}
+                        </Suspense>
+                    ))}
 
                 <form onSubmit={handleSubmit(_onValid)}>
-                    <Sending
+                    <SendingMessageForm
                         register={register("message", { required: true })}
                         placeholder="메시지를 입력해주세요."
                         isLoading={loading}
@@ -175,7 +180,7 @@ const ChatDetail: NextPage = () => {
                                 />
                             </svg>
                         )}
-                    </Sending>
+                    </SendingMessageForm>
                 </form>
             </div>
         </Layout>

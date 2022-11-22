@@ -30,9 +30,7 @@ const UserCard = ({
         <div
             className={cls(
                 "p-4",
-                type === "message"
-                    ? "cursor-pointer transition-all hover:opacity-50"
-                    : "flex items-center space-x-4 mt-2",
+                type === "message" ? "" : "flex items-center space-x-4 mt-2",
                 hasBorder ? "border-y" : ""
             )}
         >

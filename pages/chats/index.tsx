@@ -1,17 +1,24 @@
-import type { NextPage } from "next";
-import Layout from "@components/layout";
-import { Message } from "@prisma/client";
-import { dateConverter } from "@libs/client/util";
-import useGetKey from "@libs/client/useGetKey";
+import { Suspense, useEffect, useState } from "react";
 import useSWRInfinite from "swr/infinite";
-import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
-import { useEffect } from "react";
 import dynamic from "next/dynamic";
+// types
+import type { NextPage } from "next";
+import type { Message } from "@prisma/client";
+// custom hooks
+import useGetKey from "@libs/client/useGetKey";
+import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
+// utils
+import { dateConverter } from "@libs/client/util";
+import Layout from "@components/layout";
+import SkeletonUserCard from "@components/skeleton/userCard";
 
+// dynamic imports
 const UserCard = dynamic(() => import("@components/userCard"), {
     ssr: false,
+    suspense: true,
 });
 
+// interfaces
 interface MessageWithUser extends Message {
     messagedBy: {
         id: number;
@@ -19,7 +26,6 @@ interface MessageWithUser extends Message {
         avatarUrl?: string | null;
     };
 }
-
 interface MessageListReturn {
     status: boolean;
     messages: MessageWithUser[];
@@ -27,27 +33,36 @@ interface MessageListReturn {
     error?: string;
 }
 
+// Page
 const Chats: NextPage = () => {
+    // fetch messages list
     const getKey = useGetKey<MessageListReturn>({
         url: `/api/message`,
         hasQuery: false,
     });
     const { data, setSize } = useSWRInfinite<MessageListReturn>(getKey);
+
+    // set page number for infinite scroll
     const page = useInfiniteScrollDown();
-
-    const messages = !data?.[0]?.error
-        ? data?.map((data) => data.messages).flat()
-        : undefined;
-
     useEffect(() => {
         setSize(page);
     }, [setSize, page]);
 
+    // received dataset
+    const [messages, setMessages] = useState<MessageWithUser[]>([]);
+    useEffect(() => {
+        if (data && !data?.[0]?.error) {
+            setMessages(() => data.map((data) => data.messages).flat());
+        } else {
+            setMessages([]);
+        }
+    }, [data]);
+
     return (
         <Layout title="메시지" hasTabBar canGoBack hasConfig>
             <div className="divide-y-[1px] divide-slate-100">
-                {data && messages ? (
-                    messages.map((message) => (
+                {messages.map((message) => (
+                    <Suspense fallback={<SkeletonUserCard />} key={message.id}>
                         <UserCard
                             key={message.id}
                             text={`마지막으로 받은 메시지: ${dateConverter(
@@ -58,22 +73,8 @@ const Chats: NextPage = () => {
                             type="message"
                             href={`/chats/${message.messagedBy.id}`}
                         />
-                    ))
-                ) : (
-                    // Skeleton Loading Component
-                    <div className="p-4 flex w-full flex-1 flex-col items-center mb-8 transition-all">
-                        <div className="w-full animate-pulse flex-row items-center justfiy-center space-y-4">
-                            <div className="flex flex-row items-start">
-                                <div className="h-16 w-16 mr-4 rounded-md bg-slate-200" />
-                                <div className="h-24 w-full rounded-md bg-slate-200" />
-                            </div>
-                            <div className="flex flex-row items-start">
-                                <div className="h-16 w-16 mr-4 rounded-md bg-slate-100" />
-                                <div className="h-24 w-full rounded-md bg-slate-100" />
-                            </div>
-                        </div>
-                    </div>
-                )}
+                    </Suspense>
+                ))}
             </div>
         </Layout>
     );

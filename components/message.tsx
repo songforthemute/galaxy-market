@@ -12,7 +12,7 @@ interface MessagesProps {
     createdAt: Date;
 }
 
-const Messages = ({
+const MessageBody = ({
     text = " ",
     isReverse = false,
     avatarUrl,
@@ -25,7 +25,7 @@ const Messages = ({
                 isReverse ? "flex-row-reverse space-x-reverse" : ""
             )}
         >
-            {avatarUrl ? (
+            {avatarUrl && avatarUrl.length > 0 ? (
                 <div className="relative rounded-full p-4">
                     <Image
                         src={getImgSource(avatarUrl, "avatar")}
@@ -38,8 +38,9 @@ const Messages = ({
                     />
                 </div>
             ) : (
-                <div className="rounded-full w-8 h-8 bg-slate-400" />
+                <div className="rounded-full w-8 aspect-square bg-slate-400" />
             )}
+
             <div className="w-1/3 max-w-max text-sm text-slate-700 p-2 border border-slate-400 rounded-md ">
                 <p>{text}</p>
             </div>
@@ -50,4 +51,4 @@ const Messages = ({
     );
 };
 
-export default Messages;
+export default MessageBody;

@@ -6,7 +6,7 @@ interface skeletonUserCardInterface {
 
 const SkeletonUserCard = ({ isLarge = false }: skeletonUserCardInterface) => {
     return (
-        <div className="p-4 flex items-center space-x-4 mt-2 animate-pulse">
+        <div className="p-4 flex items-center space-x-4 mt-0.5 animate-pulse">
             <a className="flex items-center space-x-4">
                 <div
                     className={cls(
@@ -15,19 +15,15 @@ const SkeletonUserCard = ({ isLarge = false }: skeletonUserCardInterface) => {
                     )}
                 />
 
-                <div className="space-y-1">
-                    <p
+                <div className="space-y-1.5">
+                    <div
                         className={cls(
-                            isLarge
-                                ? "text-md font-semibold text-slate-700"
-                                : "font-medium text-slate-700"
+                            "rounded-md bg-slate-400",
+                            isLarge ? "w-32 h-6" : "w-28 h-5"
                         )}
-                    >
-                        유저
-                    </p>
-                    <p className="font-medium text-xs text-slate-400">
-                        프로필보기 →
-                    </p>
+                    />
+
+                    <div className="bg-slate-400 rounded-md w-20 h-2.5" />
                 </div>
             </a>
         </div>

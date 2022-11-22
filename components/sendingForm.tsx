@@ -1,7 +1,7 @@
 import { UseFormRegisterReturn } from "react-hook-form";
 import { cls } from "@libs/client/util";
 
-interface SendingProps {
+interface SendingMessageFormProps {
     placeholder?: string;
     register?: UseFormRegisterReturn;
     children: React.ReactNode;
@@ -9,13 +9,13 @@ interface SendingProps {
     isLoading?: boolean;
 }
 
-const Sending = ({
+const SendingMessageForm = ({
     placeholder = "메시지를 입력해주세요.",
     required = false,
     register,
     children,
     isLoading = false,
-}: SendingProps) => {
+}: SendingMessageFormProps) => {
     return (
         <div className="fixed w-full mx-auto max-w-md bottom-4 inset-x-0">
             <div className="flex mx-2.5 items-center relative">
@@ -43,4 +43,4 @@ const Sending = ({
     );
 };
 
-export default Sending;
+export default SendingMessageForm;

@@ -1,5 +1,5 @@
 import { cls } from "@libs/client/util";
-import React, { useState } from "react";
+import { useState } from "react";
 import type { UseFormRegisterReturn } from "react-hook-form";
 
 interface InputProps {
