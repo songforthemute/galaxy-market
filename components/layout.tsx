@@ -40,7 +40,7 @@ const Layout = ({
     return (
         <div className="">
             <Head>
-                <title>{`${title} - Galaxy Market`}</title>
+                <title>{`${title} | Galaxy Market`}</title>
             </Head>
 
             <div
