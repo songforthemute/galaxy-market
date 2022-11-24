@@ -85,7 +85,7 @@ const Auth: NextPage = () => {
                 setError("email", { message: data?.error });
             else setError("password", { message: data?.error });
         }
-    }, [data]);
+    }, [data, setError]);
 
     // if authentication success
     useEffect(() => {

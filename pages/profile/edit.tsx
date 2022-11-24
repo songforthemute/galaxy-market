@@ -81,7 +81,7 @@ const EditProfile: NextPage = () => {
         if (user?.phone) setValue("phone", user.phone);
         if (user?.username) setValue("username", user.username);
         if (user?.avatarUrl) setAvatarUrlPreview(getImgSource(user.avatarUrl)!);
-    }, [user]);
+    }, [user, setValue]);
 
     // submit form
     const _onValid = async ({
