@@ -1,0 +1,11 @@
+.root {
+    @apply flex items-center justify-center fixed bg-slate-medium bg-opacity-40 inset-0 backdrop-blur-md;
+}
+
+.modal {
+    @apply relative p-10 rounded-md focus:outline-none;
+}
+
+.close {
+    @apply absolute p-1 rounded-full hover:shadow-inner hover:shadow-slate-dark hover:bg-opacity-light hover:bg-slate-dark hover:text-white focus:outline-none transition ease-in-out right-0 top-0;
+}

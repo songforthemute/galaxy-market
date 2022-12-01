@@ -1,0 +1,19 @@
+.root {
+    @apply fixed h-full inset-0 z-50 box-border outline-none;
+}
+
+.container {
+    @apply absolute inset-0 overflow-hidden;
+}
+
+.close {
+    @apply absolute p-1 rounded-full hover:shadow-inner hover:shadow-slate-dark hover:bg-opacity-light hover:bg-slate-dark hover:text-white focus:outline-none transition ease-in-out left-6 top-6;
+}
+
+.sidetab {
+    @apply absolute flex w-full inset-y-0 right-0 outline-none;
+}
+
+.content {
+    @apply flex flex-col p-16 h-full text-base bg-slate-medium shadow-xl overflow-x-hidden;
+}
