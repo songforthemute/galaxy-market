@@ -1,0 +1,19 @@
+.root {
+    @apply fixed h-full inset-0 z-40 box-border outline-none backdrop-blur-[1px];
+}
+
+.container {
+    @apply absolute inset-0 overflow-hidden;
+}
+
+.close {
+    @apply absolute p-0.5 border-b-2 border-b-slate-dark hover:border-b-white hover:bg-opacity-light hover:text-white focus:outline-none focus:ring-2 focus:ring-purple-dark transition ease-in-out left-6 top-6;
+}
+
+.sidebar {
+    @apply absolute flex w-full inset-y-0 right-0 outline-none max-w-full;
+}
+
+.content {
+    @apply flex flex-col p-16 z-[41] h-full text-base bg-slate-medium shadow-xl overflow-x-hidden;
+}

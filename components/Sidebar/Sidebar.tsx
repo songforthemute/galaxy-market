@@ -3,7 +3,7 @@ import { clearAllBodyScrollLocks, disableBodyScroll } from "body-scroll-lock";
 // types
 import type { FC, ReactNode, MutableRefObject } from "react";
 // css
-import s from "./Sidetab.module.css";
+import s from "./Sidebar.module.css";
 import CloseIcon from "@components/icons/close";
 
 interface Props {
@@ -12,8 +12,8 @@ interface Props {
     onClose: () => void;
 }
 
-const Sidetab: FC<Props> = ({ children, onClose }) => {
-    const sidetabRef = useRef() as MutableRefObject<HTMLDivElement>;
+const Sidebar: FC<Props> = ({ children, onClose }) => {
+    const sidebarRef = useRef() as MutableRefObject<HTMLDivElement>;
     const contentRef = useRef() as MutableRefObject<HTMLDivElement>;
 
     const _onClick = () => onClose();
@@ -28,8 +28,8 @@ const Sidetab: FC<Props> = ({ children, onClose }) => {
     );
 
     useEffect(() => {
-        if (sidetabRef.current) {
-            sidetabRef.current.focus();
+        if (sidebarRef.current) {
+            sidebarRef.current.focus();
         }
 
         const { current } = contentRef;
@@ -47,14 +47,18 @@ const Sidetab: FC<Props> = ({ children, onClose }) => {
 
     // NEED TO AUTOFOCUS => useForm()
     return (
-        <aside className={s.root} ref={sidetabRef}>
+        <aside className={s.root} ref={sidebarRef}>
             <div className={s.container}>
-                <section className={s.sidetab}>
-                    <div className="w-full h-full">
-                        <button onClick={onClose} className={s.close}>
+                <section className={s.sidebar}>
+                    <div className="w-full h-full md:w-screen md:max-w-md">
+                        <button onClick={_onClick} className={s.close}>
                             <CloseIcon />
                         </button>
-                        <div className={s.content} ref={contentRef}>
+                        <div
+                            tabIndex={-1}
+                            className={s.content}
+                            ref={contentRef}
+                        >
                             {children}
                         </div>
                     </div>
@@ -64,4 +68,4 @@ const Sidetab: FC<Props> = ({ children, onClose }) => {
     );
 };
 
-export default Sidetab;
+export default Sidebar;

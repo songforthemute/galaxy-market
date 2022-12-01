@@ -47,7 +47,7 @@ const Modal: FC<Props> = ({ children, onClose }) => {
                 <button onClick={_onClick} className={s.close}>
                     <CloseIcon />
                 </button>
-                <div tabIndex={-1} className="outline-none">
+                <div tabIndex={-1} className={s.content}>
                     {children}
                 </div>
             </div>

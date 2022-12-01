@@ -10,7 +10,7 @@ import { ThemeProvider } from "./themeContext";
 import type { FC, ReactNode } from "react";
 
 export interface UIState {
-    showSidetab: boolean;
+    showSidebar: boolean;
     showDropdown: boolean;
     showModal: boolean;
     modalView: string;
@@ -18,7 +18,7 @@ export interface UIState {
 }
 
 const initialState: UIState = {
-    showSidetab: false,
+    showSidebar: false,
     showDropdown: false,
     showModal: false,
     modalView: "",
@@ -27,10 +27,10 @@ const initialState: UIState = {
 
 type Action =
     | {
-          type: "OPEN_SIDETAB";
+          type: "OPEN_SIDEBAR";
       }
     | {
-          type: "CLOSE_SIDETAB";
+          type: "CLOSE_SIDEBAR";
       }
     | {
           type: "OPEN_DROPDOWN";
@@ -62,11 +62,11 @@ UIContext.displayName = "UIContext";
 
 const uiReducer = (state: UIState, action: Action): UIState => {
     switch (action.type) {
-        case "OPEN_SIDETAB": {
-            return { ...state, showSidetab: true };
+        case "OPEN_SIDEBAR": {
+            return { ...state, showSidebar: true };
         }
-        case "CLOSE_SIDETAB": {
-            return { ...state, showSidetab: false };
+        case "CLOSE_SIDEBAR": {
+            return { ...state, showSidebar: false };
         }
         case "OPEN_DROPDOWN": {
             return { ...state, showDropdown: true };
@@ -75,7 +75,7 @@ const uiReducer = (state: UIState, action: Action): UIState => {
             return { ...state, showDropdown: false };
         }
         case "OPEN_MODAL": {
-            return { ...state, showModal: true, showSidetab: false };
+            return { ...state, showModal: true, showSidebar: false };
         }
         case "CLOSE_MODAL": {
             return { ...state, showModal: false };
@@ -93,13 +93,13 @@ export const UIProvider: FC<{ children?: ReactNode }> = (props) => {
     // useReducer: 리렌더링 시에도 변경되지 않음을 보장
     const [state, dispatch] = useReducer(uiReducer, initialState);
 
-    const openSidetab = useCallback(
-        () => dispatch({ type: "OPEN_SIDETAB" }),
+    const openSidebar = useCallback(
+        () => dispatch({ type: "OPEN_SIDEBAR" }),
         [dispatch]
     );
 
-    const closeSidetab = useCallback(
-        () => dispatch({ type: "CLOSE_SIDETAB" }),
+    const closeSidebar = useCallback(
+        () => dispatch({ type: "CLOSE_SIDEBAR" }),
         [dispatch]
     );
 
@@ -137,8 +137,8 @@ export const UIProvider: FC<{ children?: ReactNode }> = (props) => {
     const value = useMemo(
         () => ({
             ...state,
-            openSidetab,
-            closeSidetab,
+            openSidebar,
+            closeSidebar,
             openDropdown,
             closeDropdown,
             openModal,
@@ -157,8 +157,24 @@ export const UIProvider: FC<{ children?: ReactNode }> = (props) => {
     return <UIContext.Provider value={value} {...props} />;
 };
 
+interface useUIInterface {
+    showSidebar: boolean;
+    showDropdown: boolean;
+    showModal: boolean;
+    modalView: string;
+    userAvatar: string | null;
+    openSidebar: () => void;
+    closeSidebar: () => void;
+    openDropdown: () => void;
+    closeDropdown: () => void;
+    openModal: () => void;
+    closeModal: () => void;
+    setUserAvatar: (url: string) => void;
+    setModalView: (view: MODAL_VIEWS) => void;
+}
+
 export const useUI = () => {
-    const context = useContext(UIContext);
+    const context = useContext<useUIInterface>(UIContext);
 
     if (context === undefined) {
         //

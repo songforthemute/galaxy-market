@@ -2,6 +2,7 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { SWRConfig } from "swr";
 import { fetcher } from "@libs/client/util";
+import { ManagedUIContext } from "@components/contexts/uiContext";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
     return (
@@ -10,9 +11,11 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
                 fetcher,
             }}
         >
-            <div className="w-full mx-auto">
-                <Component {...pageProps} />
-            </div>
+            <ManagedUIContext>
+                <div className="w-full mx-auto">
+                    <Component {...pageProps} />
+                </div>
+            </ManagedUIContext>
         </SWRConfig>
     );
 };
