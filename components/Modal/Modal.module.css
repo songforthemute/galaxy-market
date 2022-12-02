@@ -11,5 +11,5 @@
 }
 
 .content {
-    @apply outline-none bg-slate-medium w-[80vw] max-w-full md:max-w-md p-12 rounded-md shadow-xl;
+    @apply outline-none bg-slate-medium w-[80vw] max-w-full md:max-w-md p-12 rounded-md;
 }

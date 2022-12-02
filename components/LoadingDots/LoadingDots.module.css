@@ -1,0 +1,38 @@
+.root {
+    @apply inline-flex text-center items-center;
+}
+
+.root .dot {
+    @apply rounded-full h-1.5 w-1.5 bg-white;
+    animation-name: blink;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    margin: 0 2px;
+}
+
+.root .dot:nth-of-type(2) {
+    animation-delay: 0.15s;
+}
+
+.root .dot:nth-of-type(3) {
+    animation-delay: 0.3s;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 0.7;
+        transform: translateY(0px);
+    }
+    20% {
+        opacity: 0.3;
+        transform: translateY(-5px);
+    }
+    50% {
+        opacity: 0.5;
+        transform: translateY(1px);
+    }
+    100% {
+        opacity: 0.7;
+        transform: translateY(0px);
+    }
+}

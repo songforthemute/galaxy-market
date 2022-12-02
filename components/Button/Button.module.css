@@ -1,0 +1,27 @@
+.root {
+    @apply bg-purple-medium text-white cursor-pointer inline-flex
+    px-10 py-5 leading-6 transition ease-in-out text-center justify-center capitalize
+    items-center text-sm font-semibold max-h-16;
+}
+
+.root:hover {
+    @apply bg-purple-dark;
+}
+
+.root:focus {
+    @apply ring-2 ring-purple-dark outline-none;
+}
+
+.root[aria-pressed] {
+    @apply bg-purple-dark;
+}
+
+.loading {
+    @apply bg-purple-dark text-purple-light cursor-not-allowed;
+}
+
+.disabled,
+.disabled:hover {
+    @apply text-slate-dark bg-slate-medium cursor-not-allowed;
+    filter: grayscale(1);
+}
