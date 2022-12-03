@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from "react";
 import { clearAllBodyScrollLocks, disableBodyScroll } from "body-scroll-lock";
-import CloseIcon from "@components/icons/close";
+import Close from "@components/icons/close";
 // types
 import type { FC, ReactNode, MutableRefObject } from "react";
 // css
@@ -45,7 +45,7 @@ const Modal: FC<Props> = ({ children, onClose }) => {
         <div className={s.root}>
             <div ref={ref} className={s.modal}>
                 <button onClick={_onClick} className={s.close}>
-                    <CloseIcon />
+                    <Close />
                 </button>
                 <div tabIndex={-1} className={s.content}>
                     {children}

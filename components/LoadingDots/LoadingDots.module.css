@@ -3,7 +3,7 @@
 }
 
 .root .dot {
-    @apply rounded-full h-1.5 w-1.5 bg-white;
+    @apply rounded-full h-1.5 w-1.5 bg-achroma-lightest;
     animation-name: blink;
     animation-duration: 1.5s;
     animation-iteration-count: infinite;

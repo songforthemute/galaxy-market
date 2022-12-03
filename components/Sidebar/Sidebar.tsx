@@ -4,7 +4,7 @@ import { clearAllBodyScrollLocks, disableBodyScroll } from "body-scroll-lock";
 import type { FC, ReactNode, MutableRefObject } from "react";
 // css
 import s from "./Sidebar.module.css";
-import CloseIcon from "@components/icons/close";
+import Close from "@components/icons/close";
 
 interface Props {
     children?: ReactNode;
@@ -52,7 +52,7 @@ const Sidebar: FC<Props> = ({ children, onClose }) => {
                 <section className={s.sidebar}>
                     <div className="w-full h-full md:w-screen md:max-w-md">
                         <button onClick={_onClick} className={s.close}>
-                            <CloseIcon />
+                            <Close />
                         </button>
                         <div
                             tabIndex={-1}

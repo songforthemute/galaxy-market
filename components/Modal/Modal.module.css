@@ -1,15 +1,20 @@
 .root {
-    @apply flex items-center justify-center fixed bg-opacity-medium inset-0 backdrop-blur-md;
+    @apply flex items-center justify-center fixed bg-achroma-lightest bg-opacity-high inset-0
+    backdrop-blur-md;
 }
 
 .modal {
-    @apply relative p-10 rounded-md focus:outline-none;
+    @apply relative p-10 rounded-sm focus:outline-none;
 }
 
 .close {
-    @apply absolute p-0.5 border-b-2 text-slate-dark border-b-slate-dark hover:border-b-slate-light hover:bg-opacity-light hover:text-white focus:outline-none focus:ring-2 focus:ring-purple-dark transition ease-in-out right-14 top-14;
+    @apply absolute pb-0.5 border-b-[1.5px] text-achroma-darkest border-b-achroma-darkest
+    hover:border-b-achroma-lightest hover:bg-opacity-low hover:text-achroma-lightest
+    focus:outline-none focus:ring-2 focus:ring-primary-dark transition
+    ease-in-out right-14 top-14;
 }
 
 .content {
-    @apply outline-none bg-slate-medium w-[80vw] max-w-full md:max-w-md p-12 rounded-md;
+    @apply outline-none bg-achroma-light w-[80vw] max-w-full md:max-w-md
+    rounded-sm shadow-xl border-[1.5px] border-achroma-dark;
 }

@@ -2,7 +2,15 @@ export const cls = (...classNames: string[]) => {
     return classNames.join(" ");
 };
 
-export const priceConverter = (price?: string) => {
+export const booleanCls = (
+    formula: boolean,
+    className1: string,
+    className2 = ""
+) => {
+    return Boolean(formula) ? className1 : className2;
+};
+
+export const convertPrice = (price?: string) => {
     if (!price) return "";
     if (price.length <= 3) return price;
 
@@ -20,7 +28,7 @@ export const priceConverter = (price?: string) => {
     return converted;
 };
 
-export const dateConverter = (date: Date, opts?: "Full" | "Time" | "Date") => {
+export const convertDate = (date: Date, opts?: "Full" | "Time" | "Date") => {
     return new Date(date).toLocaleString("ko-kr", {
         dateStyle: opts === "Time" ? undefined : "full",
         timeStyle: opts === "Date" ? undefined : "short",

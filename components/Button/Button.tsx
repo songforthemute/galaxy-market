@@ -4,7 +4,7 @@ import type { ButtonHTMLAttributes, JSXElementConstructor, FC } from "react";
 // hooks
 import { useMergeRefs } from "@libs/hooks/useMergeRefs";
 // util
-import { cls } from "@libs/client/util";
+import { booleanCls, cls } from "@libs/client/util";
 // css
 import s from "./Button.module.css";
 import LoadingDots from "@components/LoadingDots";
@@ -44,8 +44,8 @@ const Button: FC<Props> = forwardRef(
                 className={cls(
                     className,
                     s.root,
-                    loading ? s.loading : "",
-                    disabled ? s.disabled : ""
+                    booleanCls(loading, s.loading),
+                    booleanCls(disabled, s.disabled)
                 )}
                 disabled={disabled}
                 onClick={onClick}

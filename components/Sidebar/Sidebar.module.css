@@ -1,5 +1,5 @@
 .root {
-    @apply fixed h-full inset-0 z-40 box-border outline-none backdrop-blur-[1px];
+    @apply fixed h-full inset-0 z-40 box-border outline-none bg-achroma-medium bg-opacity-medium backdrop-blur-[1px];
 }
 
 .container {
@@ -7,7 +7,9 @@
 }
 
 .close {
-    @apply absolute p-0.5 border-b-2 border-b-slate-dark hover:border-b-white hover:bg-opacity-light hover:text-white focus:outline-none focus:ring-2 focus:ring-purple-dark transition ease-in-out left-6 top-6;
+    @apply absolute pb-0.5 border-b-[1.5px] border-b-achroma-darkest hover:border-b-achroma-lightest
+    text-achroma-darkest hover:text-achroma-lightest focus:outline-none
+    focus:ring-2 focus:ring-primary-dark transition ease-in-out left-6 top-6;
 }
 
 .sidebar {
@@ -15,5 +17,5 @@
 }
 
 .content {
-    @apply flex flex-col p-16 z-[41] h-full text-base bg-slate-medium shadow-xl overflow-x-hidden;
+    @apply flex flex-col p-16 z-[41] h-full text-base bg-achroma-light shadow-xl shadow-achroma-dark overflow-x-hidden;
 }
