@@ -8,8 +8,6 @@ import s from "./Input.module.css";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
     className?: string;
-    placeholder?: string;
-    name?: string;
     register?: UseFormRegisterReturn;
     required?: boolean;
     disabled?: boolean;
@@ -18,8 +16,6 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 
 const Input: FC<Props> = ({
     className = "",
-    placeholder,
-    name,
     register,
     required = false,
     disabled = false,
@@ -33,10 +29,8 @@ const Input: FC<Props> = ({
             autoCorrect="off"
             autoCapitalize="off"
             spellCheck="false"
-            placeholder={placeholder}
             required={required}
             disabled={disabled}
-            name={name}
             type={type}
             {...register}
             {...rest}
