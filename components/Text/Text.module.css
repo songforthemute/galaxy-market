@@ -1,0 +1,15 @@
+.body {
+    @apply text-sm;
+}
+
+.contentHeading {
+    @apply text-lg font-medium;
+}
+
+.pageHeading {
+    @apply text-xl font-semibold tracking-wide leading-7;
+}
+
+.span {
+    @apply text-sm;
+}

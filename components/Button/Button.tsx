@@ -16,14 +16,18 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
     loading?: boolean;
     disabled?: boolean;
     active?: boolean;
+    variant?: Variant;
     type?: "button" | "submit";
     onClick?: () => void;
 }
+
+type Variant = "normal" | "chromaOutline" | "achromaOutline";
 
 const Button: FC<Props> = forwardRef(
     (
         {
             href,
+            variant = "normal",
             className = "",
             Component = "button",
             loading = false,
@@ -45,7 +49,8 @@ const Button: FC<Props> = forwardRef(
                     className,
                     s.root,
                     booleanCls(loading, s.loading),
-                    booleanCls(disabled, s.disabled)
+                    booleanCls(disabled, s.disabled),
+                    booleanCls(true, s[variant])
                 )}
                 disabled={disabled}
                 onClick={onClick}

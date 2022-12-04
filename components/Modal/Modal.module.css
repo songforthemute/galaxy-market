@@ -1,6 +1,6 @@
 .root {
     @apply flex items-center justify-center fixed bg-achroma-lightest bg-opacity-high inset-0
-    backdrop-blur-md;
+    backdrop-blur-sm z-40;
 }
 
 .modal {
@@ -16,5 +16,5 @@
 
 .content {
     @apply outline-none bg-achroma-light w-[80vw] max-w-full md:max-w-md
-    rounded-sm shadow-xl border-[1.5px] border-achroma-dark;
+    rounded-sm shadow-xl border-[1.5px] border-achroma-dark z-[41];
 }
