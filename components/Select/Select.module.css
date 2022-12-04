@@ -1,0 +1,27 @@
+.item {
+    @apply flex items-center space-x-2 bg-achroma-lightest transition hover:bg-primary-medium
+    hover:text-achroma-lightest rounded-sm py-1.5 my-1 px-2.5 text-achroma-darkest duration-300;
+}
+
+.item[data-highlighted] {
+    @apply outline-none bg-primary-medium text-achroma-lightest;
+}
+
+.trigger {
+    @apply inline-flex min-h-[0.5rem] gap-2 border-[1.5px] border-primary-medium items-center
+    justify-center hover:bg-primary-dark hover:border-primary-dark hover:text-achroma-lightest
+    text-achroma-darkest transition duration-300 focus:ring-[1.5px] focus:ring-offset-[1.5px] focus:ring-primary-dark
+    focus:outline-none leading-4;
+}
+
+.icon {
+    @apply text-primary-medium text-sm;
+}
+
+.content {
+    @apply overflow-hidden bg-achroma-lightest border-[1.5px];
+}
+
+.viewport {
+    @apply p-4;
+}
