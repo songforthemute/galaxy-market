@@ -4,7 +4,7 @@
 }
 
 .item[data-highlighted] {
-    @apply outline-none bg-primary-medium text-achroma-lightest;
+    @apply outline-none bg-primary-medium text-achroma-lightest cursor-pointer;
 }
 
 .trigger {

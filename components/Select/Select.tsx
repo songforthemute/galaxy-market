@@ -1,7 +1,7 @@
 import * as Radix from "@radix-ui/react-select";
 import { forwardRef } from "react";
 // types
-import type { ReactNode, RefAttributes } from "react";
+import type { Dispatch, SetStateAction, ReactNode, RefAttributes } from "react";
 // css
 import s from "./Select.module.css";
 // utill
@@ -21,6 +21,7 @@ interface Props {
     children?: ReactNode | any;
     className?: string;
     id?: string;
+    setValue?: Dispatch<SetStateAction<string>> | any;
 }
 
 export const SelectItem = forwardRef<
@@ -45,13 +46,16 @@ export const SelectItem = forwardRef<
 export const Select = ({
     className = "",
     ariaLabel,
+    setValue,
     placeholder,
     children,
     id,
     ...rest
 }: Props) => {
+    const _onValueChange = (value: string) => setValue(value);
+
     return (
-        <Radix.Root>
+        <Radix.Root required onValueChange={_onValueChange}>
             <Radix.Trigger
                 className={cls(s.trigger, className)}
                 aria-label={ariaLabel}
