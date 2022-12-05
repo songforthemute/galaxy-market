@@ -1,0 +1,15 @@
+.root {
+    @apply flex flex-row p-4;
+}
+
+.star {
+    @apply ml-1 inline-block;
+}
+
+.on {
+    @apply text-primary-medium;
+}
+
+.off {
+    @apply text-achroma-medium;
+}
