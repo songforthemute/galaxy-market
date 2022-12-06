@@ -1,13 +1,19 @@
 import * as Radix from "@radix-ui/react-select";
 import { forwardRef } from "react";
 // types
-import type { Dispatch, SetStateAction, ReactNode, RefAttributes } from "react";
+import type {
+    FC,
+    Dispatch,
+    SetStateAction,
+    ReactNode,
+    RefAttributes,
+} from "react";
 // css
 import s from "./Select.module.css";
 // utill
 import { cls } from "@libs/client/util";
 // icons
-import { ChevronDown, ChevronUp, Check } from "@components/icons";
+import { ChevronDown, ChevronUp, Check } from "@components/Atoms";
 
 interface ItemProps {
     children?: ReactNode | any;
@@ -43,7 +49,7 @@ export const SelectItem = forwardRef<
     );
 });
 
-export const Select = ({
+export const Select: FC<Props> = ({
     className = "",
     ariaLabel,
     setValue,
@@ -51,7 +57,7 @@ export const Select = ({
     children,
     id,
     ...rest
-}: Props) => {
+}) => {
     const _onValueChange = (value: string) => setValue(value);
 
     return (

@@ -4,7 +4,7 @@ import { clearAllBodyScrollLocks, disableBodyScroll } from "body-scroll-lock";
 import type { FC, ReactNode, MutableRefObject } from "react";
 // css
 import s from "./Sidebar.module.css";
-import Close from "@components/icons/close";
+import { Close } from "@components/Atoms";
 
 interface Props {
     children?: ReactNode;

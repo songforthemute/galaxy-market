@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from "react";
 import { clearAllBodyScrollLocks, disableBodyScroll } from "body-scroll-lock";
-import Close from "@components/icons/close";
+import { Close } from "@components/Atoms/icons";
 // types
 import type { FC, ReactNode, MutableRefObject } from "react";
 // css

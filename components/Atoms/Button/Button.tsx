@@ -7,7 +7,7 @@ import { useMergeRefs } from "@libs/hooks/useMergeRefs";
 import { booleanCls, cls } from "@libs/client/util";
 // css
 import s from "./Button.module.css";
-import LoadingDots from "@components/LoadingDots";
+import LoadingDots from "@components/Atoms/LoadingDots";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
     href?: string;

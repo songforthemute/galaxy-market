@@ -1,0 +1,11 @@
+.show {
+    @apply bg-achroma-medium animate-pulse z-10 rounded-sm;
+}
+
+.wrapper {
+    @apply relative;
+}
+
+.disappeared {
+    @apply content-none;
+}
