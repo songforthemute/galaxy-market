@@ -7,12 +7,14 @@ interface Props extends InputProps {
     id: string;
     children?: ReactNode | string | any;
     placeholder?: string;
+    type?: "email" | "text" | string;
 }
 
 const Textinput: FC<Props> = ({
     id,
     placeholder,
     children,
+    type = "text",
     register,
     required = false,
     disabled = false,
@@ -23,13 +25,15 @@ const Textinput: FC<Props> = ({
             <Label htmlFor={id}>{children}</Label>
             <Input
                 id={id}
-                className="px-4"
+                type={type}
+                className="px-4 mt-1"
                 register={register}
                 required={required}
                 disabled={disabled}
                 placeholder={placeholder}
                 {...rest}
             />
+            {children}
         </div>
     );
 };

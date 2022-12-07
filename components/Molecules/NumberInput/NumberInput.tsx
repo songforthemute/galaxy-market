@@ -1,6 +1,6 @@
 import { Input, Label } from "@components/Atoms";
 // types
-import type { FC, ReactNode } from "react";
+import type { ReactNode, FC } from "react";
 import type { InputProps } from "@components/Atoms/Input/Input";
 // styles
 import s from "./NumberInput.module.css";
@@ -38,6 +38,7 @@ const NumberInput: FC<Props> = ({
                 {...rest}
             />
             <span className={s.heading}>{heading}</span>
+            {children}
         </div>
     );
 };

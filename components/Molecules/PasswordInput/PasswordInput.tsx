@@ -47,6 +47,7 @@ const PasswordInput: FC<Props> = ({
                     <Eye strokeWidth={1.75} />
                 )}
             </button>
+            {children}
         </div>
     );
 };
