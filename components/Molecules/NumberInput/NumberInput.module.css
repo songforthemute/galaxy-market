@@ -1,0 +1,11 @@
+.root {
+    @apply relative;
+}
+
+.input {
+    @apply mt-1 px-[3.75rem];
+}
+
+.heading {
+    @apply absolute bottom-[.35rem] left-1.5 text-achroma-dark py-1 w-12 text-center bg-achroma-light rounded-md;
+}

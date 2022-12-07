@@ -1,8 +1,15 @@
 .root {
-    @apply appearance-none bg-achroma-lightest py-2 px-4 w-full transition
+    @apply appearance-none bg-achroma-lightest py-2 w-full transition
     ease-in-out text-achroma-darkest placeholder:text-achroma-medium duration-300
-    border-[1.5px] focus:outline-none focus:ring-1 focus:ring-primary-dark
-    border-achroma-dark focus:border-primary-dark duration-300 focus:bg-primary-light;
+    border-[1.5px] focus:outline-none focus:ring-[1.5px] focus:ring-primary-dark
+    border-achroma-dark focus:border-primary-dark focus:bg-primary-light rounded-lg;
+}
+
+/* Chrome, Safari, Edge, Opera */
+.root::-webkit-inner-spin-button,
+.root::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
 }
 
 .disabled {

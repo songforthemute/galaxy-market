@@ -6,31 +6,42 @@ import { booleanCls, cls } from "@libs/client/util";
 // css
 import s from "./Input.module.css";
 
-interface Props extends InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     className?: string;
     register?: UseFormRegisterReturn;
     required?: boolean;
     disabled?: boolean;
-    type?: "text" | "phone" | "price" | "email" | "password" | string;
+    type?: "text" | "tel" | "email" | "password" | string;
+    placeholder?: string;
 }
 
-const Input: FC<Props> = ({
+const Input: FC<InputProps> = ({
     className = "",
     register,
     required = false,
     disabled = false,
     type = "text",
+    placeholder,
     ...rest
 }) => {
     return (
         <input
-            className={cls(className, s.root, booleanCls(disabled, s.disabled))}
+            className={cls(
+                className,
+                s.root,
+                booleanCls(
+                    disabled,
+                    s.disabled,
+                    "hover:border-achroma-darkest hover:bg-achroma-light"
+                )
+            )}
             autoComplete="off"
             autoCorrect="off"
             autoCapitalize="off"
             spellCheck="false"
             required={required}
             disabled={disabled}
+            placeholder={placeholder}
             type={type}
             {...register}
             {...rest}

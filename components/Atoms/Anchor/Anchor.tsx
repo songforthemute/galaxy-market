@@ -5,13 +5,12 @@ import type { FC, ReactNode } from "react";
 interface Props extends LinkProps {
     children?: ReactNode;
     className?: string;
-    [key: string]: any;
 }
 
-const Anchor: FC<Props> = ({ href, children, className, ...props }) => {
+const Anchor: FC<Props> = ({ href, children, className, ...rest }) => {
     return (
         <Link href={href}>
-            <a className={className} {...props}>
+            <a className={className} {...rest}>
                 {children}
             </a>
         </Link>

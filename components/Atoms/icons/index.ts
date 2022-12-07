@@ -5,3 +5,5 @@ export { default as ChevronRight } from "./chevronRight";
 export { default as ChevronLeft } from "./chevronLeft";
 export { default as Close } from "./close";
 export { default as Star } from "./star";
+export { default as Eye } from "./eye";
+export { default as EyeSlash } from "./eyeSlash";
