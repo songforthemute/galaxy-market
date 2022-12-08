@@ -3,11 +3,7 @@
 }
 
 .input {
-    @apply mt-1 px-[4.25rem];
-}
-
-.heading {
-    @apply absolute bottom-5 left-1.5 text-achroma-dark py-1 w-14 text-center bg-achroma-medium bg-opacity-medium rounded-md;
+    @apply px-4 mt-1;
 }
 
 .check {

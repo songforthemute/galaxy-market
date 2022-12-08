@@ -1,32 +1,34 @@
-import { Input, Label } from "@components/Atoms";
+import { Check, Close, ErrorMessage, Input, Label } from "@components/Atoms";
 // types
-import type { ReactNode, FC } from "react";
 import type { InputProps } from "@components/Atoms/Input/Input";
+// utils
+import { booleanCls } from "@libs/client/util";
 // styles
 import s from "./NumberInput.module.css";
 
 interface Props extends InputProps {
     type?: "number" | "tel";
     id: string;
-    children?: ReactNode | string | any;
     placeholder?: string;
+    label?: string;
     heading: string;
+    error?: string;
 }
 
-const NumberInput: FC<Props> = ({
+const NumberInput = ({
     id,
+    label,
     heading,
     type = "number",
     placeholder,
-    children,
     register,
     required = false,
     disabled = false,
-    ...rest
-}) => {
+    error,
+}: Props) => {
     return (
         <div className={s.root}>
-            <Label htmlFor={id}>{children}</Label>
+            <Label htmlFor={id}>{label}</Label>
             <Input
                 id={id}
                 className={s.input}
@@ -35,10 +37,19 @@ const NumberInput: FC<Props> = ({
                 disabled={disabled}
                 type={type}
                 placeholder={placeholder}
-                {...rest}
             />
             <span className={s.heading}>{heading}</span>
-            {children}
+
+            {/* error indicator */}
+            <span className={booleanCls(!!error, s.error, s.check)}>
+                {!!error ? (
+                    <Close strokeWidth={1.75} />
+                ) : (
+                    <Check strokeWidth={1.75} />
+                )}
+            </span>
+
+            {!!error && <ErrorMessage>{error}</ErrorMessage>}
         </div>
     );
 };

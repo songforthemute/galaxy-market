@@ -1,0 +1,19 @@
+.root {
+    @apply flex flex-col;
+}
+
+.nav {
+    @apply flex flex-col items-center;
+}
+
+.methods {
+    @apply w-full flex justify-evenly text-center;
+}
+
+.active {
+    @apply inline-block font-medium text-lg py-2 w-[40vw] border-b-2 border-primary-medium text-primary-dark;
+}
+
+.nonactive {
+    @apply inline-block font-medium text-lg py-2 w-[40vw] border-b-2 border-achroma-medium;
+}

@@ -1,35 +1,44 @@
-import { Eye, EyeSlash, Input, Label } from "@components/Atoms";
+import { useState } from "react";
 // types
-import type { FC, ReactNode } from "react";
 import type { InputProps } from "@components/Atoms/Input/Input";
+import type { UseFormRegisterReturn } from "react-hook-form";
+// utils
+import { booleanCls } from "@libs/client/util";
 // styles
 import s from "./PasswordInput.module.css";
+// components
+import {
+    Check,
+    Close,
+    ErrorMessage,
+    Eye,
+    EyeSlash,
+    Input,
+    Label,
+} from "@components/Atoms";
 
 interface Props extends InputProps {
     id: string;
-    children?: ReactNode | string | any;
-    inputClassName?: string;
     placeholder?: string;
-    hide: boolean;
-    onClick: () => void;
+    label?: string;
+    error?: string;
+    register?: UseFormRegisterReturn;
 }
 
-const PasswordInput: FC<Props> = ({
-    className = "",
-    inputClassName = "",
+const PasswordInput = ({
     id,
+    label,
     placeholder,
-    children,
-    hide,
     register,
     required = false,
     disabled = false,
-    onClick,
-    ...rest
-}) => {
+    error,
+}: Props) => {
+    const [hide, setHide] = useState(false);
+
     return (
         <div className={s.root}>
-            <Label htmlFor={id}>{children}</Label>
+            <Label htmlFor={id}>{label}</Label>
             <Input
                 id={id}
                 className={s.input}
@@ -38,16 +47,27 @@ const PasswordInput: FC<Props> = ({
                 disabled={disabled}
                 type={hide ? "text" : "password"}
                 placeholder={placeholder}
-                {...rest}
             />
-            <button onClick={onClick} className={s.hide}>
+
+            {/* pw hide & show */}
+            <button onClick={() => setHide((prev) => !prev)} className={s.hide}>
                 {hide ? (
                     <EyeSlash strokeWidth={1.75} />
                 ) : (
                     <Eye strokeWidth={1.75} />
                 )}
             </button>
-            {children}
+
+            {/* error indicator */}
+            <span className={booleanCls(!!error, s.error, s.check)}>
+                {!!error ? (
+                    <Close strokeWidth={1.75} />
+                ) : (
+                    <Check strokeWidth={1.75} />
+                )}
+            </span>
+
+            {!!error && <ErrorMessage>{error}</ErrorMessage>}
         </div>
     );
 };
