@@ -1,5 +1,5 @@
 .root {
-    @apply p-0.5 text-xs font-medium text-primary-dark transition;
+    @apply absolute left-4 -bottom-2 text-center text-xs font-medium text-primary-dark transition;
     animation-name: blink;
     animation-duration: 0.7s;
     animation-iteration-count: 2;
@@ -7,15 +7,12 @@
 
 @keyframes blink {
     0% {
-        @apply text-primary-dark;
         opacity: 1;
     }
     50% {
-        @apply text-achroma-medium;
         opacity: 0.3;
     }
     100% {
-        @apply text-primary-dark;
         opacity: 1;
     }
 }

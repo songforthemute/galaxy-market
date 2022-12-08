@@ -1,5 +1,5 @@
 // types
-import type { FC, InputHTMLAttributes } from "react";
+import type { InputHTMLAttributes } from "react";
 import type { UseFormRegisterReturn } from "react-hook-form";
 // utils
 import { booleanCls, cls } from "@libs/client/util";
@@ -15,7 +15,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     placeholder?: string;
 }
 
-const Input: FC<InputProps> = ({
+const Input = ({
     className = "",
     register,
     required = false,
@@ -23,7 +23,7 @@ const Input: FC<InputProps> = ({
     type = "text",
     placeholder,
     ...rest
-}) => {
+}: InputProps) => {
     return (
         <input
             className={cls(

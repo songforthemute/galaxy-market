@@ -17,7 +17,6 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
     disabled?: boolean;
     active?: boolean;
     variant?: Variant;
-    type?: "button" | "submit";
     onClick?: () => void;
 }
 
@@ -50,7 +49,7 @@ const Button: FC<Props> = forwardRef(
                     s.root,
                     booleanCls(loading, s.loading),
                     booleanCls(disabled, s.disabled),
-                    booleanCls(true, s[variant])
+                    s[variant]
                 )}
                 disabled={disabled}
                 onClick={onClick}
