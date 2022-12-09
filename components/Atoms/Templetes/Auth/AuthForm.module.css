@@ -1,5 +1,5 @@
 .root {
-    @apply flex flex-col;
+    @apply flex flex-col my-12;
 }
 
 .nav {
@@ -7,13 +7,26 @@
 }
 
 .methods {
-    @apply w-full flex justify-evenly text-center;
+    @apply w-full flex justify-evenly text-center py-8;
 }
 
 .active {
-    @apply inline-block font-medium text-lg py-2 w-[40vw] border-b-2 border-primary-medium text-primary-dark;
+    @apply inline-block font-medium text-lg py-2.5 w-[25vw] border-b-2
+    border-primary-medium text-primary-dark transition duration-300;
 }
 
 .nonactive {
-    @apply inline-block font-medium text-lg py-2 w-[40vw] border-b-2 border-achroma-medium;
+    @apply inline-block font-medium text-lg py-2.5 w-[25vw] border-b-2
+    border-achroma-medium transition duration-300;
+}
+
+.active:focus,
+.nonactive:focus {
+    @apply ring-2 ring-primary-dark outline-none 
+    ring-offset-[1.5px] border-b-transparent;
+}
+
+.active:hover,
+.nonactive:hover {
+    @apply border-b-transparent bg-achroma-light text-primary-dark;
 }

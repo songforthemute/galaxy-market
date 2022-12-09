@@ -1,4 +1,4 @@
-import { Check, Close, ErrorMessage, Input, Label } from "@components/Atoms";
+import dynamic from "next/dynamic";
 // types
 import type { InputProps } from "@components/Atoms/Input/Input";
 import type { UseFormRegisterReturn } from "react-hook-form";
@@ -6,6 +6,8 @@ import type { UseFormRegisterReturn } from "react-hook-form";
 import { booleanCls } from "@libs/client/util";
 // styles
 import s from "./TextInput.module.css";
+// components
+import { Check, Close, Input, Label, ErrorMessage } from "@components/Atoms";
 
 interface Props extends InputProps {
     id: string;

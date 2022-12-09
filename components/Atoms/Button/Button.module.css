@@ -1,9 +1,9 @@
 .root {
-    @apply cursor-pointer inline-flex py-2 leading-6 transition
+    @apply cursor-pointer inline-flex min-h-[2.75rem] py-2 leading-6 transition
     ease-in-out text-center justify-center capitalize items-center
     text-sm font-semibold max-h-16 border-[1.5px] hover:border-primary-dark
     hover:bg-primary-dark focus:ring-[1.5px] focus:ring-offset-[1.5px] focus:ring-primary-dark focus:outline-none
-    hover:text-achroma-lightest;
+    hover:text-achroma-lightest duration-300;
 }
 
 .normal {

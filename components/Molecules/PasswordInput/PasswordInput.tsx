@@ -10,11 +10,11 @@ import s from "./PasswordInput.module.css";
 import {
     Check,
     Close,
-    ErrorMessage,
     Eye,
     EyeSlash,
     Input,
     Label,
+    ErrorMessage,
 } from "@components/Atoms";
 
 interface Props extends InputProps {
@@ -50,13 +50,13 @@ const PasswordInput = ({
             />
 
             {/* pw hide & show */}
-            <button onClick={() => setHide((prev) => !prev)} className={s.hide}>
+            <span onClick={() => setHide((prev) => !prev)} className={s.hide}>
                 {hide ? (
                     <EyeSlash strokeWidth={1.75} />
                 ) : (
                     <Eye strokeWidth={1.75} />
                 )}
-            </button>
+            </span>
 
             {/* error indicator */}
             <span className={booleanCls(!!error, s.error, s.check)}>

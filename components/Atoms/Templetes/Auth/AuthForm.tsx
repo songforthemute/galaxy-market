@@ -1,5 +1,5 @@
 import { FormProvider, useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // utils
 import { booleanCls } from "@libs/client/util";
 // styles
@@ -18,13 +18,13 @@ interface FormInterface {
 interface Props {
     mutatorFn: (data: FormInterface) => void;
     loading: boolean;
-    error?: {
-        type: string;
+    errors?: {
+        type: "email" | "password" | "passwordConfirm" | "username";
         message: string;
     };
 }
 
-const AuthForm = ({ mutatorFn, loading, error }: Props) => {
+const AuthForm = ({ mutatorFn, loading, errors }: Props) => {
     const [method, setMethod] = useState<"login" | "join">("login");
 
     const formProviderValues = useForm<FormInterface>({
@@ -35,49 +35,67 @@ const AuthForm = ({ mutatorFn, loading, error }: Props) => {
         if (loading) return;
 
         if (method === "join" && data.password !== data.passwordConfirm) {
-            setError("passwordConfirm", {
-                message: "비밀번호가 일치하지 않아요.",
-            });
+            setError(
+                "passwordConfirm",
+                {
+                    message: "비밀번호와 비밀번호 확인란이 일치하지 않아요.",
+                },
+                { shouldFocus: true }
+            );
+
             return;
         }
 
         mutatorFn(data);
     };
+    useEffect(() => {
+        if (errors) {
+            setError(
+                errors.type,
+                { message: errors.message },
+                { shouldFocus: true }
+            );
+        }
+    }, [errors]);
 
     return (
         <section className={s.root}>
             <nav className={s.nav}>
                 <Text variant="pageHeading">
-                    {method === "login" ? "login now" : "join now"}
+                    {method === "login" ? "로그인하기" : "지금 가입하기"}
                 </Text>
 
                 <ul className={s.methods}>
-                    <li
-                        className={booleanCls(
-                            method === "login",
-                            s.active,
-                            s.nonactive
-                        )}
-                        onClick={() => {
-                            setMethod("login");
-                            reset();
-                        }}
-                    >
-                        <button>로그인하기</button>
+                    <li>
+                        <button
+                            className={booleanCls(
+                                method === "login",
+                                s.active,
+                                s.nonactive
+                            )}
+                            onClick={() => {
+                                setMethod("login");
+                                reset();
+                            }}
+                        >
+                            로그인
+                        </button>
                     </li>
 
-                    <li
-                        className={booleanCls(
-                            method === "login",
-                            s.active,
-                            s.nonactive
-                        )}
-                        onClick={() => {
-                            setMethod("join");
-                            reset();
-                        }}
-                    >
-                        <button>가입하기</button>
+                    <li>
+                        <button
+                            className={booleanCls(
+                                method === "join",
+                                s.active,
+                                s.nonactive
+                            )}
+                            onClick={() => {
+                                setMethod("join");
+                                reset();
+                            }}
+                        >
+                            가입
+                        </button>
                     </li>
                 </ul>
             </nav>

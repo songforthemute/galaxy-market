@@ -1,252 +1,64 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import dynamic from "next/dynamic";
 // type
 import type { NextPage } from "next";
 // custom hooks
 import useMutation from "@libs/client/useMutation";
-// utill
-import { cls } from "@libs/client/util";
 // components
 import Layout from "@components/layout";
-import Input from "@components/input";
-import Btn from "@components/btn";
-
-// dynamic imports
-const ErrorMessage = dynamic(() => import("@components/errMessage"), {
-    ssr: false,
-});
+import AuthForm from "@components/Atoms/Templetes/Auth/AuthForm";
 
 // interfaces
-interface AuthForm {
-    email: string;
-    username: string;
-    password: string;
-    passwordConfirm?: string;
-}
 interface AuthenticationReturn {
     status: boolean;
     error?: string;
 }
+interface ErrorInterface {
+    type: "email" | "password" | "passwordConfirm" | "username";
+    message: string;
+}
 
 // Page
 const Auth: NextPage = () => {
-    const router = useRouter();
+    const { replace } = useRouter();
+    const [errors, setErrors] = useState<ErrorInterface>();
 
-    // authentication form
-    const [method, setMethod] = useState<"login" | "join">("login");
-    const {
-        register,
-        reset,
-        handleSubmit,
-        setError,
-        formState: { errors },
-    } = useForm<AuthForm>({ reValidateMode: "onBlur" });
-
-    // request authentication
+    // request
     const [authentication, { loading, data }] =
         useMutation<AuthenticationReturn>({
             url: "/api/users/auth",
             method: "POST",
         });
 
-    // event handlers
-    const _onLoginClick = () => {
-        setMethod("login");
-        reset(); // reset input fields
-    };
-    const _onJoinClick = () => {
-        setMethod("join");
-        reset(); // reset input fields
-    };
+    // if authentication error
+    useEffect(() => {
+        if (data?.status === false && data?.error) {
+            if (data?.error !== "비밀번호가 일치하지 않습니다.") {
+                setErrors({ type: "email", message: data?.error });
+            } else {
+                setErrors({ type: "password", message: data?.error });
+            }
 
-    // submit form
-    const _onValid = (validFormData: AuthForm) => {
-        if (loading) return;
-        if (
-            method === "join" &&
-            validFormData.password !== validFormData.passwordConfirm
-        ) {
-            setError("passwordConfirm", {
-                type: "passwordMismatch",
-                message: "비밀번호가 일치하지 않아요.",
-            });
             return;
         }
 
-        authentication(validFormData);
-    };
-
-    // if authentication error
-    useEffect(() => {
-        if (data?.error) {
-            if (data?.error !== "비밀번호가 일치하지 않습니다.")
-                setError("email", { message: data?.error });
-            else setError("password", { message: data?.error });
+        if (data?.status === true) {
+            replace("/");
+            // reload();
         }
-    }, [data, setError]);
-
-    // if authentication success
-    useEffect(() => {
-        if (data?.status) {
-            router.replace("/");
-            // router.reload();
-        }
-    }, [data, router]);
+    }, [data]);
 
     return (
-        <Layout title={method === "login" ? "로그인" : "회원가입"}>
-            <div className="mt-12 px-4">
-                <h3 className="text-3xl font-bold text-center">
-                    {method === "login"
-                        ? "Login now into Galaxy!"
-                        : "Join now into Galaxy!"}
-                </h3>
+        <Layout title={"들어가기"}>
+            <div className="px-4">
+                <AuthForm
+                    loading={loading}
+                    mutatorFn={authentication}
+                    errors={errors}
+                />
 
-                <div className="mt-12">
-                    <div className="flex flex-col items-center">
-                        {/* <h5 className="text-sm text-slate-400 font-medium">
-                            로그인하기 & 가입하기
-                        </h5> */}
-                        <div className="grid grid-cols-2 mt-8 gap-16 border-b w-full">
-                            <button
-                                className={cls(
-                                    "pb-4 font-medium border-b-2",
-                                    method === "login"
-                                        ? "border-purple-400 text-purple-400 font-medium"
-                                        : "border-transparent text-slate-400"
-                                )}
-                                onClick={_onLoginClick}
-                            >
-                                로그인하기
-                            </button>
-                            <button
-                                className={cls(
-                                    "pb-4 font-medium border-b-2",
-                                    method === "join"
-                                        ? "border-purple-400 text-purple-400 font-medium"
-                                        : "border-transparent text-slate-400"
-                                )}
-                                onClick={_onJoinClick}
-                            >
-                                회원가입
-                            </button>
-                        </div>
-                    </div>
-
-                    {/* 로그인 폼 컴포넌트 */}
-                    <form
-                        onSubmit={handleSubmit(_onValid)}
-                        className="flex flex-col mt-8"
-                    >
-                        <Input
-                            register={register("email", {
-                                required: true,
-                                pattern: {
-                                    value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
-                                    message:
-                                        "올바른 이메일 주소를 입력해 주세요.",
-                                },
-                            })}
-                            label={"이메일 주소"}
-                            name={"email"}
-                            type={"email"}
-                            required
-                            placeholder={"이메일 주소를 입력해주세요."}
-                            isCheckOk={!errors.email}
-                        />
-                        {errors.email && (
-                            <ErrorMessage text={errors.email?.message} />
-                        )}
-
-                        {method === "join" && (
-                            <Input
-                                register={register("username", {
-                                    required: true,
-                                    minLength: {
-                                        message: "2~12자 사이로 입력해주세요.",
-                                        value: 2,
-                                    },
-                                    maxLength: {
-                                        message: "2~12자 사이로 입력해주세요.",
-                                        value: 12,
-                                    },
-                                    pattern: {
-                                        value: /^[a-zA-Zㄱ-힣0-9|s]*$/,
-                                        message:
-                                            "특수문자는 사용할 수 없습니다.",
-                                    },
-                                })}
-                                label={"닉네임"}
-                                name={"username"}
-                                type={"text"}
-                                required
-                                placeholder={"사용할 닉네임을 입력해주세요."}
-                                isCheckOk={!errors.username}
-                            />
-                        )}
-                        {errors.username && (
-                            <ErrorMessage text={errors.username.message} />
-                        )}
-
-                        <Input
-                            register={register("password", {
-                                required: true,
-                                minLength: {
-                                    message:
-                                        "4~16자 사이의 비밀번호를 입력해주세요.",
-                                    value: 4,
-                                },
-                                maxLength: {
-                                    message:
-                                        "4~16자 사이의 비밀번호를 입력해주세요.",
-                                    value: 16,
-                                },
-                            })}
-                            label={"비밀번호"}
-                            name={"password"}
-                            type={"password"}
-                            required
-                            placeholder="비밀번호를 입력해주세요."
-                        />
-
-                        {errors.password && (
-                            <ErrorMessage text={errors.password.message} />
-                        )}
-
-                        {method === "join" && (
-                            <Input
-                                register={register("passwordConfirm", {
-                                    required: true,
-                                })}
-                                label={"비밀번호 확인"}
-                                name={"password"}
-                                type={"password"}
-                                required
-                                placeholder="비밀번호를 다시 한 번 입력해주세요."
-                            />
-                        )}
-
-                        {errors.passwordConfirm && (
-                            <ErrorMessage
-                                text={errors.passwordConfirm.message}
-                            />
-                        )}
-
-                        <Btn
-                            isLarge
-                            text={
-                                loading
-                                    ? "요청 중이에요"
-                                    : method === "login"
-                                    ? "지금 로그인하기"
-                                    : "지금 바로 가입하기"
-                            }
-                        />
-                    </form>
-
-                    {/* <div className="mt-6">
+                {/* Later: social login feat */}
+                {/* <div className="mt-6">
                         <div className="relative">
                             <div className="absolute w-full border-t border-slate-400" />
                             <div className="relative -top-3 text-center">
@@ -284,7 +96,6 @@ const Auth: NextPage = () => {
                             </button>
                         </div>
                     </div> */}
-                </div>
             </div>
         </Layout>
     );
