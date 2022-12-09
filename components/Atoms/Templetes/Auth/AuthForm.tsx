@@ -5,7 +5,7 @@ import { booleanCls } from "@libs/client/util";
 // styles
 import s from "./AuthForm.module.css";
 // components
-import { Text, Button } from "@components/Atoms";
+import { Button } from "@components/Atoms";
 import { JoinForm, LoginForm } from "@components/Organisms";
 
 interface FormInterface {
@@ -61,9 +61,9 @@ const AuthForm = ({ mutatorFn, loading, errors }: Props) => {
     return (
         <section className={s.root}>
             <nav className={s.nav}>
-                <Text variant="pageHeading">
+                <h1 className={s.heading}>
                     {method === "login" ? "로그인하기" : "지금 가입하기"}
-                </Text>
+                </h1>
 
                 <ul className={s.methods}>
                     <li>
@@ -101,7 +101,10 @@ const AuthForm = ({ mutatorFn, loading, errors }: Props) => {
             </nav>
 
             <FormProvider {...formProviderValues}>
-                <form onSubmit={handleSubmit(_onSubmit)}>
+                <form
+                    onSubmit={handleSubmit(_onSubmit)}
+                    className="md:min-w-[50vw]"
+                >
                     {method === "login" ? <LoginForm /> : <JoinForm />}
                     <Button
                         loading={loading}
