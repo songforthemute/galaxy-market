@@ -110,7 +110,7 @@ const AuthForm = ({ mutatorFn, loading, errors }: Props) => {
                         loading={loading}
                         className="rounded-lg w-full mt-8"
                     >
-                        {method === "login" ? "로그인" : "가입"}
+                        {method === "login" ? "로그인하기" : "지금 가입하기"}
                     </Button>
                 </form>
             </FormProvider>

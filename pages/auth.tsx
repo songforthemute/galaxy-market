@@ -6,7 +6,7 @@ import type { NextPage } from "next";
 import useMutation from "@libs/client/useMutation";
 // components
 import Layout from "@components/layout";
-import AuthForm from "@components/Atoms/Templetes/Auth/AuthForm";
+import { AuthForm } from "@components/Templetes";
 
 // interfaces
 interface AuthenticationReturn {

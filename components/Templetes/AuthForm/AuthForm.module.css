@@ -16,12 +16,12 @@
 
 .active {
     @apply inline-block font-medium text-lg py-2.5 w-[20vw] border-b-2
-    border-primary-medium text-primary-dark transition duration-300;
+    border-primary-dark text-primary-dark transition duration-300;
 }
 
 .nonactive {
     @apply inline-block font-medium text-lg py-2.5 w-[20vw] border-b-2
-    border-achroma-medium transition duration-300;
+    border-achroma-medium text-achroma-medium transition duration-300;
 }
 
 .active:focus,
