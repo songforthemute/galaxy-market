@@ -1,5 +1,3 @@
-// types
-import type { FC } from "react";
 // utils
 import { booleanCls, cls } from "@libs/client/util";
 // css
@@ -12,7 +10,7 @@ interface Props {
     value: number;
 }
 
-const Rating: FC<Props> = ({ className = "", value = 5 }) => {
+const Rating = ({ className = "", value = 5 }: Props) => {
     const rate: boolean[] = new Array(5)
         .fill(true, 0, value)
         .fill(false, value);

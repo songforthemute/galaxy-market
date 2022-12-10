@@ -12,5 +12,7 @@ export { Select } from "./Select";
 export { SelectItem } from "./Select";
 export { default as Textarea } from "./Textarea";
 export { default as Label } from "./Label";
+export { default as Img } from "./Img";
+export { default as Quantity } from "./Quantity";
 
 export * from "./icons";

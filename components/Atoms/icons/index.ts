@@ -7,3 +7,6 @@ export { default as Close } from "./close";
 export { default as Star } from "./star";
 export { default as Eye } from "./eye";
 export { default as EyeSlash } from "./eyeSlash";
+export { default as Heart } from "./heart";
+export { default as ChatBubble } from "./chatBubble";
+export { default as QuestionMark } from "./questionMark";
