@@ -3,13 +3,13 @@
 }
 
 .contentHeading {
-    @apply text-lg font-medium;
+    @apply text-lg font-semibold;
 }
 
 .pageHeading {
-    @apply text-xl font-semibold tracking-wide leading-7;
+    @apply text-xl font-bold tracking-wide leading-7;
 }
 
 .span {
-    @apply text-sm;
+    @apply text-xs;
 }

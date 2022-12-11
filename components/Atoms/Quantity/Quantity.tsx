@@ -2,16 +2,22 @@
 import type { FC, ReactNode } from "react";
 // utils
 import { cls } from "@libs/client/util";
-// styles
-import s from "./Quantity.module.css";
 
 interface Props {
     children?: ReactNode | any;
     className?: string;
+    onClick?: () => void;
 }
 
-const Quantity: FC<Props> = ({ children, className = "" }) => {
-    return <div className={cls(s.root, className)}>{children}</div>;
+const Quantity: FC<Props> = ({ children, className = "", onClick }) => {
+    return (
+        <div
+            className={cls("flex gap-x-1.5 items-center", className)}
+            onClick={onClick}
+        >
+            {children}
+        </div>
+    );
 };
 
 export default Quantity;
