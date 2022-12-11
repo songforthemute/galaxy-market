@@ -10,19 +10,23 @@ export const booleanCls = (
     return Boolean(formula) ? className1 : className2;
 };
 
-export const convertPrice = (price?: string) => {
+export const convertPrice = (price?: number) => {
     if (!price) return "";
-    if (price.length <= 3) return price;
+
+    const willConvert = `${price}`;
+
+    if (willConvert.length <= 3) return willConvert;
 
     let converted = "";
-    const divider = price.length % 3 === 2 ? 1 : price.length % 3 === 0 ? 2 : 0;
+    const divider =
+        willConvert.length % 3 === 2 ? 1 : willConvert.length % 3 === 0 ? 2 : 0;
 
-    for (let i = price.length - 1; i >= 0; i--) {
-        if (i !== price.length - 1 && i % 3 === divider) {
+    for (let i = willConvert.length - 1; i >= 0; i--) {
+        if (i !== willConvert.length - 1 && i % 3 === divider) {
             converted = "," + converted;
         }
 
-        converted = price[i] + converted;
+        converted = willConvert[i] + converted;
     }
 
     return converted;
