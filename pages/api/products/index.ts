@@ -11,10 +11,6 @@ const handler = async (
         session: { user },
     } = req;
 
-    if (!user) {
-        return res.json({ status: false });
-    }
-
     if (req.method === "GET") {
         const {
             query: { page },
@@ -64,7 +60,7 @@ const handler = async (
                 price: Number(price),
                 description: description ? description : undefined,
                 image: imageUrlId ? imageUrlId : undefined,
-                user: { connect: { id: user.id } },
+                user: { connect: { id: user?.id } },
             },
         });
 

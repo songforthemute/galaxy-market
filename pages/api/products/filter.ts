@@ -8,11 +8,17 @@ const handler = async (
     res: NextApiResponse<ResponseInterface>
 ) => {
     const {
-        query: { kind, id },
+        query: { kind, id, page },
     } = req;
 
     if (kind === "Like" || kind === "Buy" || kind === "Sell") {
-        const record = await client.record.findMany({
+        const productsCount = await client.record.count({
+            where: {
+                kind: kind,
+                userId: Number(id),
+            },
+        });
+        const products = await client.record.findMany({
             where: {
                 kind: kind,
                 userId: Number(id),
@@ -35,9 +41,15 @@ const handler = async (
             orderBy: {
                 created: "desc",
             },
+            take: 10,
+            skip: (Number(page) - 1) * 10,
         });
 
-        res.json({ status: true, record });
+        res.json({
+            status: true,
+            products,
+            pageNum: Math.ceil(productsCount / 10),
+        });
     }
 };
 

@@ -1,84 +1,75 @@
-import { useEffect, Suspense, useState } from "react";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import useSWRInfinite from "swr/infinite";
 import dynamic from "next/dynamic";
 // types
 import type { NextPage } from "next";
 import type { Product, Record } from "@prisma/client";
-// custom hooks
+// hooks
 import useGetKey from "@libs/client/useGetKey";
 import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
 // components
 import Layout from "@components/layout";
-import SkeletonItem from "@components/skeleton/item";
+const Item = dynamic(() => import("@components/Organisms/Item"));
 
-// dynamic imports
-const Item = dynamic(() => import("@components/item"), {
-    ssr: false,
-    suspense: true,
-});
+interface ProductsWithLike extends Product {
+    _count: {
+        record: number;
+    };
+}
 
-// interfaces
-interface ProductWithLikes extends Product {
-    _count: { record: number };
+interface RecordsWithProducts extends Record {
+    product: ProductsWithLike;
 }
-interface RecordWithProduct extends Record {
-    product: ProductWithLikes;
-}
-interface RecordReturn {
+
+interface ItemsInterface {
     status: boolean;
-    record: RecordWithProduct[];
+    products: RecordsWithProducts[];
     pageNum: number;
-    error?: string;
+    error?: string | any;
 }
 
-// Page
-const Like: NextPage = () => {
+const Likes: NextPage = () => {
     const {
         query: { id },
     } = useRouter();
-    // fetch data
-    const getKey = useGetKey<RecordReturn>({
-        url: `/api/users/me/record?id=${id}&kind=Like`,
+
+    const getKey = useGetKey<ItemsInterface>({
+        url: `/api/products/filter?id=${id}&kind=Like`,
         hasQuery: true,
     });
-    const { data, setSize } = useSWRInfinite<RecordReturn>(getKey);
 
-    // set page number for infinite scroll
+    const { data, setSize } = useSWRInfinite<ItemsInterface>(getKey);
     const page = useInfiniteScrollDown();
+
+    const [items, setItems] = useState<RecordsWithProducts[]>([]);
+
+    // page number configuration
     useEffect(() => {
         setSize(page);
     }, [setSize, page]);
 
-    // changed received dataset
-    const [records, setRecords] = useState<RecordWithProduct[]>([]);
+    // recevie & connect database for mount
     useEffect(() => {
         if (data && !data?.[0]?.error) {
-            setRecords(() => data.map((data) => data.record).flat());
+            setItems(() => data.map((data) => data.products).flat());
         } else {
-            setRecords([]);
+            setItems([]);
         }
     }, [data]);
 
     return (
-        <Layout title="관심목록" hasTabBar canGoBack>
-            <div className="flex flex-col divide-y-[1px]">
-                {records.map((like) => (
-                    <Suspense fallback={<SkeletonItem />} key={like.id}>
-                        <Item
-                            imageUrl={like.product.image}
-                            name={like.product.name}
-                            opt={like.product.option}
-                            price={like.product.price}
-                            likes={like.product._count.record}
-                            key={like.id}
-                            href={`/products/${like.product.id}`}
-                        />
-                    </Suspense>
+        <Layout title="홈" hasTabBar canGoBack hasConfig>
+            <section className="flex flex-col divide-y-[1px]">
+                {items.map((item) => (
+                    <Item
+                        product={item.product}
+                        key={`item-${item?.product.id}`}
+                    />
                 ))}
-            </div>
+            </section>
         </Layout>
     );
 };
 
-export default Like;
+export default Likes;
