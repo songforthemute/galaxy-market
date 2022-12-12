@@ -9,6 +9,8 @@ import useGetKey from "@libs/client/useGetKey";
 import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
 // components
 import Layout from "@components/layout";
+import { FloatingButton } from "@components/Molecules";
+import { Add } from "@components/Atoms";
 const Item = dynamic(() => import("@components/Organisms/Item"));
 
 interface ProductsWithLike extends Product {
@@ -56,6 +58,10 @@ const Home: NextPage = () => {
                     <Item product={item} key={`item-${item?.id}`} />
                 ))}
             </section>
+
+            <FloatingButton href="/products/upload">
+                <Add />
+            </FloatingButton>
         </Layout>
     );
 };
