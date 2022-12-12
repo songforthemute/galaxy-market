@@ -30,7 +30,7 @@ const JoinForm = () => {
                     },
                 })}
                 error={errors?.email?.message}
-            ></TextInput>
+            />
 
             <TextInput
                 id="username"
@@ -54,7 +54,7 @@ const JoinForm = () => {
                     },
                 })}
                 error={errors?.username?.message}
-            ></TextInput>
+            />
 
             <PasswordInput
                 id="password"
@@ -73,7 +73,7 @@ const JoinForm = () => {
                     },
                 })}
                 error={errors?.password?.message}
-            ></PasswordInput>
+            />
 
             <PasswordInput
                 id="passwordConfirm"
@@ -92,7 +92,7 @@ const JoinForm = () => {
                     },
                 })}
                 error={errors?.passwordConfirm?.message}
-            ></PasswordInput>
+            />
         </>
     );
 };

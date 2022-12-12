@@ -10,3 +10,5 @@ export { default as EyeSlash } from "./eyeSlash";
 export { default as Heart } from "./heart";
 export { default as ChatBubble } from "./chatBubble";
 export { default as QuestionMark } from "./questionMark";
+export { default as Add } from "./add";
+export { default as Picture } from "./picture";

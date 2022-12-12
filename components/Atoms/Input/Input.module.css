@@ -1,8 +1,16 @@
 .root {
     @apply appearance-none bg-achroma-lightest py-2 w-full transition
-    ease-in-out text-achroma-darkest placeholder:text-achroma-medium duration-300
-    border-[1.5px] focus:outline-none focus:ring-[1.5px] focus:ring-primary-dark
-    border-achroma-dark focus:border-primary-dark focus:bg-primary-light rounded-lg;
+    ease-in-out text-achroma-darkest placeholder:text-achroma-medium
+    duration-300 border-[1.5px] border-achroma-dark rounded-lg;
+}
+
+.root:hover {
+    @apply border-achroma-darkest bg-achroma-light;
+}
+
+.root:focus {
+    @apply outline-none ring-[1.5px] ring-primary-dark
+    border-primary-dark bg-primary-light;
 }
 
 /* Chrome, Safari, Edge, Opera */

@@ -1,0 +1,16 @@
+.root {
+    @apply flex flex-col px-4 my-6 md:my-10 items-center;
+}
+
+.attach {
+    @apply w-full py-24 rounded-lg transition duration-300 cursor-pointer hover:opacity-medium hover:bg-primary-light;
+}
+
+.unattached {
+    @apply flex items-center justify-center border-[1.5px] border-dashed
+    border-achroma-dark text-achroma-dark hover:border-primary-dark hover:text-primary-dark;
+}
+
+.attachment {
+    @apply mx-auto py-48;
+}

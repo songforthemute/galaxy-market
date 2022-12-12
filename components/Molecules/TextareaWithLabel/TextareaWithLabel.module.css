@@ -1,0 +1,15 @@
+.root {
+    @apply relative py-3.5;
+}
+
+.input {
+    @apply px-4 mt-1;
+}
+
+.check {
+    @apply absolute bottom-8 right-4 text-emerald-600 font-light;
+}
+
+.error {
+    @apply absolute bottom-8 right-4 text-rose-400 font-light;
+}

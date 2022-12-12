@@ -26,15 +26,7 @@ const Input = ({
 }: InputProps) => {
     return (
         <input
-            className={cls(
-                className,
-                s.root,
-                booleanCls(
-                    disabled,
-                    s.disabled,
-                    "hover:border-achroma-darkest hover:bg-achroma-light"
-                )
-            )}
+            className={cls(className, s.root, booleanCls(disabled, s.disabled))}
             autoComplete="off"
             autoCorrect="off"
             autoCapitalize="off"

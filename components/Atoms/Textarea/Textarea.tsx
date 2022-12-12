@@ -6,7 +6,8 @@ import { booleanCls, cls } from "@libs/client/util";
 // css
 import s from "./Textarea.module.css";
 
-interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+export interface TextareaProps
+    extends TextareaHTMLAttributes<HTMLTextAreaElement> {
     className?: string;
     placeholder?: string;
     name?: string;
@@ -16,7 +17,7 @@ interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
     rows?: number;
 }
 
-const Textarea: FC<Props> = ({
+const Textarea: FC<TextareaProps> = ({
     className = "",
     placeholder,
     name,

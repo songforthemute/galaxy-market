@@ -12,6 +12,7 @@ interface Props extends ImageProps {
     objectFit?: "scale-down" | "contain" | "cover" | "fill";
     quality?: number;
     priority?: boolean;
+    directSrc?: boolean;
 }
 
 const Img = ({
@@ -21,12 +22,13 @@ const Img = ({
     className = "",
     objectFit = "scale-down",
     quality = 75,
+    directSrc = false,
     ...rest
 }: Props) => {
     return (
         <div className={cls("relative", className)}>
             <Image
-                src={getImgSource(src, variants)}
+                src={directSrc ? src : getImgSource(src, variants)}
                 alt={alt}
                 className="rounded-sm"
                 layout="fill"
