@@ -3,19 +3,19 @@ import { useUI } from "@components/contexts/uiContext";
 export const useToggleSidebar = () => {
     const { showSidebar, openSidebar, closeSidebar } = useUI();
 
-    const setState = () => {
+    const toggleSidebar = () => {
         return showSidebar ? closeSidebar() : openSidebar();
     };
 
-    return { sidebar: showSidebar, setSidebar: setState };
+    return { sidebar: showSidebar, toggleSidebar };
 };
 
 export const useToggleModal = () => {
     const { showModal, openModal, closeModal } = useUI();
 
-    const setState = () => {
+    const toggleModal = () => {
         return showModal ? closeModal() : openModal();
     };
 
-    return { modal: showModal, setModal: setState };
+    return { modal: showModal, toggleModal };
 };

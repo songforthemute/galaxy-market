@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import useSWR from "swr";
+import dynamic from "next/dynamic";
 // types
 import type { NextPage } from "next";
 import type { Product } from "@prisma/client";
@@ -9,7 +10,14 @@ import useMutation from "@libs/client/useMutation";
 // components
 import Layout from "@components/layout";
 import { ItemDetail } from "@components/Templetes";
-import { FloatingButton } from "@components/Molecules";
+
+const FloatingButton = dynamic(
+    () => import("@components/Molecules/FloatingButton")
+);
+const Anchor = dynamic(() => import("@components/Atoms/Anchor"));
+const PencilSquare = dynamic(
+    () => import("@components/Atoms/icons/pencilSquare")
+);
 
 // interfaces
 interface ProductWithUserInterface extends Product {
@@ -27,7 +35,7 @@ interface ProductReturn {
 
 // Page
 const ItemDetailPage: NextPage = () => {
-    const { push, query } = useRouter();
+    const { push, query, asPath } = useRouter();
     const { user } = useUser();
 
     // fetch data
@@ -89,7 +97,13 @@ const ItemDetailPage: NextPage = () => {
             />
 
             {/* 템플릿 외의 페이지 단에서 수정 및 삭제 플로팅버튼 */}
-            {/* <FloatingButton href="/" /> */}
+            {data?.product.userId === user?.id && (
+                <Anchor href={`${asPath}/update`}>
+                    <FloatingButton>
+                        <PencilSquare />
+                    </FloatingButton>
+                </Anchor>
+            )}
         </Layout>
     );
 };

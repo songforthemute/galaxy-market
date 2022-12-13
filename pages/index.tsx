@@ -10,7 +10,7 @@ import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
 // components
 import Layout from "@components/layout";
 import { FloatingButton } from "@components/Molecules";
-import { Add } from "@components/Atoms";
+import { Add, Anchor } from "@components/Atoms";
 const Item = dynamic(() => import("@components/Organisms/Item"));
 
 interface ProductsWithLike extends Product {
@@ -59,9 +59,11 @@ const Home: NextPage = () => {
                 ))}
             </section>
 
-            <FloatingButton href="/products/upload">
-                <Add />
-            </FloatingButton>
+            <Anchor href="/products/upload">
+                <FloatingButton>
+                    <Add />
+                </FloatingButton>
+            </Anchor>
         </Layout>
     );
 };

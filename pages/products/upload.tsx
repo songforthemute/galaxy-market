@@ -13,7 +13,7 @@ interface UploadReturn {
     product: Product;
 }
 
-const Upload: NextPage = () => {
+const UploadItem: NextPage = () => {
     const { push } = useRouter();
     const [mutation, { loading, data }] = useMutation<UploadReturn>({
         url: "/api/products",
@@ -33,4 +33,4 @@ const Upload: NextPage = () => {
     );
 };
 
-export default Upload;
+export default UploadItem;

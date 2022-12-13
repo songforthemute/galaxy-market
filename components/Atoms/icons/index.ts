@@ -12,3 +12,4 @@ export { default as ChatBubble } from "./chatBubble";
 export { default as QuestionMark } from "./questionMark";
 export { default as Add } from "./add";
 export { default as Picture } from "./picture";
+export { default as PencilSquare } from "./pencilSquare";

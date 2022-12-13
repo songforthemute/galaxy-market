@@ -65,7 +65,11 @@ const ItemDetail = ({
 
             <div className={s.interactive}>
                 <Button onClick={onClickButton}>
-                    {isOwner ? `판매자에게 연락하기` : `이런 상품은 어떠세요?`}
+                    {isOwner
+                        ? item?.isSoldOut
+                            ? `판매 재개하기`
+                            : `판매 완료하기`
+                        : `판매자에게 연락하기`}
                 </Button>
                 <button onClick={onToggleLike}>
                     <Heart
@@ -78,7 +82,11 @@ const ItemDetail = ({
             </div>
 
             {/* 연관된 상품 */}
-            <Text variant="pageHeading">이런 상품은 어떠세요?</Text>
+            <Text variant="pageHeading">
+                {related?.length
+                    ? "이런 상품은 어떠세요?"
+                    : "관련된 상품이 없는 것 같아요 😂"}
+            </Text>
             <article className={s.related}>
                 {related?.map((v) => (
                     <Anchor href={`/products/${v.id}`} key={`related_${v.id}`}>

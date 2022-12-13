@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+// types
+import type { Product } from "@prisma/client";
 // utils
-import { booleanCls, cls, fetcher } from "@libs/client/util";
+import { booleanCls, cls, fetcher, getImgSource } from "@libs/client/util";
 // styles
 import s from "./UploadForm.module.css";
 // components
@@ -36,6 +38,13 @@ interface FormInterface {
     image?: FileList;
 }
 
+interface PresetInterface extends Product {
+    user: {
+        username: string;
+        avatarUrl: string;
+    };
+}
+
 interface Props {
     mutatorFn: (data: FormInterface | any) => void;
     loading: boolean;
@@ -43,13 +52,20 @@ interface Props {
         type: "name" | "price" | "option" | "description" | "image";
         message: string;
     };
+    preset?: PresetInterface;
 }
 
-const UploadForm = ({ mutatorFn, loading, errors }: Props) => {
+const UploadForm = ({
+    mutatorFn,
+    loading,
+    errors,
+    preset = undefined,
+}: Props) => {
     const formProviderValues = useForm<FormInterface>({
         reValidateMode: "onBlur",
     });
-    const { handleSubmit, setError, register, watch } = formProviderValues;
+    const { handleSubmit, setError, register, watch, setValue } =
+        formProviderValues;
 
     // Attached Image Priview Configuration
     const attached = watch("image");
@@ -104,6 +120,20 @@ const UploadForm = ({ mutatorFn, loading, errors }: Props) => {
             );
         }
     }, [errors]);
+
+    // for update api call
+    useEffect(() => {
+        if (preset) {
+            setValue("name", preset.name);
+            setValue("price", preset.price);
+            setValue("option", preset.option);
+            setValue("description", preset.description ?? undefined);
+
+            if (preset.image) {
+                setImagePreview(getImgSource(preset.image));
+            }
+        }
+    }, []);
 
     return (
         <section className={s.root}>

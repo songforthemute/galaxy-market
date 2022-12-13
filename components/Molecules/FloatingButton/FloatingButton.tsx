@@ -7,16 +7,16 @@ import { cls } from "@libs/client/util";
 import s from "./FloatingButton.module.css";
 
 interface Props {
-    href: string;
     children?: ReactNode | any;
     className?: string;
+    onClick?: () => void;
 }
 
-const FloatingButton: FC<Props> = ({ children, className = "", href }) => {
+const FloatingButton: FC<Props> = ({ children, className = "", onClick }) => {
     return (
-        <Anchor href={href}>
+        <button onClick={onClick}>
             <div className={cls(className, s.root)}>{children}</div>
-        </Anchor>
+        </button>
     );
 };
 
