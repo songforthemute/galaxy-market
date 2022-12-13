@@ -1,0 +1,31 @@
+.root {
+    @apply flex gap-4 items-center transition duration-300 rounded-lg;
+}
+
+.root:hover {
+    @apply opacity-medium text-primary-dark;
+}
+
+.profile {
+    @apply flex flex-col gap-0.5 items-start;
+}
+
+.avatar {
+    @apply aspect-square rounded-full w-14;
+}
+
+.empty {
+    @apply aspect-square rounded-full bg-achroma-medium w-14;
+}
+
+.username {
+    @apply font-semibold;
+}
+
+.subtext {
+    @apply text-achroma-medium inline-block;
+}
+
+.chevron {
+    @apply text-achroma-medium;
+}

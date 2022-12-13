@@ -1,0 +1,23 @@
+.root {
+    @apply flex flex-col gap-y-1.5 items-start md:p-2.5;
+}
+
+.image {
+    @apply aspect-square rounded-lg w-[25vw] md:w-[15vw];
+}
+
+.empty {
+    @apply aspect-square rounded-lg w-[25vw] md:w-[15vw] bg-achroma-medium;
+}
+
+.container {
+    @apply text-start;
+}
+
+.title {
+    @apply font-semibold text-base md:text-lg;
+}
+
+.price {
+    @apply text-achroma-medium text-sm md:text-base;
+}
