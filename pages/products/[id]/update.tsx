@@ -8,7 +8,7 @@ import type { NextPage } from "next";
 import Layout from "@components/layout";
 import { UploadForm } from "@components/Templetes";
 import { FloatingButton } from "@components/Molecules";
-import { Button, Close, Modal, Text } from "@components/Atoms";
+import { Bin, Button, Modal, Text } from "@components/Atoms";
 import useSWR from "swr";
 import { useToggleModal } from "@libs/hooks/useToggle";
 
@@ -94,10 +94,10 @@ const UpdateItem: NextPage = () => {
             />
 
             <FloatingButton
-                className="bg-rose-500"
+                className="hover:text-rose-400"
                 onClick={() => toggleModal()}
             >
-                <Close />
+                <Bin />
             </FloatingButton>
         </Layout>
     );

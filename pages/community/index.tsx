@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import useSWRInfinite from "swr/infinite";
 // types
@@ -9,15 +9,10 @@ import useGetKey from "@libs/client/useGetKey";
 import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
 // components
 import Layout from "@components/layout";
-import Badge from "@components/badge";
-import HelperBtn from "@components/helperBtn";
-import SkeletonPosting from "@components/skeleton/posts";
+import { FloatingButton } from "@components/Molecules";
+import { Add, Anchor, Badge } from "@components/Atoms";
 
-// dynamic imports
-const Posting = dynamic(() => import("@components/posts"), {
-    ssr: false,
-    suspense: true,
-});
+const Posting = dynamic(() => import("@components/Organisms/Posting"));
 
 // interfaes
 interface PostWithReaction extends Post {
@@ -29,6 +24,7 @@ interface PostWithReaction extends Post {
         interest: number;
     };
 }
+
 interface PostsReturn {
     status: boolean;
     posts: PostWithReaction[];
@@ -40,7 +36,7 @@ interface PostsReturn {
 const Community: NextPage = () => {
     // tag for filter posts
     const [selected, setSelected] = useState("모두");
-    const _onTagClick = (e: React.MouseEvent<HTMLSpanElement>) => {
+    const _onClickCategory = (e: React.MouseEvent<HTMLSpanElement>) => {
         const { innerHTML } = e.target as HTMLSpanElement;
         setSelected(innerHTML);
         mutate();
@@ -60,63 +56,53 @@ const Community: NextPage = () => {
     }, [setSize, page]);
 
     // received dataset
-    const [posts, setPosts] = useState<PostWithReaction[]>([]);
+    const [postings, setPostings] = useState<PostWithReaction[]>([]);
     useEffect(() => {
         if (data && !data?.[0]?.error) {
-            setPosts(() => data.map((data) => data.posts).flat());
+            setPostings(() => data.map((data) => data.posts).flat());
         } else {
-            setPosts([]);
+            setPostings([]);
         }
     }, [data]);
 
     return (
         <Layout title="커뮤니티" hasTabBar canGoBack hasConfig>
-            <>
+            <div className="flex p-2 gap-2">
                 {["모두", "질문", "정보", "후기", "자유"].map((v, i) => (
-                    <Badge
-                        text={v}
+                    <button
                         key={i}
-                        isLarge
-                        _onClick={_onTagClick}
-                        isSelected={selected === v}
-                    />
-                ))}
-            </>
-
-            <div className="-mb-2">
-                {posts.map((post) => (
-                    <Suspense fallback={<SkeletonPosting />} key={post.id}>
-                        <Posting
-                            href={`/community/${post.id}`}
-                            key={post.id}
-                            badge={post.tag}
-                            text={post.title}
-                            creator={post.user.username}
-                            createdAt={post.created}
-                            createdAtOpts="Full"
-                            interested={post._count.interest}
-                            reply={post._count.replies}
-                        />
-                    </Suspense>
+                        onClick={_onClickCategory}
+                        className="rounded-lg transtion duration-300 focus:outline-none focus:ring-[1.5px] focus:ring-primary-dark"
+                    >
+                        <Badge
+                            className="transtion duration-300"
+                            active={selected === v}
+                        >
+                            {v}
+                        </Badge>
+                    </button>
                 ))}
             </div>
 
-            <HelperBtn href={"/community/posting"}>
-                <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                    ></path>
-                </svg>
-            </HelperBtn>
+            <section className="flex flex-col -mb-8">
+                {postings.map((post) => (
+                    <button
+                        key={post.id}
+                        className="transition duration-300 w-full hover:opacity-high hover:bg-achroma-light hover:shadow-inner
+                            focus:outline-none focus:opacity-high focus:bg-achroma-light focus:shadow-inner text-start"
+                    >
+                        <Anchor href={`/community/${post.id}`}>
+                            <Posting {...post} />
+                        </Anchor>
+                    </button>
+                ))}
+            </section>
+
+            <FloatingButton>
+                <Anchor href={"/community/upload"}>
+                    <Add />
+                </Anchor>
+            </FloatingButton>
         </Layout>
     );
 };

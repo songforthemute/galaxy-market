@@ -53,17 +53,27 @@ const Home: NextPage = () => {
 
     return (
         <Layout title="홈" hasTabBar canGoBack hasConfig>
-            <section className="flex flex-col divide-y-[1px]">
+            <section className="flex flex-col divide-y-[1px] -mb-8">
                 {items.map((item) => (
-                    <Item product={item} key={`item-${item?.id}`} />
+                    <Anchor
+                        href={`/products/${item.id}`}
+                        key={`item-${item?.id}`}
+                    >
+                        <button
+                            className="transition duration-300 w-full hover:opacity-high hover:bg-achroma-light hover:shadow-inner
+                            focus:outline-none focus:opacity-high focus:bg-achroma-light focus:shadow-inner"
+                        >
+                            <Item product={item} />
+                        </button>
+                    </Anchor>
                 ))}
             </section>
 
-            <Anchor href="/products/upload">
-                <FloatingButton>
+            <FloatingButton>
+                <Anchor href="/products/upload">
                     <Add />
-                </FloatingButton>
-            </Anchor>
+                </Anchor>
+            </FloatingButton>
         </Layout>
     );
 };
