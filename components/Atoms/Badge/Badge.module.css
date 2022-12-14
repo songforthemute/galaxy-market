@@ -1,0 +1,16 @@
+.root {
+    @apply inline-flex items-start justify-center w-14 py-2 rounded-lg
+    font-medium text-xs tracking-wider text-achroma-darkest bg-achroma-light;
+}
+
+.able {
+    @apply transition duration-300;
+}
+
+.abled:hover {
+    @apply text-achroma-lightest bg-primary-dark;
+}
+
+.active {
+    @apply bg-primary-medium text-achroma-lightest;
+}

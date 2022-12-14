@@ -1,13 +1,5 @@
 .root {
-    @apply flex gap-4 relative p-4 w-full items-center transition duration-300;
-}
-
-.root:hover {
-    @apply opacity-high bg-achroma-light shadow-inner;
-}
-
-.root:focus {
-    @apply outline-none opacity-high bg-achroma-light shadow-inner;
+    @apply flex gap-4 relative p-4 w-full items-center;
 }
 
 .summary {

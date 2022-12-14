@@ -13,3 +13,5 @@ export { default as QuestionMark } from "./questionMark";
 export { default as Add } from "./add";
 export { default as Picture } from "./picture";
 export { default as PencilSquare } from "./pencilSquare";
+export { default as Bin } from "./bin";
+export { default as Bulb } from "./bulb";

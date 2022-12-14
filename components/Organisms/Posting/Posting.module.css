@@ -1,0 +1,27 @@
+.root {
+    @apply flex flex-col justify-start gap-4 mt-4;
+}
+
+.badge {
+    @apply mx-4 rounded-full -my-1;
+}
+
+.title {
+    @apply font-medium mx-4;
+}
+
+.title > span {
+    @apply font-semibold text-primary-medium;
+}
+
+.detail {
+    @apply flex justify-between text-achroma-dark mx-4;
+}
+
+.detail > span {
+    @apply inline-block;
+}
+
+.reaction {
+    @apply px-2 border-y-[1.5px] border-y-achroma-light;
+}

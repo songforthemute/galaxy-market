@@ -14,5 +14,6 @@ export { default as Textarea } from "./Textarea";
 export { default as Label } from "./Label";
 export { default as Img } from "./Img";
 export { default as Quantity } from "./Quantity";
+export { default as Badge } from "./Badge";
 
 export * from "./icons";

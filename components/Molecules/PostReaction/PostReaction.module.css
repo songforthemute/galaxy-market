@@ -1,0 +1,23 @@
+.root {
+    @apply flex gap-4 py-2 text-sm tracking-tight;
+}
+
+.root span {
+    @apply inline-block;
+}
+
+.root > button {
+    @apply transition duration-300;
+}
+
+.root > button:hover {
+    @apply text-primary-dark fill-primary-medium;
+}
+
+.on {
+    @apply text-primary-medium;
+}
+
+.on svg {
+    @apply fill-primary-light;
+}
