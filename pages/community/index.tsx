@@ -12,7 +12,7 @@ import Layout from "@components/layout";
 import { FloatingButton } from "@components/Molecules";
 import { Add, Anchor, Badge } from "@components/Atoms";
 
-const Posting = dynamic(() => import("@components/Organisms/PostCard"));
+const PostCard = dynamic(() => import("@components/Organisms/PostCard"));
 
 // interfaes
 interface PostWithReaction extends Post {
@@ -92,7 +92,7 @@ const Community: NextPage = () => {
                             focus:outline-none focus:opacity-high focus:bg-achroma-light focus:shadow-inner text-start"
                     >
                         <Anchor href={`/community/${post.id}`}>
-                            <Posting {...post} />
+                            <PostCard {...post} />
                         </Anchor>
                     </button>
                 ))}

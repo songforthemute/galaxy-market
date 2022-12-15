@@ -9,7 +9,7 @@ import useMutation from "@libs/client/useMutation";
 import Layout from "@components/layout";
 import { UploadPostForm } from "@components/Templetes";
 
-interface PostingReturn {
+interface UploadReturn {
     status: boolean;
     post: Post;
 }
@@ -18,7 +18,7 @@ interface PostingReturn {
 const UploadPosting: NextPage = () => {
     const router = useRouter();
     // mutation data
-    const [upload, { loading, data }] = useMutation<PostingReturn>({
+    const [upload, { loading, data }] = useMutation<UploadReturn>({
         url: "/api/posts",
         method: "POST",
     });

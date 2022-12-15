@@ -14,6 +14,13 @@ import Layout from "@components/layout";
 import { PostDetailWithReply } from "@components/Templetes";
 
 const DeleteModal = dynamic(() => import("@components/Organisms/DeleteModal"));
+const FloatingButton = dynamic(
+    () => import("@components/Molecules/FloatingButton")
+);
+const Anchor = dynamic(() => import("@components/Atoms/Anchor"));
+const PencilSquare = dynamic(
+    () => import("@components/Atoms/icons/pencilSquare")
+);
 
 // interfaces
 interface RepliesWithUser extends Replies {
@@ -47,7 +54,7 @@ interface ReplyReturn {
 
 // Page
 const PostDetail: NextPage = () => {
-    const { query } = useRouter();
+    const { query, asPath } = useRouter();
     const { user } = useUser();
 
     // fetching post
@@ -139,6 +146,14 @@ const PostDetail: NextPage = () => {
                 currentUser={user?.id}
                 onClickDeleteReply={_onClickDeleteReply}
             />
+
+            {user?.id === data?.post.userId && (
+                <FloatingButton>
+                    <Anchor href={`${asPath}/update`}>
+                        <PencilSquare />
+                    </Anchor>
+                </FloatingButton>
+            )}
         </Layout>
     );
 };

@@ -56,6 +56,16 @@ const UploadPostForm = ({ mutatorFn, loading, preset = undefined }: Props) => {
         mutatorFn(data);
     };
 
+    // preset data for update or delete
+    useEffect(() => {
+        if (preset) {
+            setValue("title", preset.title);
+            setValue("tag", preset.tag);
+            setTag(preset.tag);
+            setValue("description", preset.description);
+        }
+    }, []);
+
     return (
         <section className={s.root}>
             <FormProvider {...formProviderValues}>
@@ -78,7 +88,9 @@ const UploadPostForm = ({ mutatorFn, loading, preset = undefined }: Props) => {
                             ariaLabel="태그"
                             placeholder="태그를 골라주세요."
                             setValue={setTag}
-                            required
+                            required={preset?.tag ? false : true}
+                            defaultValue={preset && preset.tag}
+                            defaultChecked={Boolean(preset?.tag)}
                         >
                             {["질문", "정보", "후기", "자유"].map((v, i) => (
                                 <SelectItem value={v} key={i}>

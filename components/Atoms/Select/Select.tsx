@@ -29,6 +29,8 @@ interface Props {
     className?: string;
     id?: string;
     setValue?: Dispatch<SetStateAction<string>> | any;
+    defaultValue?: string;
+    defaultChecked?: boolean;
 }
 
 export const SelectItem = forwardRef<
@@ -56,6 +58,8 @@ export const Select: FC<Props> = ({
     setValue,
     required,
     placeholder,
+    defaultValue,
+    defaultChecked,
     children,
     id,
     ...rest
@@ -65,6 +69,8 @@ export const Select: FC<Props> = ({
     return (
         <Radix.Root required={required} onValueChange={_onValueChange}>
             <Radix.Trigger
+                defaultValue={defaultValue}
+                defaultChecked={defaultChecked}
                 className={cls(s.trigger, className)}
                 aria-label={ariaLabel}
                 id={id}

@@ -1,82 +1,91 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import useSWR from "swr";
-import dynamic from "next/dynamic";
 // hooks
 import { useToggleModal } from "@libs/hooks/useToggle";
 import useMutation from "@libs/client/useMutation";
 //types
-import type { Product } from "@prisma/client";
+import type { Replies, Post } from "@prisma/client";
 import type { NextPage } from "next";
 // components
 import Layout from "@components/layout";
-import { UploadItemForm } from "@components/Templetes";
+import { UploadPostForm } from "@components/Templetes";
 import { FloatingButton } from "@components/Molecules";
 import { Bin } from "@components/Atoms";
-
-const DeleteModal = dynamic(() => import("@components/Organisms/DeleteModal"));
+import { DeleteModal } from "@components/Organisms";
 
 // interfaces
-interface ProductWithUserInterface extends Product {
+interface RepliesWithUser extends Replies {
     user: {
+        id: number;
         username: string;
         avatarUrl: string;
     };
 }
-interface ProductReturn {
+interface PostWithUser extends Post {
+    user: {
+        username: string;
+        avatarUrl: string;
+    };
+    _count: {
+        replies: number;
+        interest: number;
+    };
+    replies: RepliesWithUser[];
+}
+interface PostReturn {
     status: boolean;
-    product: ProductWithUserInterface;
-    relatedProducts: Product[];
-    isLiked: boolean;
+    post: PostWithUser;
+    isInterest: boolean;
 }
 interface UploadReturn {
     status: boolean;
-    product: Product;
+    post: Post;
 }
 
-const UpdateItem: NextPage = () => {
+const UpdatePost: NextPage = () => {
     const { push, asPath } = useRouter();
-    const productId = asPath.split("/")[2];
+    const postId = asPath.split("/")[2];
 
     const { modal, toggleModal } = useToggleModal();
     const _onClickDelete = () => {
-        deleteMutation({ id: productId });
+        deleteMutation({ id: postId });
         toggleModal();
-        push("/");
+        push("/community");
     };
 
     // preset value
-    const { data: preset } = useSWR<ProductReturn | undefined>(
-        `/api/products/${productId}`
+    const { data: preset } = useSWR<PostReturn | undefined>(
+        `/api/posts/${postId}`
     );
 
     // for update
     const [mutation, { loading, data }] = useMutation<UploadReturn>({
-        url: `/api/products/${productId}`,
+        url: `/api/posts/${postId}`,
         method: "PUT",
     });
 
     // for delete
     const [deleteMutation] = useMutation<UploadReturn>({
-        url: `/api/products/${productId}`,
+        url: `/api/posts/${postId}`,
         method: "DELETE",
     });
 
     // success fetch
     useEffect(() => {
         if (data?.status === true) {
-            push(`/products/${productId}`);
+            push(`/community/${postId}`);
         }
     }, [data]);
 
     return (
-        <Layout title="상품 업데이트" canGoBack>
+        <Layout title="게시글 업데이트" canGoBack>
             {modal && <DeleteModal onClickConfirm={_onClickDelete} />}
 
-            <UploadItemForm
+            <UploadPostForm
                 loading={loading}
                 mutatorFn={mutation}
-                preset={preset?.product}
+                preset={preset?.post}
             />
 
             <FloatingButton
@@ -89,4 +98,4 @@ const UpdateItem: NextPage = () => {
     );
 };
 
-export default UpdateItem;
+export default UpdatePost;
