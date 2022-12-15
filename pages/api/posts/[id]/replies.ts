@@ -8,48 +8,65 @@ const handler = async (
     res: NextApiResponse<ResponseInterface>
 ) => {
     const {
+        method,
         query: { id },
         session: { user },
         body: { reply },
     } = req; // product id, user
 
-    const post = await client.post.findUnique({
-        where: {
-            id: Number(id),
-        },
-        select: {
-            id: true,
-        },
-    });
-
-    if (!post)
-        return res
-            .status(404)
-            .json({ status: false, error: "Post not found." });
-
-    const newReply = await client.replies.create({
-        data: {
-            user: {
-                connect: {
-                    id: user?.id,
-                },
+    if (method === "POST") {
+        const post = await client.post.findUnique({
+            where: {
+                id: Number(id),
             },
-            post: {
-                connect: {
-                    id: Number(id),
-                },
+            select: {
+                id: true,
             },
+        });
 
-            text: reply,
-        },
-    });
+        if (!post)
+            return res
+                .status(404)
+                .json({ status: false, error: "Post not found." });
 
-    res.json({ status: true, newReply });
+        const newReply = await client.replies.create({
+            data: {
+                user: {
+                    connect: {
+                        id: user?.id,
+                    },
+                },
+                post: {
+                    connect: {
+                        id: Number(id),
+                    },
+                },
+
+                text: reply,
+            },
+        });
+
+        return res.json({ status: true, newReply });
+    }
+
+    if (method === "DELETE") {
+        const {
+            body: { replyId },
+        } = req;
+
+        await client.replies.delete({
+            where: {
+                id: replyId,
+            },
+        });
+
+        return res.json({ status: true });
+    }
 };
 
 export default withApiSession(
     handlerHelper({
-        methods: ["POST"],
+        methods: ["POST", "DELETE"],
         handlerFn: handler,
         isPrivate: true,
     })
