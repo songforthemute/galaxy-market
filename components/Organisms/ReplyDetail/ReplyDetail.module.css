@@ -1,0 +1,27 @@
+.root {
+    @apply relative flex gap-4 items-start;
+}
+
+.avatar {
+    @apply rounded-full aspect-square w-12;
+}
+
+.empty {
+    @apply rounded-full aspect-square w-12 bg-achroma-medium;
+}
+
+.container {
+    @apply flex flex-col gap-y-1;
+}
+
+.author {
+    @apply font-medium text-sm;
+}
+
+.date {
+    @apply inline-block text-achroma-dark text-xs;
+}
+
+.text {
+    @apply text-sm;
+}

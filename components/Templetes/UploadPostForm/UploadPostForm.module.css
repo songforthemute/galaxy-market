@@ -1,0 +1,15 @@
+.root {
+    @apply p-4 flex flex-col mx-auto w-full md:max-w-7xl;
+}
+
+.tagContainer {
+    @apply relative flex flex-col;
+}
+
+.select {
+    @apply py-2 rounded-lg border-achroma-dark text-start;
+}
+
+.button {
+    @apply w-full rounded-lg;
+}
