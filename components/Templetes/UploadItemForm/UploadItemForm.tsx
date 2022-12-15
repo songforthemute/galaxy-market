@@ -5,7 +5,7 @@ import type { Product } from "@prisma/client";
 // utils
 import { booleanCls, cls, fetcher, getImgSource } from "@libs/client/util";
 // styles
-import s from "./UploadForm.module.css";
+import s from "./UploadItemForm.module.css";
 // components
 import { Button, Img, Picture } from "@components/Atoms";
 import { ImageInput } from "@components/Molecules";
@@ -55,7 +55,7 @@ interface Props {
     preset?: PresetInterface;
 }
 
-const UploadForm = ({
+const UploadItemForm = ({
     mutatorFn,
     loading,
     errors,
@@ -182,4 +182,4 @@ const UploadForm = ({
     );
 };
 
-export default UploadForm;
+export default UploadItemForm;

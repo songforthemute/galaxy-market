@@ -7,11 +7,15 @@
 }
 
 .root > button {
-    @apply transition duration-300;
+    @apply transition duration-300 rounded-lg;
 }
 
 .root > button:hover {
     @apply text-primary-dark fill-primary-medium;
+}
+
+.root > button:focus {
+    @apply ring-[1.5px] ring-offset-2 ring-primary-dark outline-none text-primary-dark fill-primary-medium;
 }
 
 .on {

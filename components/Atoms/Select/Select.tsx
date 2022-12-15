@@ -22,6 +22,7 @@ interface ItemProps {
 }
 
 interface Props {
+    required?: boolean;
     ariaLabel: string;
     placeholder: string;
     children?: ReactNode | any;
@@ -53,6 +54,7 @@ export const Select: FC<Props> = ({
     className = "",
     ariaLabel,
     setValue,
+    required,
     placeholder,
     children,
     id,
@@ -61,7 +63,7 @@ export const Select: FC<Props> = ({
     const _onValueChange = (value: string) => setValue(value);
 
     return (
-        <Radix.Root required onValueChange={_onValueChange}>
+        <Radix.Root required={required} onValueChange={_onValueChange}>
             <Radix.Trigger
                 className={cls(s.trigger, className)}
                 aria-label={ariaLabel}

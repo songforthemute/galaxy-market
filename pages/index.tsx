@@ -11,7 +11,7 @@ import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
 import Layout from "@components/layout";
 import { FloatingButton } from "@components/Molecules";
 import { Add, Anchor } from "@components/Atoms";
-const Item = dynamic(() => import("@components/Organisms/Item"));
+const Item = dynamic(() => import("@components/Organisms/ItemCard"));
 
 interface ProductsWithLike extends Product {
     _count: {

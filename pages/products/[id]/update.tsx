@@ -6,7 +6,7 @@ import type { Product } from "@prisma/client";
 import type { NextPage } from "next";
 // components
 import Layout from "@components/layout";
-import { UploadForm } from "@components/Templetes";
+import { UploadItemForm } from "@components/Templetes";
 import { FloatingButton } from "@components/Molecules";
 import { Bin, Button, Modal, Text } from "@components/Atoms";
 import useSWR from "swr";
@@ -35,10 +35,10 @@ const UpdateItem: NextPage = () => {
     const productId = asPath.split("/")[2];
 
     const { modal, toggleModal } = useToggleModal();
-    const _onClickDelete = async () => {
+    const _onClickDelete = () => {
         deleteMutation({ id: productId });
         toggleModal();
-        await push("/");
+        push("/");
     };
 
     // preset value
@@ -87,7 +87,7 @@ const UpdateItem: NextPage = () => {
                 </Modal>
             )}
 
-            <UploadForm
+            <UploadItemForm
                 loading={loading}
                 mutatorFn={mutation}
                 preset={preset?.product}

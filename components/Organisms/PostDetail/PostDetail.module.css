@@ -1,0 +1,35 @@
+.root {
+    @apply flex flex-col gap-y-4 w-full;
+}
+
+.profile {
+    @apply rounded-lg duration-300 transition;
+}
+
+.profile:focus {
+    @apply outline-none ring-[1.5px] ring-offset-2 ring-primary-dark;
+}
+
+.title {
+    @apply font-medium text-xl;
+}
+
+.title > span {
+    @apply font-semibold text-primary-medium;
+}
+
+.description {
+    @apply font-medium text-base mx-6;
+}
+
+.detail {
+    @apply flex justify-between text-achroma-dark mx-6;
+}
+
+.detail > span {
+    @apply inline-block;
+}
+
+.reaction {
+    @apply -mx-4 px-2 border-y-[1.5px] border-y-achroma-light;
+}

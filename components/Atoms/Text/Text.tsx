@@ -18,8 +18,13 @@ interface Props {
     onClick?: () => any | void;
 }
 
-type Variant = "pageHeading" | "contentsHeading" | "body" | "span";
-type htmlType = "h1" | "h3" | "div" | "span" | string;
+type Variant =
+    | "pageHeading"
+    | "contentsHeading"
+    | "body"
+    | "span"
+    | "paragraph";
+type htmlType = "h1" | "h3" | "div" | "span" | "p" | string;
 
 const Text: FC<Props> = ({
     variant = "body",
@@ -35,6 +40,7 @@ const Text: FC<Props> = ({
         contentsHeading: "h3",
         body: "div",
         span: "span",
+        paragraph: "p",
     };
 
     const Component:

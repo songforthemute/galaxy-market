@@ -12,7 +12,7 @@ import Layout from "@components/layout";
 import { FloatingButton } from "@components/Molecules";
 import { Add, Anchor, Badge } from "@components/Atoms";
 
-const Posting = dynamic(() => import("@components/Organisms/Posting"));
+const Posting = dynamic(() => import("@components/Organisms/PostCard"));
 
 // interfaes
 interface PostWithReaction extends Post {

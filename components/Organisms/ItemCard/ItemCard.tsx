@@ -1,7 +1,7 @@
 // types
 import type { Product } from "@prisma/client";
 // styles
-import s from "./Item.module.css";
+import s from "./ItemCard.module.css";
 // components
 import { Heart, Img, Quantity, Text } from "@components/Atoms";
 import { convertPrice } from "@libs/client/util";

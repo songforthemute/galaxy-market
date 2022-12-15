@@ -6,7 +6,7 @@ import type { Product } from "@prisma/client";
 import type { NextPage } from "next";
 // components
 import Layout from "@components/layout";
-import { UploadForm } from "@components/Templetes";
+import { UploadItemForm } from "@components/Templetes";
 
 interface UploadReturn {
     status: boolean;
@@ -28,7 +28,7 @@ const UploadItem: NextPage = () => {
 
     return (
         <Layout title="상품 등록" hasTabBar canGoBack>
-            <UploadForm loading={loading} mutatorFn={mutation} />
+            <UploadItemForm loading={loading} mutatorFn={mutation} />
         </Layout>
     );
 };
