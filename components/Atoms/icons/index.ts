@@ -15,3 +15,4 @@ export { default as Picture } from "./picture";
 export { default as PencilSquare } from "./pencilSquare";
 export { default as Bin } from "./bin";
 export { default as Bulb } from "./bulb";
+export { default as PaperAirPlane } from "./paperAirPlane";

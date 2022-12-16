@@ -103,7 +103,10 @@ const PostDetail: NextPage = () => {
     const [deleteReplyId, setDeleteReplyId] = useState<number | undefined>();
 
     // delete reply
-    const [deleteReply, { data: deleteReplyReturn }] = useMutation<{
+    const [
+        deleteReply,
+        { data: deleteReplyReturn, loading: deleteReplyLoading },
+    ] = useMutation<{
         status: boolean;
     }>({
         url: `/api/posts/${query.id}/replies`,
@@ -130,6 +133,7 @@ const PostDetail: NextPage = () => {
         <Layout title={"커뮤니티"} canGoBack>
             {modal && (
                 <DeleteModal
+                    loading={deleteReplyLoading}
                     onClickConfirm={() => {
                         deleteReply({ replyId: deleteReplyId });
                         toggleModal();

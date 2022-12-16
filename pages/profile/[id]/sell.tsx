@@ -10,7 +10,7 @@ import useGetKey from "@libs/client/useGetKey";
 import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
 // components
 import Layout from "@components/layout";
-const Item = dynamic(() => import("@components/Organisms/Item"));
+const Item = dynamic(() => import("@components/Organisms/ItemCard"));
 
 interface ProductsWithLike extends Product {
     _count: {

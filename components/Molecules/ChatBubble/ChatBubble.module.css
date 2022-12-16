@@ -1,0 +1,23 @@
+.root {
+    @apply flex gap-2.5 pb-2 items-center;
+}
+
+.reverse {
+    @apply flex-row-reverse;
+}
+
+.avatar {
+    @apply w-10 aspect-square rounded-full;
+}
+
+.empty {
+    @apply w-10 aspect-square rounded-full bg-achroma-medium;
+}
+
+.date {
+    @apply inline-block text-achroma-dark text-xs;
+}
+
+.message {
+    @apply px-4 py-2 border-[1.5px] rounded-full border-achroma-medium text-sm;
+}

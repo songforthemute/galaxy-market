@@ -3,9 +3,10 @@ import { useToggleModal } from "@libs/hooks/useToggle";
 
 interface Props {
     onClickConfirm?: () => void;
+    loading?: boolean;
 }
 
-const DeleteModal = ({ onClickConfirm }: Props) => {
+const DeleteModal = ({ onClickConfirm, loading = false }: Props) => {
     const { toggleModal } = useToggleModal();
 
     return (
@@ -19,6 +20,7 @@ const DeleteModal = ({ onClickConfirm }: Props) => {
                 <Button
                     className="rounded-lg w-full mx-auto"
                     onClick={onClickConfirm}
+                    loading={loading}
                 >
                     삭제할래요
                 </Button>

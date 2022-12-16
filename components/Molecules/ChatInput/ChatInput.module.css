@@ -1,0 +1,15 @@
+.root {
+    @apply fixed w-full mx-auto bottom-4 inset-x-0 max-w-md;
+}
+
+.container {
+    @apply flex mx-2.5 items-center relative;
+}
+
+.container input {
+    @apply py-3 rounded-xl w-full pr-14 bg-opacity-high hover:bg-opacity-high;
+}
+
+.button {
+    @apply absolute right-1 rounded-lg aspect-square;
+}

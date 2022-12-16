@@ -48,10 +48,9 @@ const UpdatePost: NextPage = () => {
     const postId = asPath.split("/")[2];
 
     const { modal, toggleModal } = useToggleModal();
-    const _onClickDelete = () => {
+    const _onClickDelete = async () => {
         deleteMutation({ id: postId });
-        toggleModal();
-        push("/community");
+        await push("/community");
     };
 
     // preset value
@@ -66,10 +65,11 @@ const UpdatePost: NextPage = () => {
     });
 
     // for delete
-    const [deleteMutation] = useMutation<UploadReturn>({
-        url: `/api/posts/${postId}`,
-        method: "DELETE",
-    });
+    const [deleteMutation, { loading: deleteLoading }] =
+        useMutation<UploadReturn>({
+            url: `/api/posts/${postId}`,
+            method: "DELETE",
+        });
 
     // success fetch
     useEffect(() => {
@@ -80,7 +80,12 @@ const UpdatePost: NextPage = () => {
 
     return (
         <Layout title="게시글 업데이트" canGoBack>
-            {modal && <DeleteModal onClickConfirm={_onClickDelete} />}
+            {modal && (
+                <DeleteModal
+                    loading={deleteLoading}
+                    onClickConfirm={_onClickDelete}
+                />
+            )}
 
             <UploadPostForm
                 loading={loading}
