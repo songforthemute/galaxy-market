@@ -1,6 +1,5 @@
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useSWRInfinite from "swr/infinite";
-import dynamic from "next/dynamic";
 // types
 import type { NextPage } from "next";
 import type { Message } from "@prisma/client";
@@ -8,15 +7,10 @@ import type { Message } from "@prisma/client";
 import useGetKey from "@libs/client/useGetKey";
 import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
 // utils
-import { dateConverter } from "@libs/client/util";
+import { convertDate } from "@libs/client/util";
 import Layout from "@components/layout";
-import SkeletonUserCard from "@components/skeleton/userCard";
-
-// dynamic imports
-const UserCard = dynamic(() => import("@components/userCard"), {
-    ssr: false,
-    suspense: true,
-});
+import { ProfileCard } from "@components/Molecules";
+import { Anchor } from "@components/Atoms";
 
 // interfaces
 interface MessageWithUser extends Message {
@@ -60,22 +54,25 @@ const Chats: NextPage = () => {
 
     return (
         <Layout title="메시지" hasTabBar canGoBack hasConfig>
-            <div className="divide-y-[1px] divide-slate-100">
-                {messages.map((message) => (
-                    <Suspense fallback={<SkeletonUserCard />} key={message.id}>
-                        <UserCard
-                            key={message.id}
-                            text={`마지막으로 받은 메시지: ${dateConverter(
-                                message.created
-                            )}`}
-                            avatarUrl={message.messagedBy.avatarUrl}
-                            username={message.messagedBy.username}
-                            type="message"
-                            href={`/chats/${message.messagedBy.id}`}
-                        />
-                    </Suspense>
+            <section className="flex flex-col divide-y-[1px] divide-achroma-light w-full mx-auto">
+                {messages.map((v) => (
+                    <button
+                        key={v.id}
+                        className="p-4 transition duration-300 w-full hover:opacity-high hover:bg-achroma-light hover:shadow-inner
+                            focus:outline-none focus:opacity-high focus:bg-achroma-light focus:shadow-inner"
+                    >
+                        <Anchor href={`/chats/${v.messagedBy.id}`}>
+                            <ProfileCard
+                                avatar={v.messagedBy.avatarUrl}
+                                username={v.messagedBy.username}
+                                subtext={`마지막으로 받은 메시지: ${convertDate(
+                                    v.created
+                                )}`}
+                            />
+                        </Anchor>
+                    </button>
                 ))}
-            </div>
+            </section>
         </Layout>
     );
 };
