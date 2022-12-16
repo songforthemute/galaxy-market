@@ -99,8 +99,11 @@ const Community: NextPage = () => {
             </section>
 
             <FloatingButton>
-                <Anchor href={"/community/upload"}>
-                    <Add />
+                <Anchor
+                    className="flex aspect-square w-full rounded-full items-center justify-center"
+                    href={"/community/upload"}
+                >
+                    <Add className="mx-auto" />
                 </Anchor>
             </FloatingButton>
         </Layout>

@@ -69,7 +69,10 @@ const UploadPostForm = ({ mutatorFn, loading, preset = undefined }: Props) => {
     return (
         <section className={s.root}>
             <FormProvider {...formProviderValues}>
-                <form onSubmit={handleSubmit(_onSubmit)}>
+                <form
+                    className="md:min-w-[50vw] justify-center"
+                    onSubmit={handleSubmit(_onSubmit)}
+                >
                     <TextInput
                         id="title"
                         label="제목"

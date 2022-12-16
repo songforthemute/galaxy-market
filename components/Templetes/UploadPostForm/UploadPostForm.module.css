@@ -1,5 +1,5 @@
 .root {
-    @apply p-4 flex flex-col mx-auto w-full md:max-w-7xl;
+    @apply flex flex-col px-4 my-6 md:my-10 items-center;
 }
 
 .tagContainer {

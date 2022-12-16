@@ -83,7 +83,7 @@ const UpdateItem: NextPage = () => {
                 className="hover:text-rose-400"
                 onClick={() => toggleModal()}
             >
-                <Bin />
+                <Bin className="mx-auto" />
             </FloatingButton>
         </Layout>
     );

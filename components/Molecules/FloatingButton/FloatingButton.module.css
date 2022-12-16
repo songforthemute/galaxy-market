@@ -1,9 +1,9 @@
 .root {
-    @apply bottom-28 right-5 fixed rounded-full shadow-md aspect-square p-4
+    @apply bottom-28 right-5 fixed rounded-full shadow-md aspect-square w-14 items-center
     bg-primary-medium text-achroma-lightest transition duration-300 border-transparent;
 }
 
 .root:hover,
 .root:focus {
-    @apply bg-primary-dark shadow-xl;
+    @apply outline-none bg-primary-dark shadow-xl;
 }

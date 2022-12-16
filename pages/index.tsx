@@ -70,8 +70,11 @@ const Home: NextPage = () => {
             </section>
 
             <FloatingButton>
-                <Anchor href="/products/upload">
-                    <Add />
+                <Anchor
+                    className="flex aspect-square w-full rounded-full items-center justify-center"
+                    href="/products/upload"
+                >
+                    <Add className="mx-auto" />
                 </Anchor>
             </FloatingButton>
         </Layout>

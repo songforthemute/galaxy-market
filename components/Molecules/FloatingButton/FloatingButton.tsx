@@ -1,4 +1,3 @@
-import { Anchor } from "@components/Atoms";
 // types
 import type { FC, ReactNode } from "react";
 // utils
@@ -14,8 +13,8 @@ interface Props {
 
 const FloatingButton: FC<Props> = ({ children, className = "", onClick }) => {
     return (
-        <button onClick={onClick}>
-            <div className={cls(className, s.root)}>{children}</div>
+        <button className={cls(className, s.root)} onClick={onClick}>
+            {children}
         </button>
     );
 };
