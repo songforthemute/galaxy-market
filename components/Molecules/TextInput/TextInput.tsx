@@ -1,4 +1,3 @@
-import dynamic from "next/dynamic";
 // types
 import type { InputProps } from "@components/Atoms/Input/Input";
 import type { UseFormRegisterReturn } from "react-hook-form";

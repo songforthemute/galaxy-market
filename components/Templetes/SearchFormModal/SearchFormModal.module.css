@@ -1,0 +1,15 @@
+.root {
+    @apply flex flex-col mx-auto p-10;
+}
+
+.sortContainer {
+    @apply relative flex flex-col py-4;
+}
+
+.select {
+    @apply relative py-2 rounded-lg border-achroma-dark bg-achroma-lightest;
+}
+
+.button {
+    @apply mt-8 w-full rounded-lg;
+}

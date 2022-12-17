@@ -1,6 +1,6 @@
 .item {
     @apply flex items-center space-x-2 bg-achroma-lightest transition hover:bg-primary-medium
-    hover:text-achroma-lightest rounded-sm py-1.5 my-1 px-2.5 text-achroma-darkest duration-300;
+    hover:text-achroma-lightest rounded-lg py-1.5 my-1 px-2.5 text-achroma-darkest duration-300;
 }
 
 .item[data-highlighted] {
@@ -19,7 +19,7 @@
 }
 
 .content {
-    @apply overflow-hidden bg-achroma-lightest border-[1.5px];
+    @apply z-[42] overflow-hidden bg-achroma-lightest border-[1.5px] rounded-lg;
 }
 
 .viewport {

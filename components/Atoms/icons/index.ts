@@ -16,3 +16,5 @@ export { default as PencilSquare } from "./pencilSquare";
 export { default as Bin } from "./bin";
 export { default as Bulb } from "./bulb";
 export { default as PaperAirPlane } from "./paperAirPlane";
+export { default as MagnifyingGlass } from "./magnifyingGlass";
+export { default as HorizontalDots } from "./horizontalDots";
