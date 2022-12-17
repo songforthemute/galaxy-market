@@ -69,14 +69,14 @@ const Home: NextPage = () => {
                 ))}
             </section>
 
-            <FloatingButton>
-                <Anchor
-                    className="flex aspect-square w-full rounded-full items-center justify-center"
-                    href="/products/upload"
-                >
+            <Anchor
+                className="flex aspect-square w-full rounded-full items-center justify-center"
+                href="/products/upload"
+            >
+                <FloatingButton>
                     <Add className="mx-auto" />
-                </Anchor>
-            </FloatingButton>
+                </FloatingButton>
+            </Anchor>
         </Layout>
     );
 };

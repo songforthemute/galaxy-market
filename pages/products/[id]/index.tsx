@@ -98,14 +98,14 @@ const ItemDetailPage: NextPage = () => {
 
             {/* 템플릿 외의 페이지 단에서 수정 및 삭제 플로팅버튼 */}
             {data?.product.userId === user?.id && (
-                <FloatingButton>
-                    <Anchor
-                        className="flex aspect-square w-full rounded-full items-center justify-center"
-                        href={`${asPath}/update`}
-                    >
+                <Anchor
+                    className="flex aspect-square w-full rounded-full items-center justify-center"
+                    href={`${asPath}/update`}
+                >
+                    <FloatingButton>
                         <PencilSquare className="mx-auto" />
-                    </Anchor>
-                </FloatingButton>
+                    </FloatingButton>
+                </Anchor>
             )}
         </Layout>
     );

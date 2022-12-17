@@ -67,6 +67,7 @@ const SearchFormModal = ({ onClose, onSearch }: Props) => {
                     id="name"
                     label="상품명"
                     required
+                    placeholder="검색할 상품명을 입력해주세요."
                     register={register("name", {
                         required: "검색할 상품의 이름을 입력해주세요.",
                         minLength: {

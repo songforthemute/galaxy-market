@@ -1,0 +1,39 @@
+.root {
+    @apply flex flex-col;
+}
+
+.button {
+    @apply transition p-2 rounded-lg duration-300 hover:opacity-high hover:bg-achroma-light hover:shadow-inner;
+}
+
+.button:focus {
+    @apply ring-[1.5px] ring-offset-2 ring-primary-dark opacity-high outline-none;
+}
+
+.review {
+    @apply p-2;
+}
+
+.product {
+    @apply flex gap-x-4 items-center text-start;
+}
+
+.textbox {
+    @apply flex flex-col gap-y-1;
+}
+
+.image {
+    @apply rounded-lg aspect-square w-14;
+}
+
+.empty {
+    @apply rounded-lg aspect-square w-14 bg-achroma-medium;
+}
+
+.title {
+    @apply font-semibold text-base;
+}
+
+.date {
+    @apply inline-block;
+}

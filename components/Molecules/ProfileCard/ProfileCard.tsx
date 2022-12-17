@@ -4,7 +4,7 @@ import s from "./ProfileCard.module.css";
 interface Props {
     avatar?: string | null;
     username?: string;
-    subtext?: string;
+    subtext?: string | any;
 }
 
 const ProfileCard = ({ avatar, username, subtext }: Props) => {

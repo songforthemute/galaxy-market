@@ -152,14 +152,14 @@ const PostDetail: NextPage = () => {
             />
 
             {user?.id === data?.post.userId && (
-                <FloatingButton>
-                    <Anchor
-                        className="flex aspect-square w-full rounded-full items-center justify-center"
-                        href={`${asPath}/update`}
-                    >
+                <Anchor
+                    className="flex aspect-square w-full rounded-full items-center justify-center"
+                    href={`${asPath}/update`}
+                >
+                    <FloatingButton>
                         <PencilSquare className="mx-auto" />
-                    </Anchor>
-                </FloatingButton>
+                    </FloatingButton>
+                </Anchor>
             )}
         </Layout>
     );
