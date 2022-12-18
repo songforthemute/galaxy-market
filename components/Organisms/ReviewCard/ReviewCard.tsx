@@ -1,44 +1,41 @@
+// types
+import type { Review } from "@prisma/client";
 // utils
 import { convertDate } from "@libs/client/util";
 // styles
 import s from "./ReviewCard.module.css";
 // components
-import { Anchor, Img, Star, Text } from "@components/Atoms";
+import { Anchor, Star, Text } from "@components/Atoms";
 import { ProfileCard } from "@components/Molecules";
 
-interface Props {
-    avatar?: string | null;
-    score?: number;
-    username?: string;
-    userId?: number;
-    productImage?: string | null;
-    productName?: string;
-    productId?: string;
-    review?: string;
-    date?: Date;
+interface ReviewWithUser extends Review {
+    createdBy: {
+        id: number;
+        username: string;
+        avatarUrl?: string;
+    };
+    product: {
+        name: string;
+        option: string;
+        image: string;
+    };
 }
 
-const ReviewCard = ({
-    avatar = null,
-    score = 0,
-    username,
-    productId,
-    productImage,
-    productName,
-    userId,
-    review,
-    date,
-}: Props) => {
+interface Props {
+    data?: ReviewWithUser;
+}
+
+const ReviewCard = ({ data }: Props) => {
     return (
         <article className={s.root}>
-            <Anchor href={`/profile/${userId}`}>
+            <Anchor className={s.anchor} href={`/profile/${data?.createdById}`}>
                 <button className={s.button}>
                     <ProfileCard
-                        avatar={avatar}
-                        username={username}
+                        avatar={data?.createdBy.avatarUrl}
+                        username={data?.createdBy.username}
                         subtext={[0, 0, 0, 0, 0].map((_, i) => (
                             <Star
-                                fill={score > i}
+                                fill={(data?.star || 0) > i}
                                 w={4}
                                 h={4}
                                 className="text-primary-medium inline-flex"
@@ -50,31 +47,17 @@ const ReviewCard = ({
             </Anchor>
 
             <Text className={s.review} variant="paragraph">
-                {review}
+                {data?.text}
             </Text>
 
-            <Anchor href={`/products/${productId}`}>
+            <Anchor className={s.anchor} href={`/products/${data?.productId}`}>
                 <button className={s.button}>
-                    <div className={s.product}>
-                        {productImage ? (
-                            <Img
-                                src={productImage}
-                                className={s.image}
-                                priority
-                            />
-                        ) : (
-                            <div className={s.empty} />
-                        )}
-
-                        <div className={s.textbox}>
-                            <Text className={s.title} variant="contentsHeading">
-                                {productName}
-                            </Text>
-                            <Text className={s.date} variant="span">
-                                {convertDate(date!)}
-                            </Text>
-                        </div>
-                    </div>
+                    <ProfileCard
+                        avatar={data?.product.image}
+                        username={data?.product.name}
+                        isSquare
+                        subtext={convertDate(data?.created!)}
+                    />
                 </button>
             </Anchor>
         </article>

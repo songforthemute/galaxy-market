@@ -1,19 +1,38 @@
-import { ChevronRight, Img, Text } from "@components/Atoms";
 import s from "./ProfileCard.module.css";
+import { ChevronRight, Img, Text } from "@components/Atoms";
+import { cls, booleanCls } from "@libs/client/util";
 
 interface Props {
     avatar?: string | null;
     username?: string;
     subtext?: string | any;
+    isSquare?: boolean;
 }
 
-const ProfileCard = ({ avatar, username, subtext }: Props) => {
+const ProfileCard = ({
+    avatar,
+    username,
+    subtext,
+    isSquare = false,
+}: Props) => {
     return (
-        <article className={s.root}>
+        <div className={s.root}>
             {avatar ? (
-                <Img src={avatar} className={s.avatar} priority />
+                <Img
+                    src={avatar}
+                    className={cls(
+                        s.avatar,
+                        booleanCls(isSquare, s.square, s.circle)
+                    )}
+                    priority
+                />
             ) : (
-                <div className={s.empty} />
+                <div
+                    className={cls(
+                        s.empty,
+                        booleanCls(isSquare, s.square, s.circle)
+                    )}
+                />
             )}
 
             <div className={s.profile}>
@@ -26,7 +45,7 @@ const ProfileCard = ({ avatar, username, subtext }: Props) => {
             </div>
 
             <ChevronRight className={s.chevron} w={4} h={4} strokeWidth={2} />
-        </article>
+        </div>
     );
 };
 

@@ -1,9 +1,13 @@
 .root {
-    @apply flex flex-col;
+    @apply flex flex-col items-start p-2;
+}
+
+.anchor {
+    @apply inline-flex mr-auto;
 }
 
 .button {
-    @apply transition p-2 rounded-lg duration-300 hover:opacity-high hover:bg-achroma-light hover:shadow-inner;
+    @apply transition p-2 pr-12 rounded-lg duration-300;
 }
 
 .button:focus {

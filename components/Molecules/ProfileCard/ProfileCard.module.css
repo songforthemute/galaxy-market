@@ -3,7 +3,7 @@
 }
 
 .root:hover {
-    @apply opacity-medium text-primary-dark;
+    @apply text-primary-dark;
 }
 
 .profile {
@@ -11,11 +11,19 @@
 }
 
 .avatar {
-    @apply aspect-square rounded-full w-14;
+    @apply aspect-square w-14;
 }
 
 .empty {
-    @apply aspect-square rounded-full bg-achroma-medium w-14;
+    @apply aspect-square bg-achroma-medium w-14;
+}
+
+.square {
+    @apply rounded-lg;
+}
+
+.circle {
+    @apply rounded-full;
 }
 
 .username {
@@ -27,5 +35,24 @@
 }
 
 .chevron {
-    @apply text-achroma-medium;
+    @apply text-achroma-medium transition duration-300 ease-in-out;
+}
+
+.root:hover .chevron {
+    @apply text-primary-dark;
+    animation-name: straight;
+    animation-duration: 1.2s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes straight {
+    0% {
+        transform: translateX(0px);
+    }
+    60% {
+        transform: translateX(40px);
+    }
+    100% {
+        transform: translateX(0px);
+    }
 }

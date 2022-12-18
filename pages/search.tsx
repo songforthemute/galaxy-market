@@ -83,17 +83,7 @@ const Search: NextPage = () => {
 
             <section className="flex flex-col divide-y-[1px]">
                 {results.map((item) => (
-                    <Anchor
-                        href={`/products/${item.id}`}
-                        key={`item-${item?.id}`}
-                    >
-                        <button
-                            className="transition duration-300 w-full hover:opacity-high hover:bg-achroma-light hover:shadow-inner
-                            focus:outline-none focus:opacity-high focus:bg-achroma-light focus:shadow-inner"
-                        >
-                            <ItemCard product={item} />
-                        </button>
-                    </Anchor>
+                    <ItemCard product={item} key={`item-${item?.id}`} />
                 ))}
             </section>
 

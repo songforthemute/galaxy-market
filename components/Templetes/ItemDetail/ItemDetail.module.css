@@ -11,7 +11,7 @@
 }
 
 .profile {
-    @apply w-full border-y-[1.5px] py-4;
+    @apply w-full rounded-lg m-0.5 p-4 transition duration-300;
 }
 
 .main {
@@ -30,12 +30,12 @@
     @apply text-lg;
 }
 
-.interactive {
+.buttonContainer {
     @apply w-full flex gap-4 py-4 justify-evenly;
 }
 
-.interactive button:first-child {
-    @apply w-full rounded-lg;
+.buttonContainer > button {
+    @apply rounded-lg;
 }
 
 .like {
@@ -55,7 +55,7 @@
 }
 
 .profile:focus,
-.interactive > button:last-child:focus,
+.buttonContainer > button:last-child:focus,
 .related button:focus {
     @apply transition duration-300 outline-none ring-[1.5px] ring-offset-2 ring-primary-dark;
 }

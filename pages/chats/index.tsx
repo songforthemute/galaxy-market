@@ -56,12 +56,11 @@ const Chats: NextPage = () => {
         <Layout title="메시지" hasTabBar canGoBack hasConfig>
             <section className="flex flex-col divide-y-[1px] divide-achroma-light w-full mx-auto">
                 {messages.map((v) => (
-                    <button
-                        key={v.id}
-                        className="p-4 transition duration-300 w-full hover:opacity-high hover:bg-achroma-light hover:shadow-inner
+                    <Anchor key={v.id} href={`/chats/${v.messagedBy.id}`}>
+                        <button
+                            className="p-4 transition duration-300 w-full hover:opacity-high hover:bg-achroma-light hover:shadow-inner
                             focus:outline-none focus:opacity-high focus:bg-achroma-light focus:shadow-inner"
-                    >
-                        <Anchor href={`/chats/${v.messagedBy.id}`}>
+                        >
                             <ProfileCard
                                 avatar={v.messagedBy.avatarUrl}
                                 username={v.messagedBy.username}
@@ -69,8 +68,8 @@ const Chats: NextPage = () => {
                                     v.created
                                 )}`}
                             />
-                        </Anchor>
-                    </button>
+                        </button>
+                    </Anchor>
                 ))}
             </section>
         </Layout>

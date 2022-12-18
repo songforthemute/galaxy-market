@@ -72,7 +72,7 @@ const Community: NextPage = () => {
                     <button
                         key={i}
                         onClick={_onClickCategory}
-                        className="rounded-lg transtion duration-300 focus:outline-none focus:ring-[1.5px] focus:ring-primary-dark"
+                        className="rounded-lg transtion duration-300 focus:outline-none focus:ring-[1.5px] focus:ring-offset-2 focus:ring-primary-dark"
                     >
                         <Badge
                             className="transtion duration-300"
@@ -84,22 +84,14 @@ const Community: NextPage = () => {
                 ))}
             </div>
 
-            <section className="flex flex-col -mb-8">
+            <section className="flex flex-col">
                 {postings.map((post) => (
-                    <button
-                        key={post.id}
-                        className="transition duration-300 w-full hover:opacity-high hover:bg-achroma-light hover:shadow-inner
-                            focus:outline-none focus:opacity-high focus:bg-achroma-light focus:shadow-inner text-start"
-                    >
-                        <Anchor href={`/community/${post.id}`}>
-                            <PostCard {...post} />
-                        </Anchor>
-                    </button>
+                    <PostCard key={`post_${post.id}`} data={post} />
                 ))}
             </section>
 
             <Anchor
-                className="flex aspect-square w-full rounded-full items-center justify-center"
+                className="aspect-square rounded-full"
                 href={"/community/upload"}
             >
                 <FloatingButton>

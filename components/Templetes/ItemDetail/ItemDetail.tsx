@@ -46,7 +46,10 @@ const ItemDetail = ({
                 <div className={s.empty} />
             )}
 
-            <Anchor href={`/profile/${item?.userId}`}>
+            <Anchor
+                className="border-y-[1.5px]"
+                href={`/profile/${item?.userId}`}
+            >
                 <button className={s.profile}>
                     <ProfileCard
                         avatar={item?.user.avatarUrl}
@@ -63,8 +66,8 @@ const ItemDetail = ({
                 <Text className={s.description}>{item?.description}</Text>
             </article>
 
-            <div className={s.interactive}>
-                <Button onClick={onClickButton}>
+            <div className={s.buttonContainer}>
+                <Button className="w-full" onClick={onClickButton}>
                     {isOwner
                         ? item?.isSoldOut
                             ? `판매 재개하기`
@@ -90,7 +93,7 @@ const ItemDetail = ({
             <article className={s.related}>
                 {related?.map((v) => (
                     <Anchor href={`/products/${v.id}`} key={`related_${v.id}`}>
-                        <button>
+                        <button className="rounded-lg">
                             <ItemThumbnail
                                 image={v.image}
                                 subTitle={`₩ ${convertPrice(v.price)}`}

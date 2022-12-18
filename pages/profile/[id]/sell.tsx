@@ -11,7 +11,7 @@ import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
 // components
 import Layout from "@components/layout";
 import { Anchor } from "@components/Atoms";
-const Item = dynamic(() => import("@components/Organisms/ItemCard"));
+const ItemCard = dynamic(() => import("@components/Organisms/ItemCard"));
 
 interface ProductsWithLike extends Product {
     _count: {
@@ -63,17 +63,10 @@ const Likes: NextPage = () => {
         <Layout title="판매내역" hasTabBar canGoBack hasConfig>
             <section className="flex flex-col divide-y-[1px]">
                 {items.map((item) => (
-                    <Anchor
-                        href={`/products/${item.product.id}`}
+                    <ItemCard
                         key={`item-${item?.product.id}`}
-                    >
-                        <button
-                            className="transition duration-300 w-full hover:opacity-high hover:bg-achroma-light hover:shadow-inner
-                            focus:outline-none focus:opacity-high focus:bg-achroma-light focus:shadow-inner"
-                        >
-                            <Item product={item.product} />
-                        </button>
-                    </Anchor>
+                        product={item.product}
+                    />
                 ))}
             </section>
         </Layout>

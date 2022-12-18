@@ -11,7 +11,7 @@ import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
 import Layout from "@components/layout";
 import { FloatingButton } from "@components/Molecules";
 import { Add, Anchor } from "@components/Atoms";
-const Item = dynamic(() => import("@components/Organisms/ItemCard"));
+const ItemCard = dynamic(() => import("@components/Organisms/ItemCard"));
 
 interface ProductsWithLike extends Product {
     _count: {
@@ -53,24 +53,14 @@ const Home: NextPage = () => {
 
     return (
         <Layout title="홈" hasTabBar canGoBack hasConfig>
-            <section className="flex flex-col divide-y-[1px] -mb-8">
+            <section className="flex flex-col divide-y-[1px]">
                 {items.map((item) => (
-                    <Anchor
-                        href={`/products/${item.id}`}
-                        key={`item-${item?.id}`}
-                    >
-                        <button
-                            className="transition duration-300 w-full hover:opacity-high hover:bg-achroma-light hover:shadow-inner
-                            focus:outline-none focus:opacity-high focus:bg-achroma-light focus:shadow-inner"
-                        >
-                            <Item product={item} />
-                        </button>
-                    </Anchor>
+                    <ItemCard product={item} key={`item-${item?.id}`} />
                 ))}
             </section>
 
             <Anchor
-                className="flex aspect-square w-full rounded-full items-center justify-center"
+                className="aspect-square rounded-full"
                 href="/products/upload"
             >
                 <FloatingButton>

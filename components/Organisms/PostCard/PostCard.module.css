@@ -1,13 +1,18 @@
-.root {
-    @apply flex flex-col justify-start gap-4 mt-4;
+.button {
+    @apply w-full flex flex-col gap-4 pt-4 transition duration-300 items-start;
+}
+
+.button:hover,
+.button:focus {
+    @apply opacity-high bg-achroma-light shadow-inner outline-none;
 }
 
 .badge {
-    @apply mx-4 rounded-full -my-1;
+    @apply inline-block mx-4 -my-1 rounded-lg;
 }
 
 .title {
-    @apply font-medium mx-4;
+    @apply font-medium text-lg mx-4;
 }
 
 .title > span {
@@ -15,7 +20,7 @@
 }
 
 .detail {
-    @apply flex justify-between text-achroma-dark mx-4;
+    @apply w-full flex justify-between text-achroma-dark px-4;
 }
 
 .detail > span {
@@ -23,5 +28,5 @@
 }
 
 .reaction {
-    @apply px-4 border-y-[1.5px] border-y-achroma-light;
+    @apply w-full px-4 border-y-[1.5px] border-y-achroma-light;
 }
