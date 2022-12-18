@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import useSWR from "swr";
 import useSWRInfinite from "swr/infinite";
@@ -12,22 +12,23 @@ import useGetKey from "@libs/client/useGetKey";
 import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
 // components
 import Layout from "@components/layout";
-import ProfileBtn from "@components/profileBtn";
-import SkeletonReviews from "@components/skeleton/reivew";
-import SkeletonUserCard from "@components/skeleton/userCard";
+import { CircleButton, ProfileCard } from "@components/Molecules";
+import { booleanCls } from "@libs/client/util";
+import {
+    Anchor,
+    Heart,
+    ShoppingBag,
+    ShoppingCart,
+    Text,
+} from "@components/Atoms";
 
-// dynamic imports
-const UserCard = dynamic(() => import("@components/userCard"), {
-    ssr: false,
-    suspense: true,
-});
-const Reviews = dynamic(() => import("@components/review"), {
-    ssr: false,
-    suspense: true,
-});
-const HelperBtn = dynamic(() => import("@components/helperBtn"), {
-    ssr: true,
-});
+const ReviewCard = dynamic(() => import("@components/Organisms/ReviewCard"));
+const PencilSquare = dynamic(
+    () => import("@components/Atoms/icons/pencilSquare")
+);
+const FloatingButton = dynamic(
+    () => import("@components/Molecules/FloatingButton")
+);
 
 // interfaces
 interface ReviewWithUser extends Review {
@@ -55,19 +56,17 @@ interface ProfileReturn {
 
 // Page
 const Profile: NextPage = () => {
-    const {
-        query: { id },
-    } = useRouter();
+    const { query, asPath } = useRouter();
     const { user } = useUser();
 
     // fetch data: user profile
     const { data: profileData } = useSWR<ProfileReturn>(
-        `/api/users/profile?id=${id}`
+        query ? `/api/users/profile?id=${query.id}` : null
     );
 
     // fetch data: user's reviews
     const getKey = useGetKey<ReviewsReturn>({
-        url: `/api/reviews?id=${id}`,
+        url: query ? `/api/reviews?id=${query.id}` : null,
         hasQuery: true,
     });
     const { data: reviewData, setSize } = useSWRInfinite<ReviewsReturn>(getKey);
@@ -90,114 +89,79 @@ const Profile: NextPage = () => {
 
     return (
         <Layout title="프로필" hasTabBar canGoBack hasConfig>
-            <Suspense fallback={<SkeletonUserCard isLarge />}>
-                <UserCard
-                    username={profileData?.profile?.username as string}
-                    avatarUrl={profileData?.profile?.avatarUrl}
-                    text={
-                        user?.id === Number(id)
-                            ? "프로필 수정 →"
-                            : "메시지 보내기 →"
-                    }
-                    type="profile"
-                    href={
-                        user?.id === Number(id)
-                            ? "/profile/edit"
-                            : `/chats/${id}`
-                    }
-                    isLarge
-                />
-            </Suspense>
-
-            <div className="mt-10 flex justify-around">
-                <ProfileBtn href={`/profile/${id}/sell`} text="판매내역">
-                    <svg
-                        className="w-6 h-6"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
+            <div className="p-4 space-y-10">
+                {/* 프로파일 */}
+                <Anchor
+                    href={booleanCls(
+                        user?.id === profileData?.profile?.id,
+                        `/profile/edit`,
+                        `/chats/${profileData?.profile?.id}`
+                    )}
+                >
+                    <button
+                        className="p-2 rounded-lg transition duration-300 w-full
+                            focus:outline-none focus:ring-[1.5px] focus:ring-offset-2 focus:ring-primary-dark"
                     >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                        ></path>
-                    </svg>
-                </ProfileBtn>
+                        <ProfileCard
+                            avatar={profileData?.profile?.avatarUrl}
+                            subtext={booleanCls(
+                                user?.id === profileData?.profile?.id,
+                                "프로필 수정하기",
+                                "메시지 보내기"
+                            )}
+                            username={profileData?.profile?.username}
+                        />
+                    </button>
+                </Anchor>
 
-                <ProfileBtn href={`/profile/${id}/buy`} text="구매내역">
-                    <svg
-                        className="w-6 h-6"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                        ></path>
-                    </svg>
-                </ProfileBtn>
+                {/* Sell Buy Like */}
+                <div className="flex justify-around mx-12">
+                    <Anchor className="rounded-full" href={`${asPath}/sell`}>
+                        <CircleButton>
+                            <ShoppingCart />
+                            <Text className="inline-block" variant="span">
+                                판매내역
+                            </Text>
+                        </CircleButton>
+                    </Anchor>
 
-                <ProfileBtn href={`/profile/${id}/like`} text="관심목록">
-                    <svg
-                        className="w-6 h-6"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                        ></path>
-                    </svg>
-                </ProfileBtn>
+                    <Anchor className="rounded-full" href={`${asPath}/buy`}>
+                        <CircleButton>
+                            <ShoppingBag />
+                            <Text className="inline-block" variant="span">
+                                구매내역
+                            </Text>
+                        </CircleButton>
+                    </Anchor>
+
+                    <Anchor className="rounded-full" href={`${asPath}/like`}>
+                        <CircleButton>
+                            <Heart />
+                            <Text className="inline-block" variant="span">
+                                관심목록
+                            </Text>
+                        </CircleButton>
+                    </Anchor>
+                </div>
+
+                {/* Reviews */}
+                <section className="divide-y-[1px]">
+                    {reviews.map((v) => (
+                        <ReviewCard data={v} key={`review_${v.id}`} />
+                    ))}
+                </section>
             </div>
 
-            {/* 리뷰란 */}
-            <div className="mt-6 px-4 divide-y-[1px] divied-slate-400">
-                {reviews.map((review) => (
-                    <Suspense fallback={<SkeletonReviews />} key={review.id}>
-                        <Reviews
-                            key={review.id}
-                            avatarUrl={review.createdBy.avatarUrl}
-                            username={review.createdBy.username}
-                            star={review.star}
-                            text={review.text}
-                            created={review.created}
-                            productName={review.product.name}
-                            productOpt={review.product.option}
-                            productId={review.productId}
-                            productImg={review.product.image}
-                        />
-                    </Suspense>
-                ))}
-            </div>
-
-            {user?.id !== Number(id) && (
-                <HelperBtn href={`/profile/${id}/review`}>
-                    <svg
-                        className="w-6 h-6"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                        <path
-                            fillRule="evenodd"
-                            d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                            clipRule="evenodd"
-                        />
-                    </svg>
-                </HelperBtn>
+            {/* 플로팅버튼 - 리뷰 작성 */}
+            {user?.id !== profileData?.profile?.id && (
+                <Anchor
+                    className="aspect-square rounded-full"
+                    href={`${asPath}/review`}
+                >
+                    <FloatingButton>
+                        <PencilSquare className="mx-auto" />
+                    </FloatingButton>
+                </Anchor>
             )}
         </Layout>
     );

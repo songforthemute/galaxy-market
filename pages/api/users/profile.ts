@@ -13,21 +13,23 @@ const handler = async (
     } = req;
 
     if (user?.id !== Number(id)) {
-        await client.user
-            .findUnique({
-                where: {
-                    id: Number(id),
-                },
-            })
-            .then((response) => res.json({ status: true, profile: response }));
+        const profile = await client.user.findUnique({
+            where: {
+                id: Number(id),
+            },
+        });
+
+        console.log(profile);
+
+        return res.json({ status: true, profile });
     } else {
-        await client.user
-            .findUnique({
-                where: {
-                    id: user?.id,
-                },
-            })
-            .then((response) => res.json({ status: true, profile: response }));
+        const profile = await client.user.findUnique({
+            where: {
+                id: user?.id,
+            },
+        });
+
+        return res.json({ status: true, profile });
     }
 };
 
