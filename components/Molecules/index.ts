@@ -9,3 +9,4 @@ export { default as ItemThumbnail } from "./ItemThumbnail";
 export { default as PostReaction } from "./PostReaction";
 export { default as ChatInput } from "./ChatInput";
 export { default as ChatBubble } from "./ChatBubble";
+export { default as CircleButton } from "./CircleButton";

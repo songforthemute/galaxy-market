@@ -18,3 +18,5 @@ export { default as Bulb } from "./bulb";
 export { default as PaperAirPlane } from "./paperAirPlane";
 export { default as MagnifyingGlass } from "./magnifyingGlass";
 export { default as HorizontalDots } from "./horizontalDots";
+export { default as ShoppingCart } from "./shoppingCart";
+export { default as ShoppingBag } from "./shoppingBag";
