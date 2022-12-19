@@ -18,7 +18,6 @@ import { FloatingButton } from "@components/Molecules";
 import { MagnifyingGlass } from "@components/Atoms";
 
 const ItemCard = dynamic(() => import("@components/Organisms/ItemCard"));
-const Anchor = dynamic(() => import("@components/Atoms/Anchor"));
 
 interface FormInterface {
     name: string;
