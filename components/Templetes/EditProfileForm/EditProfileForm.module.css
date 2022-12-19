@@ -1,0 +1,35 @@
+.root {
+    @apply flex flex-col px-4 my-4 md:my-8 items-center;
+}
+
+.container {
+    @apply flex flex-col items-center gap-y-4 md:gap-y-8;
+}
+
+.container span {
+    @apply inline-block cursor-pointer text-center border-[1.5px] border-primary-medium px-4 py-2 text-base rounded-lg transition duration-300;
+}
+
+.container span:hover {
+    @apply bg-primary-dark border-primary-dark text-achroma-lightest;
+}
+
+.container span:focus {
+    @apply ring-[1.5px] ring-offset-2 ring-primary-dark outline-none;
+}
+
+.preview {
+    @apply rounded-full w-32 aspect-square ring-[1.5px] ring-offset-4 ring-primary-dark;
+}
+
+.preview img {
+    @apply rounded-full cursor-default;
+}
+
+.empty {
+    @apply rounded-full w-32 aspect-square bg-achroma-medium ring-[1.5px] ring-offset-4 ring-primary-dark;
+}
+
+.button {
+    @apply w-full rounded-lg mt-8;
+}

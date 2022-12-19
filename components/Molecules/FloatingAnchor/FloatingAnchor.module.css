@@ -1,0 +1,12 @@
+.root {
+    @apply bottom-28 right-5 fixed flex justify-center rounded-full shadow-md aspect-square w-14 items-center
+    bg-primary-medium text-achroma-lightest transition duration-300 border-transparent;
+}
+
+.root:focus {
+    @apply outline-none bg-primary-dark ring-[1.5px] ring-offset-2 ring-primary-dark shadow-xl;
+}
+
+.root:hover {
+    @apply bg-primary-dark;
+}
