@@ -11,10 +11,9 @@ import useMutation from "@libs/client/useMutation";
 import Layout from "@components/layout";
 import { ItemDetail } from "@components/Templetes";
 
-const FloatingButton = dynamic(
-    () => import("@components/Molecules/FloatingButton")
+const FloatingAnchor = dynamic(
+    () => import("@components/Molecules/FloatingAnchor")
 );
-const Anchor = dynamic(() => import("@components/Atoms/Anchor"));
 const PencilSquare = dynamic(
     () => import("@components/Atoms/icons/pencilSquare")
 );
@@ -98,14 +97,9 @@ const ItemDetailPage: NextPage = () => {
 
             {/* 템플릿 외의 페이지 단에서 수정 및 삭제 플로팅버튼 */}
             {data?.product.userId === user?.id && (
-                <Anchor
-                    className="aspect-square rounded-full"
-                    href={`${asPath}/update`}
-                >
-                    <FloatingButton>
-                        <PencilSquare className="mx-auto" />
-                    </FloatingButton>
-                </Anchor>
+                <FloatingAnchor href={`${asPath}/update`}>
+                    <PencilSquare />
+                </FloatingAnchor>
             )}
         </Layout>
     );

@@ -5,11 +5,12 @@ import useSWRInfinite from "swr/infinite";
 import type { NextPage } from "next";
 import type { Post } from "@prisma/client";
 // custom hooks
+import useFocusEvent from "@libs/client/useFocusEvent";
 import useGetKey from "@libs/client/useGetKey";
 import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
 // components
 import Layout from "@components/layout";
-import { FloatingButton } from "@components/Molecules";
+import { FloatingAnchor } from "@components/Molecules";
 import { Add, Anchor, Badge } from "@components/Atoms";
 
 const PostCard = dynamic(() => import("@components/Organisms/PostCard"));
@@ -34,6 +35,7 @@ interface PostsReturn {
 
 // Page
 const Community: NextPage = () => {
+    const { onKeyDownEnter } = useFocusEvent("parent");
     // tag for filter posts
     const [selected, setSelected] = useState("모두");
     const _onClickCategory = (e: React.MouseEvent<HTMLSpanElement>) => {
@@ -86,18 +88,21 @@ const Community: NextPage = () => {
 
             <section className="flex flex-col">
                 {postings.map((post) => (
-                    <PostCard key={`post_${post.id}`} data={post} />
+                    <article key={`post_${post.id}`}>
+                        <Anchor href={`/community/${post.id}`}>
+                            <PostCard
+                                data={post}
+                                tabIndex={0}
+                                onKeyDown={onKeyDownEnter}
+                            />
+                        </Anchor>
+                    </article>
                 ))}
             </section>
 
-            <Anchor
-                className="aspect-square rounded-full"
-                href={"/community/upload"}
-            >
-                <FloatingButton>
-                    <Add className="mx-auto" />
-                </FloatingButton>
-            </Anchor>
+            <FloatingAnchor href={"/community/upload"}>
+                <Add />
+            </FloatingAnchor>
         </Layout>
     );
 };

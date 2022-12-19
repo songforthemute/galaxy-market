@@ -14,8 +14,8 @@ import Layout from "@components/layout";
 import { PostDetailWithReply } from "@components/Templetes";
 
 const DeleteModal = dynamic(() => import("@components/Organisms/DeleteModal"));
-const FloatingButton = dynamic(
-    () => import("@components/Molecules/FloatingButton")
+const FloatingAnchor = dynamic(
+    () => import("@components/Molecules/FloatingAnchor")
 );
 const Anchor = dynamic(() => import("@components/Atoms/Anchor"));
 const PencilSquare = dynamic(
@@ -152,14 +152,9 @@ const PostDetail: NextPage = () => {
             />
 
             {user?.id === data?.post.userId && (
-                <Anchor
-                    className="aspect-square rounded-full"
-                    href={`${asPath}/update`}
-                >
-                    <FloatingButton>
-                        <PencilSquare className="mx-auto" />
-                    </FloatingButton>
-                </Anchor>
+                <FloatingAnchor href={`${asPath}/update`}>
+                    <PencilSquare />
+                </FloatingAnchor>
             )}
         </Layout>
     );

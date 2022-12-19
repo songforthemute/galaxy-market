@@ -1,9 +1,13 @@
 .root {
-    @apply flex gap-4 items-center transition duration-300 rounded-lg;
+    @apply flex p-2 gap-4 items-center transition duration-300 rounded-lg;
 }
 
 .root:hover {
     @apply text-primary-dark;
+}
+
+.root:focus {
+    @apply outline-none ring-[1.5px] ring-offset-2 ring-primary-dark;
 }
 
 .profile {
@@ -38,7 +42,8 @@
     @apply text-achroma-medium transition duration-300 ease-in-out;
 }
 
-.root:hover .chevron {
+.root:hover .chevron,
+.root:focus .chevron {
     @apply text-primary-dark;
     animation-name: straight;
     animation-duration: 1.2s;

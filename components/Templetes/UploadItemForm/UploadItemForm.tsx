@@ -3,13 +3,14 @@ import { FormProvider, useForm } from "react-hook-form";
 // types
 import type { Product } from "@prisma/client";
 // utils
-import { booleanCls, cls, fetcher, getImgSource } from "@libs/client/util";
+import { booleanCls, cls, getImgSource } from "@libs/client/util";
 // styles
 import s from "./UploadItemForm.module.css";
 // components
 import { Button, Img, Picture } from "@components/Atoms";
 import { ImageInput } from "@components/Molecules";
-import { UploadTypeInputs } from "@components/Organisms";
+import { UploadItemInputs } from "@components/Organisms";
+import useFetch from "@libs/client/useFetch";
 
 interface CloudflareURLInterface {
     status: boolean;
@@ -61,6 +62,7 @@ const UploadItemForm = ({
     errors,
     preset = undefined,
 }: Props) => {
+    const { fetcher } = useFetch();
     const formProviderValues = useForm<FormInterface>({
         reValidateMode: "onBlur",
     });
@@ -168,7 +170,7 @@ const UploadItemForm = ({
                         </ImageInput>
                     </>
 
-                    <UploadTypeInputs />
+                    <UploadItemInputs />
 
                     <Button
                         loading={loading}

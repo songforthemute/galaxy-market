@@ -26,7 +26,11 @@ const Input = ({
 }: InputProps) => {
     return (
         <input
-            className={cls(className, s.root, booleanCls(disabled, s.disabled))}
+            className={cls(
+                className,
+                s.root,
+                booleanCls(disabled, s.disabled, s.abled)
+            )}
             autoComplete="off"
             autoCorrect="off"
             autoCapitalize="off"

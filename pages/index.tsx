@@ -9,8 +9,8 @@ import useGetKey from "@libs/client/useGetKey";
 import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
 // components
 import Layout from "@components/layout";
-import { FloatingButton } from "@components/Molecules";
-import { Add, Anchor } from "@components/Atoms";
+import { FloatingAnchor } from "@components/Molecules";
+import { Add } from "@components/Atoms";
 const ItemCard = dynamic(() => import("@components/Organisms/ItemCard"));
 
 interface ProductsWithLike extends Product {
@@ -28,7 +28,7 @@ interface ItemsInterface {
 
 const Home: NextPage = () => {
     const getKey = useGetKey<ItemsInterface>({
-        url: "api/products",
+        url: "/api/products",
         hasQuery: false,
     });
 
@@ -45,7 +45,7 @@ const Home: NextPage = () => {
     // recevie & connect database for mount
     useEffect(() => {
         if (data && !data?.[0]?.error) {
-            setItems(() => data?.map((data) => data.products).flat());
+            setItems(() => data?.map((data) => data?.products).flat());
         } else {
             setItems([]);
         }
@@ -59,14 +59,7 @@ const Home: NextPage = () => {
                 ))}
             </section>
 
-            <Anchor
-                className="aspect-square rounded-full"
-                href="/products/upload"
-            >
-                <FloatingButton>
-                    <Add className="mx-auto" />
-                </FloatingButton>
-            </Anchor>
+            <FloatingAnchor href="/products/upload"></FloatingAnchor>
         </Layout>
     );
 };

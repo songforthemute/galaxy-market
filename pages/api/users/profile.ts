@@ -19,8 +19,6 @@ const handler = async (
             },
         });
 
-        console.log(profile);
-
         return res.json({ status: true, profile });
     } else {
         const profile = await client.user.findUnique({

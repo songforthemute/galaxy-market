@@ -46,7 +46,10 @@ const handler = async (
             if (exists) {
                 return res.json({
                     status: false,
-                    error: "이미 사용중인 전화번호입니다.",
+                    error: {
+                        type: "phone",
+                        message: "이미 사용중인 전화번호입니다.",
+                    },
                 });
             }
         }

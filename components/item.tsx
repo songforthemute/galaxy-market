@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getImgSource, priceConverter } from "@libs/client/util";
+import { getImgSource, convertPrice } from "@libs/client/util";
 import dynamic from "next/dynamic";
 
 const Image = dynamic(() => import("next/image"), {
@@ -42,7 +42,7 @@ const Item = ({ href, name, imageUrl, opt, price, likes }: ItemProps) => {
                         </h3>
                         <span className="text-xs text-slate-400">{opt}</span>
                         <span className="font-medium mt-2 text-slate-700">
-                            ₩ {priceConverter(String(price))}
+                            ₩ {convertPrice(price)}
                         </span>
                     </div>
                 </div>

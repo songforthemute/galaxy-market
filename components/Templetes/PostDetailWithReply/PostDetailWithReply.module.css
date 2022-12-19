@@ -1,9 +1,9 @@
 .root {
-    @apply flex flex-col w-full md:max-w-7xl mx-auto p-4;
+    @apply flex flex-col gap-4 w-full md:max-w-7xl mx-auto p-4;
 }
 
 .container {
-    @apply flex flex-col gap-5 p-4;
+    @apply flex flex-col gap-5;
 }
 
 .deleteReply {

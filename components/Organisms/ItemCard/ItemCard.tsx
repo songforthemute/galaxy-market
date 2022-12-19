@@ -1,5 +1,7 @@
 // types
 import type { Product } from "@prisma/client";
+// util
+import useFocusEvent from "@libs/client/useFocusEvent";
 // styles
 import s from "./ItemCard.module.css";
 // components
@@ -17,15 +19,22 @@ interface Props {
 }
 
 const Item = ({ product }: Props) => {
+    const { onKeyDownEnter } = useFocusEvent();
+
     return (
         <article>
             <Anchor className={s.root} href={`/products/${product?.id}`}>
-                <button className={s.button}>
+                <div
+                    onKeyDown={onKeyDownEnter}
+                    tabIndex={0}
+                    className={s.container}
+                >
                     {product?.image ? (
                         <Img
+                            alt="item"
                             src={product.image}
                             className={s.image}
-                            priority={true}
+                            priority
                         />
                     ) : (
                         <div className={s.empty} />
@@ -47,7 +56,7 @@ const Item = ({ product }: Props) => {
                         <Heart w={4} h={4} />
                         {product?._count.record}
                     </Quantity>
-                </button>
+                </div>
             </Anchor>
         </article>
     );

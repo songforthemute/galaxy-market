@@ -1,12 +1,19 @@
-import s from "./ProfileCard.module.css";
-import { ChevronRight, Img, Text } from "@components/Atoms";
+// typs
+import type { KeyboardEvent } from "react";
+// utils
 import { cls, booleanCls } from "@libs/client/util";
+// styles
+import s from "./ProfileCard.module.css";
+// components
+import { ChevronRight, Img, Text } from "@components/Atoms";
 
 interface Props {
     avatar?: string | null;
     username?: string;
     subtext?: string | any;
     isSquare?: boolean;
+    onKeyDown?: (e: KeyboardEvent) => void;
+    tabIndex?: number;
 }
 
 const ProfileCard = ({
@@ -14,11 +21,14 @@ const ProfileCard = ({
     username,
     subtext,
     isSquare = false,
+    onKeyDown,
+    tabIndex,
 }: Props) => {
     return (
-        <div className={s.root}>
+        <div tabIndex={tabIndex} onKeyDown={onKeyDown} className={s.root}>
             {avatar ? (
                 <Img
+                    alt={isSquare ? "item" : "avatar"}
                     src={avatar}
                     className={cls(
                         s.avatar,

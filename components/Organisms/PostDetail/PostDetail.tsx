@@ -3,8 +3,8 @@ import { Post } from "@prisma/client";
 // styles
 import s from "./PostDetail.module.css";
 // components
-import { PostReaction, ProfileCard } from "@components/Molecules";
-import { Anchor, Badge, Text } from "@components/Atoms";
+import { PostReaction } from "@components/Molecules";
+import { Badge, Text } from "@components/Atoms";
 import { convertDate } from "@libs/client/util";
 
 interface PostWithUserAndReaction extends Post {
@@ -26,17 +26,7 @@ interface Props {
 
 const PostDetail = ({ post, onClickInterest, isInterested }: Props) => {
     return (
-        <section className={s.root}>
-            <button className={s.profile}>
-                <Anchor href={`/profile/${post?.userId}`}>
-                    <ProfileCard
-                        avatar={post?.user?.avatarUrl}
-                        username={post?.user?.username}
-                        subtext={"프로필 보기"}
-                    />
-                </Anchor>
-            </button>
-
+        <article className={s.root}>
             <Badge disabled>{post?.tag}</Badge>
 
             <Text variant="contentsHeading" className={s.title}>
@@ -59,7 +49,7 @@ const PostDetail = ({ post, onClickInterest, isInterested }: Props) => {
                 className={s.reaction}
                 onClickInterest={onClickInterest}
             />
-        </section>
+        </article>
     );
 };
 

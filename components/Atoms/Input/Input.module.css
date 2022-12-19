@@ -4,18 +4,18 @@
     duration-300 border-[1.5px] border-achroma-dark rounded-lg;
 }
 
-.root:hover {
+.abled:hover {
     @apply border-achroma-darkest bg-achroma-light;
 }
 
-.root:focus {
+.abled:focus {
     @apply outline-none ring-[1.5px] ring-primary-dark
     border-primary-dark bg-primary-light;
 }
 
 /* Chrome, Safari, Edge, Opera */
-.root::-webkit-inner-spin-button,
-.root::-webkit-outer-spin-button {
+.abled::-webkit-inner-spin-button,
+.abled::-webkit-outer-spin-button {
     appearance: none;
     margin: 0;
 }

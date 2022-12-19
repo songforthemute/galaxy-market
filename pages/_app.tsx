@@ -1,10 +1,12 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { SWRConfig } from "swr";
-import { fetcher } from "@libs/client/util";
 import { ManagedUIContext } from "@components/contexts/uiContext";
+import useFetch from "@libs/client/useFetch";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
+    const { fetcher } = useFetch();
+
     return (
         <SWRConfig
             value={{

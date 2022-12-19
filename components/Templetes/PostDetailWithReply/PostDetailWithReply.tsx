@@ -6,8 +6,9 @@ import type { Post, Replies } from "@prisma/client";
 import s from "./PostDetailWithReply.module.css";
 // components
 import { PostDetail } from "@components/Organisms";
-import { TextareaWithLabel } from "@components/Molecules";
-import { Button } from "@components/Atoms";
+import { ProfileCard, TextareaWithLabel } from "@components/Molecules";
+import { Anchor, Button } from "@components/Atoms";
+import useFocusEvent from "@libs/client/useFocusEvent";
 
 const ReplyDetail = dynamic(() => import("@components/Organisms/ReplyDetail"));
 const Close = dynamic(() => import("@components/Atoms/icons/close"));
@@ -55,6 +56,7 @@ const PostDetailWithReply = ({
     currentUser,
     onClickDeleteReply,
 }: Props) => {
+    const { onKeyDownEnter } = useFocusEvent("itself");
     const { register, handleSubmit, reset } = useForm<FormInterface>();
     const _onSubmit = (data: FormInterface) => {
         if (replyLoading) return;
@@ -65,6 +67,16 @@ const PostDetailWithReply = ({
 
     return (
         <section className={s.root}>
+            <Anchor href={`/profile/${post?.userId}`}>
+                <ProfileCard
+                    onKeyDown={onKeyDownEnter}
+                    tabIndex={0}
+                    avatar={post?.user?.avatarUrl}
+                    username={post?.user?.username}
+                    subtext={"프로필 보기"}
+                />
+            </Anchor>
+
             <PostDetail
                 onClickInterest={onClickInterest}
                 isInterested={isInterested}
@@ -72,24 +84,25 @@ const PostDetailWithReply = ({
             />
 
             <div className={s.container}>
-                {post?.replies.map((v) => (
-                    <ReplyDetail
-                        key={v.id}
-                        avatar={v.user.avatarUrl}
-                        created={v.created}
-                        text={v.text}
-                        username={v.user.username}
-                    >
-                        {currentUser === v.user.id && (
-                            <button
-                                onClick={() => onClickDeleteReply(v.id)}
-                                className={s.deleteReply}
-                            >
-                                <Close w={5} h={5} strokeWidth={1.75} />
-                            </button>
-                        )}
-                    </ReplyDetail>
-                ))}
+                {post &&
+                    post.replies.map((v) => (
+                        <ReplyDetail
+                            key={v.id}
+                            avatar={v.user.avatarUrl}
+                            created={v.created}
+                            text={v.text}
+                            username={v.user.username}
+                        >
+                            {currentUser === v.user.id && (
+                                <button
+                                    onClick={() => onClickDeleteReply(v.id)}
+                                    className={s.deleteReply}
+                                >
+                                    <Close w={5} h={5} strokeWidth={1.75} />
+                                </button>
+                            )}
+                        </ReplyDetail>
+                    ))}
             </div>
 
             <form className={s.form} onSubmit={handleSubmit(_onSubmit)}>

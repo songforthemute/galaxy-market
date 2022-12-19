@@ -21,13 +21,14 @@ import {
     ShoppingCart,
     Text,
 } from "@components/Atoms";
+import useFocusEvent from "@libs/client/useFocusEvent";
 
 const ReviewCard = dynamic(() => import("@components/Organisms/ReviewCard"));
 const PencilSquare = dynamic(
     () => import("@components/Atoms/icons/pencilSquare")
 );
-const FloatingButton = dynamic(
-    () => import("@components/Molecules/FloatingButton")
+const FloatingAnchor = dynamic(
+    () => import("@components/Molecules/FloatingAnchor")
 );
 
 // interfaces
@@ -58,15 +59,16 @@ interface ProfileReturn {
 const Profile: NextPage = () => {
     const { query, asPath } = useRouter();
     const { user } = useUser();
+    const { onKeyDownEnter } = useFocusEvent("parent");
 
     // fetch data: user profile
     const { data: profileData } = useSWR<ProfileReturn>(
-        query ? `/api/users/profile?id=${query.id}` : null
+        query.id ? `/api/users/profile?id=${query.id}` : null
     );
 
     // fetch data: user's reviews
     const getKey = useGetKey<ReviewsReturn>({
-        url: query ? `/api/reviews?id=${query.id}` : null,
+        url: query.id ? `/api/reviews?id=${query.id}` : null,
         hasQuery: true,
     });
     const { data: reviewData, setSize } = useSWRInfinite<ReviewsReturn>(getKey);
@@ -98,20 +100,17 @@ const Profile: NextPage = () => {
                         `/chats/${profileData?.profile?.id}`
                     )}
                 >
-                    <button
-                        className="p-2 rounded-lg transition duration-300 w-full
-                            focus:outline-none focus:ring-[1.5px] focus:ring-offset-2 focus:ring-primary-dark"
-                    >
-                        <ProfileCard
-                            avatar={profileData?.profile?.avatarUrl}
-                            subtext={booleanCls(
-                                user?.id === profileData?.profile?.id,
-                                "프로필 수정하기",
-                                "메시지 보내기"
-                            )}
-                            username={profileData?.profile?.username}
-                        />
-                    </button>
+                    <ProfileCard
+                        tabIndex={0}
+                        onKeyDown={onKeyDownEnter}
+                        avatar={profileData?.profile?.avatarUrl}
+                        subtext={booleanCls(
+                            user?.id === profileData?.profile?.id,
+                            "프로필 수정하기",
+                            "메시지 보내기"
+                        )}
+                        username={profileData?.profile?.username}
+                    />
                 </Anchor>
 
                 {/* Sell Buy Like */}
@@ -153,15 +152,10 @@ const Profile: NextPage = () => {
             </div>
 
             {/* 플로팅버튼 - 리뷰 작성 */}
-            {user?.id !== profileData?.profile?.id && (
-                <Anchor
-                    className="aspect-square rounded-full"
-                    href={`${asPath}/review`}
-                >
-                    <FloatingButton>
-                        <PencilSquare className="mx-auto" />
-                    </FloatingButton>
-                </Anchor>
+            {user?.id && user.id !== profileData?.profile?.id && (
+                <FloatingAnchor href={`${asPath}/review`}>
+                    <PencilSquare />
+                </FloatingAnchor>
             )}
         </Layout>
     );

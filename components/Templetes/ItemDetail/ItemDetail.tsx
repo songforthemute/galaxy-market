@@ -41,7 +41,12 @@ const ItemDetail = ({
     return (
         <section className={s.root}>
             {item?.image ? (
-                <Img src={item?.image} className={s.image} priority />
+                <Img
+                    alt="item"
+                    src={item?.image}
+                    className={s.image}
+                    priority
+                />
             ) : (
                 <div className={s.empty} />
             )}

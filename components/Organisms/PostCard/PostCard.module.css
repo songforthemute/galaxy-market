@@ -1,14 +1,14 @@
-.button {
+.container {
     @apply w-full flex flex-col gap-4 pt-4 transition duration-300 items-start;
 }
 
-.button:hover,
-.button:focus {
+.container:hover,
+.container:focus {
     @apply opacity-high bg-achroma-light shadow-inner outline-none;
 }
 
 .badge {
-    @apply inline-block mx-4 -my-1 rounded-lg;
+    @apply inline-block text-center mx-4 -my-1 rounded-lg;
 }
 
 .title {

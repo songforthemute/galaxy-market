@@ -1,11 +1,12 @@
 // types
 import type { Post } from "@prisma/client";
+import type { KeyboardEvent } from "react";
 // styles
 import s from "./PostCard.module.css";
 // utils
 import { convertDate } from "@libs/client/util";
 // components
-import { Anchor, Badge, Text } from "@components/Atoms";
+import { Badge, Text } from "@components/Atoms";
 import { PostReaction } from "@components/Molecules";
 
 interface PostWithReaction extends Post {
@@ -20,37 +21,35 @@ interface PostWithReaction extends Post {
 
 interface Props {
     data?: PostWithReaction;
+    onKeyDown?: (e: KeyboardEvent) => void;
+    tabIndex?: number;
 }
 
-const Posting = ({ data }: Props) => {
+const PostCard = ({ data, onKeyDown, tabIndex }: Props) => {
     return (
-        <article>
-            <Anchor href={`/community/${data?.id}`}>
-                <button className={s.button} key={data?.id}>
-                    <Badge className={s.badge} disabled>
-                        {data?.tag}
-                    </Badge>
+        <div onKeyDown={onKeyDown} tabIndex={tabIndex} className={s.container}>
+            <Badge className={s.badge} disabled>
+                {data?.tag}
+            </Badge>
 
-                    <Text variant="contentsHeading" className={s.title}>
-                        <span>Q. </span>
-                        {data?.title}
-                    </Text>
-                    <div className={s.detail}>
-                        <Text variant="span">{data?.user.username}</Text>
-                        <Text variant="span">
-                            {convertDate(data?.updated!, "Full")}
-                        </Text>
-                    </div>
+            <Text variant="contentsHeading" className={s.title}>
+                <span>Q. </span>
+                {data?.title}
+            </Text>
+            <div className={s.detail}>
+                <Text variant="span">{data?.user.username}</Text>
+                <Text variant="span">
+                    {convertDate(data?.updated!, "Full")}
+                </Text>
+            </div>
 
-                    <PostReaction
-                        interest={data?._count.interest}
-                        replies={data?._count.replies}
-                        className={s.reaction}
-                    />
-                </button>
-            </Anchor>
-        </article>
+            <PostReaction
+                interest={data?._count.interest}
+                replies={data?._count.replies}
+                className={s.reaction}
+            />
+        </div>
     );
 };
 
-export default Posting;
+export default PostCard;

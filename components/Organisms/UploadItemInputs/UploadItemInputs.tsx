@@ -13,7 +13,7 @@ interface UploadTypeInputsInterface {
     description?: string;
 }
 
-const UploadTypeInputs = () => {
+const UploadItemInputs = () => {
     const {
         register,
         formState: { errors },
@@ -65,4 +65,4 @@ const UploadTypeInputs = () => {
     );
 };
 
-export default UploadTypeInputs;
+export default UploadItemInputs;

@@ -39,11 +39,6 @@ export const convertDate = (date: Date, opts?: "Full" | "Time" | "Date") => {
     });
 };
 
-export const fetcher = async (url: string, opts?: any) => {
-    const response = await fetch(url, opts);
-    return await response.json();
-};
-
 export const getImgSource = (avatarUrl?: string | null, variants?: string) => {
     return `https://imagedelivery.net/${
         process.env.NEXT_PUBLIC_CLOUDFLARE_HASH

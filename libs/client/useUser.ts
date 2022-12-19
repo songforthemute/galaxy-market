@@ -1,7 +1,7 @@
 import { User } from "@prisma/client";
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import { fetcher } from "./util";
+import useFetch from "./useFetch";
 
 interface ProfileReturn {
     status: boolean;
@@ -10,6 +10,7 @@ interface ProfileReturn {
 
 const useUser = () => {
     const router = useRouter();
+    const { fetcher } = useFetch();
     const { data, error } = useSWR<ProfileReturn>(
         router.pathname !== "/auth" ? "/api/users/me" : null,
         fetcher

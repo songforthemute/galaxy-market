@@ -11,6 +11,7 @@ import { convertDate } from "@libs/client/util";
 import Layout from "@components/layout";
 import { ProfileCard } from "@components/Molecules";
 import { Anchor } from "@components/Atoms";
+import useFocusEvent from "@libs/client/useFocusEvent";
 
 // interfaces
 interface MessageWithUser extends Message {
@@ -29,6 +30,7 @@ interface MessageListReturn {
 
 // Page
 const Chats: NextPage = () => {
+    const { onKeyDownEnter } = useFocusEvent("parent");
     // fetch messages list
     const getKey = useGetKey<MessageListReturn>({
         url: `/api/message`,
@@ -56,19 +58,20 @@ const Chats: NextPage = () => {
         <Layout title="메시지" hasTabBar canGoBack hasConfig>
             <section className="flex flex-col divide-y-[1px] divide-achroma-light w-full mx-auto">
                 {messages.map((v) => (
-                    <Anchor key={v.id} href={`/chats/${v.messagedBy.id}`}>
-                        <button
-                            className="p-4 transition duration-300 w-full hover:opacity-high hover:bg-achroma-light hover:shadow-inner
-                            focus:outline-none focus:opacity-high focus:bg-achroma-light focus:shadow-inner"
-                        >
-                            <ProfileCard
-                                avatar={v.messagedBy.avatarUrl}
-                                username={v.messagedBy.username}
-                                subtext={`마지막으로 받은 메시지: ${convertDate(
-                                    v.created
-                                )}`}
-                            />
-                        </button>
+                    <Anchor
+                        className="p-2"
+                        key={v.id}
+                        href={`/chats/${v.messagedBy.id}`}
+                    >
+                        <ProfileCard
+                            onKeyDown={onKeyDownEnter}
+                            tabIndex={0}
+                            avatar={v.messagedBy.avatarUrl}
+                            username={v.messagedBy.username}
+                            subtext={`마지막으로 받은 메시지: ${convertDate(
+                                v.created
+                            )}`}
+                        />
                     </Anchor>
                 ))}
             </section>

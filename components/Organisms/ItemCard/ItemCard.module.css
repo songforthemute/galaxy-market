@@ -2,12 +2,12 @@
     @apply w-full;
 }
 
-.button {
+.container {
     @apply w-full transition duration-300 flex gap-4 relative p-4 items-center;
 }
 
-.button:hover,
-.button:focus {
+.container:hover,
+.container:focus {
     @apply opacity-high bg-achroma-light shadow-inner outline-none;
 }
 
