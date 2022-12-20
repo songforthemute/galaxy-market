@@ -99,6 +99,17 @@ const handler = async (
         return res.json({ status: true });
     }
 
+    if (method === "DELETE") {
+        const { reviewId } = req.body;
+
+        await client.review.delete({
+            where: {
+                id: reviewId,
+            },
+        });
+
+        return res.json({ status: true });
+    }
 };
 
 export default withApiSession(

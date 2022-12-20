@@ -7,5 +7,17 @@
 }
 
 .review {
-    @apply px-4 py-2;
+    @apply px-4 py-2 relative w-full;
+}
+
+.deleteReview {
+    @apply absolute right-4 -top-12 transition duration-300 text-achroma-medium;
+}
+
+.deleteReview:hover {
+    @apply text-rose-500 border-b-[1.5px] border-b-rose-500;
+}
+
+.deleteReview:focus {
+    @apply outline-none ring-[1.5px] ring-offset-2 ring-primary-dark text-rose-500;
 }

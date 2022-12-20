@@ -6,7 +6,7 @@ import useFocusEvent from "@libs/client/useFocusEvent";
 // styles
 import s from "./ReviewCard.module.css";
 // components
-import { Anchor, Star, Text } from "@components/Atoms";
+import { Anchor, Close, Star, Text } from "@components/Atoms";
 import { ProfileCard } from "@components/Molecules";
 
 interface ReviewWithUser extends Review {
@@ -24,9 +24,11 @@ interface ReviewWithUser extends Review {
 
 interface Props {
     data?: ReviewWithUser;
+    userId?: number;
+    onClickDelete: (reviewId: number) => void;
 }
 
-const ReviewCard = ({ data }: Props) => {
+const ReviewCard = ({ data, userId, onClickDelete }: Props) => {
     const { onKeyDownEnter } = useFocusEvent("parent");
 
     return (
@@ -51,6 +53,14 @@ const ReviewCard = ({ data }: Props) => {
 
             <Text className={s.review} variant="paragraph">
                 {data?.text}
+                {userId === data?.createdById && (
+                    <button
+                        onClick={() => onClickDelete(data?.id!)}
+                        className={s.deleteReview}
+                    >
+                        <Close w={5} h={5} strokeWidth={1.75} />
+                    </button>
+                )}
             </Text>
 
             <Anchor className={s.anchor} href={`/products/${data?.productId}`}>

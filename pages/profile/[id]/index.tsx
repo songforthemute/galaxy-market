@@ -22,8 +22,11 @@ import {
     Text,
 } from "@components/Atoms";
 import useFocusEvent from "@libs/client/useFocusEvent";
+import { useToggleModal } from "@libs/hooks/useToggle";
+import useMutation from "@libs/client/useMutation";
 
 const ReviewCard = dynamic(() => import("@components/Organisms/ReviewCard"));
+const DeleteModal = dynamic(() => import("@components/Organisms/DeleteModal"));
 const PencilSquare = dynamic(
     () => import("@components/Atoms/icons/pencilSquare")
 );
@@ -74,6 +77,7 @@ const Profile: NextPage = () => {
     const {
         data: reviewData,
         setSize,
+        mutate: reviewMutate,
     } = useSWRInfinite<ReviewsReturn>(getKey);
 
     // set page number for infinite scroll
@@ -92,8 +96,40 @@ const Profile: NextPage = () => {
         }
     }, [reviewData]);
 
+    // Delete Review
+    const { modal, toggleModal } = useToggleModal();
+    const [deleteReviewId, setDeleteReviewId] = useState<number | undefined>();
+    const _onClickDeleteReview = (reviewId: number) => {
+        setDeleteReviewId(reviewId);
+        toggleModal();
+    };
+
+    const [
+        deleteReview,
+        { data: deleteReviewReturn, loading: deleteReviewLoading },
+    ] = useMutation<{ status: boolean }>({
+        url: `/api/users/reviews`,
+        method: "DELETE",
+    });
+
+    useEffect(() => {
+        if (deleteReviewReturn && deleteReviewReturn?.status) {
+            reviewMutate();
+        }
+    }, [deleteReviewReturn]);
+
     return (
         <Layout title="프로필" hasTabBar canGoBack hasConfig>
+            {modal && (
+                <DeleteModal
+                    loading={deleteReviewLoading}
+                    onClickConfirm={() => {
+                        deleteReview({ reviewId: deleteReviewId });
+                        toggleModal();
+                    }}
+                />
+            )}
+
             <div className="p-4 space-y-10 w-full md:max-w-7xl mx-auto">
                 {/* 프로파일 */}
                 <Anchor
@@ -149,7 +185,12 @@ const Profile: NextPage = () => {
                 {/* Reviews */}
                 <section className="divide-y-[1px]">
                     {reviews.map((v) => (
-                        <ReviewCard data={v} key={`review_${v.id}`} />
+                        <ReviewCard
+                            data={v}
+                            key={`review_${v.id}`}
+                            userId={user?.id}
+                            onClickDelete={_onClickDeleteReview}
+                        />
                     ))}
                 </section>
             </div>
