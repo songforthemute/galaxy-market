@@ -119,15 +119,19 @@ const PostDetail: NextPage = () => {
         toggleModal();
     };
 
-    // after submit & delete reply
+    // after submit
     useEffect(() => {
-        if (
-            (replyData && replyData.status) ||
-            (deleteReplyReturn && deleteReplyReturn?.status)
-        ) {
+        if (replyData && replyData.status) {
             mutate();
         }
-    }, [replyData, deleteReplyReturn, mutate]);
+    }, [replyData]);
+
+    // delete reply
+    useEffect(() => {
+        if (deleteReplyReturn && deleteReplyReturn?.status) {
+            mutate();
+        }
+    }, [deleteReplyReturn]);
 
     return (
         <Layout title={"커뮤니티"} canGoBack>

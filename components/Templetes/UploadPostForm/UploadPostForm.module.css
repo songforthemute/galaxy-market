@@ -2,7 +2,7 @@
     @apply flex flex-col px-4 my-6 md:my-10 items-center;
 }
 
-.tagContainer {
+.selectContainer {
     @apply relative flex flex-col;
 }
 

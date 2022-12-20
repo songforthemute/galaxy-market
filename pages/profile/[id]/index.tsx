@@ -68,10 +68,13 @@ const Profile: NextPage = () => {
 
     // fetch data: user's reviews
     const getKey = useGetKey<ReviewsReturn>({
-        url: query.id ? `/api/reviews?id=${query.id}` : null,
+        url: query.id ? `/api/users/reviews?id=${query.id}` : null,
         hasQuery: true,
     });
-    const { data: reviewData, setSize } = useSWRInfinite<ReviewsReturn>(getKey);
+    const {
+        data: reviewData,
+        setSize,
+    } = useSWRInfinite<ReviewsReturn>(getKey);
 
     // set page number for infinite scroll
     const page = useInfiniteScrollDown();
@@ -152,7 +155,7 @@ const Profile: NextPage = () => {
             </div>
 
             {/* 플로팅버튼 - 리뷰 작성 */}
-            {user?.id && user.id !== profileData?.profile?.id && (
+            {profileData && user?.id !== profileData.profile?.id && (
                 <FloatingAnchor href={`${asPath}/review`}>
                     <PencilSquare />
                 </FloatingAnchor>

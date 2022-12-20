@@ -49,7 +49,7 @@ const UploadPostForm = ({ mutatorFn, loading, preset = undefined }: Props) => {
     const _onSubmit = (data: FormInterface) => {
         if (loading) return;
         if (tag === "") {
-            setError("tag", { message: "태그를 골라주세요." });
+            setError("tag", { message: "태그를 선택해주세요." });
             return;
         }
 
@@ -83,7 +83,7 @@ const UploadPostForm = ({ mutatorFn, loading, preset = undefined }: Props) => {
                         })}
                     />
 
-                    <div className={s.tagContainer}>
+                    <div className={s.selectContainer}>
                         <Label htmlFor="tag">태그</Label>
                         <Select
                             id="tag"

@@ -9,9 +9,10 @@ const handler = async (
 ) => {
     const {
         session: { user },
+        method,
     } = req;
 
-    if (req.method === "GET") {
+    if (method === "GET") {
         const {
             query: { id, page },
         } = req;
@@ -52,7 +53,7 @@ const handler = async (
         });
     }
 
-    if (req.method === "POST") {
+    if (method === "POST") {
         const {
             body: { description, star, productId, createdTo },
         } = req;
@@ -97,11 +98,12 @@ const handler = async (
 
         return res.json({ status: true });
     }
+
 };
 
 export default withApiSession(
     handlerHelper({
-        methods: ["GET", "POST"],
+        methods: ["GET", "POST", "DELETE"],
         handlerFn: handler,
         isPrivate: true,
     })
