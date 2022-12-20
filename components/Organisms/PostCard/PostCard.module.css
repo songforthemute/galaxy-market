@@ -28,5 +28,5 @@
 }
 
 .reaction {
-    @apply w-full px-4 border-y-[1.5px] border-y-achroma-light;
+    @apply w-full px-4 border-y-[1px] border-y-achroma-light;
 }

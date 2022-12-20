@@ -1,17 +1,37 @@
+// types
+import type { KeyboardEvent } from "react";
+// utils
+import { cls } from "@libs/client/util";
+// styles
 import s from "./ItemThumbnail.module.css";
+// Component
 import { Img, Text } from "@components/Atoms";
 
 interface Props {
     image?: string | null;
     title?: string;
     subTitle?: string | number;
+    tabIndex?: number;
+    onKeyDown?: (event: KeyboardEvent) => void;
+    className?: string;
 }
 
-const ItemThumbnail = ({ image, title, subTitle }: Props) => {
+const ItemThumbnail = ({
+    image,
+    title,
+    subTitle,
+    onKeyDown,
+    tabIndex,
+    className = "",
+}: Props) => {
     return (
-        <div className={s.root}>
+        <div
+            tabIndex={tabIndex}
+            onKeyDown={onKeyDown}
+            className={cls(s.root, className)}
+        >
             {image ? (
-                <Img src={image} className={s.image} />
+                <Img alt="thumbnail" src={image} className={s.image} />
             ) : (
                 <div className={s.empty} />
             )}

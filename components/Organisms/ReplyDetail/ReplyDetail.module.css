@@ -3,11 +3,15 @@
 }
 
 .avatar {
-    @apply rounded-full aspect-square w-12;
+    @apply rounded-full aspect-square w-12 ring-[1.5px] ring-offset-2 ring-primary-dark;
+}
+
+.avatar img {
+    @apply rounded-full;
 }
 
 .empty {
-    @apply rounded-full aspect-square w-12 bg-achroma-medium;
+    @apply rounded-full aspect-square w-12 bg-achroma-medium ring-[1.5px] ring-offset-2 ring-primary-dark;
 }
 
 .container {

@@ -15,7 +15,7 @@
 }
 
 .deleteReply:focus {
-    @apply outline-none ring-[1.5px] ring-offset-2 ring-primary-dark;
+    @apply outline-none ring-[1.5px] ring-offset-2 ring-primary-dark text-rose-500;
 }
 
 .form {

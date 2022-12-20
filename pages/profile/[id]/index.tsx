@@ -91,7 +91,7 @@ const Profile: NextPage = () => {
 
     return (
         <Layout title="프로필" hasTabBar canGoBack hasConfig>
-            <div className="p-4 space-y-10">
+            <div className="p-4 space-y-10 w-full md:max-w-7xl mx-auto">
                 {/* 프로파일 */}
                 <Anchor
                     href={booleanCls(

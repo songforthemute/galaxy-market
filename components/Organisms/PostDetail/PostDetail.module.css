@@ -31,5 +31,5 @@
 }
 
 .reaction {
-    @apply -mx-4 px-4 border-y-[1.5px] border-y-achroma-light;
+    @apply -mx-4 px-4 border-y-[1px] border-y-achroma-light;
 }

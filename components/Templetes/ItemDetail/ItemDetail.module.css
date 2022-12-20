@@ -38,6 +38,10 @@
     @apply rounded-lg;
 }
 
+.buttonContainer > button:last-child:focus {
+    @apply transition duration-300 outline-none ring-[1.5px] ring-offset-2 ring-primary-dark;
+}
+
 .like {
     @apply text-rose-500 fill-rose-500 hover:text-achroma-medium hover:fill-transparent transition duration-300;
 }
@@ -47,15 +51,21 @@
 }
 
 .related {
-    @apply grid grid-flow-row grid-cols-2 md:grid-cols-3 gap-4;
+    @apply grid grid-flow-row grid-cols-2 md:grid-cols-3 gap-4 items-center justify-center;
 }
 
-.related a {
-    @apply hover:opacity-medium transition duration-300 hover:text-primary-medium;
+.related > a {
+    @apply flex items-center justify-start;
 }
 
-.profile:focus,
-.buttonContainer > button:last-child:focus,
-.related button:focus {
-    @apply transition duration-300 outline-none ring-[1.5px] ring-offset-2 ring-primary-dark;
+.relatedItem {
+    @apply transition duration-300 rounded-lg m-0.5 p-4;
+}
+
+.relatedItem:hover {
+    @apply opacity-medium;
+}
+
+.relatedItem:focus {
+    @apply outline-none ring-[1.5px] ring-offset-2 ring-primary-dark;
 }

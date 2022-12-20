@@ -25,7 +25,7 @@ const ReplyDetail: FC<Props> = ({
     return (
         <article className={s.root}>
             {avatar ? (
-                <Img priority src={avatar} className={s.avatar} />
+                <Img alt="avatar" priority src={avatar} className={s.avatar} />
             ) : (
                 <div className={s.empty} />
             )}

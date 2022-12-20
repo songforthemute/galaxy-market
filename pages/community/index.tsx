@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import useSWRInfinite from "swr/infinite";
 // types
 import type { NextPage } from "next";
+import type { MouseEvent, KeyboardEvent } from "react";
 import type { Post } from "@prisma/client";
 // custom hooks
 import useFocusEvent from "@libs/client/useFocusEvent";
@@ -38,10 +39,17 @@ const Community: NextPage = () => {
     const { onKeyDownEnter } = useFocusEvent("parent");
     // tag for filter posts
     const [selected, setSelected] = useState("모두");
-    const _onClickCategory = (e: React.MouseEvent<HTMLSpanElement>) => {
-        const { innerHTML } = e.target as HTMLSpanElement;
-        setSelected(innerHTML);
+    const _onClickCategory = (e: MouseEvent<HTMLSpanElement>) => {
+        const { innerText } = e.target as HTMLSpanElement;
+        setSelected(innerText);
         mutate();
+    };
+    const _onKeyDownCategory = (e: KeyboardEvent<HTMLSpanElement>) => {
+        if (e.code === "Enter") {
+            const { innerText } = e.target as HTMLSpanElement;
+            setSelected(innerText);
+            mutate();
+        }
     };
 
     // fetch data
@@ -73,6 +81,7 @@ const Community: NextPage = () => {
                 {["모두", "질문", "정보", "후기", "자유"].map((v, i) => (
                     <button
                         key={i}
+                        onKeyDown={_onKeyDownCategory}
                         onClick={_onClickCategory}
                         className="rounded-lg transtion duration-300 focus:outline-none focus:ring-[1.5px] focus:ring-offset-2 focus:ring-primary-dark"
                     >

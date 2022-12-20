@@ -59,7 +59,9 @@ const Home: NextPage = () => {
                 ))}
             </section>
 
-            <FloatingAnchor href="/products/upload"></FloatingAnchor>
+            <FloatingAnchor href="/products/upload">
+                <Add />
+            </FloatingAnchor>
         </Layout>
     );
 };

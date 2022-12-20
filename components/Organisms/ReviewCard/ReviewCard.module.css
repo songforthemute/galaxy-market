@@ -1,43 +1,11 @@
 .root {
-    @apply flex flex-col items-start p-2;
+    @apply flex flex-col items-start py-2;
 }
 
 .anchor {
-    @apply inline-flex mr-auto;
-}
-
-.button {
-    @apply transition p-2 pr-12 rounded-lg duration-300;
-}
-
-.button:focus {
-    @apply ring-[1.5px] ring-offset-2 ring-primary-dark opacity-high outline-none;
+    @apply w-full;
 }
 
 .review {
-    @apply p-2;
-}
-
-.product {
-    @apply flex gap-x-4 items-center text-start;
-}
-
-.textbox {
-    @apply flex flex-col gap-y-1;
-}
-
-.image {
-    @apply rounded-lg aspect-square w-14;
-}
-
-.empty {
-    @apply rounded-lg aspect-square w-14 bg-achroma-medium;
-}
-
-.title {
-    @apply font-semibold text-base;
-}
-
-.date {
-    @apply inline-block;
+    @apply px-4 py-2;
 }

@@ -22,11 +22,16 @@
     @apply aspect-square bg-achroma-medium w-14;
 }
 
-.square {
+.square,
+.square img {
     @apply rounded-lg;
 }
 
 .circle {
+    @apply rounded-full ring-[1.5px] ring-primary-dark ring-offset-2;
+}
+
+.circle img {
     @apply rounded-full;
 }
 

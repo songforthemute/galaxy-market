@@ -4,6 +4,7 @@ import type { Product } from "@prisma/client";
 // styles
 import s from "./ItemDetail.module.css";
 // utils
+import useFocusEvent from "@libs/client/useFocusEvent";
 import { booleanCls, convertPrice } from "@libs/client/util";
 // components
 import { Anchor, Button, Heart, Img, Text } from "@components/Atoms";
@@ -38,6 +39,8 @@ const ItemDetail = ({
     onClickButton,
     onToggleLike,
 }: Props) => {
+    const { onKeyDownEnter } = useFocusEvent("parent");
+
     return (
         <section className={s.root}>
             {item?.image ? (
@@ -52,16 +55,16 @@ const ItemDetail = ({
             )}
 
             <Anchor
-                className="border-y-[1.5px]"
+                className="border-y-[1px] p-2"
                 href={`/profile/${item?.userId}`}
             >
-                <button className={s.profile}>
-                    <ProfileCard
-                        avatar={item?.user.avatarUrl}
-                        username={item?.user.username}
-                        subtext="프로필 보기"
-                    />
-                </button>
+                <ProfileCard
+                    onKeyDown={onKeyDownEnter}
+                    tabIndex={0}
+                    avatar={item?.user.avatarUrl}
+                    username={item?.user.username}
+                    subtext="프로필 보기"
+                />
             </Anchor>
 
             {/* 상품 상세 */}
@@ -98,13 +101,14 @@ const ItemDetail = ({
             <article className={s.related}>
                 {related?.map((v) => (
                     <Anchor href={`/products/${v.id}`} key={`related_${v.id}`}>
-                        <button className="rounded-lg">
-                            <ItemThumbnail
-                                image={v.image}
-                                subTitle={`₩ ${convertPrice(v.price)}`}
-                                title={v.name}
-                            />
-                        </button>
+                        <ItemThumbnail
+                            onKeyDown={onKeyDownEnter}
+                            tabIndex={0}
+                            image={v.image}
+                            subTitle={`₩ ${convertPrice(v.price)}`}
+                            title={v.name}
+                            className={s.relatedItem}
+                        />
                     </Anchor>
                 ))}
             </article>
