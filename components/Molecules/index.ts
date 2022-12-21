@@ -11,3 +11,4 @@ export { default as ChatInput } from "./ChatInput";
 export { default as ChatBubble } from "./ChatBubble";
 export { default as CircleButton } from "./CircleButton";
 export { default as FloatingAnchor } from "./FloatingAnchor";
+export { default as Scoring } from "./Scoring";

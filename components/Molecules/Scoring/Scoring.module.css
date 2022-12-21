@@ -1,0 +1,16 @@
+.root {
+    @apply flex;
+}
+
+.button {
+    @apply py-1 px-0.5 transition duration-300 text-achroma-medium border-b-[1.5px] border-transparent;
+}
+
+.button:focus,
+.button:hover {
+    @apply outline-none text-primary-dark border-primary-dark;
+}
+
+.active {
+    @apply text-primary-medium;
+}

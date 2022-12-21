@@ -1,0 +1,19 @@
+.root {
+    @apply flex flex-col px-4 my-6 md:my-10 items-center;
+}
+
+.selectContainer {
+    @apply relative flex flex-col;
+}
+
+.select {
+    @apply py-2 rounded-lg border-achroma-dark text-start text-sm;
+}
+
+.scoreContainer {
+    @apply relative flex flex-col mt-8 mb-4;
+}
+
+.errorMessage {
+    @apply -bottom-[1.375rem];
+}
