@@ -55,12 +55,13 @@ const handler = async (
 
     if (method === "POST") {
         const {
-            body: { description, star, productId, createdTo },
+            body: { review, star, productId },
+            query: { createdTo },
         } = req;
 
         await client.review.create({
             data: {
-                text: description,
+                text: review,
                 star,
                 createdBy: {
                     connect: {
