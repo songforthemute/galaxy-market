@@ -142,7 +142,7 @@ const UploadItemForm = ({
             <FormProvider {...formProviderValues}>
                 <form
                     onSubmit={handleSubmit(_onSubmit)}
-                    className="md:min-w-[50vw] justify-center"
+                    className="w-full md:max-w-[50vw] justify-center"
                 >
                     <>
                         <ImageInput

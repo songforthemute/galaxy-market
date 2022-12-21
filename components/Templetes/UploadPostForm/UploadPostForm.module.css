@@ -3,13 +3,13 @@
 }
 
 .selectContainer {
-    @apply relative flex flex-col;
+    @apply relative flex flex-col my-4;
 }
 
 .select {
-    @apply py-2 rounded-lg border-achroma-dark text-start;
+    @apply p-2 rounded-lg border-achroma-dark text-start;
 }
 
 .button {
-    @apply w-full rounded-lg;
+    @apply w-full rounded-lg mt-4;
 }

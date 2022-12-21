@@ -9,9 +9,15 @@
 
 .trigger {
     @apply inline-flex min-h-[0.5rem] gap-2 border-[1.5px] border-primary-medium items-center
-    justify-center hover:bg-primary-dark hover:border-primary-dark hover:text-achroma-lightest
-    text-achroma-darkest transition duration-300 focus:ring-[1.5px] focus:ring-offset-[1.5px] focus:ring-primary-dark
-    focus:outline-none leading-4;
+    justify-center text-achroma-darkest transition duration-300 leading-4 px-4 py-4;
+}
+
+.trigger:hover {
+    @apply bg-primary-dark border-primary-dark text-achroma-lightest;
+}
+
+.trigger:focus {
+    @apply ring-[1.5px] ring-offset-[1.5px] ring-primary-dark outline-none;
 }
 
 .icon {
