@@ -9,22 +9,35 @@ const handler = async (
 ) => {
     const {
         session: { user },
+        method,
     } = req;
 
-    const currentUser = await client.user.findUnique({
-        where: {
-            id: user?.id,
-        },
-    });
+    if (method === "GET") {
+        const profile = await client.user.findUnique({
+            where: {
+                id: user?.id,
+            },
+        });
 
-    if (req.method === "GET") {
-        return res.json({ status: true, profile: currentUser });
+        return res.json({ status: true, profile });
     }
 
-    if (req.method === "PUT") {
+    if (method === "POST") {
+        req.session.destroy();
+
+        return res.json({ status: true });
+    }
+
+    if (method === "PUT") {
         const {
             body: { username, phone, avatarUrlId },
         } = req;
+
+        const currentUser = await client.user.findUnique({
+            where: {
+                id: user?.id,
+            },
+        });
 
         if (
             phone &&
@@ -80,11 +93,38 @@ const handler = async (
 
         return res.json({ status: true });
     }
+
+    if (method === "DELETE") {
+        const { email } = req.body;
+
+        const currentUser = await client.user.findUnique({
+            where: {
+                id: user?.id,
+            },
+        });
+
+        if (currentUser?.email !== email) {
+            return res.json({
+                status: false,
+                error: "이메일이 일치하지 않습니다.",
+            });
+        }
+
+        await client.user.delete({
+            where: {
+                id: user?.id,
+            },
+        });
+
+        req.session.destroy();
+
+        return res.json({ status: true });
+    }
 };
 
 export default withApiSession(
     handlerHelper({
-        methods: ["GET", "PUT"],
+        methods: ["GET", "POST", "PUT", "DELETE"],
         handlerFn: handler,
         isPrivate: true,
     })
