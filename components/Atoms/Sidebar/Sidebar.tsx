@@ -2,8 +2,11 @@ import { useCallback, useEffect, useRef } from "react";
 import { clearAllBodyScrollLocks, disableBodyScroll } from "body-scroll-lock";
 // types
 import type { FC, ReactNode, MutableRefObject } from "react";
-// css
+// utils
+import { cls } from "@libs/client/util";
+// styles
 import s from "./Sidebar.module.css";
+// components
 import { Close } from "@components/Atoms";
 
 interface Props {
@@ -12,7 +15,7 @@ interface Props {
     onClose: () => void;
 }
 
-const Sidebar: FC<Props> = ({ children, onClose }) => {
+const Sidebar: FC<Props> = ({ children, onClose, className = "" }) => {
     const sidebarRef = useRef() as MutableRefObject<HTMLDivElement>;
     const contentRef = useRef() as MutableRefObject<HTMLDivElement>;
 
@@ -45,7 +48,6 @@ const Sidebar: FC<Props> = ({ children, onClose }) => {
         };
     }, [handleKeydownEscape]);
 
-    // NEED TO AUTOFOCUS => useForm()
     return (
         <aside className={s.root} ref={sidebarRef}>
             <div className={s.container}>
@@ -56,7 +58,7 @@ const Sidebar: FC<Props> = ({ children, onClose }) => {
                         </button>
                         <div
                             tabIndex={-1}
-                            className={s.content}
+                            className={cls(s.content, className)}
                             ref={contentRef}
                         >
                             {children}

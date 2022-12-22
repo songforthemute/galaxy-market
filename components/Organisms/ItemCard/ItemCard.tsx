@@ -23,7 +23,11 @@ const Item = ({ product }: Props) => {
 
     return (
         <article>
-            <Anchor className={s.root} href={`/products/${product?.id}`}>
+            <Anchor
+                as={product.image ? "image" : undefined}
+                className={s.root}
+                href={`/products/${product?.id}`}
+            >
                 <div
                     onKeyDown={onKeyDownEnter}
                     tabIndex={0}

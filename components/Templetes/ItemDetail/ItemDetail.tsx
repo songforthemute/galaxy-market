@@ -100,7 +100,11 @@ const ItemDetail = ({
             </Text>
             <article className={s.related}>
                 {related?.map((v) => (
-                    <Anchor href={`/products/${v.id}`} key={`related_${v.id}`}>
+                    <Anchor
+                        as={v.image ? "image" : undefined}
+                        href={`/products/${v.id}`}
+                        key={`related_${v.id}`}
+                    >
                         <ItemThumbnail
                             onKeyDown={onKeyDownEnter}
                             tabIndex={0}

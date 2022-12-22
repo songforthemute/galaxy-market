@@ -23,6 +23,7 @@ const Img = ({
     objectFit = "scale-down",
     quality = 75,
     directSrc = false,
+    priority = false,
     ...rest
 }: Props) => {
     return (
@@ -34,6 +35,7 @@ const Img = ({
                 layout="fill"
                 objectFit={objectFit}
                 quality={quality}
+                priority={priority}
                 {...rest}
             />
         </div>

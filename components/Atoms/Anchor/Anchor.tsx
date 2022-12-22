@@ -6,6 +6,7 @@ interface Props extends LinkProps {
     children?: ReactNode;
     className?: string;
     tabIndex?: number;
+    onKeyDown?: (e: any) => void;
 }
 
 const Anchor: FC<Props> = ({
@@ -13,11 +14,17 @@ const Anchor: FC<Props> = ({
     children,
     className,
     tabIndex,
+    onKeyDown,
     ...rest
 }) => {
     return (
         <Link href={href}>
-            <a className={className} tabIndex={tabIndex} {...rest}>
+            <a
+                onKeyDown={onKeyDown}
+                className={className}
+                tabIndex={tabIndex}
+                {...rest}
+            >
                 {children}
             </a>
         </Link>

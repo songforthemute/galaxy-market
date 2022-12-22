@@ -1,4 +1,4 @@
-import { Bulb, ChatBubble, Quantity } from "@components/Atoms";
+import { Bulb, ChatBubbleSquare, Quantity } from "@components/Atoms";
 import { booleanCls, cls } from "@libs/client/util";
 import s from "./PostReaction.module.css";
 
@@ -39,7 +39,7 @@ const PostReaction = ({
             )}
             <div>
                 <Quantity>
-                    <ChatBubble w={5} h={5} strokeWidth={1.5} />
+                    <ChatBubbleSquare w={5} h={5} strokeWidth={1.5} />
                     <span>댓글 {replies}</span>
                 </Quantity>
             </div>

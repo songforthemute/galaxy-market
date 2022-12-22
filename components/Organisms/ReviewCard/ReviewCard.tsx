@@ -33,7 +33,11 @@ const ReviewCard = ({ data, userId, onClickDelete }: Props) => {
 
     return (
         <article className={s.root}>
-            <Anchor className={s.anchor} href={`/profile/${data?.createdById}`}>
+            <Anchor
+                as={data?.createdBy.avatarUrl ? "image" : undefined}
+                className={s.anchor}
+                href={`/profile/${data?.createdById}`}
+            >
                 <ProfileCard
                     onKeyDown={onKeyDownEnter}
                     tabIndex={0}
@@ -63,7 +67,11 @@ const ReviewCard = ({ data, userId, onClickDelete }: Props) => {
                 )}
             </Text>
 
-            <Anchor className={s.anchor} href={`/products/${data?.productId}`}>
+            <Anchor
+                as={data?.product.image ? "image" : undefined}
+                className={s.anchor}
+                href={`/products/${data?.productId}`}
+            >
                 <ProfileCard
                     onKeyDown={onKeyDownEnter}
                     tabIndex={0}

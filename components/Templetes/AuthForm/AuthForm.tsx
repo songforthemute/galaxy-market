@@ -103,7 +103,7 @@ const AuthForm = ({ mutatorFn, loading, errors }: Props) => {
             <FormProvider {...formProviderValues}>
                 <form
                     onSubmit={handleSubmit(_onSubmit)}
-                    className="md:min-w-[50vw]"
+                    className="w-full md:max-w-[50vw] justify-center"
                 >
                     {method === "login" ? <LoginForm /> : <JoinForm />}
                     <Button

@@ -1,0 +1,31 @@
+.root {
+    @apply flex flex-col;
+}
+
+.header {
+    @apply bg-white w-full text-lg font-medium py-4 fixed text-achroma-dark border-b top-0 flex items-center z-40;
+}
+
+.backButton {
+    @apply absolute left-6 p-1 text-achroma-dark text-2xl transition duration-300 border-b-[1.5px] border-transparent;
+}
+
+.backButton:hover {
+    @apply text-primary-dark border-primary-dark;
+}
+
+.backButton:focus {
+    @apply outline-none text-primary-dark border-primary-dark;
+}
+
+.sidebar {
+    @apply absolute right-6 p-1 text-achroma-dark text-2xl transition duration-300 border-b-[1.5px] border-transparent;
+}
+
+.sidebar:hover {
+    @apply text-primary-dark border-primary-dark;
+}
+
+.sidebar:focus {
+    @apply outline-none text-primary-dark border-primary-dark;
+}
