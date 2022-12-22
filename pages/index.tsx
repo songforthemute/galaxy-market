@@ -11,6 +11,7 @@ import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
 import Layout from "@components/layout";
 import { FloatingAnchor } from "@components/Molecules";
 import { Add } from "@components/Atoms";
+
 const ItemCard = dynamic(() => import("@components/Organisms/ItemCard"));
 
 interface ProductsWithLike extends Product {
@@ -52,7 +53,7 @@ const Home: NextPage = () => {
     }, [data]);
 
     return (
-        <Layout title="홈" hasTabBar canGoBack hasConfig>
+        <Layout title="홈" backwardButton dockBar configTab>
             <section className="flex flex-col divide-y-[1px]">
                 {items.map((item) => (
                     <ItemCard product={item} key={`item-${item?.id}`} />

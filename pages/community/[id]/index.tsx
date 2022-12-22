@@ -134,7 +134,7 @@ const PostDetail: NextPage = () => {
     }, [deleteReplyReturn]);
 
     return (
-        <Layout title={"커뮤니티"} canGoBack>
+        <Layout title={"커뮤니티"} backwardButton configTab>
             {modal && (
                 <DeleteModal
                     loading={deleteReplyLoading}

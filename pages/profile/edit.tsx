@@ -56,7 +56,7 @@ const EditProfile: NextPage = () => {
     }, [data]);
 
     return (
-        <Layout title="프로필 수정" canGoBack>
+        <Layout title="프로필 수정" backwardButton>
             <EditProfileForm
                 user={user}
                 mutatorFn={edit}

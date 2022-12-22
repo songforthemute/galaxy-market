@@ -6,14 +6,17 @@ import useSWRInfinite from "swr/infinite";
 // types
 import type { NextPage } from "next";
 import type { Review, User } from "@prisma/client";
-// custom hooks
+// utils
 import useUser from "@libs/client/useUser";
 import useGetKey from "@libs/client/useGetKey";
 import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
+import useFocusEvent from "@libs/client/useFocusEvent";
+import { useToggleModal } from "@libs/hooks/useToggle";
+import useMutation from "@libs/client/useMutation";
+import { booleanCls } from "@libs/client/util";
 // components
 import Layout from "@components/layout";
 import { CircleButton, ProfileCard } from "@components/Molecules";
-import { booleanCls } from "@libs/client/util";
 import {
     Anchor,
     Heart,
@@ -21,9 +24,6 @@ import {
     ShoppingCart,
     Text,
 } from "@components/Atoms";
-import useFocusEvent from "@libs/client/useFocusEvent";
-import { useToggleModal } from "@libs/hooks/useToggle";
-import useMutation from "@libs/client/useMutation";
 
 const ReviewCard = dynamic(() => import("@components/Organisms/ReviewCard"));
 const DeleteModal = dynamic(() => import("@components/Organisms/DeleteModal"));
@@ -119,7 +119,7 @@ const Profile: NextPage = () => {
     }, [deleteReviewReturn]);
 
     return (
-        <Layout title="프로필" hasTabBar canGoBack hasConfig>
+        <Layout title="프로필" backwardButton dockBar configTab>
             {modal && (
                 <DeleteModal
                     loading={deleteReviewLoading}
@@ -133,6 +133,7 @@ const Profile: NextPage = () => {
             <div className="p-4 space-y-10 w-full md:max-w-7xl mx-auto">
                 {/* 프로파일 */}
                 <Anchor
+                    as={profileData?.profile?.avatarUrl ? "image" : undefined}
                     href={booleanCls(
                         user?.id === profileData?.profile?.id,
                         `/profile/edit`,
@@ -153,7 +154,7 @@ const Profile: NextPage = () => {
                 </Anchor>
 
                 {/* Sell Buy Like */}
-                <div className="flex justify-around mx-12">
+                <div className="flex justify-around mx-12 gap-x-5">
                     <Anchor className="rounded-full" href={`${asPath}/sell`}>
                         <CircleButton>
                             <ShoppingCart />

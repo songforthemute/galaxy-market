@@ -55,7 +55,7 @@ const Chats: NextPage = () => {
     }, [data]);
 
     return (
-        <Layout title="메시지" hasTabBar canGoBack hasConfig>
+        <Layout title="메시지" backwardButton dockBar configTab>
             <section className="flex flex-col divide-y-[1px] divide-achroma-light w-full mx-auto">
                 {messages.map((v) => (
                     <Anchor

@@ -66,7 +66,7 @@ const Search: NextPage = () => {
     }, [data]);
 
     return (
-        <Layout title="검색하기" hasTabBar canGoBack hasConfig>
+        <Layout title="검색하기" backwardButton dockBar configTab>
             {modal && (
                 <SearchFormModal
                     onClose={() => toggleModal()}

@@ -32,7 +32,7 @@ const UploadPosting: NextPage = () => {
     }, [data, router]);
 
     return (
-        <Layout title="질문하기" canGoBack>
+        <Layout title="질문하기" backwardButton configTab>
             <UploadPostForm mutatorFn={upload} loading={loading} />
         </Layout>
     );

@@ -81,7 +81,7 @@ const ItemDetailPage: NextPage = () => {
     };
 
     return (
-        <Layout title="상품 상세" canGoBack>
+        <Layout title="상품 상세" backwardButton configTab>
             <ItemDetail
                 item={data?.product}
                 related={data?.relatedProducts}

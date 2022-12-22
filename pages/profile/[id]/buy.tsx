@@ -60,7 +60,7 @@ const Likes: NextPage = () => {
     }, [data]);
 
     return (
-        <Layout title="구매내역" hasTabBar canGoBack hasConfig>
+        <Layout title="구매내역" backwardButton configTab>
             <section className="flex flex-col divide-y-[1px]">
                 {items.map((item) => (
                     <ItemCard

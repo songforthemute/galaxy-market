@@ -43,7 +43,7 @@ const WriteReview: NextPage = () => {
     );
 
     return (
-        <Layout title="리뷰하기" canGoBack>
+        <Layout title="리뷰하기" backwardButton>
             <ReviewForm
                 loading={loading}
                 soldoutList={data?.soldoutProducts}

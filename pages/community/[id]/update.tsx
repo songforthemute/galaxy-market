@@ -79,7 +79,7 @@ const UpdatePost: NextPage = () => {
     }, [data]);
 
     return (
-        <Layout title="게시글 업데이트" canGoBack>
+        <Layout title="게시글 업데이트" backwardButton configTab>
             {modal && (
                 <DeleteModal
                     loading={deleteLoading}

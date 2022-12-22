@@ -27,7 +27,7 @@ const UploadItem: NextPage = () => {
     }, [data]);
 
     return (
-        <Layout title="상품 등록" hasTabBar canGoBack>
+        <Layout title="상품 등록" backwardButton configTab>
             <UploadItemForm loading={loading} mutatorFn={mutation} />
         </Layout>
     );

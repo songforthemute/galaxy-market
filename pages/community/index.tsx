@@ -76,7 +76,7 @@ const Community: NextPage = () => {
     }, [data]);
 
     return (
-        <Layout title="커뮤니티" hasTabBar canGoBack hasConfig>
+        <Layout title="커뮤니티" backwardButton dockBar configTab>
             <div className="flex p-2 gap-2">
                 {["모두", "질문", "정보", "후기", "자유"].map((v, i) => (
                     <button
