@@ -1,0 +1,19 @@
+.root {
+    @apply px-12 py-16 flex flex-col text-start justify-center items-start;
+}
+
+.form {
+    @apply w-full flex flex-col items-center gap-y-4;
+}
+
+.form > div {
+    @apply w-full;
+}
+
+.form label {
+    display: none;
+}
+
+.button {
+    @apply w-full rounded-lg mx-auto;
+}

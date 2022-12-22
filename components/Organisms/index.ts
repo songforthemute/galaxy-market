@@ -7,3 +7,6 @@ export { default as PostDetail } from "./PostDetail";
 export { default as ReplyDetail } from "./ReplyDetail";
 export { default as DeleteModal } from "./DeleteModal";
 export { default as ReviewCard } from "./ReviewCard";
+export { default as LogOutModal } from "./LogOutModal";
+export { default as WithdrawalModal } from "./WithdrawalModal";
+export { default as DockBar } from "./DockBar";

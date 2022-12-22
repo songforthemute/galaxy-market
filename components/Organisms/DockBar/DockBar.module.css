@@ -1,0 +1,31 @@
+.dock {
+    @apply flex w-full text-achroma-dark border-t-[1.5px] fixed bottom-0 py-4 justify-evenly items-center bg-achroma-lightest;
+}
+
+.dock > li {
+    @apply list-none;
+}
+
+.dockButton {
+    @apply flex flex-col text-center items-center justify-center gap-y-2 transition duration-300 p-1 border-b-[1.5px] border-transparent;
+}
+
+.dockButton > span {
+    @apply inline-block;
+}
+
+.dockButton:hover {
+    @apply text-primary-dark border-primary-dark;
+}
+
+.dockButton:focus {
+    @apply outline-none text-primary-dark border-primary-dark;
+}
+
+.active {
+    @apply text-primary-dark border-primary-dark;
+}
+
+.active > svg {
+    @apply stroke-2;
+}

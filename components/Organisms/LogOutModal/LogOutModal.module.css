@@ -1,0 +1,11 @@
+.root {
+    @apply px-12 py-16 flex flex-col text-start justify-center items-start gap-y-8;
+}
+
+.container {
+    @apply w-full flex items-center justify-between gap-x-8;
+}
+
+.button {
+    @apply w-full rounded-lg;
+}
