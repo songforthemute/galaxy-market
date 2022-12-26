@@ -11,6 +11,7 @@ import { Button, Img, Picture } from "@components/Atoms";
 import { ImageInput } from "@components/Molecules";
 import { UploadItemInputs } from "@components/Organisms";
 import useFetch from "@libs/client/useFetch";
+import useFocusEvent from "@libs/client/useFocusEvent";
 
 interface CloudflareURLInterface {
     status: boolean;
@@ -62,6 +63,7 @@ const UploadItemForm = ({
     errors,
     preset = undefined,
 }: Props) => {
+    const { onKeyDownEnter } = useFocusEvent("itself");
     const { fetcher } = useFetch();
     const formProviderValues = useForm<FormInterface>({
         reValidateMode: "onBlur",
@@ -146,12 +148,15 @@ const UploadItemForm = ({
                 >
                     <>
                         <ImageInput
+                            onKeyDown={onKeyDownEnter}
+                            tabIndex={0}
                             id="image"
                             className={cls(
                                 s.attach,
                                 booleanCls(
                                     imagePreview.length === 0,
-                                    s.unattached
+                                    s.unattached,
+                                    s.attached
                                 )
                             )}
                             register={register("image")}
@@ -165,7 +170,7 @@ const UploadItemForm = ({
                                     directSrc
                                 />
                             ) : (
-                                <Picture strokeWidth={1} w={14} h={14} />
+                                <Picture strokeWidth={1} w={12} h={12} />
                             )}
                         </ImageInput>
                     </>

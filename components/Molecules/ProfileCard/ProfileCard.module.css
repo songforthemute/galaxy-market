@@ -44,7 +44,7 @@
 }
 
 .chevron {
-    @apply text-achroma-medium transition duration-300 ease-in-out;
+    @apply scale-75 text-achroma-medium transition duration-300 ease-in-out;
 }
 
 .root:hover .chevron,

@@ -31,6 +31,8 @@ interface Props {
 const ReviewCard = ({ data, userId, onClickDelete }: Props) => {
     const { onKeyDownEnter } = useFocusEvent("parent");
 
+    console.log(data?.star);
+
     return (
         <article className={s.root}>
             <Anchor
@@ -46,9 +48,7 @@ const ReviewCard = ({ data, userId, onClickDelete }: Props) => {
                     subtext={[0, 0, 0, 0, 0].map((_, i) => (
                         <Star
                             fill={(data?.star || 0) > i}
-                            w={4}
-                            h={4}
-                            className="text-primary-medium inline-flex"
+                            className={s.star}
                             key={`score_${i}`}
                         />
                     ))}

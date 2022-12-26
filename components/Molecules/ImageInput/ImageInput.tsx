@@ -1,5 +1,5 @@
 // types
-import type { FC, ReactNode } from "react";
+import type { FC, KeyboardEvent, ReactNode } from "react";
 import type { UseFormRegisterReturn } from "react-hook-form";
 
 interface Props {
@@ -7,11 +7,25 @@ interface Props {
     children?: ReactNode | string | any;
     register: UseFormRegisterReturn;
     className?: string;
+    tabIndex?: number;
+    onKeyDown?: (event: KeyboardEvent) => void;
 }
 
-const ImageInput: FC<Props> = ({ id, children, register, className }) => {
+const ImageInput: FC<Props> = ({
+    id,
+    children,
+    register,
+    className,
+    tabIndex,
+    onKeyDown,
+}) => {
     return (
-        <label htmlFor={id} className={className}>
+        <label
+            onKeyDown={onKeyDown}
+            tabIndex={tabIndex}
+            htmlFor={id}
+            className={className}
+        >
             {children}
             <input
                 id={id}

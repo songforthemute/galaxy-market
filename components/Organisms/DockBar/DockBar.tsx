@@ -34,7 +34,7 @@ const DockBar = ({ pathname, userId }: Props) => {
                         booleanCls(pathname === "/", s.active)
                     )}
                 >
-                    <Home w={7} h={7} />
+                    <Home />
                     <Text variant="span">홈</Text>
                 </Anchor>
             </li>
@@ -52,7 +52,7 @@ const DockBar = ({ pathname, userId }: Props) => {
                         )
                     )}
                 >
-                    <MagnifyingGlass w={7} h={7} />
+                    <MagnifyingGlass />
                     <Text variant="span">검색하기</Text>
                 </Anchor>
             </li>
@@ -70,7 +70,7 @@ const DockBar = ({ pathname, userId }: Props) => {
                         )
                     )}
                 >
-                    <Building w={7} h={7} />
+                    <Building />
                     <Text variant="span">커뮤니티</Text>
                 </Anchor>
             </li>
@@ -85,7 +85,7 @@ const DockBar = ({ pathname, userId }: Props) => {
                         booleanCls(pathname?.slice(0, 6) === "/chats", s.active)
                     )}
                 >
-                    <ChatBubbleSquare w={7} h={7} />
+                    <ChatBubbleSquare />
                     <Text variant="span">메시지</Text>
                 </Anchor>
             </li>
@@ -103,7 +103,7 @@ const DockBar = ({ pathname, userId }: Props) => {
                         )
                     )}
                 >
-                    <User w={7} h={7} />
+                    <User />
                     <Text variant="span">프로필</Text>
                 </Anchor>
             </li>

@@ -57,7 +57,7 @@ const Item = ({ product }: Props) => {
                     </div>
 
                     <Quantity className={s.preferences}>
-                        <Heart w={4} h={4} />
+                        <Heart />
                         {product?._count.record}
                     </Quantity>
                 </div>

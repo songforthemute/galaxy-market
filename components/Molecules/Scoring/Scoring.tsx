@@ -32,8 +32,8 @@ const Scoring = ({ onClick, score, className = "" }: Props) => {
                 >
                     <Star
                         fill={Boolean((score || 0) >= v)}
-                        w={8}
-                        h={8}
+                        w={10}
+                        h={10}
                         strokeWidth={1}
                     />
                 </button>

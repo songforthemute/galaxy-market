@@ -38,3 +38,7 @@
 .preferences {
     @apply absolute bottom-4 right-4 text-center text-achroma-dark;
 }
+
+.preferences > svg {
+    @apply scale-75;
+}

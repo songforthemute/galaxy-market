@@ -54,7 +54,7 @@ const ProfileCard = ({
                 </Text>
             </div>
 
-            <ChevronRight className={s.chevron} w={4} h={4} strokeWidth={2} />
+            <ChevronRight className={s.chevron} strokeWidth={2} />
         </div>
     );
 };

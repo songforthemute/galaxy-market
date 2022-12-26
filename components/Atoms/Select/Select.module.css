@@ -7,6 +7,10 @@
     @apply outline-none bg-primary-medium text-achroma-lightest cursor-pointer;
 }
 
+.checked {
+    @apply scale-75;
+}
+
 .trigger {
     @apply inline-flex min-h-[0.5rem] gap-2 border-[1.5px] border-primary-medium items-center
     justify-center text-achroma-darkest transition duration-300 leading-4 px-4 py-4;

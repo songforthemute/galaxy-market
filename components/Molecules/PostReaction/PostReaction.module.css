@@ -25,3 +25,7 @@
 .on svg {
     @apply fill-primary-light;
 }
+
+.icon {
+    @apply scale-75;
+}

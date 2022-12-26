@@ -85,8 +85,6 @@ const ItemDetail = ({
                 <button onClick={onToggleLike}>
                     <Heart
                         strokeWidth={1.5}
-                        w={7}
-                        h={7}
                         className={booleanCls(isLiked, s.like, s.dislike)}
                     />
                 </button>

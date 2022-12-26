@@ -46,7 +46,7 @@ export const SelectItem = forwardRef<
         >
             <Radix.ItemText>{children || value}</Radix.ItemText>
             <Radix.ItemIndicator>
-                <Check w={4} h={4} strokeWidth={2} />
+                <Check className={s.checked} strokeWidth={2} />
             </Radix.ItemIndicator>
         </Radix.Item>
     );

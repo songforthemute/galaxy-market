@@ -3,14 +3,39 @@
 }
 
 .attach {
-    @apply w-full py-24 rounded-lg transition duration-300 cursor-pointer hover:opacity-medium hover:bg-primary-light;
+    @apply w-full px-2 py-24 rounded-lg transition duration-300
+    cursor-pointer border-[1.5px] border-transparent;
+}
+
+.attach:hover {
+    @apply bg-opacity-medium;
+}
+
+.attach:focus {
+    @apply bg-opacity-medium outline-none;
 }
 
 .unattached {
-    @apply flex items-center justify-center border-[1.5px] border-dashed
-    border-achroma-dark text-achroma-dark hover:border-primary-dark hover:text-primary-dark;
+    @apply flex items-center justify-center border-dashed
+    border-achroma-dark text-achroma-dark;
+}
+
+.unattached:hover {
+    @apply border-primary-dark text-primary-dark;
+}
+
+.unattached:focus {
+    @apply border-solid border-primary-dark text-primary-dark bg-primary-light ring-[1.5px] ring-primary-dark;
+}
+
+.attached {
+    @apply block p-4 border-dashed border-achroma-dark;
+}
+
+.attached:focus {
+    @apply border-solid border-primary-dark ring-[1.5px] ring-primary-dark;
 }
 
 .attachment {
-    @apply mx-auto py-48;
+    @apply mx-auto py-48 rounded-lg;
 }

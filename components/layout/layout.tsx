@@ -75,7 +75,6 @@ const Layout: FC<Props> = ({
                 {/* 뷰 */}
                 <main className={cls("pt-[3.8125rem]", dockBar ? "pb-24" : "")}>
                     {/* 설정 OF & OFF */}
-
                     {sidebar && <ConfigSidebar userEmail={user?.email} />}
 
                     {children}
