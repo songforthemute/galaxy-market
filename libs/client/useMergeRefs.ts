@@ -1,6 +1,6 @@
 import type { ForwardedRef, RefCallback } from "react";
 
-export const useMergeRefs = <T extends any>(
+const useMergeRefs = <T extends any>(
     ...refs: ForwardedRef<T>[]
 ): RefCallback<T> => {
     return (node: T) => {
@@ -12,3 +12,5 @@ export const useMergeRefs = <T extends any>(
         }
     };
 };
+
+export default useMergeRefs;
