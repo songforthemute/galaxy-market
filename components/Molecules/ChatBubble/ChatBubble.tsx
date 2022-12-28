@@ -1,5 +1,5 @@
 // utils
-import { booleanCls, cls, convertDate } from "@libs/client/util";
+import { booleanCls, cls, convertDate } from "@libs/client";
 // styles
 import s from "./ChatBubble.module.css";
 // component

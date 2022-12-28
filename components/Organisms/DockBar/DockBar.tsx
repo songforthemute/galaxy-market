@@ -1,6 +1,6 @@
 // utils
 import useFocusEvent from "@libs/client/useFocusEvent";
-import { booleanCls, cls } from "@libs/client/util";
+import { booleanCls, cls } from "@libs/client";
 // styles
 import s from "./DockBar.module.css";
 // components

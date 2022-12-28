@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 // styles
 import s from "./SearchFormModal.module.css";
@@ -11,7 +12,6 @@ import {
     SelectItem,
 } from "@components/Atoms";
 import { NumberInput, TextInput } from "@components/Molecules";
-import { useEffect, useState } from "react";
 
 interface FormInterface {
     name: string;
@@ -34,7 +34,7 @@ const SearchFormModal = ({ onClose, onSearch }: Props) => {
     const [sort, setSort] = useState("");
     useEffect(() => {
         setValue("sort", sort);
-    }, [sort]);
+    }, [sort, setValue]);
 
     const _onSubmit = (data: FormInterface) => {
         if (sort === "") {

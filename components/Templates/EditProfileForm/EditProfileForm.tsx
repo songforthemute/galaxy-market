@@ -3,9 +3,7 @@ import { useForm } from "react-hook-form";
 // types
 import type { User } from "@prisma/client";
 // utils
-import { getImgSource } from "@libs/client/util";
-import useFocusEvent from "@libs/client/useFocusEvent";
-import useFetch from "@libs/client/useFetch";
+import { getImgSource, useFocusEvent, useFetch } from "@libs/client";
 // styles
 import s from "./EditProfileForm.module.css";
 // components
@@ -104,7 +102,7 @@ const EditProfileForm = ({
         if (user?.username) setValue("username", user.username);
         if (user?.phone) setValue("phone", user.phone);
         if (user?.avatarUrl) setPreview(getImgSource(user.avatarUrl));
-    }, [user]);
+    }, [user, setValue]);
 
     return (
         <section className={s.root}>

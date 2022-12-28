@@ -8,11 +8,11 @@ import type {
     ReactNode,
     RefAttributes,
 } from "react";
-// css
-import s from "./Select.module.css";
 // utill
-import { cls } from "@libs/client/util";
-// icons
+import { cls } from "@libs/client";
+// styles
+import s from "./Select.module.css";
+// components
 import { ChevronDown, ChevronUp, Check } from "@components/Atoms";
 
 interface ItemProps {
@@ -51,6 +51,7 @@ export const SelectItem = forwardRef<
         </Radix.Item>
     );
 });
+SelectItem.displayName = "SelectItem";
 
 export const Select: FC<Props> = ({
     className = "",

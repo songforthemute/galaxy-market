@@ -1,6 +1,6 @@
 // utils
-import { booleanCls, cls } from "@libs/client/util";
-// css
+import { booleanCls, cls } from "@libs/client";
+// styles
 import s from "./Rating.module.css";
 // icons
 import { Star } from "@components/Atoms/icons";

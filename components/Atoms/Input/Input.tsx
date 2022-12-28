@@ -2,7 +2,7 @@
 import type { InputHTMLAttributes } from "react";
 import type { UseFormRegisterReturn } from "react-hook-form";
 // utils
-import { booleanCls, cls } from "@libs/client/util";
+import { booleanCls, cls } from "@libs/client";
 // css
 import s from "./Input.module.css";
 

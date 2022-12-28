@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 // utils
-import { booleanCls } from "@libs/client/util";
+import { booleanCls } from "@libs/client";
 // styles
 import s from "./AuthForm.module.css";
 // components
@@ -56,7 +56,7 @@ const AuthForm = ({ mutatorFn, loading, errors }: Props) => {
                 { shouldFocus: true }
             );
         }
-    }, [errors]);
+    }, [errors, setError]);
 
     return (
         <section className={s.root}>

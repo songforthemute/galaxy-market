@@ -1,5 +1,5 @@
 import { Button, Modal, Text } from "@components/Atoms";
-import { useToggleModal } from "@libs/hooks/useToggle";
+import { useToggleModal } from "@libs/client";
 
 interface Props {
     onClickConfirm?: () => void;

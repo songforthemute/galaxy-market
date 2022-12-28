@@ -1,7 +1,7 @@
 // types
 import type { FC, ReactNode } from "react";
 // utils
-import { cls } from "@libs/client/util";
+import { cls } from "@libs/client";
 
 interface Props {
     children?: ReactNode | any;

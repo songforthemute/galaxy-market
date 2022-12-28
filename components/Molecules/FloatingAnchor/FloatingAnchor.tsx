@@ -1,9 +1,10 @@
 // types
 import type { FC, ReactNode } from "react";
 // utils
-import { cls } from "@libs/client/util";
+import { cls } from "@libs/client";
 // styles
 import s from "./FloatingAnchor.module.css";
+// components
 import { Anchor } from "@components/Atoms";
 
 interface Props {

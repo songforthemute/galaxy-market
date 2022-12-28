@@ -3,15 +3,19 @@ import { FormProvider, useForm } from "react-hook-form";
 // types
 import type { Product } from "@prisma/client";
 // utils
-import { booleanCls, cls, getImgSource } from "@libs/client/util";
+import {
+    booleanCls,
+    cls,
+    getImgSource,
+    useFetch,
+    useFocusEvent,
+} from "@libs/client";
 // styles
 import s from "./UploadItemForm.module.css";
 // components
 import { Button, Img, Picture } from "@components/Atoms";
 import { ImageInput } from "@components/Molecules";
 import { UploadItemInputs } from "@components/Organisms";
-import useFetch from "@libs/client/useFetch";
-import useFocusEvent from "@libs/client/useFocusEvent";
 
 interface CloudflareURLInterface {
     status: boolean;
@@ -123,7 +127,7 @@ const UploadItemForm = ({
                 { shouldFocus: true }
             );
         }
-    }, [errors]);
+    }, [errors, setError]);
 
     // for update api call
     useEffect(() => {
@@ -137,7 +141,7 @@ const UploadItemForm = ({
                 setImagePreview(getImgSource(preset.image));
             }
         }
-    }, []);
+    }, [preset, setValue]);
 
     return (
         <section className={s.root}>

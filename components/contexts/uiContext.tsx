@@ -146,7 +146,17 @@ export const UIProvider: FC<{ children?: ReactNode }> = (props) => {
             setUserAvatar,
             setModalView,
         }),
-        [state]
+        [
+            state,
+            openSidebar,
+            closeSidebar,
+            openDropdown,
+            closeDropdown,
+            openModal,
+            closeModal,
+            setUserAvatar,
+            setModalView,
+        ]
     );
 
     /**

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 // utils
-import { useToggleSidebar } from "@libs/hooks/useToggle";
-import useMutation from "@libs/client/useMutation";
+import { useMutation, useToggleSidebar } from "@libs/client";
 // components
 import { Button, Sidebar } from "@components/Atoms";
 import { LogOutModal, WithdrawalModal } from "@components/Organisms";
@@ -32,7 +31,7 @@ const ConfigSidebar = ({ userEmail }: Props) => {
         if (logOutData && logOutData.status) {
             reload();
         }
-    }, [logOutData]);
+    }, [logOutData, reload]);
 
     const [withdrawal, { loading: withdrawalLoading, data: withdrawalData }] =
         useMutation<MutationReturn>({
@@ -44,7 +43,7 @@ const ConfigSidebar = ({ userEmail }: Props) => {
         if (withdrawalData && withdrawalData.status) {
             reload();
         }
-    }, [withdrawalData]);
+    }, [withdrawalData, reload]);
 
     return (
         <Sidebar className="flex flex-col" onClose={() => toggleSidebar()}>

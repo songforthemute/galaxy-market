@@ -1,7 +1,7 @@
 // typs
 import type { KeyboardEvent } from "react";
 // utils
-import { cls, booleanCls } from "@libs/client/util";
+import { cls, booleanCls } from "@libs/client";
 // styles
 import s from "./ProfileCard.module.css";
 // components

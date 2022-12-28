@@ -1,7 +1,7 @@
 // types
 import type { MouseEvent } from "react";
 // utils
-import { booleanCls, cls } from "@libs/client/util";
+import { booleanCls, cls } from "@libs/client";
 // styles
 import s from "./Scoring.module.css";
 // component

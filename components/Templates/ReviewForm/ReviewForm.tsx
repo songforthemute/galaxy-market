@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import type { Product } from "@prisma/client";
 import type { MouseEvent } from "react";
 // utils
-import { convertPrice } from "@libs/client/util";
+import { convertPrice } from "@libs/client";
 // styles
 import s from "./ReviewForm.module.css";
 // components
@@ -39,7 +39,7 @@ const ReviewForm = ({ loading = false, soldoutList, mutatorFn }: Props) => {
     const [productId, setProductId] = useState<number | undefined>();
     useEffect(() => {
         setValue("productId", productId);
-    }, [productId]);
+    }, [productId, setValue]);
 
     // for scoring
     const [score, setScore] = useState<number | undefined>();

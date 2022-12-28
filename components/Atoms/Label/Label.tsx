@@ -1,5 +1,5 @@
 import type { FC, LabelHTMLAttributes, ReactNode } from "react";
-import { cls } from "@libs/client/util";
+import { cls } from "@libs/client";
 import s from "./Label.module.css";
 
 interface Props extends LabelHTMLAttributes<HTMLLabelElement> {

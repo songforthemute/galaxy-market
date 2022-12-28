@@ -2,7 +2,7 @@ import Image from "next/image";
 // types
 import type { ImageProps } from "next/image";
 // utils
-import { cls, getImgSource } from "@libs/client/util";
+import { cls, getImgSource } from "@libs/client";
 
 interface Props extends ImageProps {
     src: string;

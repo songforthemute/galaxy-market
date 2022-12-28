@@ -1,5 +1,8 @@
+// types
 import type { FC, ReactNode } from "react";
-import { booleanCls, cls } from "@libs/client/util";
+// utils
+import { booleanCls, cls } from "@libs/client";
+// styles
 import s from "./Badge.module.css";
 
 interface Props {

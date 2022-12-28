@@ -1,10 +1,8 @@
 import { forwardRef, useRef } from "react";
 // types
-import type { ButtonHTMLAttributes, JSXElementConstructor, FC } from "react";
-// hooks
-import { useMergeRefs } from "@libs/hooks/useMergeRefs";
+import type { ButtonHTMLAttributes, FC } from "react";
 // util
-import { booleanCls, cls } from "@libs/client/util";
+import { booleanCls, cls, useMergeRefs } from "@libs/client";
 // css
 import s from "./Button.module.css";
 import LoadingDots from "@components/Atoms/LoadingDots";
@@ -12,7 +10,6 @@ import LoadingDots from "@components/Atoms/LoadingDots";
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
     href?: string;
     className?: string;
-    Component?: JSXElementConstructor<any> | string;
     loading?: boolean;
     disabled?: boolean;
     active?: boolean;
@@ -28,7 +25,6 @@ const Button: FC<Props> = forwardRef(
             href,
             variant = "normal",
             className = "",
-            Component = "button",
             loading = false,
             disabled = false,
             active,
@@ -38,10 +34,10 @@ const Button: FC<Props> = forwardRef(
         },
         buttonRef
     ) => {
-        const ref = useRef<typeof Component>(null);
+        const ref = useRef(null);
 
         return (
-            <Component
+            <button
                 aria-pressed={active}
                 ref={useMergeRefs<any>(ref, buttonRef)}
                 className={cls(
@@ -58,13 +54,14 @@ const Button: FC<Props> = forwardRef(
                 {!loading ? (
                     children
                 ) : (
-                    <i className="m-0 flex">
+                    <span className="m-0 inline-flex">
                         <LoadingDots />
-                    </i>
+                    </span>
                 )}
-            </Component>
+            </button>
         );
     }
 );
+Button.displayName = "Button";
 
 export default Button;

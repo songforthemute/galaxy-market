@@ -1,9 +1,9 @@
 // types
 import type { FC, ReactNode } from "react";
+// utils
+import { cls } from "@libs/client";
 // styles
 import s from "./CircleButton.module.css";
-// utils
-import { cls } from "@libs/client/util";
 
 interface Props {
     children?: ReactNode | any;

@@ -1,7 +1,7 @@
 // types
 import type { KeyboardEvent } from "react";
 // utils
-import { cls } from "@libs/client/util";
+import { cls } from "@libs/client";
 // styles
 import s from "./ItemThumbnail.module.css";
 // Component

@@ -2,13 +2,14 @@ import { useForm } from "react-hook-form";
 import dynamic from "next/dynamic";
 // types
 import type { Post, Replies } from "@prisma/client";
+// utils
+import { useFocusEvent } from "@libs/client";
 // styles
 import s from "./PostDetailWithReply.module.css";
 // components
 import { PostDetail } from "@components/Organisms";
 import { ProfileCard, TextareaWithLabel } from "@components/Molecules";
 import { Anchor, Button } from "@components/Atoms";
-import useFocusEvent from "@libs/client/useFocusEvent";
 
 const ReplyDetail = dynamic(() => import("@components/Organisms/ReplyDetail"));
 const Close = dynamic(() => import("@components/Atoms/icons/close"));

@@ -1,11 +1,12 @@
 // types
 import { Post } from "@prisma/client";
+// utils
+import { convertDate } from "@libs/client";
 // styles
 import s from "./PostDetail.module.css";
 // components
 import { PostReaction } from "@components/Molecules";
 import { Badge, Text } from "@components/Atoms";
-import { convertDate } from "@libs/client/util";
 
 interface PostWithUserAndReaction extends Post {
     user?: {

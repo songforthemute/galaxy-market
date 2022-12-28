@@ -2,7 +2,7 @@
 import type { TextareaProps } from "@components/Atoms/Textarea/Textarea";
 import type { UseFormRegisterReturn } from "react-hook-form";
 // utils
-import { booleanCls } from "@libs/client/util";
+import { booleanCls } from "@libs/client";
 // styles
 import s from "./TextareaWithLabel.module.css";
 // components

@@ -54,7 +54,7 @@ export const ThemeProvider: FC<{ children?: ReactNode }> = (children) => {
             onDarkMode,
             offDarkMode,
         }),
-        [state]
+        [state, offDarkMode, onDarkMode]
     );
 
     /**

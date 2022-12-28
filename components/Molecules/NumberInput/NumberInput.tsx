@@ -1,7 +1,7 @@
 // types
 import type { InputProps } from "@components/Atoms/Input/Input";
 // utils
-import { booleanCls } from "@libs/client/util";
+import { booleanCls } from "@libs/client";
 // styles
 import s from "./NumberInput.module.css";
 // components

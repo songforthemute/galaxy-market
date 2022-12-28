@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useRef } from "react";
 import { clearAllBodyScrollLocks, disableBodyScroll } from "body-scroll-lock";
-import { Close } from "@components/Atoms/icons";
 // types
 import type { FC, ReactNode, MutableRefObject } from "react";
-// css
+// styles
 import s from "./Modal.module.css";
+// components
+import { Close } from "@components/Atoms/icons";
 
 interface Props {
     children?: ReactNode;

@@ -4,7 +4,7 @@ import type { KeyboardEvent } from "react";
 // styles
 import s from "./PostCard.module.css";
 // utils
-import { convertDate } from "@libs/client/util";
+import { convertDate } from "@libs/client";
 // components
 import { Badge, Text } from "@components/Atoms";
 import { PostReaction } from "@components/Molecules";

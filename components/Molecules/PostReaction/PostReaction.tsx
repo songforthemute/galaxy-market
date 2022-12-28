@@ -1,5 +1,5 @@
 import { Bulb, ChatBubbleSquare, Quantity } from "@components/Atoms";
-import { booleanCls, cls } from "@libs/client/util";
+import { booleanCls, cls } from "@libs/client";
 import s from "./PostReaction.module.css";
 
 interface Props {

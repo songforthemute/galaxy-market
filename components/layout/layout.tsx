@@ -4,9 +4,7 @@ import dynamic from "next/dynamic";
 // types
 import type { FC, ReactNode } from "react";
 // utils
-import useUser from "@libs/client/useUser";
-import { cls } from "@libs/client/util";
-import { useToggleSidebar } from "@libs/hooks/useToggle";
+import { cls, useUser, useToggleSidebar } from "@libs/client";
 // styles
 import s from "./Layout.module.css";
 // components
@@ -14,7 +12,7 @@ import { ChevronLeft, HorizontalDots, Text } from "@components/Atoms";
 
 const DockBar = dynamic(() => import("@components/Organisms/DockBar"));
 const ConfigSidebar = dynamic(
-    () => import("@components/Templetes/ConfigSidebar")
+    () => import("@components/Templates/ConfigSidebar")
 );
 
 interface Props {

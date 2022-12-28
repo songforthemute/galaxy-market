@@ -1,8 +1,7 @@
 // types
 import type { Review } from "@prisma/client";
 // utils
-import { convertDate } from "@libs/client/util";
-import useFocusEvent from "@libs/client/useFocusEvent";
+import { convertDate, useFocusEvent } from "@libs/client";
 // styles
 import s from "./ReviewCard.module.css";
 // components
@@ -30,8 +29,6 @@ interface Props {
 
 const ReviewCard = ({ data, userId, onClickDelete }: Props) => {
     const { onKeyDownEnter } = useFocusEvent("parent");
-
-    console.log(data?.star);
 
     return (
         <article className={s.root}>
@@ -62,7 +59,7 @@ const ReviewCard = ({ data, userId, onClickDelete }: Props) => {
                         onClick={() => onClickDelete(data?.id!)}
                         className={s.deleteReview}
                     >
-                        <Close w={5} h={5} strokeWidth={1.75} />
+                        <Close w={4} h={4} strokeWidth={1.75} />
                     </button>
                 )}
             </Text>

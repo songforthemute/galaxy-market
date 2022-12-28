@@ -2,8 +2,8 @@
 import type { FC, TextareaHTMLAttributes } from "react";
 import type { UseFormRegisterReturn } from "react-hook-form";
 // utils
-import { booleanCls, cls } from "@libs/client/util";
-// css
+import { booleanCls, cls } from "@libs/client";
+// styles
 import s from "./Textarea.module.css";
 
 export interface TextareaProps

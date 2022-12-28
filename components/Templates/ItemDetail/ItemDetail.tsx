@@ -4,8 +4,7 @@ import type { Product } from "@prisma/client";
 // styles
 import s from "./ItemDetail.module.css";
 // utils
-import useFocusEvent from "@libs/client/useFocusEvent";
-import { booleanCls, convertPrice } from "@libs/client/util";
+import { booleanCls, convertPrice, useFocusEvent } from "@libs/client";
 // components
 import { Anchor, Button, Heart, Img, Text } from "@components/Atoms";
 import { ProfileCard } from "@components/Molecules";

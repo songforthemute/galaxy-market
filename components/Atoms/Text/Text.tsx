@@ -7,8 +7,8 @@ import type {
     ReactElement,
 } from "react";
 // utils
-import { booleanCls, cls } from "@libs/client/util";
-//css
+import { booleanCls, cls } from "@libs/client";
+// styles
 import s from "./Text.module.css";
 
 interface Props {

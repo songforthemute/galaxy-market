@@ -3,7 +3,7 @@ import { clearAllBodyScrollLocks, disableBodyScroll } from "body-scroll-lock";
 // types
 import type { FC, ReactNode, MutableRefObject } from "react";
 // utils
-import { cls } from "@libs/client/util";
+import { cls } from "@libs/client";
 // styles
 import s from "./Sidebar.module.css";
 // components

@@ -44,7 +44,7 @@ const UploadPostForm = ({ mutatorFn, loading, preset = undefined }: Props) => {
     const [tag, setTag] = useState("");
     useEffect(() => {
         setValue("tag", tag);
-    }, [tag]);
+    }, [tag, setValue]);
 
     const _onSubmit = (data: FormInterface) => {
         if (loading) return;
@@ -64,7 +64,7 @@ const UploadPostForm = ({ mutatorFn, loading, preset = undefined }: Props) => {
             setTag(preset.tag);
             setValue("description", preset.description);
         }
-    }, []);
+    }, [preset, setValue]);
 
     return (
         <section className={s.root}>

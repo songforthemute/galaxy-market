@@ -3,7 +3,7 @@ import type { FC, ReactNode } from "react";
 // styles
 import s from "./ReplyDetail.module.css";
 // utils
-import { convertDate } from "@libs/client/util";
+import { convertDate } from "@libs/client";
 // components
 import { Img, Text } from "@components/Atoms";
 

@@ -1,5 +1,5 @@
-import { PasswordInput, TextInput } from "@components/Molecules";
 import { useFormContext } from "react-hook-form";
+import { PasswordInput, TextInput } from "@components/Molecules";
 
 interface JoinFormInterface {
     email: string;
