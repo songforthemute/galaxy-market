@@ -5,14 +5,15 @@ import useSWRInfinite from "swr/infinite";
 // types
 import type { NextPage } from "next";
 import type { Message } from "@prisma/client";
-// custom hooks
-import useUser from "@libs/client/useUser";
-import useGetKey from "@libs/client/useGetKey";
-import useMutation from "@libs/client/useMutation";
-import { useInfiniteScrollUp } from "@libs/client/useInfiniteScroll";
+// utils
+import {
+    useUser,
+    useGetKey,
+    useMutation,
+    useInfiniteScrollUp,
+} from "@libs/client";
 // components
-import Layout from "@components/layout";
-import { ChatBubble, ChatInput } from "@components/Molecules";
+import { Layout, ChatBubble, ChatInput } from "components";
 
 // interfaces
 interface SendingForm {

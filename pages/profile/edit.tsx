@@ -2,12 +2,10 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 // type
 import type { NextPage } from "next";
-// custom hooks
-import useUser from "@libs/client/useUser";
-import useMutation from "@libs/client/useMutation";
+// utils
+import { useUser, useMutation } from "@libs/client";
 // components
-import Layout from "@components/layout";
-import { EditProfileForm } from "@components/Templetes";
+import { Layout, EditProfileForm } from "components";
 
 // interfaces
 interface ErrorInterface {
@@ -38,20 +36,18 @@ const EditProfile: NextPage = () => {
     const [errors, setErrors] = useState<ErrorInterface | any>();
     // if authentication error
     useEffect(() => {
-        if (data?.status === false && data?.error) {
-            setErrors(data.error);
-            return;
-        }
-
         if (data && data.status) {
             push(`/profile/${user?.id}`);
         }
-    }, [data]);
+    }, [data, push, user?.id]);
 
     // already exist phone number
     useEffect(() => {
         if (data && !data.status && data.error) {
-            // setErrors({ message: data.error });
+            if (data?.status === false && data?.error) {
+                setErrors(data.error);
+                return;
+            }
         }
     }, [data]);
 

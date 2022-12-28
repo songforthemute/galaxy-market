@@ -4,14 +4,11 @@ import dynamic from "next/dynamic";
 // types
 import type { NextPage } from "next";
 import type { Product } from "@prisma/client";
-// hooks
-import useGetKey from "@libs/client/useGetKey";
-import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
+// utils
+import { useGetKey, useInfiniteScrollDown } from "@libs/client";
 // components
-import Layout from "@components/layout";
-import { FloatingAnchor } from "@components/Molecules";
-import { Add } from "@components/Atoms";
-
+import { Layout, Add, FloatingAnchor } from "components";
+// dynamic components
 const ItemCard = dynamic(() => import("@components/Organisms/ItemCard"));
 
 interface ProductsWithLike extends Product {
@@ -61,7 +58,7 @@ const Home: NextPage = () => {
             </section>
 
             <FloatingAnchor href="/products/upload">
-                <Add />
+                <Add className="w-6 h-6" strokeWidth={2} />
             </FloatingAnchor>
         </Layout>
     );

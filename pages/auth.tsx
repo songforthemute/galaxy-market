@@ -3,10 +3,9 @@ import { useEffect, useState } from "react";
 // type
 import type { NextPage } from "next";
 // custom hooks
-import useMutation from "@libs/client/useMutation";
+import { useMutation } from "@libs/client";
 // components
-import Layout from "@components/layout";
-import { AuthForm } from "@components/Templetes";
+import { Layout, AuthForm } from "components";
 
 // interfaces
 interface AuthenticationReturn {
@@ -44,9 +43,8 @@ const Auth: NextPage = () => {
 
         if (data?.status === true) {
             replace("/");
-            // reload();
         }
-    }, [data]);
+    }, [data, replace]);
 
     return (
         <Layout title={"들어가기"}>

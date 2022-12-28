@@ -5,18 +5,21 @@ import dynamic from "next/dynamic";
 // types
 import type { Product } from "@prisma/client";
 import type { NextPage } from "next";
-// hooks
-import useGetKey from "@libs/client/useGetKey";
-import { useToggleModal } from "@libs/hooks/useToggle";
-import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
 // utils
-import { booleanCls } from "@libs/client/util";
+import {
+    useGetKey,
+    useToggleModal,
+    useInfiniteScrollDown,
+    booleanCls,
+} from "@libs/client";
 // components
-import Layout from "@components/layout";
-import { SearchFormModal } from "@components/Templetes";
-import { FloatingButton } from "@components/Molecules";
-import { MagnifyingGlass } from "@components/Atoms";
-
+import {
+    Layout,
+    FloatingButton,
+    SearchFormModal,
+    MagnifyingGlass,
+} from "../components";
+// dynamic components
 const ItemCard = dynamic(() => import("@components/Organisms/ItemCard"));
 
 interface FormInterface {
@@ -63,7 +66,7 @@ const Search: NextPage = () => {
         } else {
             setResults([]);
         }
-    }, [data]);
+    }, [data, setResults]);
 
     return (
         <Layout title="검색하기" backwardButton dockBar configTab>

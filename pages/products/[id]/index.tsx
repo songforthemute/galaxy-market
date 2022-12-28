@@ -4,13 +4,11 @@ import dynamic from "next/dynamic";
 // types
 import type { NextPage } from "next";
 import type { Product } from "@prisma/client";
-// custom hooks
-import useUser from "@libs/client/useUser";
-import useMutation from "@libs/client/useMutation";
+// utils
+import { useUser, useMutation } from "@libs/client";
 // components
-import Layout from "@components/layout";
-import { ItemDetail } from "@components/Templetes";
-
+import { Layout, ItemDetail } from "components";
+// dynamic components
 const FloatingAnchor = dynamic(
     () => import("@components/Molecules/FloatingAnchor")
 );

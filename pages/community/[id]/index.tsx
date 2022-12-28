@@ -5,19 +5,15 @@ import dynamic from "next/dynamic";
 // types
 import type { NextPage } from "next";
 import type { Post, Replies } from "@prisma/client";
-// custom hooks
-import useUser from "@libs/client/useUser";
-import useMutation from "@libs/client/useMutation";
-import { useToggleModal } from "@libs/hooks/useToggle";
+// utils
+import { useUser, useMutation, useToggleModal } from "@libs/client";
 // components
-import Layout from "@components/layout";
-import { PostDetailWithReply } from "@components/Templetes";
-
+import { Layout, PostDetailWithReply } from "components";
+// dynamic components
 const DeleteModal = dynamic(() => import("@components/Organisms/DeleteModal"));
 const FloatingAnchor = dynamic(
     () => import("@components/Molecules/FloatingAnchor")
 );
-const Anchor = dynamic(() => import("@components/Atoms/Anchor"));
 const PencilSquare = dynamic(
     () => import("@components/Atoms/icons/pencilSquare")
 );
@@ -124,14 +120,14 @@ const PostDetail: NextPage = () => {
         if (replyData && replyData.status) {
             mutate();
         }
-    }, [replyData]);
+    }, [replyData, mutate]);
 
     // delete reply
     useEffect(() => {
         if (deleteReplyReturn && deleteReplyReturn?.status) {
             mutate();
         }
-    }, [deleteReplyReturn]);
+    }, [deleteReplyReturn, mutate]);
 
     return (
         <Layout title={"커뮤니티"} backwardButton configTab>

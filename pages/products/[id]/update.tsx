@@ -2,18 +2,14 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import useSWR from "swr";
 import dynamic from "next/dynamic";
-// hooks
-import { useToggleModal } from "@libs/hooks/useToggle";
-import useMutation from "@libs/client/useMutation";
-//types
+// types
 import type { Product } from "@prisma/client";
 import type { NextPage } from "next";
+// utils
+import { useMutation, useToggleModal } from "@libs/client";
 // components
-import Layout from "@components/layout";
-import { UploadItemForm } from "@components/Templetes";
-import { FloatingButton } from "@components/Molecules";
-import { Bin } from "@components/Atoms";
-
+import { Layout, UploadItemForm, FloatingButton, Bin } from "components";
+// dynamic components
 const DeleteModal = dynamic(() => import("@components/Organisms/DeleteModal"));
 
 // interfaces
@@ -67,7 +63,7 @@ const UpdateItem: NextPage = () => {
         if (data?.status === true) {
             push(`/products/${productId}`);
         }
-    }, [data]);
+    }, [data, push, productId]);
 
     return (
         <Layout title="상품 업데이트" backwardButton configTab>

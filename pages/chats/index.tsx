@@ -3,15 +3,15 @@ import useSWRInfinite from "swr/infinite";
 // types
 import type { NextPage } from "next";
 import type { Message } from "@prisma/client";
-// custom hooks
-import useGetKey from "@libs/client/useGetKey";
-import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
 // utils
-import { convertDate } from "@libs/client/util";
-import Layout from "@components/layout";
-import { ProfileCard } from "@components/Molecules";
-import { Anchor } from "@components/Atoms";
-import useFocusEvent from "@libs/client/useFocusEvent";
+import {
+    convertDate,
+    useInfiniteScrollDown,
+    useGetKey,
+    useFocusEvent,
+} from "@libs/client";
+// components
+import { Layout, Anchor, ProfileCard } from "components";
 
 // interfaces
 interface MessageWithUser extends Message {

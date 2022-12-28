@@ -3,11 +3,10 @@ import { useRouter } from "next/router";
 // types
 import type { NextPage } from "next";
 import type { Post } from "@prisma/client";
-// custom hooks
-import useMutation from "@libs/client/useMutation";
+// utils
+import { useMutation } from "@libs/client";
 // components
-import Layout from "@components/layout";
-import { UploadPostForm } from "@components/Templetes";
+import { Layout, UploadPostForm } from "components";
 
 interface UploadReturn {
     status: boolean;
@@ -16,7 +15,7 @@ interface UploadReturn {
 
 // Page
 const UploadPosting: NextPage = () => {
-    const router = useRouter();
+    const { push } = useRouter();
     // mutation data
     const [upload, { loading, data }] = useMutation<UploadReturn>({
         url: "/api/posts",
@@ -27,9 +26,9 @@ const UploadPosting: NextPage = () => {
     useEffect(() => {
         // sending user to 'community/data.post.id' (warp user to correspond posting)
         if (data && data.status) {
-            router.push(`/community/${data.post.id}`);
+            push(`/community/${data.post.id}`);
         }
-    }, [data, router]);
+    }, [data, push]);
 
     return (
         <Layout title="질문하기" backwardButton configTab>

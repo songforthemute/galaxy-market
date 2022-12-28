@@ -5,15 +5,11 @@ import useSWRInfinite from "swr/infinite";
 import type { NextPage } from "next";
 import type { MouseEvent, KeyboardEvent } from "react";
 import type { Post } from "@prisma/client";
-// custom hooks
-import useFocusEvent from "@libs/client/useFocusEvent";
-import useGetKey from "@libs/client/useGetKey";
-import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
+// utils
+import { useFocusEvent, useGetKey, useInfiniteScrollDown } from "@libs/client";
 // components
-import Layout from "@components/layout";
-import { FloatingAnchor } from "@components/Molecules";
-import { Add, Anchor, Badge } from "@components/Atoms";
-
+import { Layout, FloatingAnchor, Add, Anchor, Badge } from "components";
+// dynamic components
 const PostCard = dynamic(() => import("@components/Organisms/PostCard"));
 
 // interfaes

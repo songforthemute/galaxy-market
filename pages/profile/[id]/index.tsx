@@ -7,24 +7,27 @@ import useSWRInfinite from "swr/infinite";
 import type { NextPage } from "next";
 import type { Review, User } from "@prisma/client";
 // utils
-import useUser from "@libs/client/useUser";
-import useGetKey from "@libs/client/useGetKey";
-import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
-import useFocusEvent from "@libs/client/useFocusEvent";
-import { useToggleModal } from "@libs/hooks/useToggle";
-import useMutation from "@libs/client/useMutation";
-import { booleanCls } from "@libs/client/util";
-// components
-import Layout from "@components/layout";
-import { CircleButton, ProfileCard } from "@components/Molecules";
 import {
+    booleanCls,
+    useUser,
+    useGetKey,
+    useInfiniteScrollDown,
+    useFocusEvent,
+    useToggleModal,
+    useMutation,
+} from "@libs/client";
+// components
+import {
+    Layout,
+    CircleButton,
+    ProfileCard,
     Anchor,
     Heart,
     ShoppingBag,
     ShoppingCart,
     Text,
-} from "@components/Atoms";
-
+} from "components";
+// dynamic components
 const ReviewCard = dynamic(() => import("@components/Organisms/ReviewCard"));
 const DeleteModal = dynamic(() => import("@components/Organisms/DeleteModal"));
 const PencilSquare = dynamic(
@@ -116,7 +119,7 @@ const Profile: NextPage = () => {
         if (deleteReviewReturn && deleteReviewReturn?.status) {
             reviewMutate();
         }
-    }, [deleteReviewReturn]);
+    }, [deleteReviewReturn, reviewMutate]);
 
     return (
         <Layout title="프로필" backwardButton dockBar configTab>

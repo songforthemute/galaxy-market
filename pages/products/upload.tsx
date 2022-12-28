@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import useMutation from "@libs/client/useMutation";
 //types
 import type { Product } from "@prisma/client";
 import type { NextPage } from "next";
+// utiis
+import { useMutation } from "@libs/client";
 // components
-import Layout from "@components/layout";
-import { UploadItemForm } from "@components/Templetes";
+import { Layout, UploadItemForm } from "components";
 
 interface UploadReturn {
     status: boolean;
@@ -24,7 +24,7 @@ const UploadItem: NextPage = () => {
         if (data?.status === true) {
             push(`/products/${data.product.id}`);
         }
-    }, [data]);
+    }, [data, push]);
 
     return (
         <Layout title="상품 등록" backwardButton configTab>

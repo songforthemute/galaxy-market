@@ -6,11 +6,10 @@ import dynamic from "next/dynamic";
 import type { NextPage } from "next";
 import type { Product, Record } from "@prisma/client";
 // hooks
-import useGetKey from "@libs/client/useGetKey";
-import { useInfiniteScrollDown } from "@libs/client/useInfiniteScroll";
+import { useGetKey, useInfiniteScrollDown } from "@libs/client";
 // components
-import Layout from "@components/layout";
-import { Anchor } from "@components/Atoms";
+import { Layout } from "components";
+// dynamic components
 const ItemCard = dynamic(() => import("@components/Organisms/ItemCard"));
 
 interface ProductsWithLike extends Product {

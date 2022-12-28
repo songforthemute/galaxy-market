@@ -4,11 +4,10 @@ import useSWR from "swr";
 // types
 import type { Product } from "@prisma/client";
 import type { NextPage } from "next";
-// custom hook
-import useMutation from "@libs/client/useMutation";
+// utils
+import { useMutation } from "@libs/client";
 // components
-import Layout from "@components/layout";
-import { ReviewForm } from "@components/Templetes";
+import { Layout, ReviewForm } from "components";
 
 // interfaces
 interface SoldoutProductsReturn {
@@ -35,7 +34,7 @@ const WriteReview: NextPage = () => {
         if (mutateReturn && mutateReturn.status) {
             push(`/profile/${query.id}`);
         }
-    }, [mutateReturn]);
+    }, [mutateReturn, query.id, push]);
 
     // initialize soldout items for review
     const { data } = useSWR<SoldoutProductsReturn>(

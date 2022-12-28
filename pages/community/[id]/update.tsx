@@ -1,18 +1,19 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import useSWR from "swr";
-// hooks
-import { useToggleModal } from "@libs/hooks/useToggle";
-import useMutation from "@libs/client/useMutation";
 //types
 import type { Replies, Post } from "@prisma/client";
 import type { NextPage } from "next";
+// hooks
+import { useMutation, useToggleModal } from "@libs/client";
 // components
-import Layout from "@components/layout";
-import { UploadPostForm } from "@components/Templetes";
-import { FloatingButton } from "@components/Molecules";
-import { Bin } from "@components/Atoms";
-import { DeleteModal } from "@components/Organisms";
+import {
+    Layout,
+    UploadPostForm,
+    FloatingButton,
+    Bin,
+    DeleteModal,
+} from "components";
 
 // interfaces
 interface RepliesWithUser extends Replies {
@@ -76,7 +77,7 @@ const UpdatePost: NextPage = () => {
         if (data?.status === true) {
             push(`/community/${postId}`);
         }
-    }, [data]);
+    }, [data, postId, push]);
 
     return (
         <Layout title="게시글 업데이트" backwardButton configTab>
