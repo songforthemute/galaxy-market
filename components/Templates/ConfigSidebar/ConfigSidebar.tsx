@@ -49,6 +49,7 @@ const ConfigSidebar = ({ userEmail }: Props) => {
         <Sidebar className="flex flex-col" onClose={() => toggleSidebar()}>
             <li className="my-4 list-none w-full">
                 <Button
+                    variant="achromaOutline"
                     onClick={() => setShowLogOut(true)}
                     className="w-full rounded-lg"
                 >
@@ -65,6 +66,7 @@ const ConfigSidebar = ({ userEmail }: Props) => {
             </li>
             <li className="my-4 list-none w-full">
                 <Button
+                    variant="achromaOutline"
                     onClick={() => setShowWithdrawal(true)}
                     className="w-full rounded-lg"
                 >

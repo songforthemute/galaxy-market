@@ -3,7 +3,7 @@
 }
 
 .container {
-    @apply w-full flex items-center justify-between gap-x-8;
+    @apply w-full flex flex-col items-center gap-y-4;
 }
 
 .button {

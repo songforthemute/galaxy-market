@@ -29,6 +29,7 @@ const Img = ({
     return (
         <div className={cls("relative", className)}>
             <Image
+                role="img"
                 src={directSrc ? src : getImgSource(src, variants)}
                 alt={alt}
                 className="rounded-sm"

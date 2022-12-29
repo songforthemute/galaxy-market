@@ -15,9 +15,10 @@ interface ProductWithLike extends Product {
 
 interface Props {
     product: ProductWithLike;
+    priority?: boolean;
 }
 
-const Item = ({ product }: Props) => {
+const Item = ({ product, priority = false }: Props) => {
     const { onKeyDownEnter } = useFocusEvent();
 
     return (
@@ -37,7 +38,7 @@ const Item = ({ product }: Props) => {
                             alt="item"
                             src={product.image}
                             className={s.image}
-                            priority
+                            priority={priority}
                         />
                     ) : (
                         <div className={s.empty} />

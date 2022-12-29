@@ -9,12 +9,12 @@
 
 .close {
     @apply absolute pb-0.5 border-b-[1.5px] text-achroma-darkest border-b-achroma-darkest
-    hover:border-b-achroma-lightest hover:bg-opacity-low hover:text-achroma-lightest
-    focus:outline-none focus:ring-2 focus:ring-primary-dark transition
-    ease-in-out right-14 top-14;
+    hover:border-b-primary-medium hover:bg-opacity-low hover:text-primary-medium
+    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-dark transition
+    duration-300 ease-in-out right-14 top-14;
 }
 
 .content {
-    @apply outline-none bg-achroma-light w-[80vw] max-w-full md:max-w-md
-    rounded-sm shadow-xl border-[1.5px] border-achroma-dark z-[41];
+    @apply outline-none bg-achroma-lightest w-[80vw] max-w-full md:max-w-md
+    rounded-lg shadow-xl border-[1.5px] border-achroma-dark z-[41];
 }

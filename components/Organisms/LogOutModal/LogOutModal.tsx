@@ -16,13 +16,18 @@ const LogOutModal = ({ onClose, onConfirm, loading = false }: Props) => {
                 <Text variant="pageHeading">정말 로그아웃 하시겠습니까?</Text>
                 <div className={s.container}>
                     <Button
+                        variant="chromaOutline"
                         loading={loading}
                         onClick={onConfirm}
                         className={s.button}
                     >
                         예
                     </Button>
-                    <Button onClick={onClose} className={s.button}>
+                    <Button
+                        variant="achromaOutline"
+                        onClick={onClose}
+                        className={s.button}
+                    >
                         아니요
                     </Button>
                 </div>

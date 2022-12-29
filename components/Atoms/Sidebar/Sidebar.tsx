@@ -49,7 +49,7 @@ const Sidebar: FC<Props> = ({ children, onClose, className = "" }) => {
     }, [handleKeydownEscape]);
 
     return (
-        <aside className={s.root} ref={sidebarRef}>
+        <nav className={s.root} ref={sidebarRef}>
             <div className={s.container}>
                 <section className={s.sidebar}>
                     <div className="w-full h-full md:w-screen md:max-w-md">
@@ -66,7 +66,7 @@ const Sidebar: FC<Props> = ({ children, onClose, className = "" }) => {
                     </div>
                 </section>
             </div>
-        </aside>
+        </nav>
     );
 };
 

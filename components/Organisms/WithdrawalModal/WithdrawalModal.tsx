@@ -65,7 +65,11 @@ const WithdrawalModal = ({
                         })}
                         error={errors?.email?.message || error}
                     />
-                    <Button loading={loading} className={s.button}>
+                    <Button
+                        variant="achromaOutline"
+                        loading={loading}
+                        className={s.button}
+                    >
                         탈퇴하기
                     </Button>
                 </form>
