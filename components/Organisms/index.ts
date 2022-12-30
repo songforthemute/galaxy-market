@@ -10,3 +10,4 @@ export { default as ReviewCard } from "./ReviewCard";
 export { default as LogOutModal } from "./LogOutModal";
 export { default as WithdrawalModal } from "./WithdrawalModal";
 export { default as DockBar } from "./DockBar";
+export { default as AuthResetModal } from "./AuthResetModal";

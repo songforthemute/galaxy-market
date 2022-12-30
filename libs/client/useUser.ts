@@ -5,14 +5,14 @@ import useFetch from "./useFetch";
 
 interface ProfileReturn {
     status: boolean;
-    profile: User;
+    profile?: User;
 }
 
 const useUser = () => {
-    const router = useRouter();
+    const { pathname } = useRouter();
     const { fetcher } = useFetch();
     const { data, error } = useSWR<ProfileReturn>(
-        router.pathname !== "/auth" ? "/api/users/me" : null,
+        pathname.startsWith("/auth") ? null : "/api/users/me",
         fetcher
     ); // url: fetching url & key used when caching
 

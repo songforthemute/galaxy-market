@@ -21,5 +21,6 @@
 }
 
 .disabled {
-    @apply outline-none text-achroma-dark placeholder:text-achroma-dark bg-achroma-medium;
+    @apply outline-none text-achroma-dark placeholder:text-achroma-dark
+    bg-achroma-light italic;
 }

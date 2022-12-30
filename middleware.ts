@@ -1,4 +1,4 @@
-import { NextResponse, userAgent } from "next/server";
+import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { getIronSession } from "iron-session/edge";
 
@@ -24,13 +24,13 @@ export const middleware = async (req: NextRequest) => {
     });
 
     if (!url.pathname.includes("/api")) {
-        if (!user && url.pathname !== "/auth") {
+        if (!user && !url.pathname.startsWith("/auth")) {
             url.pathname = "/auth";
             url.searchParams.set("from", req.nextUrl.pathname);
             return NextResponse.redirect(url);
         }
 
-        if (user && url.pathname === "/auth") {
+        if (user && url.pathname.startsWith("/auth")) {
             url.pathname = "/";
             return NextResponse.redirect(url);
         }

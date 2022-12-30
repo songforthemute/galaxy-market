@@ -48,6 +48,7 @@ const AuthForm = ({ mutatorFn, loading, errors }: Props) => {
 
         mutatorFn(data);
     };
+
     useEffect(() => {
         if (errors) {
             setError(

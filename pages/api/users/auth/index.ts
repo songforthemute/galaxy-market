@@ -9,6 +9,8 @@ interface AuthInterface {
     password: string;
     username?: string;
     passwordConfirm?: string;
+    passwordQuestion?: string;
+    passwordAnswer?: string;
 }
 
 const authHandler = async (
@@ -20,6 +22,8 @@ const authHandler = async (
         username = undefined,
         password,
         passwordConfirm = undefined,
+        passwordQuestion = undefined,
+        passwordAnswer = undefined,
     }: AuthInterface = req.body;
 
     let user = await client.user.findUnique({
@@ -29,7 +33,7 @@ const authHandler = async (
     });
 
     // Join Case
-    if (username && passwordConfirm) {
+    if (username && passwordConfirm && passwordQuestion && passwordAnswer) {
         // Already exist user
         if (user) {
             return res.json({
@@ -44,6 +48,8 @@ const authHandler = async (
                     email,
                     password: await bcrypt.hash(password, 12),
                     username,
+                    passwordQuestion,
+                    passwordAnswer,
                 },
             });
         }
@@ -75,7 +81,7 @@ const authHandler = async (
     }; // cookie has stroage limitation
     await req.session.save(); // logout: req.session.destroy()
 
-    res.json({ status: true });
+    return res.json({ status: true });
 };
 
 export default withApiSession(

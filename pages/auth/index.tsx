@@ -1,17 +1,25 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 // type
 import type { NextPage } from "next";
 // custom hooks
-import { useMutation } from "@libs/client";
+import { useMutation, useToggleModal } from "@libs/client";
 // components
-import { Layout, AuthForm } from "components";
+import { Layout, AuthForm, Button } from "components";
+// dynamic components
+const AuthResetModal = dynamic(
+    () => import("@components/Organisms/AuthResetModal")
+);
 
 // interfaces
 interface AuthenticationReturn {
     status: boolean;
     error?: string;
+    question?: string;
+    id?: number;
 }
+
 interface ErrorInterface {
     type: "email" | "password" | "passwordConfirm" | "username";
     message: string;
@@ -19,10 +27,11 @@ interface ErrorInterface {
 
 // Page
 const Auth: NextPage = () => {
-    const { replace } = useRouter();
+    const { replace, push, query } = useRouter();
+    const { modal, toggleModal, closeModal } = useToggleModal();
     const [errors, setErrors] = useState<ErrorInterface>();
 
-    // request
+    // request auth
     const [authentication, { loading, data }] =
         useMutation<AuthenticationReturn>({
             url: "/api/users/auth",
@@ -40,20 +49,64 @@ const Auth: NextPage = () => {
 
             return;
         }
+    }, [data]);
 
+    // if authentication success
+    useEffect(() => {
         if (data?.status === true) {
             replace("/");
         }
     }, [data, replace]);
 
+    // for reset password
+    const [findAccount, { loading: findLoading, data: findData }] =
+        useMutation<AuthenticationReturn>({
+            url: "/api/users/auth/reset",
+            method: "POST",
+        });
+
+    // if finding success
+    useEffect(() => {
+        if (findData?.status === true) {
+            push(
+                `/auth/reset?id=${findData.id}&question=${findData.question}`,
+                "/auth/reset"
+            );
+        }
+    }, [findData, push]);
+
+    // after reset password
+    useEffect(() => {
+        if (query.isReset === "true") {
+            closeModal();
+        }
+    }, [query]);
+
     return (
         <Layout title={"들어가기"}>
-            <div className="px-4">
+            {modal && (
+                <AuthResetModal
+                    mutatorFn={findAccount}
+                    onClose={() => toggleModal()}
+                    loading={findLoading}
+                    errors={findData?.error}
+                />
+            )}
+
+            <div className="mx-auto mb-12 flex flex-col items-center justify-center px-4">
                 <AuthForm
                     loading={loading}
                     mutatorFn={authentication}
                     errors={errors}
                 />
+
+                <Button
+                    variant="achromaOutline"
+                    className="rounded-lg px-4"
+                    onClick={() => toggleModal()}
+                >
+                    비밀번호가 생각나지 않아요.
+                </Button>
 
                 {/* Later: social login feat */}
                 {/* <div className="mt-6">

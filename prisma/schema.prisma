@@ -12,23 +12,25 @@ datasource db {
 }
 
 model User {
-  id              Int        @id @default(autoincrement()) // 필드명 자료형 식별자 옵션
-  phone           String?    @unique
-  email           String     @unique
-  username        String
-  password        String
-  avatarUrl       String?
-  created         DateTime   @default(now()) // now() : 해당 시점의 날짜를 가져옴.
-  updated         DateTime   @updatedAt
-  product         Product[]
-  post            Post[]
-  replies         Replies[]
-  interest        Interest[]
-  writtenReviews  Review[]   @relation(name: "writtenReviews")
-  receivedReviews Review[]   @relation(name: "receivedReviews")
-  record          Record[]
-  sentMessage     Message[]  @relation(name: "sentMessage")
-  receivedMessage Message[]  @relation(name: "receivedMessage")
+  id               Int        @id @default(autoincrement()) // 필드명 자료형 식별자 옵션
+  phone            String?    @unique
+  email            String     @unique
+  username         String
+  password         String
+  avatarUrl        String?
+  created          DateTime   @default(now()) // now() : 해당 시점의 날짜를 가져옴.
+  updated          DateTime   @updatedAt
+  passwordQuestion String?
+  passwordAnswer   String?
+  product          Product[]
+  post             Post[]
+  replies          Replies[]
+  interest         Interest[]
+  writtenReviews   Review[]   @relation(name: "writtenReviews")
+  receivedReviews  Review[]   @relation(name: "receivedReviews")
+  record           Record[]
+  sentMessage      Message[]  @relation(name: "sentMessage")
+  receivedMessage  Message[]  @relation(name: "receivedMessage")
 }
 
 model Product {

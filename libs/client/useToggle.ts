@@ -7,7 +7,7 @@ export const useToggleSidebar = () => {
         return showSidebar ? closeSidebar() : openSidebar();
     };
 
-    return { sidebar: showSidebar, toggleSidebar };
+    return { sidebar: showSidebar, toggleSidebar, openSidebar, closeSidebar };
 };
 
 export const useToggleModal = () => {
@@ -17,5 +17,5 @@ export const useToggleModal = () => {
         return showModal ? closeModal() : openModal();
     };
 
-    return { modal: showModal, toggleModal };
+    return { modal: showModal, toggleModal, openModal, closeModal };
 };
