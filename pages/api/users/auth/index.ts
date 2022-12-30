@@ -19,11 +19,11 @@ const authHandler = async (
 ) => {
     const {
         email,
-        username = undefined,
+        username,
         password,
-        passwordConfirm = undefined,
-        passwordQuestion = undefined,
-        passwordAnswer = undefined,
+        passwordConfirm,
+        passwordQuestion,
+        passwordAnswer,
     }: AuthInterface = req.body;
 
     let user = await client.user.findUnique({

@@ -80,7 +80,7 @@ const Auth: NextPage = () => {
         if (query.isReset === "true") {
             closeModal();
         }
-    }, [query]);
+    }, [query, closeModal]);
 
     return (
         <Layout title={"들어가기"}>
