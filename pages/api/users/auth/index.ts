@@ -7,10 +7,7 @@ import { withApiSession } from "@libs/server/sessionHelper";
 interface AuthInterface {
     email: string;
     password: string;
-    username?: string;
-    passwordConfirm?: string;
-    passwordQuestion?: string;
-    passwordAnswer?: string;
+    [key: string]: string | undefined;
 }
 
 const authHandler = async (
@@ -19,8 +16,8 @@ const authHandler = async (
 ) => {
     const {
         email,
-        username,
         password,
+        username,
         passwordConfirm,
         passwordQuestion,
         passwordAnswer,
@@ -48,8 +45,8 @@ const authHandler = async (
                     email,
                     password: await bcrypt.hash(password, 12),
                     username,
-                    passwordQuestion: `${passwordQuestion}`,
-                    passwordAnswer: `${passwordQuestion}`,
+                    passwordQuestion,
+                    passwordAnswer,
                 },
             });
         }
