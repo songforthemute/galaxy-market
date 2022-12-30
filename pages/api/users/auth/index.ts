@@ -4,6 +4,15 @@ import handlerHelper, { ResponseInterface } from "@libs/server/handlerHelper";
 import bcrypt from "bcrypt";
 import { withApiSession } from "@libs/server/sessionHelper";
 
+interface AuthInterface {
+    email: string;
+    password: string;
+    username?: string;
+    passwordConfirm?: string;
+    passwordQuestion?: string;
+    passwordAnswer?: string;
+}
+
 const authHandler = async (
     req: NextApiRequest,
     res: NextApiResponse<ResponseInterface>
@@ -15,7 +24,7 @@ const authHandler = async (
         passwordConfirm,
         passwordQuestion,
         passwordAnswer,
-    } = req.body;
+    }: AuthInterface = req.body;
 
     let user = await client.user.findUnique({
         where: {
@@ -24,7 +33,7 @@ const authHandler = async (
     });
 
     // Join Case
-    if (username && passwordConfirm) {
+    if (username && passwordConfirm && passwordQuestion && passwordAnswer) {
         // Already exist user
         if (user) {
             return res.json({
@@ -39,8 +48,8 @@ const authHandler = async (
                     email,
                     password: await bcrypt.hash(password, 12),
                     username,
-                    passwordQuestion,
-                    passwordAnswer,
+                    passwordQuestion: `${passwordQuestion}`,
+                    passwordAnswer: `${passwordQuestion}`,
                 },
             });
         }
