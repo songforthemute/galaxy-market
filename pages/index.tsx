@@ -64,7 +64,7 @@ const Home: NextPage = () => {
             </section>
 
             <FloatingAnchor href="/products/upload">
-                <Add strokeWidth={2} />
+                <Add className="w-6 h-6" strokeWidth={2} />
             </FloatingAnchor>
         </Layout>
     );
