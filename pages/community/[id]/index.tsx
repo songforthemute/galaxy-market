@@ -6,10 +6,24 @@ import dynamic from "next/dynamic";
 import type { NextPage } from "next";
 import type { Post, Replies } from "@prisma/client";
 // utils
-import { useUser, useMutation, useToggleModal } from "@libs/client";
+import {
+    useUser,
+    useMutation,
+    useToggleModal,
+    useFocusEvent,
+} from "@libs/client";
 // components
-import { Layout, PostDetailWithReply } from "components";
+import { Anchor, Layout, LoadingSuspense } from "components";
 // dynamic components
+const ProfileCard = dynamic(() => import("@components/Molecules/ProfileCard"), {
+    loading: () => <LoadingSuspense />,
+});
+const PostDetailWithReply = dynamic(
+    () => import("@components/Templates/PostDetailWithReply"),
+    {
+        loading: () => <LoadingSuspense variant="circle" />,
+    }
+);
 const DeleteModal = dynamic(() => import("@components/Organisms/DeleteModal"));
 const FloatingAnchor = dynamic(
     () => import("@components/Molecules/FloatingAnchor")
@@ -52,6 +66,7 @@ interface ReplyReturn {
 const PostDetail: NextPage = () => {
     const { query, asPath } = useRouter();
     const { user } = useUser();
+    const { onKeyDownEnter } = useFocusEvent("itself");
 
     // fetching post
     const { data, mutate } = useSWR<PostReturn | undefined>(
@@ -140,6 +155,18 @@ const PostDetail: NextPage = () => {
                     }}
                 />
             )}
+
+            <div className="px-4 pt-4">
+                <Anchor href={`/profile/${data?.post?.userId}`}>
+                    <ProfileCard
+                        onKeyDown={onKeyDownEnter}
+                        tabIndex={0}
+                        avatar={data?.post?.user?.avatarUrl}
+                        username={data?.post?.user?.username}
+                        subtext={"프로필 보기"}
+                    />
+                </Anchor>
+            </div>
 
             <PostDetailWithReply
                 mutatorFn={replying}

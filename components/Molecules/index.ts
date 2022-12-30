@@ -12,3 +12,4 @@ export { default as ChatBubble } from "./ChatBubble";
 export { default as CircleButton } from "./CircleButton";
 export { default as FloatingAnchor } from "./FloatingAnchor";
 export { default as Scoring } from "./Scoring";
+export { default as LoadingSuspense } from "./LoadingSuspense";

@@ -174,7 +174,7 @@ const UploadItemForm = ({
                                     directSrc
                                 />
                             ) : (
-                                <Picture strokeWidth={1} w={12} h={12} />
+                                <Picture />
                             )}
                         </ImageInput>
                     </>

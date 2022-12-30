@@ -18,9 +18,12 @@ import {
     FloatingButton,
     SearchFormModal,
     MagnifyingGlass,
+    LoadingSuspense,
 } from "../components";
 // dynamic components
-const ItemCard = dynamic(() => import("@components/Organisms/ItemCard"));
+const ItemCard = dynamic(() => import("@components/Organisms/ItemCard"), {
+    loading: () => <LoadingSuspense />,
+});
 
 interface FormInterface {
     name: string;

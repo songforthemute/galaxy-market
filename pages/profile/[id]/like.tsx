@@ -8,9 +8,11 @@ import type { Product, Record } from "@prisma/client";
 // hooks
 import { useGetKey, useInfiniteScrollDown } from "@libs/client";
 // components
-import { Layout } from "components";
+import { Layout, LoadingSuspense } from "components";
 // dynamic components
-const ItemCard = dynamic(() => import("@components/Organisms/ItemCard"));
+const ItemCard = dynamic(() => import("@components/Organisms/ItemCard"), {
+    loading: () => <LoadingSuspense />,
+});
 
 interface ProductsWithLike extends Product {
     _count: {

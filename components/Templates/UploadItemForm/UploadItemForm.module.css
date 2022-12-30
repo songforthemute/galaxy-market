@@ -20,6 +20,10 @@
     border-achroma-dark text-achroma-dark;
 }
 
+.unattached > svg {
+    @apply scale-[2];
+}
+
 .unattached:hover {
     @apply border-primary-dark text-primary-dark;
 }

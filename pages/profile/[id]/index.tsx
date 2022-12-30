@@ -20,15 +20,20 @@ import {
 import {
     Layout,
     CircleButton,
-    ProfileCard,
     Anchor,
     Heart,
     ShoppingBag,
     ShoppingCart,
     Text,
+    LoadingSuspense,
 } from "components";
 // dynamic components
-const ReviewCard = dynamic(() => import("@components/Organisms/ReviewCard"));
+const ProfileCard = dynamic(() => import("@components/Molecules/ProfileCard"), {
+    loading: () => <LoadingSuspense />,
+});
+const ReviewCard = dynamic(() => import("@components/Organisms/ReviewCard"), {
+    loading: () => <LoadingSuspense />,
+});
 const DeleteModal = dynamic(() => import("@components/Organisms/DeleteModal"));
 const PencilSquare = dynamic(
     () => import("@components/Atoms/icons/pencilSquare")

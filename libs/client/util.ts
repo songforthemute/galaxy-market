@@ -11,7 +11,7 @@ export const booleanCls = (
 };
 
 export const convertPrice = (price?: number) => {
-    if (!price) return "";
+    if (price === undefined) return "";
 
     const willConvert = `${price}`;
 
@@ -32,7 +32,11 @@ export const convertPrice = (price?: number) => {
     return converted;
 };
 
-export const convertDate = (date: Date, opts?: "Full" | "Time" | "Date") => {
+export const convertDate = (date?: Date, opts?: "Full" | "Time" | "Date") => {
+    if (!date) {
+        return "Loading...";
+    }
+
     return new Date(date).toLocaleString("ko-kr", {
         dateStyle: opts === "Time" ? undefined : "full",
         timeStyle: opts === "Date" ? undefined : "short",

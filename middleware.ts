@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 import { getIronSession } from "iron-session/edge";
 
 export const middleware = async (req: NextRequest) => {
-    const { isBot, device } = userAgent(req);
+    // const { isBot, device } = userAgent(req);
 
     // if (isBot) {
     // need to error page
@@ -14,10 +14,6 @@ export const middleware = async (req: NextRequest) => {
 
     const url = req.nextUrl;
     const res = NextResponse.next();
-
-    if (device.type === "mobile") {
-        url.hostname = "m." + url.hostname;
-    }
 
     const { user } = await getIronSession(req, res, {
         cookieName: "galaxySessions",

@@ -2,14 +2,12 @@ import { useForm } from "react-hook-form";
 import dynamic from "next/dynamic";
 // types
 import type { Post, Replies } from "@prisma/client";
-// utils
-import { useFocusEvent } from "@libs/client";
 // styles
 import s from "./PostDetailWithReply.module.css";
 // components
 import { PostDetail } from "@components/Organisms";
-import { ProfileCard, TextareaWithLabel } from "@components/Molecules";
-import { Anchor, Button } from "@components/Atoms";
+import { TextareaWithLabel } from "@components/Molecules";
+import { Button } from "@components/Atoms";
 
 const ReplyDetail = dynamic(() => import("@components/Organisms/ReplyDetail"));
 const Close = dynamic(() => import("@components/Atoms/icons/close"));
@@ -57,7 +55,6 @@ const PostDetailWithReply = ({
     currentUser,
     onClickDeleteReply,
 }: Props) => {
-    const { onKeyDownEnter } = useFocusEvent("itself");
     const { register, handleSubmit, reset } = useForm<FormInterface>();
     const _onSubmit = (data: FormInterface) => {
         if (replyLoading) return;
@@ -68,16 +65,6 @@ const PostDetailWithReply = ({
 
     return (
         <section className={s.root}>
-            <Anchor href={`/profile/${post?.userId}`}>
-                <ProfileCard
-                    onKeyDown={onKeyDownEnter}
-                    tabIndex={0}
-                    avatar={post?.user?.avatarUrl}
-                    username={post?.user?.username}
-                    subtext={"프로필 보기"}
-                />
-            </Anchor>
-
             <PostDetail
                 onClickInterest={onClickInterest}
                 isInterested={isInterested}

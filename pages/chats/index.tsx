@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import useSWRInfinite from "swr/infinite";
+import dynamic from "next/dynamic";
 // types
 import type { NextPage } from "next";
 import type { Message } from "@prisma/client";
@@ -11,7 +12,11 @@ import {
     useFocusEvent,
 } from "@libs/client";
 // components
-import { Layout, Anchor, ProfileCard } from "components";
+import { Layout, Anchor, LoadingSuspense } from "components";
+// dynamic components
+const ProfileCard = dynamic(() => import("@components/Molecules/ProfileCard"), {
+    loading: () => <LoadingSuspense />,
+});
 
 // interfaces
 interface MessageWithUser extends Message {

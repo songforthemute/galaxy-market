@@ -1,0 +1,16 @@
+.root {
+    @apply bg-achroma-dark bg-opacity-medium
+        flex items-center justify-center;
+}
+
+.root > span {
+    @apply scale-125;
+}
+
+.circle {
+    @apply absolute inset-0 m-auto p-12 w-24 h-24 rounded-full aspect-square;
+}
+
+.full {
+    @apply mt-4 mx-4 py-8 rounded-lg;
+}

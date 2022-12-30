@@ -8,9 +8,18 @@ import type { Post } from "@prisma/client";
 // utils
 import { useFocusEvent, useGetKey, useInfiniteScrollDown } from "@libs/client";
 // components
-import { Layout, FloatingAnchor, Add, Anchor, Badge } from "components";
+import {
+    Layout,
+    FloatingAnchor,
+    Add,
+    Anchor,
+    Badge,
+    LoadingSuspense,
+} from "components";
 // dynamic components
-const PostCard = dynamic(() => import("@components/Organisms/PostCard"));
+const PostCard = dynamic(() => import("@components/Organisms/PostCard"), {
+    loading: () => <LoadingSuspense />,
+});
 
 // interfaes
 interface PostWithReaction extends Post {

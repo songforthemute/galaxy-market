@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import useSWRInfinite from "swr/infinite";
+import dynamic from "next/dynamic";
 // types
 import type { NextPage } from "next";
 import type { Message } from "@prisma/client";
@@ -13,7 +14,9 @@ import {
     useInfiniteScrollUp,
 } from "@libs/client";
 // components
-import { Layout, ChatBubble, ChatInput } from "components";
+import { Layout, ChatInput } from "components";
+// dynamic components
+const ChatBubble = dynamic(() => import("@components/Molecules/ChatBubble"));
 
 // interfaces
 interface SendingForm {

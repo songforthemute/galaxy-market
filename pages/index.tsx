@@ -7,9 +7,11 @@ import type { Product } from "@prisma/client";
 // utils
 import { useGetKey, useInfiniteScrollDown } from "@libs/client";
 // components
-import { Layout, Add, FloatingAnchor } from "components";
+import { Layout, Add, FloatingAnchor, LoadingSuspense } from "components";
 // dynamic components
-const ItemCard = dynamic(() => import("@components/Organisms/ItemCard"));
+const ItemCard = dynamic(() => import("@components/Organisms/ItemCard"), {
+    loading: () => <LoadingSuspense />,
+});
 
 interface ProductsWithLike extends Product {
     _count: {
@@ -53,12 +55,16 @@ const Home: NextPage = () => {
         <Layout title="홈" backwardButton dockBar configTab>
             <section className="flex flex-col divide-y-[1px]">
                 {items.map((item) => (
-                    <ItemCard product={item} key={`item-${item?.id}`} />
+                    <ItemCard
+                        product={item}
+                        key={`item-${item?.id}`}
+                        priority={page <= 1 ? true : false}
+                    />
                 ))}
             </section>
 
             <FloatingAnchor href="/products/upload">
-                <Add className="w-6 h-6" strokeWidth={2} />
+                <Add strokeWidth={2} />
             </FloatingAnchor>
         </Layout>
     );
