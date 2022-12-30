@@ -6,7 +6,7 @@ import type { FC, ReactNode } from "react";
 // utils
 import { cls, useUser, useToggleSidebar } from "@libs/client";
 // styles
-import s from "./Layout.module.css";
+import s from "./layout.module.css";
 // components
 import { ChevronLeft, HorizontalDots, Text } from "@components/Atoms";
 
