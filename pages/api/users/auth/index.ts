@@ -7,7 +7,10 @@ import { withApiSession } from "@libs/server/sessionHelper";
 interface AuthInterface {
     email: string;
     password: string;
-    [key: string]: string | undefined;
+    username?: string;
+    passwordConfirm?: string;
+    passwordQuestion?: string;
+    passwordAnswer?: string;
 }
 
 const authHandler = async (
@@ -16,11 +19,11 @@ const authHandler = async (
 ) => {
     const {
         email,
+        username = undefined,
         password,
-        username,
-        passwordConfirm,
-        passwordQuestion,
-        passwordAnswer,
+        passwordConfirm = undefined,
+        passwordQuestion = undefined,
+        passwordAnswer = undefined,
     }: AuthInterface = req.body;
 
     let user = await client.user.findUnique({
@@ -45,10 +48,12 @@ const authHandler = async (
                     email,
                     password: await bcrypt.hash(password, 12),
                     username,
-                    passwordQuestion,
-                    passwordAnswer,
+                    passwordQuestion: passwordQuestion as string,
+                    passwordAnswer: passwordAnswer as string,
                 },
             });
+
+            console.log(user);
         }
     }
     // Login Case - !passwordConfirm
