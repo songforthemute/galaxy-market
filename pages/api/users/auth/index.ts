@@ -52,8 +52,6 @@ const authHandler = async (
                     passwordAnswer: passwordAnswer as string,
                 },
             });
-
-            console.log(user);
         }
     }
     // Login Case - !passwordConfirm

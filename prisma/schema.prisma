@@ -7,8 +7,9 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model User {
@@ -20,8 +21,8 @@ model User {
   avatarUrl        String?
   created          DateTime   @default(now()) // now() : 해당 시점의 날짜를 가져옴.
   updated          DateTime   @updatedAt
-  passwordQuestion String?
-  passwordAnswer   String?
+  passwordQuestion String
+  passwordAnswer   String
   product          Product[]
   post             Post[]
   replies          Replies[]
@@ -76,7 +77,8 @@ model Replies {
   post    Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId  Int
 
-  @@index([userId, postId])
+  @@index([userId])
+  @@index([postId])
 }
 
 model Interest {
@@ -88,7 +90,8 @@ model Interest {
   post    Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId  Int
 
-  @@index([userId, postId])
+  @@index([userId])
+  @@index([postId])
 }
 
 model Review {
@@ -104,7 +107,9 @@ model Review {
   product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId   Int
 
-  @@index([createdById, createdToId, productId])
+  @@index([createdById])
+  @@index([createdToId])
+  @@index([productId])
 }
 
 enum Kind {
@@ -123,7 +128,8 @@ model Record {
   productId Int
   kind      Kind
 
-  @@index([userId, productId])
+  @@index([userId])
+  @@index([productId])
 }
 
 model Message {
@@ -136,5 +142,6 @@ model Message {
   messagedTo   User     @relation(name: "receivedMessage", fields: [messagedToId], references: [id], onDelete: Cascade)
   messagedToId Int
 
-  @@index([messagedById, messagedToId])
+  @@index([messagedById])
+  @@index([messagedToId])
 }
