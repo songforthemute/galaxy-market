@@ -4,9 +4,9 @@
 
 -   이 프로젝트는 **사용자간 거래 서비스 웹 애플리케이션**으로, 번개장터에서 영감을 받아 진행하였으며, Next.js를 이용해 개발한 풀스택 웹 애플리케이션입니다.
 
--   프로젝트 링크 : [https://galaxy-market-rose.vercel.app]("https://galaxy-market-rose.vercel.app")
+-   Project Deployment : [Galaxy-Market](https://galaxy-market-rose.vercel.app)
 
--   미디엄 블로그 링크 : [https://medium.com/@songforthemute]("https://medium.com/@songforthemute")
+-   Medium Blog : [https://medium.com/@songforthemute](https://medium.com/@songforthemute)
 
 ---
 
