@@ -47,7 +47,7 @@ const ChatDetail: NextPage = () => {
         hasQuery: false,
     });
     const { data, mutate, setSize } = useSWRInfinite<MessagesReturn>(getKey, {
-        refreshInterval: 1500,
+        refreshInterval: 2000,
     });
 
     // set page number for infinite scroll
