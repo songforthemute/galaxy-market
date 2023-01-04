@@ -73,6 +73,7 @@ const ReviewForm = ({ loading = false, soldoutList, mutatorFn }: Props) => {
     return (
         <section className={s.root}>
             <form
+                aria-label="Form for Upload Review"
                 className="w-full md:max-w-[50vw] justify-center"
                 onSubmit={handleSubmit(_onSubmit)}
             >
@@ -87,7 +88,11 @@ const ReviewForm = ({ loading = false, soldoutList, mutatorFn }: Props) => {
                         setValue={setProductId}
                     >
                         {soldoutList?.map((v) => (
-                            <SelectItem key={v.id} value={`${v.id}`}>
+                            <SelectItem
+                                aria-label="Select Sold Item for Upload Review"
+                                key={v.id}
+                                value={`${v.id}`}
+                            >
                                 {`${v.name} (${v.option}, ₩ ${convertPrice(
                                     v.price
                                 )})`}
@@ -114,6 +119,7 @@ const ReviewForm = ({ loading = false, soldoutList, mutatorFn }: Props) => {
                 </div>
 
                 <TextareaWithLabel
+                    aria-label="Detailed Review Textarea for Upload Review"
                     register={register("review", {
                         required: "리뷰 내용을 입력해주세요.",
                     })}

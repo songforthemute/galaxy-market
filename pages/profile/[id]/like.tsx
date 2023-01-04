@@ -61,7 +61,12 @@ const Likes: NextPage = () => {
     }, [data]);
 
     return (
-        <Layout title="관심목록" backwardButton configTab>
+        <Layout
+            title="관심목록"
+            backwardButton
+            configTab
+            metaContent="This is the list of interest page on the Profiles tab. You can view a list of products of interest to that user."
+        >
             <section className="flex flex-col divide-y-[1px]">
                 {items.map((item) => (
                     <ItemCard

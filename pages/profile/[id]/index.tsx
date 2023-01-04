@@ -127,7 +127,13 @@ const Profile: NextPage = () => {
     }, [deleteReviewReturn, reviewMutate]);
 
     return (
-        <Layout title="프로필" backwardButton dockBar configTab>
+        <Layout
+            title="프로필"
+            backwardButton
+            dockBar
+            configTab
+            metaContent="The main page of the Profiles tab. View your mini profiles and reviews."
+        >
             {modal && (
                 <DeleteModal
                     loading={deleteReviewLoading}

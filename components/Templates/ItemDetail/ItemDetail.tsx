@@ -81,7 +81,10 @@ const ItemDetail = ({
                             : `판매 완료하기`
                         : `판매자에게 연락하기`}
                 </Button>
-                <button onClick={onToggleLike}>
+                <button
+                    aria-label="Like Item or not toggle Button"
+                    onClick={onToggleLike}
+                >
                     <Heart
                         strokeWidth={1.5}
                         className={booleanCls(isLiked, s.like, s.dislike)}

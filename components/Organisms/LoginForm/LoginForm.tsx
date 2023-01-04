@@ -16,6 +16,7 @@ const LoginForm = () => {
     return (
         <>
             <TextInput
+                aria-label="Email Input for Login"
                 label="이메일"
                 id="email"
                 type="email"
@@ -33,6 +34,7 @@ const LoginForm = () => {
             </TextInput>
 
             <PasswordInput
+                aria-label="Password Input for Login"
                 label="비밀번호"
                 id="password"
                 placeholder={"비밀번호를 입력해주세요."}

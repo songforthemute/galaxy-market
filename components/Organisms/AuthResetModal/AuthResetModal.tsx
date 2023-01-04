@@ -29,10 +29,15 @@ const AuthResetModal = ({
 
     return (
         <Modal onClose={onClose}>
-            <form onSubmit={handleSubmit(onSubmit)} className="px-8 py-12">
+            <form
+                aria-label="Email Validation Form for Password Reset"
+                onSubmit={handleSubmit(onSubmit)}
+                className="px-8 py-12"
+            >
                 <Text variant="pageHeading">비밀번호 찾기</Text>
 
                 <TextInput
+                    aria-label="Email Validation Input for Password Reset"
                     type="email"
                     register={register("email", {
                         required: true,

@@ -62,8 +62,13 @@ const SearchFormModal = ({ onClose, onSearch }: Props) => {
 
     return (
         <Modal onClose={onClose}>
-            <form className={s.root} onSubmit={handleSubmit(_onSubmit)}>
+            <form
+                aria-label="Form for Search Items"
+                className={s.root}
+                onSubmit={handleSubmit(_onSubmit)}
+            >
                 <TextInput
+                    aria-label="Set Name Input for Search Items"
                     id="name"
                     label="상품명"
                     required
@@ -77,6 +82,7 @@ const SearchFormModal = ({ onClose, onSearch }: Props) => {
                     })}
                 />
                 <NumberInput
+                    aria-label="Set Lowest Price for Search Items"
                     label="최저가"
                     heading="₩"
                     id="lowestPrice"
@@ -89,6 +95,7 @@ const SearchFormModal = ({ onClose, onSearch }: Props) => {
                     })}
                 />
                 <NumberInput
+                    aria-label="Set Highest Price for Search Items"
                     label="최고가"
                     heading="₩"
                     id="highestPrice"

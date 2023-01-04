@@ -20,6 +20,7 @@ const Scoring = ({ onClick, score, className = "" }: Props) => {
         <div className={s.root}>
             {star.map((v) => (
                 <button
+                    aria-label="Score for Upload Review"
                     className={cls(
                         s.button,
                         className,

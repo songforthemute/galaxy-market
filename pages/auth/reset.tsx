@@ -32,7 +32,11 @@ const Reset: NextPage = () => {
     }, [data, push]);
 
     return (
-        <Layout title={"비밀번호 찾기"} backwardButton>
+        <Layout
+            title={"비밀번호 찾기 및 변경"}
+            backwardButton
+            metaContent="If you forgot your password, please enter the answer you registered when you signed up and the password you want to set up."
+        >
             <div className="mx-auto flex flex-col items-center justify-center px-4">
                 <h1 className="my-8 font-semibold text-lg border-b-2 pb-2.5 px-4">
                     비밀번호 재설정

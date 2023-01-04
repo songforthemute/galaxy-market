@@ -63,7 +63,7 @@ const AuthForm = ({ mutatorFn, loading, errors }: Props) => {
         <section className={s.root}>
             <nav className={s.nav}>
                 <h1 className={s.heading}>
-                    {method === "login" ? "로그인하기" : "지금 가입하기"}
+                    {method === "login" ? "로그인하기" : "지금 합류하기"}
                 </h1>
 
                 <ul className={s.methods}>
@@ -103,6 +103,7 @@ const AuthForm = ({ mutatorFn, loading, errors }: Props) => {
 
             <FormProvider {...formProviderValues}>
                 <form
+                    aria-label="Authentication Form"
                     onSubmit={handleSubmit(_onSubmit)}
                     className="w-full md:max-w-[50vw] justify-center"
                 >

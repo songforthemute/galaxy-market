@@ -145,7 +145,12 @@ const PostDetail: NextPage = () => {
     }, [deleteReplyReturn, mutate]);
 
     return (
-        <Layout title={"커뮤니티"} backwardButton configTab>
+        <Layout
+            title={"커뮤니티"}
+            backwardButton
+            configTab
+            metaContent="Posting page on the Community tab. Read posts and upload comments, or express your interest with the Like button."
+        >
             {modal && (
                 <DeleteModal
                     loading={deleteReplyLoading}

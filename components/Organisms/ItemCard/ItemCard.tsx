@@ -45,13 +45,13 @@ const Item = ({ product, priority = false }: Props) => {
                     )}
 
                     <div className={s.summary}>
-                        <Text variant="contentsHeading" className={s.title}>
+                        <Text variant="span" className={s.title}>
                             {product?.name}
                         </Text>
                         <Text variant="span" className={s.option}>
                             {product?.option}
                         </Text>
-                        <Text variant="body" className={s.price}>
+                        <Text variant="span" className={s.price}>
                             ₩ {convertPrice(product?.price)}
                         </Text>
                     </div>

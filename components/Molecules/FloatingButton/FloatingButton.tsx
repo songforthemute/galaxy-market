@@ -9,11 +9,21 @@ interface Props {
     children?: ReactNode | any;
     className?: string;
     onClick?: () => void;
+    ariaLabel?: string;
 }
 
-const FloatingButton: FC<Props> = ({ children, className = "", onClick }) => {
+const FloatingButton: FC<Props> = ({
+    children,
+    className = "",
+    onClick,
+    ariaLabel = "Floating Interact Button",
+}) => {
     return (
-        <button className={cls(className, s.root)} onClick={onClick}>
+        <button
+            aria-label={ariaLabel}
+            className={cls(className, s.root)}
+            onClick={onClick}
+        >
             {children}
         </button>
     );

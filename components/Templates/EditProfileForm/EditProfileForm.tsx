@@ -107,6 +107,7 @@ const EditProfileForm = ({
     return (
         <section className={s.root}>
             <form
+                aria-label="Form for Edit Profile"
                 className="md:min-w-[50vw] justify-center"
                 onSubmit={handleSubmit(_onSubmit)}
             >
@@ -123,7 +124,11 @@ const EditProfileForm = ({
                         <div className={s.empty} />
                     )}
 
-                    <ImageInput id="avatar" register={register("avatar")}>
+                    <ImageInput
+                        aria-label="Change Profile Image by Clicking"
+                        id="avatar"
+                        register={register("avatar")}
+                    >
                         <span tabIndex={0} onKeyDown={onKeyDownEnter}>
                             프로필 사진 바꾸기
                         </span>
@@ -131,6 +136,7 @@ const EditProfileForm = ({
                 </div>
 
                 <TextInput
+                    aria-label="User email"
                     placeholder={user?.email}
                     label="이메일"
                     type="email"
@@ -138,6 +144,7 @@ const EditProfileForm = ({
                     disabled
                 />
                 <TextInput
+                    aria-label="Username Input for Edit Profile"
                     register={register("username", {
                         required: true,
                         minLength: {
@@ -157,7 +164,9 @@ const EditProfileForm = ({
                     label="닉네임"
                     id="username"
                 />
+
                 <NumberInput
+                    aria-label="Phone Number Input for Edit Profile"
                     register={register("phone")}
                     placeholder="특수문자 '-' 없이 입력해주세요."
                     label="전화번호"

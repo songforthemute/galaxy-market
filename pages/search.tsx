@@ -72,7 +72,17 @@ const Search: NextPage = () => {
     }, [data, setResults]);
 
     return (
-        <Layout title="검색하기" backwardButton dockBar configTab>
+        <Layout
+            title="상품 검색하기"
+            backwardButton
+            dockBar
+            configTab
+            metaContent={
+                results.length === 0
+                    ? "This is the Search tab. You can search for other users' products according to the option to set them through the modal of the floating button."
+                    : results.reduce((prev, curr) => prev + curr.name, "")
+            }
+        >
             {modal && (
                 <SearchFormModal
                     onClose={() => toggleModal()}

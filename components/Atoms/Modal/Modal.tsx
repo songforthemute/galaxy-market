@@ -44,8 +44,12 @@ const Modal: FC<Props> = ({ children, onClose }) => {
     // NEED TO AUTOFOCUS => useForm()
     return (
         <div className={s.root}>
-            <div ref={ref} className={s.modal}>
-                <button onClick={_onClick} className={s.close}>
+            <div aria-modal={true} ref={ref} className={s.modal}>
+                <button
+                    aria-label={"Closing Modal Button"}
+                    onClick={_onClick}
+                    className={s.close}
+                >
                     <Close />
                 </button>
                 <div tabIndex={-1} className={s.content}>

@@ -22,6 +22,7 @@ const UploadItemInputs = () => {
     return (
         <>
             <TextInput
+                aria-label="Item's Name Input for Upload Item"
                 id="name"
                 label={"상품명"}
                 required
@@ -33,6 +34,7 @@ const UploadItemInputs = () => {
             />
 
             <TextInput
+                aria-label="Item's Option Input for Upload Item"
                 id="option"
                 label={"상품 옵션"}
                 placeholder={"업로드할 상품의 옵션을 입력해주세요."}
@@ -40,6 +42,7 @@ const UploadItemInputs = () => {
             />
 
             <NumberInput
+                aria-label="Item's Price Input for Upload Item"
                 id="price"
                 label="상품 가격"
                 required
@@ -56,6 +59,7 @@ const UploadItemInputs = () => {
             />
 
             <TextareaWithLabel
+                aria-label="Item's Description Input for Upload Item"
                 id="description"
                 label="상품 설명"
                 placeholder="업로드할 상품의 간단한 설명을 입력해주세요."

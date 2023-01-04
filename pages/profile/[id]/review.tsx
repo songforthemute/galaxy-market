@@ -42,7 +42,11 @@ const WriteReview: NextPage = () => {
     );
 
     return (
-        <Layout title="리뷰하기" backwardButton>
+        <Layout
+            title="리뷰하기"
+            backwardButton
+            metaContent="This is the review page on the Profiles tab. You can upload reviews of products purchased from the user."
+        >
             <ReviewForm
                 loading={loading}
                 soldoutList={data?.soldoutProducts}

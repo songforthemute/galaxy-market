@@ -27,7 +27,12 @@ const UploadItem: NextPage = () => {
     }, [data, push]);
 
     return (
-        <Layout title="상품 등록" backwardButton configTab>
+        <Layout
+            title="상품 업로드하기"
+            backwardButton
+            configTab
+            metaContent="This is the product upload page. You can upload the product you want to sell."
+        >
             <UploadItemForm loading={loading} mutatorFn={mutation} />
         </Layout>
     );

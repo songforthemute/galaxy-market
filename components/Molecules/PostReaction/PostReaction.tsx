@@ -21,6 +21,7 @@ const PostReaction = ({
         <div className={cls(s.root, className)}>
             {onClickInterest ? (
                 <button
+                    aria-label="Toggle Interest Button for Post"
                     onClick={onClickInterest}
                     className={booleanCls(isInterested, s.on)}
                 >

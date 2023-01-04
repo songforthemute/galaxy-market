@@ -147,11 +147,13 @@ const UploadItemForm = ({
         <section className={s.root}>
             <FormProvider {...formProviderValues}>
                 <form
+                    aria-label="Form for Upload Item"
                     onSubmit={handleSubmit(_onSubmit)}
                     className="w-full md:max-w-[50vw] justify-center"
                 >
                     <>
                         <ImageInput
+                            aria-label="Item Image Input for Upload Item by Clicking"
                             onKeyDown={onKeyDownEnter}
                             tabIndex={0}
                             id="image"

@@ -66,7 +66,12 @@ const UpdateItem: NextPage = () => {
     }, [data, push, productId]);
 
     return (
-        <Layout title="상품 업데이트" backwardButton configTab>
+        <Layout
+            title="상품 업데이트 및 삭제하기"
+            backwardButton
+            configTab
+            metaContent="This is the product's update page. You can modify or delete information about the product you uploaded for sale."
+        >
             {modal && <DeleteModal onClickConfirm={_onClickDelete} />}
 
             <UploadItemForm

@@ -83,7 +83,12 @@ const Auth: NextPage = () => {
     }, [query, closeModal]);
 
     return (
-        <Layout title={"들어가기"}>
+        <Layout
+            title={"시작하기"}
+            metaContent={
+                "Join Galaxy-market now to trade products with other users."
+            }
+        >
             {modal && (
                 <AuthResetModal
                     mutatorFn={findAccount}

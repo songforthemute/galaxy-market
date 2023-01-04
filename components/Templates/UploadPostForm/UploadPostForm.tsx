@@ -70,10 +70,12 @@ const UploadPostForm = ({ mutatorFn, loading, preset = undefined }: Props) => {
         <section className={s.root}>
             <FormProvider {...formProviderValues}>
                 <form
+                    aria-label="Form for Upload Post"
                     className="w-full md:max-w-[50vw] justify-center"
                     onSubmit={handleSubmit(_onSubmit)}
                 >
                     <TextInput
+                        aria-label="Title Input for Upload Post"
                         id="title"
                         label="제목"
                         required
@@ -88,7 +90,7 @@ const UploadPostForm = ({ mutatorFn, loading, preset = undefined }: Props) => {
                         <Select
                             id="tag"
                             className={s.select}
-                            ariaLabel="태그"
+                            ariaLabel="포스트 태그"
                             placeholder="태그를 선택해주세요."
                             setValue={setTag}
                             required={preset?.tag ? false : true}
@@ -109,6 +111,7 @@ const UploadPostForm = ({ mutatorFn, loading, preset = undefined }: Props) => {
                     </div>
 
                     <TextareaWithLabel
+                        aria-label="Description Textarea for Upload Post"
                         id="description"
                         label="내용"
                         required

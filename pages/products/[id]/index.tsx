@@ -79,7 +79,13 @@ const ItemDetailPage: NextPage = () => {
     };
 
     return (
-        <Layout title="상품 상세" backwardButton configTab>
+        <Layout
+            title="상품 상세보기"
+            backwardButton
+            configTab
+            metaContent="This is the product details page. You can check the image or information and price of the product, register it as a product of interest, or contact the seller.
+        "
+        >
             <ItemDetail
                 item={data?.product}
                 related={data?.relatedProducts}

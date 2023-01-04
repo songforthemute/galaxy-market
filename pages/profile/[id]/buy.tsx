@@ -61,7 +61,12 @@ const Likes: NextPage = () => {
     }, [data]);
 
     return (
-        <Layout title="구매내역" backwardButton configTab>
+        <Layout
+            title="구매내역"
+            backwardButton
+            configTab
+            metaContent="This is the Purchase History page on the Profiles tab. You can view the list of products purchased by the user."
+        >
             <section className="flex flex-col divide-y-[1px]">
                 {items.map((item) => (
                     <ItemCard

@@ -80,7 +80,12 @@ const UpdatePost: NextPage = () => {
     }, [data, postId, push]);
 
     return (
-        <Layout title="게시글 업데이트" backwardButton configTab>
+        <Layout
+            title="포스트 업데이트 및 수정하기"
+            backwardButton
+            configTab
+            metaContent="Post update page on the Community tab. You can modify or delete the information in an uploaded post."
+        >
             {modal && (
                 <DeleteModal
                     loading={deleteLoading}

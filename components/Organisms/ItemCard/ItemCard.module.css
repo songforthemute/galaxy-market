@@ -15,16 +15,16 @@
     @apply flex flex-col items-start;
 }
 
-.summery > .title {
-    @apply inline-block font-extrabold;
+.summary > .title {
+    @apply inline-block font-medium text-base tracking-normal;
 }
 
 .summary > .option {
-    @apply inline-block text-achroma-dark pt-0.5 pb-2.5;
+    @apply inline-block text-achroma-dark pt-0.5 pb-2.5 tracking-tight;
 }
 
 .summary > .price {
-    @apply inline-block;
+    @apply inline-block text-sm;
 }
 
 .empty {

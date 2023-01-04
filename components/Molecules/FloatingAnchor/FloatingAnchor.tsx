@@ -12,6 +12,7 @@ interface Props {
     className?: string;
     href: string;
     tabIndex?: number;
+    ariaLabel?: string;
 }
 
 const FloatingAnchor: FC<Props> = ({
@@ -19,9 +20,11 @@ const FloatingAnchor: FC<Props> = ({
     className = "",
     href,
     tabIndex = 0,
+    ariaLabel = "Floating Anchor Button",
 }) => {
     return (
         <Anchor
+            aria-label={ariaLabel}
             tabIndex={tabIndex}
             className={cls(className, s.root)}
             href={href}

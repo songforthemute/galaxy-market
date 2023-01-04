@@ -31,7 +31,12 @@ const UploadPosting: NextPage = () => {
     }, [data, push]);
 
     return (
-        <Layout title="질문하기" backwardButton configTab>
+        <Layout
+            title="포스트 업로드하기"
+            backwardButton
+            configTab
+            metaContent="Post update page on the Community tab. You can modify or delete the information in a post you post."
+        >
             <UploadPostForm mutatorFn={upload} loading={loading} />
         </Layout>
     );

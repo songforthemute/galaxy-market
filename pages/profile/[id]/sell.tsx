@@ -61,7 +61,12 @@ const Likes: NextPage = () => {
     }, [data]);
 
     return (
-        <Layout title="판매내역" backwardButton configTab>
+        <Layout
+            title="판매내역"
+            backwardButton
+            configTab
+            metaContent="This is the Sales History page on the Profiles tab. You can view a list of the user's sales products."
+        >
             <section className="flex flex-col divide-y-[1px]">
                 {items.map((item) => (
                     <ItemCard

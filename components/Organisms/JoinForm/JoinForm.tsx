@@ -19,6 +19,7 @@ const JoinForm = () => {
     return (
         <>
             <TextInput
+                aria-label="Email Input for Join"
                 id="email"
                 type="email"
                 label={"이메일"}
@@ -35,6 +36,7 @@ const JoinForm = () => {
             />
 
             <TextInput
+                aria-label="Username Input for Join"
                 id="username"
                 type="text"
                 label={"닉네임"}
@@ -59,6 +61,7 @@ const JoinForm = () => {
             />
 
             <PasswordInput
+                aria-label="Password Input for Join"
                 id="password"
                 label={"비밀번호"}
                 required
@@ -78,6 +81,7 @@ const JoinForm = () => {
             />
 
             <PasswordInput
+                aria-label="Password Confirmation Input for Join"
                 id="passwordConfirm"
                 label={"비밀번호 확인"}
                 required
@@ -97,6 +101,7 @@ const JoinForm = () => {
             />
 
             <TextInput
+                aria-label="Password Question for Reset Password Later"
                 id="passwordQuestion"
                 label={"비밀번호 찾기 질문"}
                 required
@@ -107,6 +112,7 @@ const JoinForm = () => {
             />
 
             <TextInput
+                aria-label="Password Question Answer for Reset Password Later"
                 id="passwordAnswer"
                 label={"비밀번호 찾기 답"}
                 required

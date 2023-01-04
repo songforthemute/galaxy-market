@@ -117,7 +117,12 @@ const ChatDetail: NextPage = () => {
     }, [data]);
 
     return (
-        <Layout title={"메시지"} backwardButton configTab>
+        <Layout
+            title={"메시지 주고받기"}
+            backwardButton
+            configTab
+            metaContent="Chat page on the Messages tab. You can send and receive messages with sellers or buyers."
+        >
             <div className="w-full mx-auto md:max-w-7xl p-4 pb-20 space-y-4">
                 {messages.length > 0 &&
                     messages

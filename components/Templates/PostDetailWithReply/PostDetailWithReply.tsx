@@ -83,6 +83,7 @@ const PostDetailWithReply = ({
                         >
                             {currentUser === v.user.id && (
                                 <button
+                                    aria-label="Remove Reply Button"
                                     onClick={() => onClickDeleteReply(v.id)}
                                     className={s.deleteReply}
                                 >
@@ -93,8 +94,13 @@ const PostDetailWithReply = ({
                     ))}
             </div>
 
-            <form className={s.form} onSubmit={handleSubmit(_onSubmit)}>
+            <form
+                aria-label="Form for Upload Reply"
+                className={s.form}
+                onSubmit={handleSubmit(_onSubmit)}
+            >
                 <TextareaWithLabel
+                    aria-label="Reply Input for Upload Reply"
                     id="reply"
                     label="댓글 달기"
                     placeholder="등록할 댓글을 입력해주세요."

@@ -52,7 +52,13 @@ const Home: NextPage = () => {
     }, [data]);
 
     return (
-        <Layout title="홈" backwardButton dockBar configTab>
+        <Layout
+            title="홈"
+            backwardButton
+            dockBar
+            configTab
+            metaContent="This is the main page of the Home tab. You can look around other users' products."
+        >
             <section className="flex flex-col divide-y-[1px]">
                 {items.map((item) => (
                     <ItemCard

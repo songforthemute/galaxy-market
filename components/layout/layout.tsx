@@ -21,6 +21,7 @@ interface Props {
     backwardButton?: boolean;
     dockBar?: boolean;
     configTab?: boolean;
+    metaContent: string;
 }
 
 const Layout: FC<Props> = ({
@@ -29,6 +30,7 @@ const Layout: FC<Props> = ({
     backwardButton,
     dockBar,
     configTab,
+    metaContent,
 }) => {
     const { pathname, back } = useRouter();
     const { user } = useUser();
@@ -38,6 +40,7 @@ const Layout: FC<Props> = ({
         <>
             <Head>
                 <title>{`${title} | Galaxy Market`}</title>
+                <meta name="description" content={metaContent} />
             </Head>
 
             <>
@@ -48,7 +51,12 @@ const Layout: FC<Props> = ({
                     )}
                 >
                     {backwardButton && (
-                        <button className={s.backButton} onClick={() => back()}>
+                        <button
+                            aria-label="Go Back Button"
+                            aria-roledescription="Go Back Button"
+                            className={s.backButton}
+                            onClick={() => back()}
+                        >
                             <ChevronLeft />
                         </button>
                     )}
@@ -62,6 +70,8 @@ const Layout: FC<Props> = ({
 
                     {configTab && (
                         <button
+                            aria-label="Toggle Config Button"
+                            aria-roledescription="Toggle Config Button"
                             className={s.sidebar}
                             onClick={() => toggleSidebar()}
                         >

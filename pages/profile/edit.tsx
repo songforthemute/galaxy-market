@@ -52,7 +52,11 @@ const EditProfile: NextPage = () => {
     }, [data]);
 
     return (
-        <Layout title="프로필 수정" backwardButton>
+        <Layout
+            title="프로필 수정"
+            backwardButton
+            metaContent="The Modify Profile page on the Profiles tab. You can modify your profile picture, user name, and cell phone number."
+        >
             <EditProfileForm
                 user={user}
                 mutatorFn={edit}

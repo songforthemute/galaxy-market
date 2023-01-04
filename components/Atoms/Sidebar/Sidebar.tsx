@@ -51,9 +51,13 @@ const Sidebar: FC<Props> = ({ children, onClose, className = "" }) => {
     return (
         <nav className={s.root} ref={sidebarRef}>
             <div className={s.container}>
-                <section className={s.sidebar}>
+                <section aria-modal={true} className={s.sidebar}>
                     <div className="w-full h-full md:w-screen md:max-w-md">
-                        <button onClick={_onClick} className={s.close}>
+                        <button
+                            aria-label="Closing Sidebar Button"
+                            onClick={_onClick}
+                            className={s.close}
+                        >
                             <Close />
                         </button>
                         <div

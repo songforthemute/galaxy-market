@@ -45,10 +45,12 @@ const AccountResetForm = ({
 
     return (
         <form
+            aria-label="Account Password Reset Form"
             className="w-full md:max-w-[50vw] justify-center"
             onSubmit={handleSubmit(onSubmit)}
         >
             <TextInput
+                aria-label="Password Question for Password Reset"
                 id="passwordQuestion"
                 label="비밀번호 찾기 질문"
                 disabled
@@ -57,6 +59,7 @@ const AccountResetForm = ({
 
             <TextInput
                 required
+                aria-label="Password Question Answer for Password Reset"
                 register={register("passwordAnswer", {
                     required: true,
                 })}
@@ -67,6 +70,7 @@ const AccountResetForm = ({
             />
 
             <PasswordInput
+                aria-label="New Password for Password Reset"
                 id="newPassword"
                 label="새 비밀번호"
                 placeholder="새로 변경할 비밀번호를 입력해 주세요."
@@ -85,6 +89,7 @@ const AccountResetForm = ({
             />
 
             <PasswordInput
+                aria-label="New Password Confirm for Password Reset"
                 id="newPasswordConfirm"
                 label="새 비밀번호 확인"
                 placeholder="비밀번호를 한 번 더 입력해 주세요."
