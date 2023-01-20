@@ -1,8 +1,8 @@
-import { forwardRef, useRef } from "react";
+import { forwardRef } from "react";
 // types
-import type { ButtonHTMLAttributes, FC } from "react";
+import type { ButtonHTMLAttributes, FC, MutableRefObject } from "react";
 // util
-import { booleanCls, cls, useMergeRefs } from "@libs/client";
+import { booleanCls, cls } from "@libs/client";
 // css
 import s from "./Button.module.css";
 import LoadingDots from "@components/Atoms/LoadingDots";
@@ -34,12 +34,10 @@ const Button: FC<Props> = forwardRef(
         },
         buttonRef
     ) => {
-        const ref = useRef(null);
-
         return (
             <button
                 aria-pressed={active}
-                ref={useMergeRefs<any>(ref, buttonRef)}
+                ref={buttonRef as MutableRefObject<HTMLButtonElement>}
                 className={cls(
                     className,
                     s.root,
