@@ -41,10 +41,12 @@ const Likes: NextPage = () => {
         hasQuery: true,
     });
 
+    console.log("getKey: ", getKey);
+
     const { data, setSize } = useSWRInfinite<ItemsInterface>(getKey);
     const page = useInfiniteScrollDown();
 
-    const [items, setItems] = useState<RecordsWithProducts[]>([]);
+    const [items, setItems] = useState<RecordsWithProducts[] | undefined>();
 
     // page number configuration
     useEffect(() => {
@@ -55,8 +57,6 @@ const Likes: NextPage = () => {
     useEffect(() => {
         if (data && !data?.[0]?.error) {
             setItems(() => data.map((data) => data.products).flat());
-        } else {
-            setItems([]);
         }
     }, [data]);
 
@@ -68,10 +68,10 @@ const Likes: NextPage = () => {
             metaContent="This is the Sales History page on the Profiles tab. You can view a list of the user's sales products."
         >
             <section className="flex flex-col divide-y-[1px]">
-                {items.map((item) => (
+                {items?.map((item, index) => (
                     <ItemCard
-                        key={`item-${item?.product.id}`}
-                        product={item.product}
+                        key={`item-${item?.product.id}-${index}`}
+                        product={item?.product}
                     />
                 ))}
             </section>

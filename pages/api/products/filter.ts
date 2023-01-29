@@ -11,7 +11,7 @@ const handler = async (
         query: { kind, id, page },
     } = req;
 
-    if (kind === "Like" || kind === "Buy" || kind === "Sell") {
+    if (id && (kind === "Like" || kind === "Buy" || kind === "Sell")) {
         const productsCount = await client.record.count({
             where: {
                 kind: kind,

@@ -199,10 +199,10 @@ const Profile: NextPage = () => {
 
                 {/* Reviews */}
                 <section className="divide-y-[1px]">
-                    {reviews.map((v) => (
+                    {reviews.map((v, index) => (
                         <ReviewCard
                             data={v}
-                            key={`review_${v.id}`}
+                            key={`review-${v?.id}-${index}`}
                             userId={user?.id}
                             onClickDelete={_onClickDeleteReview}
                         />

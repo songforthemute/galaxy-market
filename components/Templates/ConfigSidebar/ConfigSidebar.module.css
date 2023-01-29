@@ -1,0 +1,19 @@
+.root {
+    @apply flex flex-col;
+}
+
+.listItem {
+    @apply my-4 list-none w-full;
+}
+
+.button {
+    @apply w-full rounded-lg;
+}
+
+.footer {
+    @apply block text-sm italic text-center text-achroma-dark py-0.5 px-4;
+}
+
+.contact:hover {
+    @apply text-achroma-darkest transition duration-300 underline underline-offset-2;
+}

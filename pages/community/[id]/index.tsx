@@ -20,9 +20,7 @@ const ProfileCard = dynamic(() => import("@components/Molecules/ProfileCard"), {
 });
 const PostDetailWithReply = dynamic(
     () => import("@components/Templates/PostDetailWithReply"),
-    {
-        loading: () => <LoadingSuspense variant="circle" />,
-    }
+    { loading: () => <LoadingSuspense variant="circle" /> }
 );
 const DeleteModal = dynamic(() => import("@components/Organisms/DeleteModal"));
 const FloatingAnchor = dynamic(
@@ -161,7 +159,7 @@ const PostDetail: NextPage = () => {
                 />
             )}
 
-            <div className="px-4 pt-4">
+            <div className="md:max-w-7xl mx-auto pt-4 px-4">
                 <Anchor href={`/profile/${data?.post?.userId}`}>
                     <ProfileCard
                         onKeyDown={onKeyDownEnter}

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 // utils
 import { useMutation, useToggleSidebar } from "@libs/client";
+// styles
+import s from "./ConfigSidebar.module.css";
 // components
 import { Button, Sidebar } from "@components/Atoms";
 import { LogOutModal, WithdrawalModal } from "@components/Organisms";
@@ -46,12 +48,12 @@ const ConfigSidebar = ({ userEmail }: Props) => {
     }, [withdrawalData, reload]);
 
     return (
-        <Sidebar className="flex flex-col" onClose={() => toggleSidebar()}>
-            <li className="my-4 list-none w-full">
+        <Sidebar className={s.root} onClose={() => toggleSidebar()}>
+            <li className={s.listItem}>
                 <Button
                     variant="achromaOutline"
                     onClick={() => setShowLogOut(true)}
-                    className="w-full rounded-lg"
+                    className={s.button}
                 >
                     로그아웃
                 </Button>
@@ -64,11 +66,11 @@ const ConfigSidebar = ({ userEmail }: Props) => {
                     />
                 )}
             </li>
-            <li className="my-4 list-none w-full">
+            <li className={s.listItem}>
                 <Button
                     variant="achromaOutline"
                     onClick={() => setShowWithdrawal(true)}
-                    className="w-full rounded-lg"
+                    className={s.button}
                 >
                     회원탈퇴
                 </Button>
@@ -82,6 +84,20 @@ const ConfigSidebar = ({ userEmail }: Props) => {
                         loading={withdrawalLoading}
                     />
                 )}
+            </li>
+
+            <li className={s.listItem}>
+                <footer className={s.footer}>
+                    &#169; {new Date().getFullYear()}. Galaxy-Market
+                </footer>
+                <footer className={s.footer}>
+                    <a
+                        href={`mailto:${process.env.NEXT_PUBLIC_CONTACT}`}
+                        className={s.contact}
+                    >
+                        Contact to Dev &rarr;
+                    </a>
+                </footer>
             </li>
         </Sidebar>
     );
