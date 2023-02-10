@@ -12,6 +12,7 @@ const isPrivateUrl = (pathname: string): boolean => {
         pathname.endsWith("upload"),
         pathname.endsWith("update"),
         pathname.endsWith("review"),
+        pathname.endsWith("edit"),
         pathname.startsWith("/chat"),
     ];
 

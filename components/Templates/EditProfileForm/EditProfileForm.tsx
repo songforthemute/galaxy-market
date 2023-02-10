@@ -40,7 +40,7 @@ interface Props {
         type: "avatar" | "phone" | "username";
         message: string;
     };
-    user?: User;
+    user?: User | null;
 }
 
 const EditProfileForm = ({
