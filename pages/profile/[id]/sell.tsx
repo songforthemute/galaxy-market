@@ -41,8 +41,6 @@ const Likes: NextPage = () => {
         hasQuery: true,
     });
 
-    console.log("getKey: ", getKey);
-
     const { data, setSize } = useSWRInfinite<ItemsInterface>(getKey);
     const page = useInfiniteScrollDown();
 

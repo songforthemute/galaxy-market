@@ -25,7 +25,7 @@ const handlerHelper = ({
             return res.status(405).end();
         }
 
-        if (isPrivate && !req.session.user) {
+        if (isPrivate && !req.session.user && req.method !== "GET") {
             return res
                 .status(401)
                 .json({ status: false, error: "Please Login first." });

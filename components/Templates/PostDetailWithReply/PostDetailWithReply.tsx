@@ -42,7 +42,7 @@ interface Props {
     replyLoading?: boolean;
     isInterested?: boolean;
     post?: PostWithUser;
-    currentUser?: number;
+    currentUser?: number | null;
     onClickDeleteReply: (replyId: number) => void;
 }
 
@@ -57,6 +57,10 @@ const PostDetailWithReply = ({
 }: Props) => {
     const { register, handleSubmit, reset } = useForm<FormInterface>();
     const _onSubmit = (data: FormInterface) => {
+        if (!currentUser) {
+            mutatorFn("/auth");
+            return;
+        }
         if (replyLoading) return;
 
         reset();

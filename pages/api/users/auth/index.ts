@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
 import handlerHelper, { ResponseInterface } from "@libs/server/handlerHelper";
 import bcrypt from "bcrypt";
@@ -13,7 +13,7 @@ interface AuthInterface {
     passwordAnswer?: string;
 }
 
-const authHandler = async (
+const handler = async (
     req: NextApiRequest,
     res: NextApiResponse<ResponseInterface>
 ) => {
@@ -49,7 +49,7 @@ const authHandler = async (
                     password: await bcrypt.hash(password, 12),
                     username,
                     passwordQuestion: passwordQuestion as string,
-                    passwordAnswer: passwordAnswer as string,
+                    passwordAnswer: await bcrypt.hash(passwordAnswer, 7),
                 },
             });
         }
@@ -87,6 +87,6 @@ const authHandler = async (
 export default withApiSession(
     handlerHelper({
         methods: ["POST"],
-        handlerFn: authHandler,
+        handlerFn: handler,
     })
 );

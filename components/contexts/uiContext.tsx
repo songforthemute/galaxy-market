@@ -5,7 +5,7 @@ import {
     useMemo,
     useReducer,
 } from "react";
-import { ThemeProvider } from "./themeContext";
+// import { ThemeProvider } from "./themeContext";
 // types
 import type { FC, ReactNode } from "react";
 
@@ -14,7 +14,6 @@ export interface UIState {
     showDropdown: boolean;
     showModal: boolean;
     modalView: string;
-    userAvatar: string | null;
 }
 
 const initialState: UIState = {
@@ -22,7 +21,6 @@ const initialState: UIState = {
     showDropdown: false,
     showModal: false,
     modalView: "",
-    userAvatar: null,
 };
 
 type Action =
@@ -47,10 +45,6 @@ type Action =
     | {
           type: "SET_MODAL_VIEW";
           view: MODAL_VIEWS;
-      }
-    | {
-          type: "SET_USER_AVATAR";
-          url: string;
       };
 
 // NEED TO FEAT THIS
@@ -82,9 +76,6 @@ const uiReducer = (state: UIState, action: Action): UIState => {
         }
         case "SET_MODAL_VIEW": {
             return { ...state, modalView: action.view };
-        }
-        case "SET_USER_AVATAR": {
-            return { ...state, userAvatar: action.url };
         }
     }
 };
@@ -123,11 +114,6 @@ export const UIProvider: FC<{ children?: ReactNode }> = (props) => {
         [dispatch]
     );
 
-    const setUserAvatar = useCallback(
-        (url: string) => dispatch({ type: "SET_USER_AVATAR", url }),
-        [dispatch]
-    );
-
     const setModalView = useCallback(
         (view: MODAL_VIEWS) => dispatch({ type: "SET_MODAL_VIEW", view }),
         [dispatch]
@@ -143,7 +129,6 @@ export const UIProvider: FC<{ children?: ReactNode }> = (props) => {
             closeDropdown,
             openModal,
             closeModal,
-            setUserAvatar,
             setModalView,
         }),
         [
@@ -154,7 +139,6 @@ export const UIProvider: FC<{ children?: ReactNode }> = (props) => {
             closeDropdown,
             openModal,
             closeModal,
-            setUserAvatar,
             setModalView,
         ]
     );
@@ -167,19 +151,13 @@ export const UIProvider: FC<{ children?: ReactNode }> = (props) => {
     return <UIContext.Provider value={value} {...props} />;
 };
 
-interface useUIInterface {
-    showSidebar: boolean;
-    showDropdown: boolean;
-    showModal: boolean;
-    modalView: string;
-    userAvatar: string | null;
+interface useUIInterface extends UIState {
     openSidebar: () => void;
     closeSidebar: () => void;
     openDropdown: () => void;
     closeDropdown: () => void;
     openModal: () => void;
     closeModal: () => void;
-    setUserAvatar: (url: string) => void;
     setModalView: (view: MODAL_VIEWS) => void;
 }
 
@@ -200,7 +178,9 @@ export const ManagedUIContext: React.FC<{ children?: React.ReactNode }> = ({
 }) => {
     return (
         <UIProvider>
-            <ThemeProvider>{children}</ThemeProvider>
+            {/* <ThemeProvider> */}
+            {children}
+            {/* </ThemeProvider> */}
         </UIProvider>
     );
 };

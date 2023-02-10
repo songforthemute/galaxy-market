@@ -159,9 +159,9 @@ const Profile: NextPage = () => {
                         onKeyDown={onKeyDownEnter}
                         avatar={profileData?.profile?.avatarUrl}
                         subtext={booleanCls(
-                            user?.id === profileData?.profile?.id,
-                            "프로필 수정하기",
-                            "메시지 보내기"
+                            user?.id !== profileData?.profile?.id,
+                            "메시지 보내기",
+                            "프로필 수정하기"
                         )}
                         username={profileData?.profile?.username}
                     />
@@ -211,7 +211,7 @@ const Profile: NextPage = () => {
             </div>
 
             {/* 플로팅버튼 - 리뷰 작성 */}
-            {profileData && user?.id !== profileData.profile?.id && (
+            {!user || user?.id === profileData?.profile?.id ? null : (
                 <FloatingAnchor href={`${asPath}/review`}>
                     <PencilSquare />
                 </FloatingAnchor>

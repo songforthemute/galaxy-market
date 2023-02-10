@@ -1,6 +1,6 @@
 // utils
 import useFocusEvent from "@libs/client/useFocusEvent";
-import { booleanCls, cls } from "@libs/client";
+import { booleanCls, cls, useUser } from "@libs/client";
 // styles
 import s from "./DockBar.module.css";
 // components
@@ -16,10 +16,10 @@ import {
 
 interface Props {
     pathname?: string;
-    userId?: number;
 }
 
-const DockBar = ({ pathname, userId }: Props) => {
+const DockBar = ({ pathname }: Props) => {
+    const { user } = useUser();
     const { onKeyDownEnter } = useFocusEvent("itself");
 
     return (
@@ -96,7 +96,7 @@ const DockBar = ({ pathname, userId }: Props) => {
 
                 <li>
                     <Anchor
-                        href={`/profile/${userId}`}
+                        href={user ? `/profile/${user?.id}` : `/auth`}
                         onKeyDown={onKeyDownEnter}
                         tabIndex={0}
                         className={cls(
@@ -108,7 +108,7 @@ const DockBar = ({ pathname, userId }: Props) => {
                         )}
                     >
                         <User />
-                        <Text variant="span">프로필</Text>
+                        <Text variant="span">{"프로필"}</Text>
                     </Anchor>
                 </li>
             </ul>

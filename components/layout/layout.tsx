@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 // types
 import type { FC, ReactNode } from "react";
 // utils
-import { cls, useUser, useToggleSidebar } from "@libs/client";
+import { cls, useToggleSidebar } from "@libs/client";
 // styles
 import s from "./layout.module.css";
 // components
@@ -33,7 +33,6 @@ const Layout: FC<Props> = ({
     metaContent,
 }) => {
     const { pathname, back } = useRouter();
-    const { user } = useUser();
     const { sidebar, toggleSidebar } = useToggleSidebar();
 
     return (
@@ -83,12 +82,12 @@ const Layout: FC<Props> = ({
                 {/* 뷰 */}
                 <main className={cls("pt-[3.8125rem]", dockBar ? "pb-24" : "")}>
                     {/* 설정 OF & OFF */}
-                    {sidebar && <ConfigSidebar userEmail={user?.email} />}
+                    {sidebar && <ConfigSidebar />}
 
                     {children}
                 </main>
 
-                {dockBar && <DockBar pathname={pathname} userId={user?.id} />}
+                {dockBar && <DockBar pathname={pathname} />}
             </>
         </>
     );

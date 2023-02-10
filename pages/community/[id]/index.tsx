@@ -62,7 +62,7 @@ interface ReplyReturn {
 
 // Page
 const PostDetail: NextPage = () => {
-    const { query, asPath } = useRouter();
+    const { query, asPath, push } = useRouter();
     const { user } = useUser();
     const { onKeyDownEnter } = useFocusEvent("itself");
 
@@ -77,6 +77,11 @@ const PostDetail: NextPage = () => {
         method: "POST",
     });
     const _onClickInterest = () => {
+        // prohibit access if not logged in && if not GET request
+        if (!user) {
+            push("/auth");
+            return;
+        }
         if (!data) return;
 
         mutate(
@@ -172,16 +177,16 @@ const PostDetail: NextPage = () => {
             </div>
 
             <PostDetailWithReply
-                mutatorFn={replying}
+                mutatorFn={user ? replying : push}
                 onClickInterest={_onClickInterest}
                 post={data?.post}
                 isInterested={data?.isInterest}
                 replyLoading={replyLoading}
-                currentUser={user?.id}
+                currentUser={user ? user.id : null}
                 onClickDeleteReply={_onClickDeleteReply}
             />
 
-            {user?.id === data?.post.userId && (
+            {!user || user?.id !== data?.post.userId ? null : (
                 <FloatingAnchor href={`${asPath}/update`}>
                     <PencilSquare />
                 </FloatingAnchor>

@@ -16,7 +16,7 @@ const useUser = () => {
         fetcher
     ); // url: fetching url & key used when caching
 
-    return { user: data?.profile, isLoading: !data && !error };
+    return { user: data?.profile || null, isLoading: !data && !error };
 };
 
 export default useUser;

@@ -46,8 +46,12 @@ const ItemDetailPage: NextPage = () => {
         method: "POST",
     });
     const _onClickLike = () => {
+        // prohibit access if not logged in && if not GET request
+        if (!user) {
+            push("/auth");
+            return;
+        }
         if (!data) return;
-
         toggleLike({});
         mutate({ ...data, isLiked: !data?.isLiked }, false);
     };
@@ -58,8 +62,12 @@ const ItemDetailPage: NextPage = () => {
         method: "PUT",
     });
     const _onClickSoldout = () => {
+        // prohibit access if not logged in && if not GET request
+        if (!user) {
+            push("/auth");
+            return;
+        }
         if (!data) return;
-
         toggleSoldout({ isSoldout: data.product.isSoldOut });
         mutate(
             {
@@ -75,6 +83,11 @@ const ItemDetailPage: NextPage = () => {
 
     // event handler - talk to seller
     const _onClickTalkSeller = () => {
+        // prohibit access if not logged in && if not GET request
+        if (!user) {
+            push("/auth");
+            return;
+        }
         push(`/chats/${data?.product.userId}`);
     };
 
@@ -100,7 +113,7 @@ const ItemDetailPage: NextPage = () => {
             />
 
             {/* 템플릿 외의 페이지 단에서 수정 및 삭제 플로팅버튼 */}
-            {data?.product.userId === user?.id && (
+            {!user || user?.id !== data?.product.userId ? null : (
                 <FloatingAnchor href={`${asPath}/update`}>
                     <PencilSquare />
                 </FloatingAnchor>

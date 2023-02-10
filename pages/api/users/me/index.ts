@@ -13,6 +13,8 @@ const handler = async (
     } = req;
 
     if (method === "GET") {
+        if (!user) return res.json({ status: true, profile: null });
+
         const profile = await client.user.findUnique({
             where: {
                 id: user?.id,

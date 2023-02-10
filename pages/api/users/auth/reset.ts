@@ -4,7 +4,7 @@ import handlerHelper, { ResponseInterface } from "@libs/server/handlerHelper";
 import bcrypt from "bcrypt";
 import { withApiSession } from "@libs/server/sessionHelper";
 
-const authHandler = async (
+const handler = async (
     req: NextApiRequest,
     res: NextApiResponse<ResponseInterface>
 ) => {
@@ -43,7 +43,7 @@ const authHandler = async (
         const user = await client.user.findFirst({
             where: {
                 id: Number(id),
-                passwordAnswer,
+                passwordAnswer: await bcrypt.hash(passwordAnswer, 7),
             },
         });
 
@@ -70,6 +70,6 @@ const authHandler = async (
 export default withApiSession(
     handlerHelper({
         methods: ["POST", "PUT"],
-        handlerFn: authHandler,
+        handlerFn: handler,
     })
 );
