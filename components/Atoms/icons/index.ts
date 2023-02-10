@@ -24,3 +24,4 @@ export { default as Home } from "./home";
 export { default as ChatBubbleSquare } from "./chatBubbleSquare";
 export { default as Building } from "./building";
 export { default as User } from "./user";
+export { default as Login } from "./login";
