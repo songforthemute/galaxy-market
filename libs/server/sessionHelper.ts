@@ -1,4 +1,4 @@
-import { withIronSessionApiRoute } from "iron-session/next";
+import { withIronSessionApiRoute, withIronSessionSsr } from "iron-session/next";
 import type { NextApiHandler } from "next";
 
 declare module "iron-session" {
@@ -23,10 +23,10 @@ export const withApiSession = (fn: NextApiHandler) => {
     return withIronSessionApiRoute(fn, cookieOptions);
 };
 
-// export const withSsrSession = (fn: any) => {
-//     /**
-//      * iron-session에게 req 객체를 제공하여 쿠키를 가져오게끔 하고,
-//      * 쿠키를 해독한 다음, 그 쿠키의 결과를 req.session.user 내부에 저장.
-//      */
-//     return withIronSessionSsr(fn, cookieOptions);
-// };
+export const withSsrSession = (fn: any) => {
+    /**
+     * iron-session에게 req 객체를 제공하여 쿠키를 가져오게끔 하고,
+     * 쿠키를 해독한 다음, 그 쿠키의 결과를 req.session.user 내부에 저장.
+     */
+    return withIronSessionSsr(fn, cookieOptions);
+};
