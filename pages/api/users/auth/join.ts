@@ -53,35 +53,21 @@ const handler = async (
                 },
             });
         }
+
+        req.session.user = {
+            id: user.id,
+        }; // cookie has stroage limitation
+        await req.session.save(); // logout: req.session.destroy()
+
+        return res.json({ status: true });
     }
-    // Login Case - !passwordConfirm
+    // corner case
     else {
-        // Not Found user
-        if (!user) {
-            return res.json({
-                status: false,
-                error: "존재하지 않는 이메일입니다.",
-            });
-        }
-        // Normal case - validation password
-        else {
-            const isCorrect = await bcrypt.compare(password, user.password);
-            // Not correct password
-            if (!isCorrect) {
-                return res.json({
-                    status: false,
-                    error: "비밀번호가 일치하지 않습니다.",
-                });
-            }
-        }
+        return res.json({
+            status: false,
+            error: "폼을 다시 작성해주세요.",
+        });
     }
-
-    req.session.user = {
-        id: user.id,
-    }; // cookie has stroage limitation
-    await req.session.save(); // logout: req.session.destroy()
-
-    return res.json({ status: true });
 };
 
 export default withApiSession(

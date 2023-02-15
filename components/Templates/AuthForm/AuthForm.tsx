@@ -1,5 +1,7 @@
 import { FormProvider, useForm } from "react-hook-form";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+// types
+import type { Dispatch, SetStateAction } from "react";
 // utils
 import { booleanCls } from "@libs/client";
 // styles
@@ -16,6 +18,8 @@ interface FormInterface {
 }
 
 interface Props {
+    formMethod: "login" | "join";
+    setFormMethod: Dispatch<SetStateAction<"login" | "join">>;
     mutatorFn: (data: FormInterface) => void;
     loading: boolean;
     errors?: {
@@ -24,9 +28,13 @@ interface Props {
     };
 }
 
-const AuthForm = ({ mutatorFn, loading, errors }: Props) => {
-    const [method, setMethod] = useState<"login" | "join">("login");
-
+const AuthForm = ({
+    formMethod,
+    setFormMethod,
+    mutatorFn,
+    loading,
+    errors,
+}: Props) => {
     const formProviderValues = useForm<FormInterface>({
         reValidateMode: "onBlur",
     });
@@ -34,7 +42,7 @@ const AuthForm = ({ mutatorFn, loading, errors }: Props) => {
     const _onSubmit = (data: FormInterface) => {
         if (loading) return;
 
-        if (method === "join" && data.password !== data.passwordConfirm) {
+        if (formMethod === "join" && data.password !== data.passwordConfirm) {
             setError(
                 "passwordConfirm",
                 {
@@ -63,19 +71,19 @@ const AuthForm = ({ mutatorFn, loading, errors }: Props) => {
         <section className={s.root}>
             <nav className={s.nav}>
                 <h1 className={s.heading}>
-                    {method === "login" ? "로그인하기" : "지금 합류하기"}
+                    {formMethod === "login" ? "로그인하기" : "지금 합류하기"}
                 </h1>
 
                 <ul className={s.methods}>
                     <li>
                         <button
                             className={booleanCls(
-                                method === "login",
+                                formMethod === "login",
                                 s.active,
                                 s.nonactive
                             )}
                             onClick={() => {
-                                setMethod("login");
+                                setFormMethod("login");
                                 reset();
                             }}
                         >
@@ -86,12 +94,12 @@ const AuthForm = ({ mutatorFn, loading, errors }: Props) => {
                     <li>
                         <button
                             className={booleanCls(
-                                method === "join",
+                                formMethod === "join",
                                 s.active,
                                 s.nonactive
                             )}
                             onClick={() => {
-                                setMethod("join");
+                                setFormMethod("join");
                                 reset();
                             }}
                         >
@@ -107,12 +115,14 @@ const AuthForm = ({ mutatorFn, loading, errors }: Props) => {
                     onSubmit={handleSubmit(_onSubmit)}
                     className="w-full md:max-w-[50vw] justify-center"
                 >
-                    {method === "login" ? <LoginForm /> : <JoinForm />}
+                    {formMethod === "login" ? <LoginForm /> : <JoinForm />}
                     <Button
                         loading={loading}
                         className="rounded-lg w-full mt-8"
                     >
-                        {method === "login" ? "로그인하기" : "지금 가입하기"}
+                        {formMethod === "login"
+                            ? "로그인하기"
+                            : "지금 가입하기"}
                     </Button>
                 </form>
             </FormProvider>

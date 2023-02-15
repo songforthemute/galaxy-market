@@ -30,24 +30,25 @@ const Auth: NextPage = () => {
     const { replace, push, query } = useRouter();
     const { modal, toggleModal, closeModal } = useToggleModal();
     const [errors, setErrors] = useState<ErrorInterface>();
+    const [formMethod, setFormMethod] = useState<"login" | "join">("login");
 
     // request auth
     const [authentication, { loading, data }] =
         useMutation<AuthenticationReturn>({
-            url: "/api/users/auth",
+            url: `/api/users/auth/${formMethod}`,
             method: "POST",
         });
 
     // if authentication error
     useEffect(() => {
         if (data?.status === false && data?.error) {
-            if (data?.error !== "비밀번호가 일치하지 않습니다.") {
-                setErrors({ type: "email", message: data?.error });
-            } else {
-                setErrors({ type: "password", message: data?.error });
-            }
-
-            return;
+            setErrors({
+                type:
+                    data?.error === "비밀번호가 일치하지 않습니다."
+                        ? "password"
+                        : "email",
+                message: data?.error,
+            });
         }
     }, [data]);
 
@@ -100,6 +101,8 @@ const Auth: NextPage = () => {
 
             <div className="mx-auto mb-12 flex flex-col items-center justify-center px-4">
                 <AuthForm
+                    formMethod={formMethod}
+                    setFormMethod={setFormMethod}
                     loading={loading}
                     mutatorFn={authentication}
                     errors={errors}
