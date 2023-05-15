@@ -1,21 +1,28 @@
-# 0. Galaxy-Market
+# Galaxy-Market
 
-## **_개요_**
-
--   이 프로젝트는 **C2C 거래 서비스 웹 애플리케이션**으로, 번개장터에서 영감을 받아 진행하였으며, Next.js를 이용해 개발한 풀스택 웹 애플리케이션입니다. _(This project is **C2C trading service web application** inspired by BGZT and developed using Next.js.)_
-
--   Project Deployment : [Galaxy-Market](https://galaxy-market-rose.vercel.app)
-
--   Medium Blog : [https://medium.com/@songforthemute](https://medium.com/@songforthemute)
+## **_목차_**
+0. [개요](#0-개요)
+1. [기술 스택](#1-기술-스택)
+2. [프로젝트 상세](#2-프로젝트-상세)
+3. [Google Lighthouse Inspection](#3-Google-Lighthouse-Inspection)
+4. [API 인터페이스](#4-api-인터페이스)
+5. [프로젝트 스크립트](#5-프로젝트-스크립트)
 
 ---
 
-## **_목차_**
 
-1. [기술 스택](#1-기술-스택)
-2. [프로젝트 상세](#2-프로젝트-상세)
-3. [API 인터페이스](#3-api-인터페이스)
-4. [프로젝트 스크립트](#4-프로젝트-스크립트)
+<img alt="Deployment Screenshot" src="https://file.notion.so/f/s/4a2fe40d-fbb4-47cd-a292-68501eb6a160/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2023-03-19_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_11.41.42.png?id=1f4e961f-04b1-408e-a163-db108f270dc5&table=block&spaceId=0808aacc-90cf-42dd-9736-c8efd0fc09b4&expirationTimestamp=1684255283577&signature=Xh3cbKVzkW5sWBiFcCJGq5YHEAQXJ1bR1RrsOgWsoX0&downloadName=%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA+2023-03-19+%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE+11.41.42.png"/>
+
+
+
+---
+
+## _0. 개요_
+
+-   이 프로젝트는 **C2C 중고 거래 서비스**로, 프런트엔드와 백엔드 모두 Next.js를 이용해 개발한 풀스택 웹 애플리케이션입니다. _(This project is **C2C Used Trading Service**, a full-stack web application developed using Next.js, both front-end and back-end.)_
+
+-   Deployment : [Galaxy-Market](https://galaxy-market-rose.vercel.app)
+-   Blog : [Medium](https://medium.com/@songforthemute)
 
 ---
 
@@ -72,7 +79,13 @@
 
 ---
 
-## _3. API 인터페이스_
+## _3. Google Lighthouse Inspection_
+
+<img width="50%" height="auto" alt="Google Lighthouse Inspection" src="https://github.com/songforthemute/galaxy-market/assets/105373350/c9380277-f5eb-4092-9b04-74ad814752c5"/>
+
+---
+
+## _4. API 인터페이스_
 
 -   ### `.../api`
 
@@ -183,7 +196,7 @@
 
 ---
 
-## _4. 프로젝트 스크립트_
+## _5. 프로젝트 스크립트_
 
 -   ### 이 프로젝트의 개발 환경
     -   Editor : `Visual Studio Code`
