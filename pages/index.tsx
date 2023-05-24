@@ -42,7 +42,7 @@ const Home: NextPage = () => {
         setSize(page);
     }, [setSize, page]);
 
-    // recevie & connect database for mount
+    // receive & connect database for mount
     useEffect(() => {
         if (data && !data?.[0]?.error) {
             setItems(() => data?.map((data) => data?.products).flat());
