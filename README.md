@@ -20,7 +20,369 @@
 -   이 프로젝트는 **C2C 중고 거래 서비스**로, 프런트엔드와 백엔드 모두 Next.js를 이용해 개발한 풀스택 웹 애플리케이션입니다. _(This project is **C2C Used Trading Service**, a full-stack web application developed using Next.js, both front-end and back-end.)_
 
 -   Deployment : [Galaxy-Market](https://galaxy-market-rose.vercel.app)
+
 -   Blog : [Medium](https://medium.com/@songforthemute)
+
+-   <details>
+       <summary><i>프로젝트 구조(Project structure)</i></summary>
+
+        📦galaxy-market
+        ┣ 📂components
+        ┃ ┣ 📂Atoms
+        ┃ ┃ ┣ 📂Anchor
+        ┃ ┃ ┃ ┣ 📜Anchor.tsx
+        ┃ ┃ ┃ ┗ 📜index.tsx
+        ┃ ┃ ┣ 📂Badge
+        ┃ ┃ ┃ ┣ 📜Badge.module.css
+        ┃ ┃ ┃ ┣ 📜Badge.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂Button
+        ┃ ┃ ┃ ┣ 📜Button.module.css
+        ┃ ┃ ┃ ┣ 📜Button.tsx
+        ┃ ┃ ┃ ┗ 📜index.tsx
+        ┃ ┃ ┣ 📂ErrorMessage
+        ┃ ┃ ┃ ┣ 📜ErrorMessage.module.css
+        ┃ ┃ ┃ ┣ 📜ErrorMessage.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂Img
+        ┃ ┃ ┃ ┣ 📜Img.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂Input
+        ┃ ┃ ┃ ┣ 📜Input.module.css
+        ┃ ┃ ┃ ┣ 📜Input.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂Label
+        ┃ ┃ ┃ ┣ 📜Label.module.css
+        ┃ ┃ ┃ ┣ 📜Label.tsx
+        ┃ ┃ ┃ ┗ 📜index.tsx
+        ┃ ┃ ┣ 📂LoadingDots
+        ┃ ┃ ┃ ┣ 📜LoadingDots.module.css
+        ┃ ┃ ┃ ┣ 📜LoadingDots.tsx
+        ┃ ┃ ┃ ┗ 📜index.tsx
+        ┃ ┃ ┣ 📂Modal
+        ┃ ┃ ┃ ┣ 📜Modal.module.css
+        ┃ ┃ ┃ ┣ 📜Modal.tsx
+        ┃ ┃ ┃ ┗ 📜index.tsx
+        ┃ ┃ ┣ 📂Quantity
+        ┃ ┃ ┃ ┣ 📜Quantity.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂Rating
+        ┃ ┃ ┃ ┣ 📜Rating.module.css
+        ┃ ┃ ┃ ┣ 📜Rating.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂Select
+        ┃ ┃ ┃ ┣ 📜Select.module.css
+        ┃ ┃ ┃ ┣ 📜Select.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂Sidebar
+        ┃ ┃ ┃ ┣ 📜Sidebar.module.css
+        ┃ ┃ ┃ ┣ 📜Sidebar.tsx
+        ┃ ┃ ┃ ┗ 📜index.tsx
+        ┃ ┃ ┣ 📂Skeleton
+        ┃ ┃ ┃ ┣ 📜Skeleton.module.css
+        ┃ ┃ ┃ ┣ 📜Skeleton.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂Text
+        ┃ ┃ ┃ ┣ 📜Text.module.css
+        ┃ ┃ ┃ ┣ 📜Text.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂Textarea
+        ┃ ┃ ┃ ┣ 📜Textarea.module.css
+        ┃ ┃ ┃ ┣ 📜Textarea.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂icons
+        ┃ ┃ ┃ ┣ 📜add.tsx
+        ┃ ┃ ┃ ┣ 📜bin.tsx
+        ┃ ┃ ┃ ┣ 📜building.tsx
+        ┃ ┃ ┃ ┣ 📜bulb.tsx
+        ┃ ┃ ┃ ┣ 📜chatBubbleRound.tsx
+        ┃ ┃ ┃ ┣ 📜chatBubbleSquare.tsx
+        ┃ ┃ ┃ ┣ 📜check.tsx
+        ┃ ┃ ┃ ┣ 📜chevronDown.tsx
+        ┃ ┃ ┃ ┣ 📜chevronLeft.tsx
+        ┃ ┃ ┃ ┣ 📜chevronRight.tsx
+        ┃ ┃ ┃ ┣ 📜chevronUp.tsx
+        ┃ ┃ ┃ ┣ 📜close.tsx
+        ┃ ┃ ┃ ┣ 📜eye.tsx
+        ┃ ┃ ┃ ┣ 📜eyeSlash.tsx
+        ┃ ┃ ┃ ┣ 📜heart.tsx
+        ┃ ┃ ┃ ┣ 📜home.tsx
+        ┃ ┃ ┃ ┣ 📜horizontalDots.tsx
+        ┃ ┃ ┃ ┣ 📜iconProps.ts
+        ┃ ┃ ┃ ┣ 📜index.ts
+        ┃ ┃ ┃ ┣ 📜login.tsx
+        ┃ ┃ ┃ ┣ 📜magnifyingGlass.tsx
+        ┃ ┃ ┃ ┣ 📜paperAirPlane.tsx
+        ┃ ┃ ┃ ┣ 📜pencilSquare.tsx
+        ┃ ┃ ┃ ┣ 📜picture.tsx
+        ┃ ┃ ┃ ┣ 📜questionMark.tsx
+        ┃ ┃ ┃ ┣ 📜shoppingBag.tsx
+        ┃ ┃ ┃ ┣ 📜shoppingCart.tsx
+        ┃ ┃ ┃ ┣ 📜star.tsx
+        ┃ ┃ ┃ ┗ 📜user.tsx
+        ┃ ┃ ┗ 📜index.ts
+        ┃ ┣ 📂Molecules
+        ┃ ┃ ┣ 📂ChatBubble
+        ┃ ┃ ┃ ┣ 📜ChatBubble.module.css
+        ┃ ┃ ┃ ┣ 📜ChatBubble.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂ChatInput
+        ┃ ┃ ┃ ┣ 📜ChatInput.module.css
+        ┃ ┃ ┃ ┣ 📜ChatInput.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂CircleButton
+        ┃ ┃ ┃ ┣ 📜CircleButton.module.css
+        ┃ ┃ ┃ ┣ 📜CircleButton.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂FloatingAnchor
+        ┃ ┃ ┃ ┣ 📜FloatingAnchor.module.css
+        ┃ ┃ ┃ ┣ 📜FloatingAnchor.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂FloatingButton
+        ┃ ┃ ┃ ┣ 📜FloatingButton.module.css
+        ┃ ┃ ┃ ┣ 📜FloatingButton.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂ImageInput
+        ┃ ┃ ┃ ┣ 📜ImageInput.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂ItemThumbnail
+        ┃ ┃ ┃ ┣ 📜ItemThumbnail.module.css
+        ┃ ┃ ┃ ┣ 📜ItemThumbnail.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂LoadingSuspense
+        ┃ ┃ ┃ ┣ 📜LoadingSuspense.module.css
+        ┃ ┃ ┃ ┣ 📜LoadingSuspense.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂NumberInput
+        ┃ ┃ ┃ ┣ 📜NumberInput.module.css
+        ┃ ┃ ┃ ┣ 📜NumberInput.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂PasswordInput
+        ┃ ┃ ┃ ┣ 📜PasswordInput.module.css
+        ┃ ┃ ┃ ┣ 📜PasswordInput.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂PostReaction
+        ┃ ┃ ┃ ┣ 📜PostReaction.module.css
+        ┃ ┃ ┃ ┣ 📜PostReaction.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂ProfileCard
+        ┃ ┃ ┃ ┣ 📜ProfileCard.module.css
+        ┃ ┃ ┃ ┣ 📜ProfileCard.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂Scoring
+        ┃ ┃ ┃ ┣ 📜Scoring.module.css
+        ┃ ┃ ┃ ┣ 📜Scoring.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂TextInput
+        ┃ ┃ ┃ ┣ 📜TextInput.module.css
+        ┃ ┃ ┃ ┣ 📜TextInput.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂TextareaWithLabel
+        ┃ ┃ ┃ ┣ 📜TextareaWithLabel.module.css
+        ┃ ┃ ┃ ┣ 📜TextareaWithLabel.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┗ 📜index.ts
+        ┃ ┣ 📂Organisms
+        ┃ ┃ ┣ 📂AccountResetForm
+        ┃ ┃ ┃ ┣ 📜AccountResetForm.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂AuthResetModal
+        ┃ ┃ ┃ ┣ 📜AuthResetModal.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂DeleteModal
+        ┃ ┃ ┃ ┣ 📜DeleteModal.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂DockBar
+        ┃ ┃ ┃ ┣ 📜DockBar.module.css
+        ┃ ┃ ┃ ┣ 📜DockBar.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂ItemCard
+        ┃ ┃ ┃ ┣ 📜ItemCard.module.css
+        ┃ ┃ ┃ ┣ 📜ItemCard.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂JoinForm
+        ┃ ┃ ┃ ┣ 📜JoinForm.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂LogOutModal
+        ┃ ┃ ┃ ┣ 📜LogOutModal.module.css
+        ┃ ┃ ┃ ┣ 📜LogOutModal.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂LoginForm
+        ┃ ┃ ┃ ┣ 📜LoginForm.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂PostCard
+        ┃ ┃ ┃ ┣ 📜PostCard.module.css
+        ┃ ┃ ┃ ┣ 📜PostCard.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂PostDetail
+        ┃ ┃ ┃ ┣ 📜PostDetail.module.css
+        ┃ ┃ ┃ ┣ 📜PostDetail.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂ReplyDetail
+        ┃ ┃ ┃ ┣ 📜ReplyDetail.module.css
+        ┃ ┃ ┃ ┣ 📜ReplyDetail.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂ReviewCard
+        ┃ ┃ ┃ ┣ 📜ReviewCard.module.css
+        ┃ ┃ ┃ ┣ 📜ReviewCard.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂UploadItemInputs
+        ┃ ┃ ┃ ┣ 📜UploadItemInputs.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂WithdrawalModal
+        ┃ ┃ ┃ ┣ 📜WithdrawalModal.module.css
+        ┃ ┃ ┃ ┣ 📜WithdrawalModal.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┗ 📜index.ts
+        ┃ ┣ 📂Templates
+        ┃ ┃ ┣ 📂AuthForm
+        ┃ ┃ ┃ ┣ 📜AuthForm.module.css
+        ┃ ┃ ┃ ┣ 📜AuthForm.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂ConfigSidebar
+        ┃ ┃ ┃ ┣ 📜ConfigSidebar.module.css
+        ┃ ┃ ┃ ┣ 📜ConfigSidebar.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂EditProfileForm
+        ┃ ┃ ┃ ┣ 📜EditProfileForm.module.css
+        ┃ ┃ ┃ ┣ 📜EditProfileForm.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂ItemDetail
+        ┃ ┃ ┃ ┣ 📜ItemDetail.module.css
+        ┃ ┃ ┃ ┣ 📜ItemDetail.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂PostDetailWithReply
+        ┃ ┃ ┃ ┣ 📜PostDetailWithReply.module.css
+        ┃ ┃ ┃ ┣ 📜PostDetailWithReply.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂ReviewForm
+        ┃ ┃ ┃ ┣ 📜ReviewForm.module.css
+        ┃ ┃ ┃ ┣ 📜ReviewForm.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂SearchFormModal
+        ┃ ┃ ┃ ┣ 📜SearchFormModal.module.css
+        ┃ ┃ ┃ ┣ 📜SearchFormModal.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂UploadItemForm
+        ┃ ┃ ┃ ┣ 📜UploadItemForm.module.css
+        ┃ ┃ ┃ ┣ 📜UploadItemForm.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂UploadPostForm
+        ┃ ┃ ┃ ┣ 📜UploadPostForm.module.css
+        ┃ ┃ ┃ ┣ 📜UploadPostForm.tsx
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┗ 📜index.ts
+        ┃ ┣ 📂contexts
+        ┃ ┃ ┣ 📜themeContext.tsx
+        ┃ ┃ ┣ 📜uiContext.tsx
+        ┃ ┃ ┗ 📜userContext.tsx
+        ┃ ┣ 📂layout
+        ┃ ┃ ┣ 📜index.ts
+        ┃ ┃ ┣ 📜layout.module.css
+        ┃ ┃ ┗ 📜layout.tsx
+        ┃ ┣ 📜.DS_Store
+        ┃ ┗ 📜index.ts
+        ┣ 📂libs
+        ┃ ┣ 📂client
+        ┃ ┃ ┣ 📜index.ts
+        ┃ ┃ ┣ 📜useFetch.ts
+        ┃ ┃ ┣ 📜useFocusEvent.ts
+        ┃ ┃ ┣ 📜useGetKey.ts
+        ┃ ┃ ┣ 📜useInfiniteScroll.ts
+        ┃ ┃ ┣ 📜useMergeRefs.ts
+        ┃ ┃ ┣ 📜useMutation.tsx
+        ┃ ┃ ┣ 📜useSessionStorage.tsx
+        ┃ ┃ ┣ 📜useToggle.ts
+        ┃ ┃ ┣ 📜useUser.ts
+        ┃ ┃ ┗ 📜util.ts
+        ┃ ┗ 📂server
+        ┃ ┃ ┣ 📜client.ts
+        ┃ ┃ ┣ 📜handlerHelper.ts
+        ┃ ┃ ┣ 📜index.ts
+        ┃ ┃ ┗ 📜sessionHelper.ts
+        ┣ 📂pages
+        ┃ ┣ 📂api
+        ┃ ┃ ┣ 📂message
+        ┃ ┃ ┃ ┣ 📜[id].ts
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂posts
+        ┃ ┃ ┃ ┣ 📂[id]
+        ┃ ┃ ┃ ┃ ┣ 📜index.ts
+        ┃ ┃ ┃ ┃ ┣ 📜interest.ts
+        ┃ ┃ ┃ ┃ ┗ 📜replies.ts
+        ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┣ 📂products
+        ┃ ┃ ┃ ┣ 📂[id]
+        ┃ ┃ ┃ ┃ ┣ 📜index.ts
+        ┃ ┃ ┃ ┃ ┣ 📜like.ts
+        ┃ ┃ ┃ ┃ ┗ 📜soldout.ts
+        ┃ ┃ ┃ ┣ 📜filter.ts
+        ┃ ┃ ┃ ┣ 📜index.ts
+        ┃ ┃ ┃ ┗ 📜search.ts
+        ┃ ┃ ┣ 📂users
+        ┃ ┃ ┃ ┣ 📂auth
+        ┃ ┃ ┃ ┃ ┣ 📜join.ts
+        ┃ ┃ ┃ ┃ ┣ 📜login.ts
+        ┃ ┃ ┃ ┃ ┗ 📜reset.ts
+        ┃ ┃ ┃ ┣ 📂me
+        ┃ ┃ ┃ ┃ ┗ 📜index.ts
+        ┃ ┃ ┃ ┣ 📜profile.ts
+        ┃ ┃ ┃ ┗ 📜reviews.ts
+        ┃ ┃ ┣ 📜.DS_Store
+        ┃ ┃ ┗ 📜files.ts
+        ┃ ┣ 📂auth
+        ┃ ┃ ┣ 📜index.tsx
+        ┃ ┃ ┗ 📜reset.tsx
+        ┃ ┣ 📂chats
+        ┃ ┃ ┣ 📜[id].tsx
+        ┃ ┃ ┗ 📜index.tsx
+        ┃ ┣ 📂community
+        ┃ ┃ ┣ 📂[id]
+        ┃ ┃ ┃ ┣ 📜index.tsx
+        ┃ ┃ ┃ ┗ 📜update.tsx
+        ┃ ┃ ┣ 📜index.tsx
+        ┃ ┃ ┗ 📜upload.tsx
+        ┃ ┣ 📂products
+        ┃ ┃ ┣ 📂[id]
+        ┃ ┃ ┃ ┣ 📜index.tsx
+        ┃ ┃ ┃ ┗ 📜update.tsx
+        ┃ ┃ ┗ 📜upload.tsx
+        ┃ ┣ 📂profile
+        ┃ ┃ ┣ 📂[id]
+        ┃ ┃ ┃ ┣ 📜buy.tsx
+        ┃ ┃ ┃ ┣ 📜index.tsx
+        ┃ ┃ ┃ ┣ 📜like.tsx
+        ┃ ┃ ┃ ┣ 📜review.tsx
+        ┃ ┃ ┃ ┗ 📜sell.tsx
+        ┃ ┃ ┣ 📜.DS_Store
+        ┃ ┃ ┗ 📜edit.tsx
+        ┃ ┣ 📜.DS_Store
+        ┃ ┣ 📜_app.tsx
+        ┃ ┣ 📜_document.tsx
+        ┃ ┣ 📜index.tsx
+        ┃ ┗ 📜search.tsx
+        ┣ 📂prisma
+        ┃ ┗ 📜schema.prisma
+        ┣ 📂public
+        ┃ ┣ 📜favicon.ico
+        ┃ ┗ 📜vercel.svg
+        ┣ 📂styles
+        ┃ ┗ 📜globals.css
+        ┣ 📜.env
+        ┣ 📜.env.local
+        ┣ 📜.eslintrc.json
+        ┣ 📜.gitignore
+        ┣ 📜README.md
+        ┣ 📜middleware.ts
+        ┣ 📜next-env.d.ts
+        ┣ 📜next.config.js
+        ┣ 📜package-lock.json
+        ┣ 📜package.json
+        ┣ 📜postcss.config.js
+        ┣ 📜tailwind.config.js
+        ┗ 📜tsconfig.json
+
+    </details>
 
 ---
 
