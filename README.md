@@ -388,6 +388,8 @@
 
 ## _1. 기술 스택_
 
+![gm_application](https://github.com/songforthemute/galaxy-market/assets/105373350/0b521510-0f71-498d-87c2-3cf6cd0823cf)
+
 -   Language : `TypeScript`
 
 -   Framework : `Next.js`
