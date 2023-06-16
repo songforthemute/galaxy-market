@@ -11,7 +11,7 @@
 
 ---
 
-<img alt="Deployment Screenshot" src="https://file.notion.so/f/s/4a2fe40d-fbb4-47cd-a292-68501eb6a160/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2023-03-19_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_11.41.42.png?id=1f4e961f-04b1-408e-a163-db108f270dc5&table=block&spaceId=0808aacc-90cf-42dd-9736-c8efd0fc09b4&expirationTimestamp=1684255283577&signature=Xh3cbKVzkW5sWBiFcCJGq5YHEAQXJ1bR1RrsOgWsoX0&downloadName=%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA+2023-03-19+%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE+11.41.42.png"/>
+![preview](public/galaxyMarket.gif)
 
 ---
 
